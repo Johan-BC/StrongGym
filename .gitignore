@@ -1,0 +1,5 @@
+# Claude Code local config
+.claude/
+
+# scratch / generated
+logo_assets/logo_trans_b64.txt
