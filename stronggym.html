@@ -164,14 +164,21 @@ input::placeholder,textarea::placeholder{color:var(--muted)}
 .login-register a{color:var(--primary)}
 
 /* COACHES */
-.coaches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
-.coach-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color 0.2s,transform 0.2s}
-.coach-card:hover{border-color:rgba(212,168,67,0.5);transform:translateY(-3px)}
-.coach-photo{aspect-ratio:4/3;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,255,255,0.06)}
-.coach-info{padding:1.5rem}
-.coach-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:0.25rem}
-.coach-specialty{font-size:0.82rem;color:var(--primary);font-weight:500;margin-bottom:0.75rem}
-.coach-bio{font-size:0.85rem;color:var(--muted)}
+.coaches-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.8rem;align-items:start}
+.coach-card{--tc:var(--primary);background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.7rem 1rem 0.7rem 1.1rem;display:flex;align-items:center;gap:0.85rem;position:relative;overflow:hidden;cursor:pointer;min-height:86px;transition:border-color 0.2s,transform 0.15s,box-shadow 0.2s,padding 0.25s,gap 0.25s}
+.coach-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tc)}
+.coach-card:hover{border-color:color-mix(in srgb,var(--tc) 60%,var(--border));transform:translateY(-1px);box-shadow:0 4px 14px -6px var(--tc)}
+.coach-card.expanded{grid-column:1/-1;flex-direction:column;align-items:flex-start;text-align:left;padding:1.6rem 1.9rem;gap:0.9rem;border-color:var(--tc);box-shadow:0 6px 20px -6px var(--tc)}
+.coach-photo{width:81px;height:81px;flex:none;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:rgba(255,255,255,0.15);overflow:hidden;transition:width 0.25s,height 0.25s}
+.coach-photo img{width:100%;height:100%;object-fit:cover}
+.coach-card.expanded .coach-photo{width:110px;height:110px}
+.coach-info{min-width:0}
+.coach-name{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size 0.25s}
+.coach-card.expanded .coach-name{font-size:1.7rem;white-space:normal;overflow:visible;text-overflow:clip}
+.coach-specialty{font-size:0.78rem;color:var(--primary);font-weight:500;transition:font-size 0.25s}
+.coach-card.expanded .coach-specialty{font-size:1rem}
+.coach-bio{font-size:0.85rem;color:var(--muted);line-height:1.4;max-height:0;opacity:0;overflow:hidden;transition:max-height 0.25s,opacity 0.2s,margin-top 0.25s;max-width:520px}
+.coach-card.expanded .coach-bio{max-height:200px;opacity:1;margin-top:0.4rem}
 
 /* NEWS */
 .news-layout{display:grid;grid-template-columns:1fr 300px;gap:2rem}
@@ -182,10 +189,16 @@ input::placeholder,textarea::placeholder{color:var(--muted)}
 .news-article p{font-size:0.88rem;color:var(--muted);margin-bottom:0.75rem}
 .read-more{font-size:0.82rem;color:var(--primary);display:inline-flex;align-items:center;gap:0.3rem;cursor:pointer}
 .read-more:hover{text-decoration:underline}
-.social-sidebar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:sticky;top:80px}
+.social-stack{position:sticky;top:80px;display:flex;flex-direction:column;gap:1.2rem}
+.social-sidebar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
 .social-sidebar h3{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;margin-bottom:1rem}
 .social-btn{display:flex;align-items:center;gap:0.75rem;width:100%;padding:0.65rem 1rem;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--fg);font-size:0.88rem;margin-bottom:0.75rem;transition:border-color 0.2s,background 0.2s}
 .social-btn:hover{border-color:var(--primary);background:var(--card)}
+.insta-grid{display:flex;flex-direction:column;gap:0.9rem;margin-bottom:1rem}
+.insta-post{display:flex;gap:0.8rem;align-items:flex-start}
+.insta-img{width:56px;height:56px;flex:none;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.insta-cap{font-size:0.85rem;line-height:1.35;margin-bottom:0.3rem}
+.insta-meta{font-size:0.75rem;color:var(--muted)}
 
 /* SIGNUP */
 .membership-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2.5rem}
@@ -288,6 +301,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 </head>
 <body>
 
+<div id="fb-root"></div>
+<script>
+window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
+(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://connect.facebook.net/da_DK/sdk.js";fjs.parentNode.insertBefore(js,fjs);}(document,'script','facebook-jssdk'));
+</script>
+
 <div id="toast-container"></div>
 
 <div class="dialog-overlay" id="confirm-dialog">
@@ -381,12 +400,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 <script>
 /* ══ MOCK DATA ══ */
 const coaches = [
-  {id:1,name:"Mikkel Hansen",specialty:"CrossFit L2 / Styrke & Kondition",bio:"Mikkel har trænet CrossFit i over 8 år og specialiserer sig i olympisk vægtløftning. Han brænder for at hjælpe atleter af alle niveauer med at nå deres potentiale."},
-  {id:2,name:"Sara Lindberg",specialty:"CrossFit L2 / Gymnastics Coach",bio:"Sara er tidligere rytmisk gymnast og elsker at lære folks bevægelseskvalitet og body control. Hun leder vores morgenhold med smil og intensitet."},
-  {id:3,name:"Jonas Petersen",specialty:"CrossFit L1 / Endurance",bio:"Jonas er maratonløber og triathlet der bringer sin udholdenhedsbaggrund ind i hvert hold. Specialist i rowing og løb."},
-  {id:4,name:"Emma Kristiansen",specialty:"CrossFit L2 / Ernæringsrådgiver",bio:"Emma kombinerer sin viden om ernæring med CrossFit-coaching. Hun hjælper medlemmer med at optimere både træning og kost."},
-  {id:5,name:"Lars Møller",specialty:"CrossFit L1 / Powerlifting",bio:"Lars er tidligere powerlifter med passion for tunge løft og korrekt teknik. Han er den første til at fejre din personlige rekord."},
-  {id:6,name:"Camilla Skov",specialty:"CrossFit L1 / Yoga & Mobility",bio:"Camilla integrerer yoga og mobilitetsarbejde i sine hold. Hun sørger for at vores atleter restituerer ordentligt og forbliver skadefri."},
+  {id:1,name:"Helena Levin Erting",specialty:"Træner",bio:"Certificeret styrketræner med fokus på teknik og progressiv overload. Helena elsker at hjælpe nybegyndere trygt i gang med vægtene.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Helena%20SH.png"},
+  {id:2,name:"Jeppe Rasmussen",specialty:"Træner",bio:"Tidligere konkurrenceatlet inden for crossfit. Jeppe brænder for høj intensitet og skaber en energisk stemning på holdene.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/514190889_10236754059651975_1365802143371067546_n.jpg"},
+  {id:3,name:"Cristina Gonzalez Levis",specialty:"Træner",bio:"Uddannet i funktionel træning og mobility. Cristina lægger vægt på at bevæge sig rigtigt, før man bevæger sig tungt.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Cristina%20SH.png"},
+  {id:4,name:"Mika Zillo",specialty:"Træner",bio:"Passioneret om styrkeløft og personlig udvikling. Mika skræddersyr træningen, så alle når deres individuelle mål.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/mika%20SH.png"},
+  {id:5,name:"Sebastian Meier",specialty:"Træner",bio:"Erfaren coach inden for konditionstræning og HIIT. Sebastian motiverer med et smil og en god portion humor.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Meier%20SH.png"},
+  {id:6,name:"Katja Kliem",specialty:"Træner",bio:"Fysioterapeutisk baggrund med speciale i skadesforebyggelse. Katja hjælper dig med at træne sikkert og effektivt.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/katja%20SH.png"},
+  {id:7,name:"Peter Alexander Schougaard",specialty:"Træner",bio:"Mangeårig erfaring som personlig træner med fokus på kost og livsstil. Peter guider dig hele vejen i mål.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/alex1.png"},
+  {id:8,name:"Silja Andersen",specialty:"Træner",bio:"Yoga- og mobility-instruktør, der brænder for balance mellem krop og sind. Silja skaber ro midt i en travl hverdag.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/image1%20(1).jpeg"},
 ];
 
 const newsArticles = [
@@ -394,6 +415,13 @@ const newsArticles = [
   {id:2,date:"15. august 2025",title:"Ny sommerplan på plads!",excerpt:"Vi har lagt vores sommerplan, som inkluderer ekstra udendørs træning, beach WODs og fælles events. Se hele planen i holdplanen."},
   {id:3,date:"3. juli 2025",title:"Tillykke til vores konkurrencedeltagere",excerpt:"Et stort tillykke til alle Strong Gym atleter der deltog i CrossFit Regionals. I repræsenterede os fantastisk og vi er utrolig stolte!"},
   {id:4,date:"1. juni 2025",title:"Ny træner i huset",excerpt:"Vi byder Camilla Skov velkommen til Strong Gym-teamet! Camilla vil lede vores nye yoga & mobility-klasser fra denne måned."},
+];
+
+const instagramPosts = [
+  {emoji:"🏋️‍♀️",bg:"linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)",caption:"Tirsdagens WOD gav ingen nåde – flot indsats af hele holdet! 💪",likes:128,date:"2 dage siden"},
+  {emoji:"🎉",bg:"linear-gradient(135deg,#4f5bd5,#962fbf,#d62976)",caption:"Stort tillykke til de medlemmer der landede deres første muscle-up i dag!",likes:94,date:"4 dage siden"},
+  {emoji:"🥗",bg:"linear-gradient(135deg,#fa7e1e,#d62976,#962fbf)",caption:"Kosten er halvdelen af kampen – nye ernæringstips er på vej på bloggen.",likes:76,date:"6 dage siden"},
+  {emoji:"🔥",bg:"linear-gradient(135deg,#feda75,#fa7e1e,#d62976)",caption:"Ny PR på deadlift i dag! Fedt at se de gode fremskridt i holdet.",likes:151,date:"1 uge siden"},
 ];
 
 const openingHours = [
@@ -486,6 +514,7 @@ function render(){
   const app=document.getElementById('app');
   const pages={index:renderIndex,login:renderLogin,coaches:renderCoaches,news:renderNews,signup:renderSignup,contact:renderContact,schedule:renderSchedule};
   app.innerHTML=(pages[currentPage]||renderNotFound)();
+  if(currentPage==='news'&&window.FB)FB.XFBML.parse(app);
 }
 
 /* ══ INDEX ══ */
@@ -579,7 +608,7 @@ function doLogout(){isLoggedIn=false;toast('Logget ud','Vi ses n\u00e6ste gang!'
 function renderCoaches(){
   return `<div class="page"><div class="container">
     <div class="text-center mb-12 fade-in"><h1 class="section-title">Vores Tr\u00e6nere</h1><p class="section-sub">M\u00f8d holdet bag Strong Gym \u2013 passionerede tr\u00e6nere klar til at hj\u00e6lpe dig med at n\u00e5 dine m\u00e5l.</p></div>
-    <div class="coaches-grid">${coaches.map((c,i)=>`<div class="coach-card fade-in" style="animation-delay:${i*0.08}s"><div class="coach-photo">\uD83D\uDC64</div><div class="coach-info"><div class="coach-name">${c.name}</div><div class="coach-specialty">${c.specialty}</div><p class="coach-bio">${c.bio}</p></div></div>`).join('')}</div>
+    <div class="coaches-grid">${coaches.map((c,i)=>`<div class="coach-card expanded fade-in" style="animation-delay:${i*0.08}s" onclick="this.classList.toggle('expanded')"><div class="coach-photo"><img src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.parentElement.innerHTML='\uD83D\uDC64'"></div><div class="coach-info"><div class="coach-name">${c.name}</div><div class="coach-specialty">${c.specialty}</div><div class="coach-bio">${c.bio}</div></div></div>`).join('')}</div>
   </div></div>`;
 }
 
@@ -589,7 +618,18 @@ function renderNews(){
     <div class="text-center mb-12 fade-in"><h1 class="section-title">Nyheder</h1><p class="section-sub">Hold dig opdateret med de seneste nyheder fra Strong Gym.</p></div>
     <div class="news-layout">
       <div>${newsArticles.map((a,i)=>`<div class="news-article fade-in" style="animation-delay:${i*0.08}s"><div class="art-date">${a.date}</div><h2>${a.title}</h2><p>${a.excerpt}</p><span class="read-more">L\u00e6s mere &rarr;</span></div>`).join('')}</div>
-      <div><div class="social-sidebar"><h3>F\u00f8lg Os</h3><a href="https://facebook.com/stronggym3000" target="_blank" class="social-btn"><span>\uD83D\uDCD8</span> Facebook</a><a href="https://instagram.com/stronggym3000" target="_blank" class="social-btn"><span>\uD83D\uDCF7</span> Instagram</a></div></div>
+      <div class="social-stack">
+        <div class="social-sidebar">
+          <h3>\uD83D\uDCD8 Facebook \u2013 seneste opslag</h3>
+          <div class="fb-page" data-href="https://www.facebook.com/stronggym3000" data-tabs="timeline" data-width="330" data-height="480" data-small-header="true" data-hide-cover="false" data-show-facepile="false" data-adapt-container-width="true"><blockquote cite="https://www.facebook.com/stronggym3000" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/stronggym3000">Strong Gym</a></blockquote></div>
+          <a href="https://facebook.com/stronggym3000" target="_blank" class="social-btn"><span>\uD83D\uDCD8</span> Se hele siden</a>
+        </div>
+        <div class="social-sidebar">
+          <h3>\uD83D\uDCF7 Instagram \u2013 seneste opslag</h3>
+          <div class="insta-grid">${instagramPosts.map(p=>`<div class="insta-post"><div class="insta-img" style="background:${p.bg}">${p.emoji}</div><div class="insta-body"><p class="insta-cap">${p.caption}</p><div class="insta-meta">\u2764\uFE0F ${p.likes} \u00B7 ${p.date}</div></div></div>`).join('')}</div>
+          <a href="https://instagram.com/stronggym3000" target="_blank" class="social-btn"><span>\uD83D\uDCF7</span> Se flere p\u00E5 Instagram</a>
+        </div>
+      </div>
     </div>
   </div></div>`;
 }
