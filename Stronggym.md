@@ -163,3 +163,60 @@ Holdplanen henter nu **live data** fra stronggym.dk's offentlige kalender-API vi
 - Galleri-sektionen på forsiden er stadig placeholder-ikoner (🏋️), ikke rigtige billeder.
 - Selve tilmelding/login/signup er stadig mock (client-side state der nulstilles ved refresh) — KUN holdplan-/forside-visningen er live. Rigtig tilmelding ville kræve autentificeret skrive-adgang til Memberlink (bevidst undladt).
 - Middleman'en afhænger af at Cloudflare-worker'en kører og at Memberlinks API-format er uændret (se [`setup.md`](setup.md)).
+
+---
+
+# Strong Gym Website Rebuild — Project Plan
+
+> Note (dansk): Denne plan taler om "goMember" som medlemsplatform. I resten af
+> dette dokument og i [`setup.md`](setup.md) er platformen kaldt **Memberlink**
+> (jf. `cdn-02.memberlink.dk` og `stronggym.dk/api/activity/event/days`). Det er
+> sandsynligvis samme system/leverandør under to navne — bekræft i Fase 0.
+
+## Context
+
+Strong Gym (stronggym.dk) is a CrossFit-based sports association (forening) in Helsingør, Denmark, with ~130 members. The current website is old, outdated, and hard to maintain. It pulls live data — member info, class schedules, workouts (WODs) — from goMember, a Danish membership-management platform built for foreninger. Members currently log into the existing site to view/edit their personal data and to sign up for classes and membership.
+
+A Swagger/OpenAPI documentation page for the goMember integration was previously seen at a URL resembling `stronggym.dk/swagger` (or similar), but it is no longer accessible. This suggests goMember exposes a per-tenant REST API, but it is not publicly documented or discoverable — it needs to be rediscovered and/or requested directly from goMember.
+
+## Goal
+
+Rebuild stronggym.dk as a modern, fast, maintainable website that:
+
+- Displays live class schedules and gym information pulled from goMember
+- Preserves (or improves) the member login experience for viewing/editing personal data and signing up
+- Looks modern and is easy for a non-developer (Johan) to maintain going forward
+
+## Phase 0 — Discover the goMember API (do this before any code)
+
+This phase is manual/investigative and should happen before involving Claude Code on implementation, since the whole architecture depends on what's actually available.
+
+1. **Find the Swagger endpoint again.**
+   - Check browser history for the exact URL previously visited (search history for "swagger" or "stronggym").
+   - Try common patterns directly in a browser:
+     - `https://stronggym.dk/swagger`
+     - `https://stronggym.dk/api/swagger`
+     - `https://api.stronggym.dk/swagger`
+     - `https://[tenant].gomember.dk/swagger` (check goMember admin panel for the tenant subdomain)
+   - Check the current live site's network requests (browser DevTools → Network tab) while loading the class schedule or login page — this will reveal the actual API host being called right now, even without Swagger docs.
+2. **Check the goMember admin backend.**
+   - Log into the goMember admin panel and look for a section called "Integration," "API," "Udvikler," or "Developer."
+   - If nothing is visible, contact goMember support directly and ask specifically:
+     - Do they expose a REST API for reading member data, class schedules, and bookings for existing customers?
+     - Is there a private/partner API even if not publicly documented?
+     - What authentication method is used (API key, OAuth token, tenant-scoped credentials)?
+     - Are there rate limits or usage terms relevant to a public-facing website?
+3. **Document what's found, specifically:**
+   - Base API URL
+   - Authentication method and how to obtain credentials
+   - Available endpoints (classes/schedule, member roster if needed, sign-up/booking)
+   - Whether member login/personal-data editing can or should stay inside goMember's own hosted portal (recommended — avoids handling sensitive member data and GDPR compliance in the new site)
+
+**Outcome of Phase 0:** a short doc answering "what can the new site actually call, and how."
+
+## Phase 1 — Architecture Decision
+
+Once Phase 0 is resolved, decide:
+
+- **If goMember has a usable API:** New site is a fully separate, modern front end that calls the goMember API for live class schedules/gym data. Member login, personal data editing, and membership sign-up continue to point to goMember's own secure hosted portal (via link or embed) rather than being rebuilt from scratch — this keeps sensitive data and GDPR compliance inside goMember's existing system.
+- **If goMember has no usable API:** Fall back to embedding goMember's existing widgets/iframes for schedule and login (similar to how the current site likely works), and focus the rebuild on everything else — design, content, navigation, performance.
