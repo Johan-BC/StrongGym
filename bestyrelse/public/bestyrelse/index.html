@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Bestyrelse - Strong Gym</title>
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Strong Gyms designsystem fra index.html: mørk baggrund, guld accent, Bebas Neue + DM Sans. Kun mørkt tema, som resten af sitet. */
+:root {
+  --bg: #111111; --panel: #1f1f1f; --fg: #f0ede8; --muted: #8f8f8f; --line: #2a2a2a; --soft: #1a1a1a;
+  --accent: #D4A843; --accent-fg: #111111;
+  --c-pay: #60a5fa; --c-var: #d95926; --c-fix: #7d828b; --c-inc: #f0ede8;
+  --ok: #4ade80; --warn: #D4A843; --bad: #ef4444;
+  --font-d: "Bebas Neue", "Arial Narrow", sans-serif;
+  --font-b: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r: 6px; color-scheme: dark;
+}
+html { -webkit-text-size-adjust: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-b); font-size: 15px; line-height: 1.5; }
+.topbar { position: sticky; top: 0; z-index: 20; background: rgba(17,17,17,.97); border-bottom: 1px solid var(--line); }
+.topbar-inner { max-width: 72rem; margin-inline: auto; height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wordmark { font-family: var(--font-d); font-size: 1.35rem; letter-spacing: .08em; color: var(--accent); text-decoration: none; }
+.wordmark span { color: var(--muted); }
+.topbar .who { font-size: .8rem; color: var(--muted); display: flex; gap: 14px; align-items: center; min-width: 0; }
+.topbar .who a { color: var(--muted); text-decoration: none; letter-spacing: .1em; text-transform: uppercase; font-size: .72rem; white-space: nowrap; }
+.topbar .who a:hover { color: var(--fg); }
+#who-email { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wrap { max-width: 72rem; margin-inline: auto; padding-block: 24px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h1 { font-family: var(--font-d); font-weight: 400; font-size: 3rem; line-height: 1; letter-spacing: .03em; }
+h2 { font-family: var(--font-d); font-weight: 400; font-size: 1.5rem; letter-spacing: .04em; line-height: 1.1; }
+.eyebrow { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 500; }
+.muted { color: var(--muted); }
+.small { font-size: .82rem; }
+.num { font-variant-numeric: tabular-nums; }
+
+header.top { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+header.top .ttl { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 28rem; }
+.take { margin: 0; max-width: 62ch; color: var(--muted); }
+.take b { color: var(--fg); font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+button, .btn { font: inherit; font-size: .9rem; font-weight: 500; border-radius: var(--r); padding: 8px 14px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--panel); color: var(--fg); }
+button:hover { border-color: var(--muted); }
+button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-family: var(--font-d); font-size: 1.05rem; letter-spacing: .08em; padding: 7px 16px; }
+button.primary:hover { background: #e8bc55; border-color: #e8bc55; }
+button.danger { color: var(--bad); }
+button.link { border: 0; background: none; padding: 2px 4px; color: var(--accent); }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button:disabled { opacity: .5; cursor: default; }
+
+.banner { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-radius: var(--r); border: 1px dashed var(--warn); color: var(--fg); background: var(--panel); }
+.banner p { margin: 0; flex: 1 1 24rem; min-width: 0; }
+.banner .tag { color: var(--warn); font-weight: 600; }
+
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; min-width: 0; }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.card-head p { margin: 2px 0 0; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 12px; }
+.kpi { display: flex; flex-direction: column; gap: 2px; }
+.kpi .v { font-family: var(--font-d); font-weight: 400; font-size: 2.5rem; letter-spacing: .02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.kpi .s { font-size: .82rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pos { color: var(--ok); } .neg { color: var(--bad); }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr)); gap: 20px; }
+.chart { position: relative; min-height: 220px; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart .empty { display: flex; align-items: center; justify-content: center; min-height: 220px; text-align: center; color: var(--muted); font-size: .9rem; padding: 0 16px; }
+.tip { position: absolute; pointer-events: none; z-index: 3; background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5); padding: 6px 10px; font-size: .8rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tip .h { color: var(--muted); margin-bottom: 2px; }
+.tip .r { display: flex; gap: 8px; justify-content: space-between; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .8rem; color: var(--muted); margin-top: 8px; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--sw); }
+.legend span.ln::before { height: 2px; border-radius: 1px; vertical-align: 3px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.seg button { border: 0; border-radius: 0; padding: 4px 10px; font-size: .8rem; }
+.seg button[aria-pressed="true"] { background: var(--soft); font-weight: 600; }
+
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-weight: 500; font-size: .75rem; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td.r, th.r { text-align: right; }
+tr.sample td { color: var(--muted); }
+.est { color: var(--muted); }
+.pill { display: inline-block; font-size: .75rem; font-weight: 500; padding: 1px 8px; border-radius: 999px; border: 1px solid currentColor; }
+.pill.now { color: var(--ok); } .pill.later { color: var(--warn); } .pill.never { color: var(--bad); } .pill.fond, .pill.done { color: var(--muted); }
+.prio { display: inline-flex; gap: 2px; }
+.prio button { padding: 0 6px; font-size: .8rem; line-height: 1.6; }
+
+form.panel { display: flex; flex-direction: column; gap: 16px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 12px 16px; }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field label { font-size: .8rem; font-weight: 500; }
+.field .hint { font-size: .75rem; color: var(--muted); }
+input, select, textarea { font: inherit; font-size: .92rem; padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); min-width: 0; width: 100%; box-sizing: border-box; }
+input[type="number"] { font-variant-numeric: tabular-nums; }
+fieldset { border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px 14px; margin: 0; min-width: 0; }
+legend { font-size: .8rem; font-weight: 600; padding: 0 6px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.err { color: var(--bad); font-size: .85rem; margin: 0; }
+.okmsg { color: var(--ok); font-size: .85rem; margin: 0; }
+.import { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 6px; background: var(--soft); }
+.fixed-list { display: flex; flex-direction: column; gap: 8px; }
+.fixed-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+@media (max-width: 520px) { .fixed-row { grid-template-columns: 1fr 1fr; } h1 { font-size: 2.3rem; } .topbar .who #who-email, .wordmark span, .topbar .who a.home { display: none; } }
+.notice { padding: 16px; border-radius: var(--r); border: 1px solid var(--line); background: var(--panel); }
+</style>
+
+</head>
+<body>
+<div class="topbar"><div class="topbar-inner">
+  <a class="wordmark" href="/">STRONG GYM <span>· BESTYRELSE</span></a>
+  <div class="who"><span id="who-email"></span><a class="home" href="/">Til hjemmesiden</a><a href="/cdn-cgi/access/logout">Log ud</a></div>
+</div></div>
+<div class="wrap">
+  <header class="top">
+    <div class="ttl">
+      <span class="eyebrow">Kun for bestyrelsen</span>
+      <h1>Økonomi og medlemmer</h1>
+      <p class="take" id="take">Henter data …</p>
+    </div>
+    <div class="actions needs-write">
+      <button class="primary" id="btn-new" type="button">Registrér måned</button>
+      <button id="btn-settings" type="button">Indstillinger</button>
+    </div>
+  </header>
+
+  <div class="notice" id="no-db" hidden>Kunne ikke hente data. Genindlæs siden for at logge ind igen.</div>
+  <div class="notice" id="readonly" hidden>Du kan se tallene, men ikke registrere. Bed formanden om at give dig redigeringsadgang.</div>
+
+  <div class="banner" id="sample-banner" hidden>
+    <p><span class="tag">Eksempeldata.</span> Måneder, ønskeliste og faste poster er eksempler. Slet eksemplerne, før I registrerer den første rigtige måned, og ret de faste poster under Indstillinger.</p>
+    <button class="danger needs-write" id="btn-clear-sample" type="button">Slet eksempeldata</button>
+  </div>
+
+  <!-- Månedsregistrering -->
+  <section class="card" id="entry" hidden>
+    <form class="panel" id="entry-form" novalidate>
+      <div class="card-head">
+        <div><h2 id="entry-title">Registrér måned</h2><p class="muted small">Udfyld efter månedens afslutning. Findes måneden allerede, bliver den overskrevet.</p></div>
+      </div>
+      <div class="fields">
+        <div class="field"><label for="f-month">Måned</label><input type="month" id="f-month" required></div>
+        <div class="field"><label for="f-members">Aktive medlemmer</label><input type="number" id="f-members" min="0" step="1" inputmode="numeric" required><span class="hint">Fra goMember ved månedens udgang</span></div>
+        <div class="field"><label for="f-cash">Kassebeholdning ultimo</label><input type="number" id="f-cash" step="1" inputmode="numeric"><span class="hint">Fra banken. Tom = beregnes</span></div>
+      </div>
+
+      <fieldset>
+        <legend>Løn fra Danløn</legend>
+        <div class="fields">
+          <div class="field"><label for="f-payroll">Samlet lønudgift, kr</label><input type="number" id="f-payroll" min="0" step="1" inputmode="numeric" required><span class="hint">Bruttoløn plus ATP og feriepenge</span></div>
+          <div class="field"><label for="f-hours">Trænertimer</label><input type="number" id="f-hours" min="0" step="0.5" inputmode="decimal"><span class="hint">Valgfri. Giver kr pr. time</span></div>
+          <div class="field"><label for="f-file">Hent fra Danløn-eksport</label><input type="file" id="f-file" accept=".csv,.txt,.xlsx,.xls"><span class="hint">CSV eller Excel. Filen gemmes ikke</span></div>
+        </div>
+        <div class="import" id="import" hidden>
+          <div class="fields">
+            <div class="field"><label for="imp-amount">Kolonne med beløb</label><select id="imp-amount"></select></div>
+            <div class="field"><label for="imp-hours">Kolonne med timer</label><select id="imp-hours"></select></div>
+          </div>
+          <p class="small" id="imp-sum"></p>
+          <div class="row"><button type="button" id="imp-use">Brug tallene</button><button type="button" class="link" id="imp-cancel">Luk</button></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Variable udgifter</legend>
+        <div class="fields" id="f-vars"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Øvrigt</legend>
+        <div class="fields">
+          <div class="field"><label for="f-other">Øvrige indtægter</label><input type="number" id="f-other" min="0" step="1" inputmode="numeric"><span class="hint">Drop-in, events, salg</span></div>
+          <div class="field"><label for="f-contingent">Faktisk kontingentindtægt</label><input type="number" id="f-contingent" min="0" step="1" inputmode="numeric"><span class="hint">Tom = medlemmer × gns. kontingent</span></div>
+          <div class="field"><label for="f-equip">Udstyrskøb</label><input type="number" id="f-equip" min="0" step="1" inputmode="numeric"><span class="hint">Tæller i kassen, ikke i driften</span></div>
+          <div class="field"><label for="f-note">Note</label><input type="text" id="f-note" maxlength="200"></div>
+        </div>
+      </fieldset>
+
+      <p class="err" id="entry-err" hidden></p>
+      <div class="row">
+        <button class="primary" type="submit" id="entry-save">Gem måned</button>
+        <button type="button" id="entry-cancel">Annullér</button>
+        <button type="button" class="danger" id="entry-delete" hidden>Slet måned</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="kpis" id="kpis">
+    <div class="card kpi"><span class="eyebrow" id="k-members-l">Aktive medlemmer</span><span class="v" id="k-members">—</span><span class="s" id="k-members-s">&nbsp;</span></div>
+    <div class="card kpi"><span class="eyebrow" id="k-net-l">Resultat, seneste måned</span><span class="v" id="k-net">—</span><span class="s" id="k-net-s">&nbsp;</span></div>
+    <div class="card kpi"><span class="eyebrow">Kassebeholdning</span><span class="v" id="k-cash">—</span><span class="s" id="k-cash-s">&nbsp;</span></div>
+    <div class="card kpi"><span class="eyebrow">Fri til udstyr</span><span class="v" id="k-free">—</span><span class="s" id="k-free-s">&nbsp;</span></div>
+  </section>
+
+  <section class="card" id="card-result">
+    <div class="card-head">
+      <div><h2>Indtægter og udgifter pr. måned</h2><p class="muted small">Udgifter stablet efter type, indtægter som linje. Udstyrskøb er ikke med.</p></div>
+      <div class="seg" role="group" aria-label="Periode">
+        <button type="button" data-range="12" aria-pressed="true">12 mdr</button>
+        <button type="button" data-range="0" aria-pressed="false">Alt</button>
+      </div>
+    </div>
+    <div class="chart" id="ch-result"></div>
+    <div class="legend">
+      <span style="--sw: var(--c-pay)">Løn</span>
+      <span style="--sw: var(--c-var)">Variable udgifter</span>
+      <span style="--sw: var(--c-fix)">Faste udgifter</span>
+      <span class="ln" style="--sw: var(--c-inc)">Indtægter</span>
+    </div>
+  </section>
+
+  <section class="grid2">
+    <div class="card" id="card-members">
+      <div class="card-head"><div><h2>Medlemmer</h2><p class="muted small">Aktive medlemmer ved månedens udgang</p></div></div>
+      <div class="chart" id="ch-members"></div>
+    </div>
+    <div class="card" id="card-forecast">
+      <div class="card-head"><div><h2>Prognose: fri kasse til udstyr</h2><p class="muted small" id="fc-note">Kasse minus buffer de næste 12 måneder, før køb fra ønskelisten</p></div></div>
+      <div class="chart" id="ch-forecast"></div>
+    </div>
+  </section>
+
+  <section class="card" id="card-history">
+    <div class="card-head"><div><h2>Månedsoversigt</h2><p class="muted small">Nyeste først. Kasse i grå er beregnet, ikke indtastet.</p></div></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Måned</th><th class="r">Medlemmer</th><th class="r">Kontingent</th><th class="r">Øvr. indt.</th><th class="r">Løn</th><th class="r">Kr/time</th>
+          <th class="r">Variable</th><th class="r">Faste</th><th class="r">Resultat</th><th class="r">Kasse</th><th>Registreret af</th><th class="needs-write"></th>
+        </tr></thead>
+        <tbody id="hist-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" id="card-wish">
+    <div class="card-head"><div><h2>Ønskeliste til udstyr</h2><p class="muted small">Købes i prioriteret rækkefølge fra den fri kasse. Ønsker der søges fondsmidler til, tæller ikke med.</p></div></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Prio</th><th>Udstyr</th><th class="r">Pris</th><th class="r">Akkumuleret</th><th>Muligt fra</th><th>Status</th><th class="needs-write"></th></tr></thead>
+        <tbody id="wish-body"></tbody>
+      </table>
+    </div>
+    <form class="panel needs-write" id="wish-form" novalidate style="margin-top:16px">
+      <div class="fields">
+        <div class="field"><label for="w-item">Udstyr</label><input type="text" id="w-item" maxlength="80" required></div>
+        <div class="field"><label for="w-price">Pris, kr</label><input type="number" id="w-price" min="0" step="1" inputmode="numeric" required></div>
+        <div class="field"><label for="w-funding">Finansiering</label><select id="w-funding"><option value="kasse">Egen kasse</option><option value="fond">Søges via fond</option></select></div>
+      </div>
+      <p class="err" id="wish-err" hidden></p>
+      <div class="row"><button type="submit" class="primary" id="wish-save">Tilføj ønske</button><button type="button" id="wish-cancel" hidden>Annullér</button></div>
+    </form>
+  </section>
+
+  <section class="card" id="card-settings" hidden>
+    <form class="panel" id="set-form" novalidate>
+      <div class="card-head"><div><h2>Indstillinger</h2><p class="muted small">Ændringer i faste poster gælder fra nu. Allerede registrerede måneder beholder de faste poster, de blev gemt med.</p></div></div>
+      <div class="fields">
+        <div class="field"><label for="s-fee">Gns. kontingent pr. medlem pr. måned</label><input type="number" id="s-fee" min="0" step="1"></div>
+        <div class="field"><label for="s-buffer">Buffer, antal måneders udgifter</label><input type="number" id="s-buffer" min="0" step="0.5"></div>
+        <div class="field"><label for="s-growth">Forventet netto-tilgang pr. måned</label><input type="number" id="s-growth" step="0.5"><span class="hint">Medlemmer. Bruges i prognosen</span></div>
+        <div class="field"><label for="s-opening">Kasse før første måned</label><input type="number" id="s-opening" step="1"><span class="hint">Bruges kun hvis kassen ikke er indtastet</span></div>
+        <div class="field"><label for="s-cats">Variable udgiftstyper</label><input type="text" id="s-cats"><span class="hint">Adskilt med komma</span></div>
+      </div>
+      <fieldset>
+        <legend>Faste poster pr. måned</legend>
+        <div class="fixed-list" id="s-fixed"></div>
+        <div class="row" style="margin-top:10px"><button type="button" id="s-add">Tilføj post</button></div>
+      </fieldset>
+      <p class="err" id="set-err" hidden></p>
+      <div class="row"><button type="submit" class="primary">Gem indstillinger</button><button type="button" id="set-cancel">Luk</button></div>
+    </form>
+  </section>
+</div>
+
+<script>
+(() => {
+'use strict';
+const NS = 'http://www.w3.org/2000/svg';
+const $ = (s) => document.querySelector(s);
+const nf = new Intl.NumberFormat('da-DK', { maximumFractionDigits: 0 });
+const kr = (n) => nf.format(Math.round(n)) + ' kr';
+const signedKr = (n) => (n > 0 ? '+' : n < 0 ? '−' : '') + nf.format(Math.abs(Math.round(n))) + ' kr';
+const signed = (n) => (n > 0 ? '+' : n < 0 ? '−' : '±') + nf.format(Math.abs(Math.round(n)));
+const kfmt = (n) => (Math.abs(n) >= 1000 ? nf.format(Math.round(n / 1000)) + 'k' : nf.format(n));
+const MDR = ['jan.', 'feb.', 'mar.', 'apr.', 'maj', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'dec.'];
+const monLong = (k) => { const [y, m] = k.split('-').map(Number); return MDR[m - 1] + ' ' + y; };
+const monShort = (k) => { const [y, m] = k.split('-').map(Number); return MDR[m - 1].replace('.', '') + (m === 1 ? " '" + String(y).slice(2) : ''); };
+const addMonths = (k, n) => { const [y, m] = k.split('-').map(Number); return new Date(Date.UTC(y, m - 1 + n, 1)).toISOString().slice(0, 7); };
+const val = (id) => { const v = $(id).value.trim(); if (v === '') return null; const n = Number(v); return Number.isFinite(n) ? n : NaN; };
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+const DEFAULTS = { avg_fee: 350, buffer_months: 1, growth: 1, opening_cash: 0, categories: ['El', 'Vand', 'Varme', 'Andet'], fixed: [] };
+const S = { settings: null, months: [], wish: [], db: false, me: null, canWrite: null, range: 12, editWish: null };
+const API = '/bestyrelse/api';
+async function api(method, path, body) {
+  let res;
+  try {
+    res = await fetch(API + path, { method, credentials: 'same-origin', redirect: 'manual', headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined });
+  } catch (e) { throw { status: 0, message: 'Ingen forbindelse. Prøv igen om lidt.' }; }
+  if (res.type === 'opaqueredirect' || res.status === 401) throw { status: 401, message: 'Dit login er udløbet. Genindlæs siden.' };
+  let data = null; try { data = await res.json(); } catch (e) { /* tomt svar */ }
+  if (!res.ok) throw { status: res.status, message: (data && data.error) || 'Noget gik galt (' + res.status + ').' };
+  return data;
+}
+async function load() {
+  const d = await api('GET', '/state');
+  S.me = d.me.email; S.canWrite = d.me.canWrite;
+  S.settings = d.settings; S.months = (d.months || []).filter((m) => m && /^\d{4}-\d{2}$/.test(m.month));
+  S.wish = d.wishlist || []; S.db = true;
+  $('#who-email').textContent = d.me.email;
+  render();
+}
+const st = () => Object.assign({}, DEFAULTS, S.settings || {});
+const sumFixed = (s, type) => (s.fixed || []).filter((f) => f.type === type).reduce((a, f) => a + (Number(f.amount) || 0), 0);
+
+/* ---------- beregninger ---------- */
+function calcMonth(m, s) {
+  const variable = m.variable || {};
+  const varTotal = Object.values(variable).reduce((a, v) => a + (Number(v) || 0), 0);
+  const contingent = m.contingent != null ? m.contingent : (m.members || 0) * s.avg_fee;
+  const fixedInc = m.fixed_income != null ? m.fixed_income : sumFixed(s, 'Indtægt');
+  const fixedExp = m.fixed_expenses != null ? m.fixed_expenses : sumFixed(s, 'Udgift');
+  const other = m.other_income || 0;
+  const payroll = m.payroll || 0;
+  const income = contingent + other + fixedInc;
+  const expenses = payroll + varTotal + fixedExp;
+  return { month: m.month, members: m.members || 0, contingent, contingentActual: m.contingent != null, other, fixedInc, fixedExp, payroll,
+    hours: m.hours || null, variable, varTotal, income, expenses, net: income - expenses, equipment: m.equipment || 0,
+    sample: !!m.sample, note: m.note || '', updatedBy: m.updatedBy || null, cashIn: m.cash };
+}
+function history() {
+  const s = st();
+  let cash = Number(s.opening_cash) || 0;
+  return S.months.map((m) => {
+    const c = calcMonth(m, s);
+    if (c.cashIn != null) { cash = c.cashIn; c.cashEst = false; } else { cash = cash + c.net - c.equipment; c.cashEst = true; }
+    c.cash = cash;
+    return c;
+  });
+}
+function forecast(hist) {
+  if (!hist.length) return [];
+  const s = st();
+  const last = hist[hist.length - 1];
+  const rec = hist.slice(-3);
+  const avg = (f) => rec.reduce((a, r) => a + f(r), 0) / rec.length;
+  const payroll = avg((r) => r.payroll), other = avg((r) => r.other), varAvg = avg((r) => r.varTotal);
+  const fixedInc = sumFixed(s, 'Indtægt'), fixedExp = sumFixed(s, 'Udgift');
+  const byMonth = new Map(hist.map((r) => [r.month, r]));
+  const buffer = (Number(s.buffer_months) || 0) * avg((r) => r.expenses);
+  const rows = [{ month: last.month, members: last.members, income: last.income, expenses: last.expenses, net: last.net, cash: last.cash, buffer, free: last.cash - buffer, actual: true }];
+  let cash = last.cash;
+  for (let i = 1; i <= 12; i++) {
+    const month = addMonths(last.month, i);
+    const ly = byMonth.get(addMonths(month, -12));
+    const v = ly ? ly.varTotal : varAvg;
+    const members = Math.max(0, Math.round(last.members + (Number(s.growth) || 0) * i));
+    const income = members * s.avg_fee + other + fixedInc;
+    const expenses = payroll + v + fixedExp;
+    cash += income - expenses;
+    rows.push({ month, members, income, expenses, net: income - expenses, cash, buffer, free: cash - buffer, actual: false, varFromLastYear: !!ly });
+  }
+  return rows;
+}
+function wishPlan(fc) {
+  const open = S.wish.filter((w) => !w.bought).sort((a, b) => (a.priority ?? 999) - (b.priority ?? 999) || String(a.item).localeCompare(String(b.item)));
+  let cum = 0;
+  const plan = open.map((w) => {
+    if (w.funding === 'fond') return { ...w, status: 'fond' };
+    cum += Number(w.price) || 0;
+    const hit = fc.find((f) => f.free >= cum);
+    return { ...w, cum, month: hit ? hit.month : null, status: !fc.length ? 'never' : !hit ? 'never' : hit === fc[0] ? 'now' : 'later' };
+  });
+  const done = S.wish.filter((w) => w.bought).map((w) => ({ ...w, status: 'done' }));
+  return { plan, done, total: cum };
+}
+
+/* ---------- grafer ---------- */
+const measureCtx = document.createElement('canvas').getContext('2d');
+const textW = (t) => { measureCtx.font = '12px "DM Sans", system-ui, sans-serif'; return measureCtx.measureText(t).width; };
+function niceTicks(min, max, n) {
+  if (min === max) { max = min + 1; }
+  const raw = (max - min) / n, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p;
+  const out = [];
+  for (let v = Math.floor(min / step) * step; v <= Math.ceil(max / step) * step + step / 2; v += step) out.push(Math.round(v * 1e6) / 1e6);
+  return out;
+}
+const svg = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+function drawEmpty(box, text) { box.replaceChildren(el('div', 'empty', text)); }
+function chart(box, o) {
+  box.replaceChildren();
+  const keys = o.keys;
+  if (!keys.length) return drawEmpty(box, o.emptyText || 'Ingen data endnu');
+  const W = Math.max(280, box.clientWidth || 600), H = 220, mt = 10, mb = 26;
+  let max = 0, min = 0;
+  keys.forEach((k, i) => {
+    if (o.stacked) max = Math.max(max, o.series.reduce((a, se) => a + Math.max(0, se.values[i] || 0), 0));
+    else o.series.forEach((se) => { max = Math.max(max, se.values[i]); min = Math.min(min, se.values[i]); });
+    if (o.line) max = Math.max(max, o.line.values[i]);
+  });
+  if (o.minFloor != null) min = Math.min(min, o.minFloor);
+  const ticks = niceTicks(min, max, 4);
+  const y0 = ticks[0], y1 = ticks[ticks.length - 1];
+  const ml = Math.max(...ticks.map((t) => textW(o.fmtY(t)))) + 10, mr = 6;
+  const plotW = W - ml - mr, step = plotW / keys.length, bw = Math.min(28, Math.max(4, step * 0.62));
+  const Y = (v) => mt + (H - mt - mb) * (1 - (v - y0) / (y1 - y0 || 1));
+  const X = (i) => ml + step * i + step / 2;
+  const s = svg('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': o.label || '' });
+  ticks.forEach((t) => {
+    s.appendChild(svg('line', { x1: ml, x2: W - mr, y1: Y(t), y2: Y(t), stroke: 'var(--line)', 'stroke-width': t === 0 ? 1.5 : 1 }));
+    const tx = svg('text', { x: ml - 8, y: Y(t), dy: '0.32em', 'text-anchor': 'end', 'font-size': 12, fill: 'var(--muted)' });
+    tx.textContent = o.fmtY(t); s.appendChild(tx);
+  });
+  const labW = Math.max(...keys.map((k) => textW(monShort(k)))) + 10;
+  const every = Math.max(1, Math.ceil(labW / step));
+  keys.forEach((k, i) => {
+    if ((keys.length - 1 - i) % every !== 0) return;
+    const tx = svg('text', { x: X(i), y: H - 8, 'text-anchor': 'middle', 'font-size': 12, fill: 'var(--muted)' });
+    tx.textContent = monShort(k); s.appendChild(tx);
+  });
+  const cols = keys.map(() => svg('g', {}));
+  keys.forEach((k, i) => {
+    if (o.stacked) {
+      let acc = 0;
+      o.series.forEach((se) => {
+        const v = Math.max(0, se.values[i] || 0); if (!v) return;
+        const yTop = Y(acc + v), yBot = Y(acc);
+        cols[i].appendChild(svg('rect', { x: X(i) - bw / 2, y: yTop, width: bw, height: Math.max(1, yBot - yTop - 1), rx: 2, fill: se.color }));
+        acc += v;
+      });
+    } else {
+      const se = o.series[0], v = se.values[i];
+      const yA = Y(Math.max(0, v)), yB = Y(Math.min(0, v));
+      cols[i].appendChild(svg('rect', { x: X(i) - bw / 2, y: yA, width: bw, height: Math.max(1, yB - yA), rx: 3, fill: o.colorFn ? o.colorFn(i, v) : se.color, opacity: o.opacityFn ? o.opacityFn(i) : 1 }));
+    }
+    s.appendChild(cols[i]);
+  });
+  if (o.line) {
+    const pts = keys.map((k, i) => `${X(i)},${Y(o.line.values[i])}`).join(' ');
+    s.appendChild(svg('polyline', { points: pts, fill: 'none', stroke: o.line.color, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+    keys.forEach((k, i) => s.appendChild(svg('circle', { cx: X(i), cy: Y(o.line.values[i]), r: keys.length > 24 ? 0 : 2.5, fill: o.line.color })));
+  }
+  if (o.endLabel) {
+    const i = keys.length - 1, v = o.endLabel.value;
+    const tx = svg('text', { x: X(i), y: Y(Math.max(0, v)) - 6, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 600, fill: 'var(--fg)' });
+    tx.textContent = o.endLabel.text; s.appendChild(tx);
+  }
+  const tip = el('div', 'tip'); tip.hidden = true;
+  keys.forEach((k, i) => {
+    const hit = svg('rect', { x: ml + step * i, y: 0, width: step, height: H - mb, fill: 'transparent' });
+    hit.addEventListener('mouseenter', () => {
+      cols.forEach((c, j) => c.setAttribute('opacity', j === i ? 1 : 0.45));
+      tip.replaceChildren(el('div', 'h', monLong(k)));
+      o.tip(i).forEach(([a, b, cls]) => { const r = el('div', 'r'); r.append(el('span', null, a), el('b', cls || null, b)); tip.appendChild(r); });
+      tip.hidden = false;
+      const sc = box.clientWidth / W, x = X(i) * sc, bwid = tip.offsetWidth;
+      let left = x + 14; if (left + bwid > box.clientWidth) left = x - bwid - 14; if (left < 0) left = 0;
+      tip.style.left = left + 'px'; tip.style.top = '8px';
+    });
+    hit.addEventListener('mouseleave', () => { cols.forEach((c) => c.setAttribute('opacity', 1)); tip.hidden = true; });
+    s.appendChild(hit);
+  });
+  box.append(s, tip);
+}
+
+/* ---------- visning ---------- */
+const setT = (id, text, cls) => { const e = $(id); e.textContent = text; e.classList.remove('pos', 'neg'); if (cls) e.classList.add(cls); };
+function render() {
+  const hist = history();
+  const fc = forecast(hist);
+  const wp = wishPlan(fc);
+  const last = hist[hist.length - 1], prev = hist[hist.length - 2];
+
+  $('#sample-banner').hidden = !(S.months.some((m) => m.sample) || S.wish.some((w) => w.sample) || (S.settings && S.settings.sample));
+
+  // KPI
+  if (last) {
+    $('#k-members-l').textContent = 'Aktive medlemmer, ' + monLong(last.month);
+    setT('#k-members', nf.format(last.members));
+    setT('#k-members-s', prev ? signed(last.members - prev.members) + ' siden ' + monLong(prev.month) : ' ', prev ? (last.members >= prev.members ? 'pos' : 'neg') : null);
+    $('#k-net-l').textContent = 'Resultat, ' + monLong(last.month);
+    setT('#k-net', signedKr(last.net), last.net < 0 ? 'neg' : null);
+    setT('#k-net-s', 'Indtægter ' + kr(last.income) + ' · udgifter ' + kr(last.expenses));
+    setT('#k-cash', kr(last.cash));
+    setT('#k-cash-s', (last.cashEst ? 'Beregnet' : 'Fra banken') + ', ultimo ' + monLong(last.month));
+    setT('#k-free', kr(fc[0].free), fc[0].free < 0 ? 'neg' : null);
+    setT('#k-free-s', 'Efter buffer på ' + kr(fc[0].buffer));
+  } else {
+    ['#k-members', '#k-net', '#k-cash', '#k-free'].forEach((id) => setT(id, '—'));
+    ['#k-members-s', '#k-net-s', '#k-cash-s', '#k-free-s'].forEach((id) => setT(id, ' '));
+  }
+
+  // takeaway
+  const take = $('#take'); take.replaceChildren();
+  if (!last) {
+    take.textContent = S.db ? 'Ingen måneder registreret endnu. Tryk Registrér måned for at tilføje den første.' : 'Henter data …';
+  } else {
+    const parts = [];
+    const b = (t) => el('b', null, t);
+    take.append('Seneste måned er ', b(monLong(last.month)), ' med ', b(nf.format(last.members) + ' medlemmer'), ' og et resultat på ', b(signedKr(last.net)), '. ');
+    const nowN = wp.plan.filter((w) => w.status === 'now').length, cashN = wp.plan.filter((w) => w.status !== 'fond').length;
+    if (cashN) {
+      take.append(nowN ? `${nowN} af ${cashN} ønsker kan købes nu. ` : 'Ingen ønsker kan købes nu uden at gå under bufferen. ');
+      const lastW = wp.plan.filter((w) => w.status !== 'fond').slice(-1)[0];
+      if (lastW && lastW.month) take.append('Hele listen kan være købt i ', b(monLong(lastW.month)), '. ');
+      else if (lastW) take.append('Hele listen kan ikke nås inden for 12 måneder. ');
+    }
+    const now = new Date(); const prevCal = new Date(Date.UTC(now.getFullYear(), now.getMonth() - 1, 1)).toISOString().slice(0, 7);
+    if (last.month < prevCal) { const miss = el('b', 'neg', 'Mangler: ' + monLong(addMonths(last.month, 1)) + '.'); take.append(miss); }
+    void parts;
+  }
+
+  // grafer
+  const shown = S.range ? hist.slice(-S.range) : hist;
+  const keys = shown.map((r) => r.month);
+  const emptyText = 'Ingen måneder registreret endnu';
+  chart($('#ch-result'), {
+    keys, stacked: true, label: 'Indtægter og udgifter pr. måned', emptyText,
+    series: [
+      { name: 'Løn', color: 'var(--c-pay)', values: shown.map((r) => r.payroll) },
+      { name: 'Variable', color: 'var(--c-var)', values: shown.map((r) => r.varTotal) },
+      { name: 'Faste', color: 'var(--c-fix)', values: shown.map((r) => r.fixedExp) },
+    ],
+    line: { color: 'var(--c-inc)', values: shown.map((r) => r.income) },
+    fmtY: kfmt,
+    tip: (i) => { const r = shown[i]; return [['Indtægter', kr(r.income)], ['Løn', kr(r.payroll)], ['Variable', kr(r.varTotal)], ['Faste', kr(r.fixedExp)], ['Resultat', signedKr(r.net), r.net < 0 ? 'neg' : 'pos']]; },
+  });
+  chart($('#ch-members'), {
+    keys, stacked: false, label: 'Medlemmer pr. måned', emptyText,
+    series: [{ color: 'var(--accent)', values: shown.map((r) => r.members) }],
+    fmtY: (v) => nf.format(v),
+    endLabel: shown.length ? { value: shown[shown.length - 1].members, text: nf.format(shown[shown.length - 1].members) } : null,
+    tip: (i) => { const r = shown[i], p = hist[hist.indexOf(r) - 1]; return [['Medlemmer', nf.format(r.members)]].concat(p ? [['Ændring', signed(r.members - p.members), r.members >= p.members ? 'pos' : 'neg']] : []); },
+  });
+  chart($('#ch-forecast'), {
+    keys: fc.map((r) => r.month), stacked: false, label: 'Prognose for fri kasse', emptyText: 'Prognosen kræver mindst én registreret måned',
+    series: [{ values: fc.map((r) => r.free) }],
+    colorFn: (i, v) => (v < 0 ? 'var(--bad)' : 'var(--accent)'),
+    opacityFn: (i) => (i === 0 ? 1 : 0.6),
+    minFloor: 0,
+    fmtY: kfmt,
+    tip: (i) => {
+      const r = fc[i];
+      const rows = [[r.actual ? 'Faktisk' : 'Prognose', ''], ['Kasse', kr(r.cash)], ['Buffer', kr(r.buffer)], ['Fri til udstyr', kr(r.free), r.free < 0 ? 'neg' : null], ['Medlemmer', nf.format(r.members)]];
+      const un = wp.plan.filter((w) => w.month === r.month && w.status !== 'fond').map((w) => w.item);
+      if (un.length) rows.push(['Muligt nu', un.join(', ')]);
+      return rows;
+    },
+  });
+  $('#fc-note').textContent = fc.length
+    ? `Kasse minus buffer, ${monLong(fc[0].month)} faktisk og 12 måneder frem. Løn og øvrige indtægter er gns. af de seneste 3 måneder; variable udgifter tager samme måned sidste år, når den findes.`
+    : 'Kasse minus buffer de næste 12 måneder, før køb fra ønskelisten';
+
+  renderHistory(hist);
+  renderWish(wp);
+  applyWriteGate();
+}
+
+const who = (email) => (email ? String(email).split('@')[0] : '—');
+function renderHistory(hist) {
+  const body = $('#hist-body'); body.replaceChildren();
+  if (!hist.length) {
+    const tr = el('tr'); const td = el('td', 'muted', 'Ingen måneder registreret endnu.'); td.colSpan = 12; tr.appendChild(td); body.appendChild(tr); return;
+  }
+  [...hist].reverse().forEach((r) => {
+    const tr = el('tr', r.sample ? 'sample' : null);
+    const cell = (t, cls) => { const td = el('td', cls, t); tr.appendChild(td); return td; };
+    const mtd = cell(monLong(r.month)); if (r.note) mtd.title = r.note;
+    cell(nf.format(r.members), 'r');
+    cell(nf.format(r.contingent), 'r' + (r.contingentActual ? '' : ' est'));
+    cell(nf.format(r.other), 'r');
+    cell(nf.format(r.payroll), 'r');
+    cell(r.hours ? nf.format(r.payroll / r.hours) : '—', 'r');
+    cell(nf.format(r.varTotal), 'r');
+    cell(nf.format(r.fixedExp), 'r');
+    cell(signed(r.net), 'r ' + (r.net < 0 ? 'neg' : 'pos'));
+    cell(nf.format(r.cash), 'r' + (r.cashEst ? ' est' : ''));
+    const wtd = cell(r.sample ? 'Eksempel' : who(r.updatedBy), 'muted'); if (r.updatedBy && !r.sample) wtd.title = r.updatedBy;
+    const act = el('td', 'needs-write');
+    const b = el('button', 'link', 'Ret'); b.type = 'button'; b.addEventListener('click', () => openEntry(r.month)); act.appendChild(b);
+    tr.appendChild(act);
+    body.appendChild(tr);
+  });
+}
+const STATUS = { now: 'Råd nu', later: 'Planlagt', never: 'Ikke inden for 12 mdr', fond: 'Søges via fond', done: 'Købt' };
+function renderWish(wp) {
+  const body = $('#wish-body'); body.replaceChildren();
+  const all = wp.plan.concat(wp.done);
+  if (!all.length) { const tr = el('tr'); const td = el('td', 'muted', 'Ingen ønsker endnu. Tilføj det første nedenfor.'); td.colSpan = 7; tr.appendChild(td); body.appendChild(tr); return; }
+  const openSorted = wp.plan;
+  all.forEach((w) => {
+    const tr = el('tr');
+    const idx = openSorted.indexOf(w);
+    const ptd = el('td');
+    if (w.status !== 'done') {
+      ptd.append(String(idx + 1) + ' ');
+      const box = el('span', 'prio needs-write');
+      const up = el('button', null, '↑'); up.type = 'button'; up.setAttribute('aria-label', 'Flyt op'); up.disabled = idx === 0; up.addEventListener('click', () => movePrio(openSorted, idx, -1));
+      const dn = el('button', null, '↓'); dn.type = 'button'; dn.setAttribute('aria-label', 'Flyt ned'); dn.disabled = idx === openSorted.length - 1; dn.addEventListener('click', () => movePrio(openSorted, idx, 1));
+      box.append(up, dn); ptd.appendChild(box);
+    } else ptd.textContent = '—';
+    tr.appendChild(ptd);
+    tr.appendChild(el('td', null, w.item || ''));
+    tr.appendChild(el('td', 'r', kr(Number(w.price) || 0)));
+    tr.appendChild(el('td', 'r muted', w.cum != null ? kr(w.cum) : '—'));
+    tr.appendChild(el('td', null, w.month ? monLong(w.month) : '—'));
+    const s = el('td'); s.appendChild(el('span', 'pill ' + w.status, STATUS[w.status])); tr.appendChild(s);
+    const a = el('td', 'needs-write');
+    const mk = (t, fn, cls) => { const b = el('button', 'link' + (cls ? ' ' + cls : ''), t); b.type = 'button'; b.addEventListener('click', fn); a.appendChild(b); };
+    if (w.status !== 'done') { mk('Ret', () => editWish(w)); mk('Købt', () => writeWish(w.id, { bought: true, boughtAt: new Date().toISOString() })); }
+    else mk('Fortryd', () => writeWish(w.id, { bought: false }));
+    mk('Slet', (ev) => confirmBtn(ev.currentTarget, () => api('DELETE', '/wishlist/' + w.id).then(load).catch((e) => showErr('#wish-err', onWriteErr(e)))), 'danger');
+    tr.appendChild(a);
+    body.appendChild(tr);
+  });
+}
+function applyWriteGate() {
+  const ro = S.canWrite === false;
+  document.querySelectorAll('.needs-write').forEach((e) => { e.hidden = ro || !S.db; });
+  $('#readonly').hidden = !(ro && S.db);
+}
+function confirmBtn(btn, fn) {
+  if (btn.dataset.armed) { fn(); return; }
+  const old = btn.textContent; btn.dataset.armed = '1'; btn.textContent = 'Bekræft';
+  setTimeout(() => { if (btn.isConnected) { btn.textContent = old; delete btn.dataset.armed; } }, 4000);
+}
+function onWriteErr(e) {
+  if (e && e.status === 403) { S.canWrite = false; applyWriteGate(); return e.message || 'Du har ikke adgang til at gemme.'; }
+  return (e && e.message) || 'Kunne ikke gemme lige nu. Prøv igen om lidt.';
+}
+const showErr = (id, msg) => { const e = $(id); e.textContent = msg || ''; e.hidden = !msg; };
+
+/* ---------- månedsregistrering ---------- */
+function buildVarFields(existing) {
+  const box = $('#f-vars'); box.replaceChildren();
+  const cats = [...new Set(st().categories.concat(Object.keys(existing || {})))];
+  cats.forEach((c, i) => {
+    const f = el('div', 'field');
+    const id = 'f-var-' + i;
+    const lab = el('label', null, c); lab.htmlFor = id;
+    const inp = el('input'); inp.type = 'number'; inp.min = '0'; inp.step = '1'; inp.inputMode = 'numeric'; inp.id = id; inp.dataset.cat = c;
+    if (existing && existing[c] != null) inp.value = existing[c];
+    f.append(lab, inp); box.appendChild(f);
+  });
+}
+function openEntry(month) {
+  const ex = month ? S.months.find((m) => m.month === month) : null;
+  const def = month || (() => { const now = new Date(); return new Date(Date.UTC(now.getFullYear(), now.getMonth() - 1, 1)).toISOString().slice(0, 7); })();
+  $('#entry-title').textContent = ex ? 'Ret ' + monLong(ex.month) : 'Registrér måned';
+  $('#f-month').value = def;
+  const set = (id, v) => { $(id).value = v == null ? '' : v; };
+  set('#f-members', ex ? ex.members : (S.months.length ? S.months[S.months.length - 1].members : ''));
+  set('#f-cash', ex && ex.cash); set('#f-payroll', ex && ex.payroll); set('#f-hours', ex && ex.hours);
+  set('#f-other', ex && ex.other_income); set('#f-contingent', ex && ex.contingent); set('#f-equip', ex && ex.equipment); set('#f-note', ex && ex.note);
+  $('#f-file').value = ''; $('#import').hidden = true;
+  buildVarFields(ex && ex.variable);
+  $('#entry-delete').hidden = !ex; $('#entry-delete').textContent = 'Slet måned'; delete $('#entry-delete').dataset.armed;
+  showErr('#entry-err');
+  $('#entry').hidden = false; $('#card-settings').hidden = true;
+  $('#entry').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('#f-month').focus({ preventScroll: true });
+}
+$('#btn-new').addEventListener('click', () => openEntry(null));
+$('#entry-cancel').addEventListener('click', () => { $('#entry').hidden = true; });
+$('#f-month').addEventListener('change', () => {
+  const m = $('#f-month').value; const ex = S.months.find((x) => x.month === m);
+  $('#entry-delete').hidden = !ex;
+  if (ex) $('#entry-title').textContent = 'Ret ' + monLong(m) + ' (findes allerede)'; else $('#entry-title').textContent = 'Registrér måned';
+});
+$('#entry-delete').addEventListener('click', (ev) => confirmBtn(ev.currentTarget, async () => {
+  const m = $('#f-month').value;
+  try { await api('DELETE', '/months/' + m); $('#entry').hidden = true; await load(); } catch (e) { showErr('#entry-err', onWriteErr(e)); }
+}));
+$('#entry-form').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const month = $('#f-month').value;
+  if (!/^\d{4}-\d{2}$/.test(month)) return showErr('#entry-err', 'Vælg en måned.');
+  const members = val('#f-members'), payroll = val('#f-payroll');
+  if (members == null || !Number.isInteger(members) || members < 0) return showErr('#entry-err', 'Skriv antal aktive medlemmer som et helt tal.');
+  if (payroll == null || Number.isNaN(payroll) || payroll < 0) return showErr('#entry-err', 'Skriv den samlede lønudgift. Skriv 0, hvis der ikke er udbetalt løn.');
+  const opt = ['#f-cash', '#f-hours', '#f-other', '#f-contingent', '#f-equip'].map(val);
+  if (opt.some((v) => Number.isNaN(v))) return showErr('#entry-err', 'Et af felterne indeholder ikke et tal.');
+  const variable = {};
+  let bad = false;
+  document.querySelectorAll('#f-vars input').forEach((i) => { const v = i.value.trim(); if (v === '') return; const n = Number(v); if (!Number.isFinite(n) || n < 0) bad = true; else variable[i.dataset.cat] = n; });
+  if (bad) return showErr('#entry-err', 'Variable udgifter skal være tal på 0 eller derover.');
+  const ex = S.months.find((m) => m.month === month);
+  const s = st();
+  const doc = {
+    month, members, payroll, hours: opt[1], variable, other_income: opt[2], contingent: opt[3], equipment: opt[4], cash: opt[0],
+    note: $('#f-note').value.trim() || null,
+    fixed_income: ex && ex.fixed_income != null && !ex.sample ? ex.fixed_income : sumFixed(s, 'Indtægt'),
+    fixed_expenses: ex && ex.fixed_expenses != null && !ex.sample ? ex.fixed_expenses : sumFixed(s, 'Udgift'),
+  };
+  $('#entry-save').disabled = true;
+  try { await api('PUT', '/months/' + month, doc); $('#entry').hidden = true; await load(); }
+  catch (e) { showErr('#entry-err', onWriteErr(e)); }
+  finally { $('#entry-save').disabled = false; }
+});
+
+/* ---------- Danløn-import ---------- */
+let IMP = null;
+function parseCSV(text) {
+  const first = text.split(/\r?\n/).find((l) => l.trim()) || '';
+  const delim = [';', '\t', ','].map((c) => [c, first.split(c).length]).sort((a, b) => b[1] - a[1])[0][0];
+  const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (q) { if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += ch; }
+    else if (ch === '"') q = true;
+    else if (ch === delim) { row.push(cell); cell = ''; }
+    else if (ch === '\n' || ch === '\r') { if (ch === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+    else cell += ch;
+  }
+  if (cell !== '' || row.length) { row.push(cell); rows.push(row); }
+  return rows;
+}
+function toNum(v) {
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+  if (v == null) return null;
+  let s = String(v).trim().replace(/\s|kr\.?|dkk/gi, '');
+  if (!s || !/^-?[\d.,]+-?$/.test(s)) return null;
+  if (s.endsWith('-')) s = '-' + s.slice(0, -1);
+  if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+  else if (/^-?\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '');
+  const n = Number(s); return Number.isFinite(n) ? n : null;
+}
+async function loadXLSX() {
+  if (window.XLSX) return window.XLSX;
+  await new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'; sc.onload = res; sc.onerror = rej; document.head.appendChild(sc); });
+  return window.XLSX;
+}
+$('#f-file').addEventListener('change', async () => {
+  const file = $('#f-file').files[0]; if (!file) return;
+  showErr('#entry-err');
+  try {
+    let rows;
+    if (/\.xlsx?$/i.test(file.name)) {
+      const X = await loadXLSX();
+      const wb = X.read(await file.arrayBuffer(), { type: 'array' });
+      rows = X.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, raw: true, defval: '' });
+    } else {
+      const buf = await file.arrayBuffer();
+      let text = new TextDecoder('utf-8').decode(buf);
+      if (text.includes(String.fromCharCode(0xFFFD))) text = new TextDecoder('windows-1252').decode(buf);
+      rows = parseCSV(text);
+    }
+    rows = rows.map((r) => r.map((c) => (c == null ? '' : c)));
+    const hIdx = rows.findIndex((r) => { const filled = r.filter((c) => String(c).trim() !== ''); return filled.length >= 2 && filled.filter((c) => toNum(c) == null).length >= filled.length / 2; });
+    if (hIdx < 0) throw new Error('nohead');
+    const head = rows[hIdx].map((h, i) => String(h).trim() || 'Kolonne ' + (i + 1));
+    const totalRe = /^\s*(i alt|ialt|total|totalt|sum)\b/i;
+    let skipped = 0;
+    const data = rows.slice(hIdx + 1).filter((r) => r.some((c) => String(c).trim() !== '')).filter((r) => { if (r.some((c) => typeof c === 'string' && totalRe.test(c))) { skipped++; return false; } return true; });
+    const numCols = head.map((h, i) => i).filter((i) => data.some((r) => toNum(r[i]) != null));
+    if (!numCols.length) throw new Error('nonum');
+    IMP = { head, data, numCols, skipped };
+    const guess = (res) => { for (const re of res) { const i = numCols.find((c) => re.test(head[c])); if (i != null) return i; } return undefined; };
+    const aSel = $('#imp-amount'), hSel = $('#imp-hours');
+    aSel.replaceChildren(...numCols.map((i) => new Option(head[i], i)));
+    hSel.replaceChildren(new Option('Ingen', ''), ...numCols.map((i) => new Option(head[i], i)));
+    const ga = guess([/lønomkost/i, /omkostning/i, /i alt|total/i, /brutto/i, /beløb|udbetal/i]); if (ga != null) aSel.value = ga;
+    const gh = guess([/timer|antal t/i]); hSel.value = gh != null ? gh : '';
+    $('#import').hidden = false; updateImp();
+  } catch (e) {
+    $('#import').hidden = true;
+    showErr('#entry-err', 'Filen kunne ikke læses som en tabel. Gem eksporten som CSV eller Excel og prøv igen, eller skriv beløbet direkte.');
+  }
+});
+function impSums() {
+  const a = Number($('#imp-amount').value), hv = $('#imp-hours').value;
+  const sum = IMP.data.reduce((s, r) => s + (toNum(r[a]) || 0), 0);
+  const hours = hv === '' ? null : IMP.data.reduce((s, r) => s + (toNum(r[Number(hv)]) || 0), 0);
+  return { sum, hours };
+}
+function updateImp() {
+  const { sum, hours } = impSums();
+  $('#imp-sum').textContent = `${IMP.data.length} rækker · beløb i alt ${kr(sum)}` + (hours != null ? ` · ${nf.format(hours)} timer` : '') + (IMP.skipped ? ` · ${IMP.skipped} sumrække sprunget over` : '');
+}
+$('#imp-amount').addEventListener('change', updateImp);
+$('#imp-hours').addEventListener('change', updateImp);
+$('#imp-use').addEventListener('click', () => { const { sum, hours } = impSums(); $('#f-payroll').value = Math.round(sum); if (hours != null) $('#f-hours').value = Math.round(hours * 2) / 2; $('#import').hidden = true; });
+$('#imp-cancel').addEventListener('click', () => { $('#import').hidden = true; });
+
+/* ---------- ønskeliste ---------- */
+async function writeWish(id, data) { try { await api('PATCH', '/wishlist/' + id, data); await load(); } catch (e) { showErr('#wish-err', onWriteErr(e)); } }
+async function movePrio(list, idx, dir) {
+  const a = list[idx], b = list[idx + dir]; if (!a || !b) return;
+  const order = list.map((w) => w.id); order.splice(idx, 1); order.splice(idx + dir, 0, a.id);
+  try { for (let i = 0; i < order.length; i++) { const w = list.find((x) => x.id === order[i]); if (w.priority !== i + 1) await api('PATCH', '/wishlist/' + w.id, { priority: i + 1 }); } await load(); }
+  catch (e) { showErr('#wish-err', onWriteErr(e)); }
+}
+function editWish(w) {
+  S.editWish = w.id; $('#w-item').value = w.item || ''; $('#w-price').value = w.price ?? ''; $('#w-funding').value = w.funding === 'fond' ? 'fond' : 'kasse';
+  $('#wish-save').textContent = 'Gem ændring'; $('#wish-cancel').hidden = false; $('#w-item').focus();
+}
+function resetWishForm() { S.editWish = null; $('#wish-form').reset(); $('#wish-save').textContent = 'Tilføj ønske'; $('#wish-cancel').hidden = true; showErr('#wish-err'); }
+$('#wish-cancel').addEventListener('click', resetWishForm);
+$('#wish-form').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const item = $('#w-item').value.trim(), price = val('#w-price');
+  if (!item) return showErr('#wish-err', 'Skriv hvad I ønsker jer.');
+  if (price == null || Number.isNaN(price) || price < 0) return showErr('#wish-err', 'Skriv prisen i hele kroner.');
+  const funding = $('#w-funding').value;
+  try {
+    if (S.editWish) await api('PATCH', '/wishlist/' + S.editWish, { item, price, funding });
+    else {
+      const maxP = S.wish.filter((w) => !w.bought).reduce((m, w) => Math.max(m, w.priority || 0), 0);
+      await api('POST', '/wishlist', { item, price, funding, priority: maxP + 1 });
+    }
+    resetWishForm(); await load();
+  } catch (e) { showErr('#wish-err', onWriteErr(e)); }
+});
+
+/* ---------- indstillinger ---------- */
+function fixedRow(f) {
+  const r = el('div', 'fixed-row');
+  const n = el('input'); n.type = 'text'; n.value = f.name || ''; n.placeholder = 'Post'; n.setAttribute('aria-label', 'Post'); n.className = 'fx-name';
+  const t = el('select'); t.className = 'fx-type'; t.setAttribute('aria-label', 'Type'); t.append(new Option('Udgift', 'Udgift'), new Option('Indtægt', 'Indtægt')); t.value = f.type === 'Indtægt' ? 'Indtægt' : 'Udgift';
+  const a = el('input'); a.type = 'number'; a.min = '0'; a.step = '1'; a.value = f.amount ?? ''; a.placeholder = 'kr/md'; a.setAttribute('aria-label', 'Beløb pr. måned'); a.className = 'fx-amount';
+  const d = el('button', 'link danger', 'Fjern'); d.type = 'button'; d.addEventListener('click', () => r.remove());
+  r.append(n, t, a, d); return r;
+}
+function openSettings() {
+  const s = st();
+  $('#s-fee').value = s.avg_fee; $('#s-buffer').value = s.buffer_months; $('#s-growth').value = s.growth; $('#s-opening').value = s.opening_cash; $('#s-cats').value = s.categories.join(', ');
+  $('#s-fixed').replaceChildren(...(s.fixed || []).map(fixedRow));
+  showErr('#set-err'); $('#card-settings').hidden = false; $('#entry').hidden = true;
+  $('#card-settings').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+$('#btn-settings').addEventListener('click', openSettings);
+$('#set-cancel').addEventListener('click', () => { $('#card-settings').hidden = true; });
+$('#s-add').addEventListener('click', () => $('#s-fixed').appendChild(fixedRow({ type: 'Udgift' })));
+$('#set-form').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const nums = ['#s-fee', '#s-buffer', '#s-growth', '#s-opening'].map(val);
+  if (nums.some((v) => v == null || Number.isNaN(v))) return showErr('#set-err', 'Udfyld kontingent, buffer, tilgang og kasse med tal.');
+  const cats = $('#s-cats').value.split(',').map((c) => c.trim()).filter(Boolean);
+  if (!cats.length) return showErr('#set-err', 'Angiv mindst én variabel udgiftstype.');
+  const fixed = []; let bad = false;
+  document.querySelectorAll('#s-fixed .fixed-row').forEach((r) => {
+    const name = r.querySelector('.fx-name').value.trim(), amount = Number(r.querySelector('.fx-amount').value);
+    if (!name && !r.querySelector('.fx-amount').value) return;
+    if (!name || !Number.isFinite(amount) || amount < 0) bad = true; else fixed.push({ name, type: r.querySelector('.fx-type').value, amount });
+  });
+  if (bad) return showErr('#set-err', 'Hver fast post skal have et navn og et beløb.');
+  const sampleFlag = !!(S.settings && S.settings.sample) && JSON.stringify(fixed) === JSON.stringify(st().fixed);
+  try {
+    await api('PUT', '/settings', { avg_fee: nums[0], buffer_months: nums[1], growth: nums[2], opening_cash: nums[3], categories: cats, fixed, sample: sampleFlag });
+    $('#card-settings').hidden = true; await load();
+  } catch (e) { showErr('#set-err', onWriteErr(e)); }
+});
+
+/* ---------- eksempeldata ---------- */
+$('#btn-clear-sample').addEventListener('click', (ev) => confirmBtn(ev.currentTarget, async () => {
+  try { await api('DELETE', '/sample'); await load(); }
+  catch (e) { $('#take').textContent = onWriteErr(e); }
+}));
+
+/* ---------- periode ---------- */
+document.querySelectorAll('[data-range]').forEach((b) => b.addEventListener('click', () => {
+  S.range = Number(b.dataset.range);
+  document.querySelectorAll('[data-range]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  render();
+}));
+let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(render, 120); }).observe(document.querySelector('.wrap'));
+
+/* ---------- opstart ---------- */
+render();
+load().catch((e) => {
+  $('#no-db').textContent = (e && e.message) || 'Kunne ikke hente data. Genindlæs siden.';
+  $('#no-db').hidden = false; $('#take').textContent = ''; applyWriteGate();
+});
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && S.db) load().catch(() => {}); });
+})();
+</script>
+</body>
+</html>

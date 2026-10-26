@@ -3,3 +3,8 @@
 
 # scratch / generated
 logo_assets/logo_trans_b64.txt
+
+# bestyrelsessiden
+bestyrelse/.dev.vars
+bestyrelse/.wrangler/
+bestyrelse/node_modules/

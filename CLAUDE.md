@@ -84,3 +84,17 @@ gør.
 | `check_auth.py` | Selvstændig test af login + ét GET-kald, kør før Claude Code-opsætning |
 | `.env.example` | Skabelon til credentials (kopiér til `.env`, som ikke må committes) |
 | `README.md` | Opsætningstrin (venv, Claude Code-registrering) |
+
+## Bestyrelsessiden (`bestyrelse/`)
+
+Lukket økonomiside for bestyrelsen på `/bestyrelse/`: Cloudflare Worker + D1-database
+med Cloudflare Access foran. Se `bestyrelse/README.md` for opsætning.
+
+- Hjemmesidens tidligere mock-"Dashboard" er fjernet; footeren linker til `/bestyrelse/`.
+- Adgang tjekkes to steder: Access-policy og `BOARD_EMAILS`/`VIEW_EMAILS` i worker'en,
+  som selv verificerer Access-tokenet. Fjern aldrig det tjek, og lad `DEV_MODE` kun
+  virke på localhost.
+- Repoet er offentligt: ingen rigtige økonomital, lønsedler eller e-mails i filer.
+  Bestyrelsens e-mails sættes som wrangler-secrets.
+- Siden henter ikke data fra goMember. Medlemstal tastes ind; at hente dem fra
+  goMember ville kræve medlemsdata, som bevidst er uden for MCP-serverens scope.

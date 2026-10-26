@@ -1,0 +1,3 @@
+# Kopiér til .dev.vars til lokal udvikling (wrangler dev). Må aldrig bruges i produktion.
+DEV_MODE=1
+DEV_EMAIL=din@mail.dk

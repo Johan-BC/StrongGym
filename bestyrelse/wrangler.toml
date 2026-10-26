@@ -1,0 +1,26 @@
+name = "stronggym-bestyrelse"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+# Siden selv. Filerne ligger i public/bestyrelse/, så de serveres under /bestyrelse/.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "stronggym-bestyrelse"
+database_id = "UDFYLD-EFTER-wrangler-d1-create"
+
+[vars]
+# Fra Cloudflare Zero Trust > Settings > Custom Pages (team-domæne) og
+# Access > Applications > (appen) > Overview > Application Audience (AUD) Tag.
+ACCESS_TEAM_DOMAIN = "https://UDFYLD.cloudflareaccess.com"
+ACCESS_AUD = "UDFYLD"
+# BOARD_EMAILS (kan registrere) og VIEW_EMAILS (kan kun se) sættes som secrets,
+# så bestyrelsens e-mails ikke ligger i det offentlige repo:
+#   npx wrangler secret put BOARD_EMAILS   (kommasepareret)
+#   npx wrangler secret put VIEW_EMAILS
+
+# Når siden skal ligge på stronggym.dk/bestyrelse (kræver at domænet er på Cloudflare):
+# routes = [{ pattern = "stronggym.dk/bestyrelse*", zone_name = "stronggym.dk" }]
