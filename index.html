@@ -145,6 +145,11 @@ input::placeholder,textarea::placeholder{color:var(--muted)}
 .gallery-section{background:var(--bg2);padding:5rem 0}
 .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-top:2.5rem}
 .gallery-placeholder{aspect-ratio:1;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+/* FACEBOOK-FEED (Metas Page Plugin - se setup.md) */
+.fb-feed-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.75rem}
+.fb-layout{display:grid;grid-template-columns:1fr 332px;gap:2rem;align-items:start}
+.fb-plugin-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.75rem}
+.fb-plugin-card iframe,.fb-embed iframe{border:0;overflow:hidden;display:block;max-width:100%;margin:0 auto;border-radius:0.25rem;background:#fff}
 .news-section{padding:5rem 0}
 .news-preview-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
 .news-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:border-color 0.2s}
@@ -330,6 +335,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
   .nav-links{display:none}.nav-hamburger{display:flex}
   .crossfit-grid,.wod-grid,.coaches-grid{grid-template-columns:1fr}
   .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .fb-layout{grid-template-columns:1fr}
+  .fb-plugin-card{justify-self:center}
   .news-layout{grid-template-columns:1fr}.social-sidebar{position:static}
   .contact-grid{grid-template-columns:1fr}
   .membership-grid{grid-template-columns:1fr}
@@ -346,11 +353,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 </head>
 <body>
 
-<div id="fb-root"></div>
-<script>
-window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
-(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://connect.facebook.net/da_DK/sdk.js";fjs.parentNode.insertBefore(js,fjs);}(document,'script','facebook-jssdk'));
-</script>
 
 <div id="toast-container"></div>
 
@@ -449,15 +451,31 @@ window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
 
 <script>
 /* ══ MOCK DATA ══ */
+// Bio'erne bygger på trænernes egne præsentationer i Facebook-serien
+// "Mød vores træner" (se setup.md). Tre trænere har intet opslag og
+// står derfor stadig med den oprindelige, generiske tekst.
 const coaches = [
-  {id:1,name:"Helena Levin Erting",specialty:"Træner",bio:"Certificeret styrketræner med fokus på teknik og progressiv overload. Helena elsker at hjælpe nybegyndere trygt i gang med vægtene.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Helena%20SH.png"},
-  {id:2,name:"Jeppe Rasmussen",specialty:"Træner",bio:"Tidligere konkurrenceatlet inden for crossfit. Jeppe brænder for høj intensitet og skaber en energisk stemning på holdene.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/514190889_10236754059651975_1365802143371067546_n.jpg"},
-  {id:3,name:"Cristina Gonzalez Levis",specialty:"Træner",bio:"Uddannet i funktionel træning og mobility. Cristina lægger vægt på at bevæge sig rigtigt, før man bevæger sig tungt.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Cristina%20SH.png"},
+  {id:1,name:"Helena Levin Erting",specialty:"Træner",bio:"Fysioterapeut og træner siden 2018, der tager sin viden om krop og bevægelse med ind i undervisningen. Står for WOD-holdet om onsdagen, hvor alle kan være med uanset niveau og dagsform.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Helena%20SH.png"},
+  {id:2,name:"Jeppe Rasmussen",specialty:"Træner",bio:"Træner i Strong Gym for fællesskabets skyld — man kommer igennem træningen sammen. Underviser for at give sin passion videre og se medlemmernes små succeser undervejs.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/514190889_10236754059651975_1365802143371067546_n.jpg"},
+  {id:3,name:"Cristina Gonzalez Levis",specialty:"Træner",bio:"Master-vægtløfter og crossfitter med mange års erfaring som instruktør, oprindeligt fra Venezuela. For Cristina kommer teknik og kvalitet først — så følger styrke, hastighed og resultater med.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Cristina%20SH.png"},
+  // TODO: generisk tekst - Mika har intet "Mød vores træner"-opslag at bygge på.
   {id:4,name:"Mika Zillo",specialty:"Træner",bio:"Passioneret om styrkeløft og personlig udvikling. Mika skræddersyr træningen, så alle når deres individuelle mål.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/mika%20SH.png"},
+  // TODO: generisk tekst - Sebastian har intet "Mød vores træner"-opslag at bygge på.
   {id:5,name:"Sebastian Meier",specialty:"Træner",bio:"Erfaren coach inden for konditionstræning og HIIT. Sebastian motiverer med et smil og en god portion humor.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/Meier%20SH.png"},
+  // TODO: generisk tekst - Katja har intet "Mød vores træner"-opslag at bygge på.
   {id:6,name:"Katja Kliem",specialty:"Træner",bio:"Fysioterapeutisk baggrund med speciale i skadesforebyggelse. Katja hjælper dig med at træne sikkert og effektivt.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/katja%20SH.png"},
-  {id:7,name:"Peter Alexander Schougaard",specialty:"Træner",bio:"Mangeårig erfaring som personlig træner med fokus på kost og livsstil. Peter guider dig hele vejen i mål.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/alex1.png"},
-  {id:8,name:"Silja Andersen",specialty:"Træner",bio:"Yoga- og mobility-instruktør, der brænder for balance mellem krop og sind. Silja skaber ro midt i en travl hverdag.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/image1%20(1).jpeg"},
+  {id:7,name:"Peter Alexander Schougaard",specialty:"Træner",bio:"Har dyrket sport i mange år og coachet på alt fra junior- til eliteniveau. Kan lide træning med fed energi, hurtig musik og gerne lidt tunge vægte.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/alex1.png"},
+  {id:8,name:"Silja Andersen",specialty:"Træner",bio:"Har dyrket crossfit i tolv år, de sidste otte på eliteniveau med holdkonkurrencer verden rundt. Brænder for at dele de erfaringer og små fif, der rykker andres træning.",photo:"https://image.gomember.com/azure/sitesite2518137197226848565/ProfilePicture/image1%20(1).jpeg"},
+  // Ivan, Christian og Mia er hentet fra Facebook-serien "Mød vores
+  // træner" (jan., maj og sep. 2026). Teksterne bygger på deres egne
+  // præsentationer. Efternavne stod ikke i opslagene.
+  {id:10,name:"Ivan",specialty:"Træner",bio:"Tidligere konkurrencesvømmer og uddannet ingeniør, der kastede sig over crossfit for tre år siden. Nørder teknikken i detaljen og har mandagsholdene fra 16 til 18.",photo:"billeder/traenere/ivan.jpg"},
+  {id:11,name:"Christian",specialty:"Træner",bio:"Kom til crossfit og vægtløftning for otte år siden, da tre knæoperationer satte en stopper for rugbykarrieren. Er mest hjemme i de tunge løft og underviser fast mandag aften.",photo:"billeder/traenere/christian.jpg"},
+  {id:12,name:"Mia",specialty:"Træner",bio:"Uddannet sygeplejerske, zoneterapeut og fysiurgisk massør med stor interesse for kroppen. Kom til Strong Gym for ti år siden efter tyve år med håndbold, og har holdet torsdag morgen.",photo:"billeder/traenere/mia.jpg"},
+  // Mathias kom til i november 2026. Teksten bygger på hans egen
+  // præsentation i Facebook-opslaget "Ny træner i Strong Gym".
+  // Efternavn og billede stod ikke i opslaget — se setup.md.
+  {id:9,name:"Mathias",specialty:"Træner",bio:"Ildsjæl inden for crossfit og funktionel træning. For Mathias handler coaching først og fremmest om menneskerne og relationerne på gulvet — de gode vibes er halvdelen af træningen.",photo:"billeder/traenere/mathias.jpg"},
 ];
 
 const newsArticles = [
@@ -595,7 +613,6 @@ function render(){
   const app=document.getElementById('app');
   const pages={index:renderIndex,login:renderLogin,coaches:renderCoaches,forening:renderForening,news:renderNews,signup:renderSignup,contact:renderContact,schedule:renderSchedule,dashboard:renderDashboard};
   app.innerHTML=(pages[currentPage]||renderNotFound)();
-  if(currentPage==='news'&&window.FB)FB.XFBML.parse(app);
 }
 
 /* == DASHBOARD == */
@@ -725,8 +742,16 @@ function renderIndex(){
   </section>
   <section class="gallery-section">
     <div class="container">
-      <h2 class="section-title text-center">Vores F\u00e6llesskab</h2>
-      <div class="gallery-grid">${Array.from({length:8}).map(()=>`<div class="gallery-placeholder">\uD83C\uDFCB\uFE0F</div>`).join('')}</div>
+      <div class="fb-feed-head">
+        <h2 class="section-title" style="margin:0">Vores F\u00e6llesskab</h2>
+        <a class="see-all" href="https://www.facebook.com/stronggym3000/" target="_blank" rel="noopener">Se hele siden p\u00e5 Facebook &rarr;</a>
+      </div>
+      <div class="fb-layout">
+        <div class="gallery-grid">${Array.from({length:8}).map(()=>`<div class="gallery-placeholder">\uD83C\uDFCB\uFE0F</div>`).join('')}</div>
+        <div class="fb-plugin-card">
+          <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fstronggym3000&show_posts=true&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&width=300&height=560" width="300" height="560" scrolling="no" frameborder="0" allowfullscreen="true" loading="lazy" title="Seneste opslag fra Strong Gym p\u00e5 Facebook" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        </div>
+      </div>
     </div>
   </section>
   <section class="news-section">
@@ -764,7 +789,7 @@ function doLogout(){isLoggedIn=false;toast('Logget ud','Vi ses n\u00e6ste gang!'
 function renderCoaches(){
   return `<div class="page"><div class="container">
     <div class="text-center mb-12 fade-in"><h1 class="section-title">Vores Tr\u00e6nere</h1><p class="section-sub">M\u00f8d holdet bag Strong Gym \u2013 passionerede tr\u00e6nere klar til at hj\u00e6lpe dig med at n\u00e5 dine m\u00e5l.</p></div>
-    <div class="coaches-grid">${coaches.map((c,i)=>`<div class="coach-card expanded fade-in" style="animation-delay:${i*0.08}s" onclick="this.classList.toggle('expanded')"><div class="coach-photo"><img src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.parentElement.innerHTML='\uD83D\uDC64'"></div><div class="coach-info"><div class="coach-name">${c.name}</div><div class="coach-specialty">${c.specialty}</div><div class="coach-bio">${c.bio}</div></div></div>`).join('')}</div>
+    <div class="coaches-grid">${coaches.map((c,i)=>`<div class="coach-card expanded fade-in" style="animation-delay:${i*0.08}s" onclick="this.classList.toggle('expanded')"><div class="coach-photo">${c.photo?`<img src="${c.photo}" alt="${c.name}" loading="lazy" onerror="this.parentElement.innerHTML='\uD83D\uDC64'">`:'\uD83D\uDC64'}</div><div class="coach-info"><div class="coach-name">${c.name}</div><div class="coach-specialty">${c.specialty}</div><div class="coach-bio">${c.bio}</div></div></div>`).join('')}</div>
   </div></div>`;
 }
 
@@ -864,7 +889,7 @@ function renderNews(){
       <div class="social-stack">
         <div class="social-sidebar">
           <h3>\uD83D\uDCD8 Facebook \u2013 seneste opslag</h3>
-          <div class="fb-page" data-href="https://www.facebook.com/stronggym3000" data-tabs="timeline" data-width="330" data-height="480" data-small-header="true" data-hide-cover="false" data-show-facepile="false" data-adapt-container-width="true"><blockquote cite="https://www.facebook.com/stronggym3000" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/stronggym3000">Strong Gym</a></blockquote></div>
+          <div class="fb-embed"><iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fstronggym3000&show_posts=true&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&width=250&height=500" width="250" height="500" scrolling="no" frameborder="0" allowfullscreen="true" loading="lazy" title="Seneste opslag fra Strong Gym p\u00e5 Facebook" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe></div>
           <a href="https://facebook.com/stronggym3000" target="_blank" class="social-btn"><span>\uD83D\uDCD8</span> Se hele siden</a>
         </div>
         <div class="social-sidebar">
