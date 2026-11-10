@@ -129,7 +129,7 @@ Holdplanen henter nu **live data** fra stronggym.dk's offentlige kalender-API vi
 ## Kontaktoplysninger brugt i indhold
 - Telefon: +45 31 16 55 53
 - Email: info@stronggym.dk
-- Adresse: Haderslevvej 27D, 3000 Helsingør
+- Adresse: Industrivej 8, 3000 Helsingør (ny adresse, oplyst 10. november 2026)
 - CVR: 45733467
 - Facebook: facebook.com/stronggym3000
 - Instagram: instagram.com/stronggym3000

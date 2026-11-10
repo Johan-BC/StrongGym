@@ -381,6 +381,7 @@ window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
       <li id="nav-dash-item" style="display:none"><a href="#" onclick="navigate('dashboard')" data-page="dashboard">Dashboard</a></li>
       <li><a href="#" onclick="navigate('schedule')" data-page="schedule">Holdplan</a></li>
       <li><a href="#" onclick="navigate('coaches')" data-page="coaches">Trænere</a></li>
+      <li><a href="#" onclick="navigate('forening')" data-page="forening">Foreningen</a></li>
       <li><a href="#" onclick="navigate('news')" data-page="news">Nyheder</a></li>
       <li><a href="#" onclick="navigate('contact')" data-page="contact">Kontakt</a></li>
       <li><a href="#" onclick="navigate('signup')"><button class="btn-nav-cta">Bliv Medlem</button></a></li>
@@ -395,6 +396,7 @@ window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
   <a href="#" id="mob-dash" style="display:none" onclick="navigate('dashboard');closeMobile()">Dashboard</a>
   <a href="#" onclick="navigate('schedule');closeMobile()">Holdplan</a>
   <a href="#" onclick="navigate('coaches');closeMobile()">Trænere</a>
+  <a href="#" onclick="navigate('forening');closeMobile()">Foreningen</a>
   <a href="#" onclick="navigate('news');closeMobile()">Nyheder</a>
   <a href="#" onclick="navigate('signup');closeMobile()">Bliv Medlem</a>
   <a href="#" onclick="navigate('contact');closeMobile()">Kontakt</a>
@@ -418,6 +420,7 @@ window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
         <ul>
           <li><a onclick="navigate('schedule')">Holdplan</a></li>
           <li><a onclick="navigate('coaches')">Trænere</a></li>
+          <li><a onclick="navigate('forening')">Foreningen</a></li>
           <li><a onclick="navigate('news')">Nyheder</a></li>
           <li><a onclick="navigate('signup')">Bliv Medlem</a></li>
         </ul>
@@ -426,7 +429,7 @@ window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
         <h4>Kontakt</h4>
         <p>+45 31 16 55 53</p>
         <p>info@stronggym.dk</p>
-        <p>Haderslevvej 27D</p>
+        <p>Industrivej 8</p>
         <p>3000 Helsingør</p>
       </div>
       <div class="footer-col">
@@ -439,7 +442,7 @@ window.fbAsyncInit=function(){FB.init({xfbml:true,version:'v19.0'});};
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Strong Gym Helsingør. CVR: 45733467</span>
-      <span>Haderslevvej 27D, 3000 Helsingør</span>
+      <span>Industrivej 8, 3000 Helsingør</span>
     </div>
   </div>
 </footer>
@@ -590,7 +593,7 @@ function updateNav(){
 }
 function render(){
   const app=document.getElementById('app');
-  const pages={index:renderIndex,login:renderLogin,coaches:renderCoaches,news:renderNews,signup:renderSignup,contact:renderContact,schedule:renderSchedule,dashboard:renderDashboard};
+  const pages={index:renderIndex,login:renderLogin,coaches:renderCoaches,forening:renderForening,news:renderNews,signup:renderSignup,contact:renderContact,schedule:renderSchedule,dashboard:renderDashboard};
   app.innerHTML=(pages[currentPage]||renderNotFound)();
   if(currentPage==='news'&&window.FB)FB.XFBML.parse(app);
 }
@@ -765,6 +768,93 @@ function renderCoaches(){
   </div></div>`;
 }
 
+/* ══ FORENINGEN ══ */
+// Indholdet står her, så det kan rettes uden at røre render-koden.
+// Tomme felter vises som en tydelig "mangler"-boks på siden i stedet for
+// at blive fyldt med opdigtede navne og datoer.
+const foreningData={
+  bestyrelse:[
+    // {rolle:'Formand', navn:''},
+    // {rolle:'Næstformand', navn:''},
+    // {rolle:'Kasserer', navn:''},
+  ],
+  vedtaegterUrl:'',
+  generalforsamling:'',
+  cvr:'45733467',
+  adresse:'Industrivej 8, 3000 Helsingør'
+};
+
+function manglerBoks(tekst){
+  return `<div class="card" style="padding:1.25rem;border-style:dashed;border-color:var(--border2)">
+    <p class="text-muted" style="font-size:0.85rem;margin:0">⚠️ ${tekst}</p>
+  </div>`;
+}
+
+function renderForening(){
+  const f=foreningData;
+  const kort=(titel,tekst)=>`<div class="card fade-in" style="padding:1.5rem">
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.04em;margin:0 0 0.6rem;color:var(--primary)">${titel}</h3>
+      <p class="text-muted" style="font-size:0.88rem;margin:0">${tekst}</p>
+    </div>`;
+
+  const bestyrelseHtml=f.bestyrelse.length
+    ? `<div class="coaches-grid">${f.bestyrelse.map(b=>`<div class="card" style="padding:1.25rem">
+        <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--primary)">${b.rolle}</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:0.04em;margin-top:0.25rem">${b.navn}</div>
+      </div>`).join('')}</div>`
+    : manglerBoks('Bestyrelsens navne og roller mangler. Send dem, så kommer de ind her.');
+
+  const vedtaegterHtml=f.vedtaegterUrl
+    ? `<a class="btn btn-outline btn-sm" href="${f.vedtaegterUrl}" target="_blank" rel="noopener">Læs vedtægterne</a>`
+    : manglerBoks('Vedtægterne er ikke lagt op endnu.');
+
+  const gfHtml=f.generalforsamling
+    ? `<p class="text-muted" style="font-size:0.88rem">Næste generalforsamling: <span style="color:var(--fg)">${f.generalforsamling}</span></p>`
+    : manglerBoks('Datoen for næste generalforsamling mangler.');
+
+  return `<div class="page"><div class="container">
+    <div class="text-center mb-12 fade-in">
+      <h1 class="section-title">Foreningen Strong Gym</h1>
+      <p class="section-sub">Strong Gym er en forening – ikke et kommercielt træningscenter. Medlemmerne bestemmer, og kontingentet bliver i klubben.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:3rem">
+      ${kort('Medlemmerne bestemmer','Generalforsamlingen er foreningens højeste myndighed. Hvert medlem har én stemme, og det er her bestyrelsen bliver valgt.')}
+      ${kort('Bestyrelsen','Mellem generalforsamlingerne står bestyrelsen for den daglige ledelse. Den er valgt af medlemmerne og består af medlemmer.')}
+      ${kort('Pengene bliver i klubben','Der er ingen ejere der skal have udbytte. Kontingentet går til lokaler, udstyr og hold.')}
+    </div>
+
+    <div class="mb-12">
+      <h2 class="section-title" style="font-size:2rem;margin-bottom:1rem">Bestyrelsen</h2>
+      ${bestyrelseHtml}
+    </div>
+
+    <div class="mb-12">
+      <h2 class="section-title" style="font-size:2rem;margin-bottom:1rem">Vedtægter og generalforsamling</h2>
+      <p class="text-muted" style="font-size:0.88rem;margin-bottom:1rem">Vedtægterne beskriver hvordan foreningen styres – medlemskab, valg til bestyrelsen, regnskab og hvordan vedtægterne selv kan ændres.</p>
+      <div style="display:grid;gap:1rem">
+        ${vedtaegterHtml}
+        ${gfHtml}
+      </div>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="section-title" style="font-size:2rem;margin-bottom:1rem">Foreningens oplysninger</h2>
+      <div class="card" style="padding:1.5rem;display:grid;gap:0.75rem;max-width:520px">
+        <div style="display:flex;justify-content:space-between;gap:1rem"><span class="text-muted" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em">Navn</span><span>Strong Gym</span></div>
+        <div style="display:flex;justify-content:space-between;gap:1rem"><span class="text-muted" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em">CVR</span><span>${f.cvr}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:1rem"><span class="text-muted" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em">Adresse</span><span>${f.adresse}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:1rem"><span class="text-muted" style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.1em">Kontakt</span><span>info@stronggym.dk</span></div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <p class="text-muted" style="font-size:0.88rem;margin-bottom:1rem">Spørgsmål til foreningen, eller lyst til at give en hånd?</p>
+      <button class="btn btn-primary" onclick="navigate('contact')">Skriv til os</button>
+    </div>
+  </div></div>`;
+}
+
 /* ══ NEWS ══ */
 function renderNews(){
   return `<div class="page"><div class="container">
@@ -826,7 +916,7 @@ function renderContact(){
         <div class="contact-info-card">
           <div class="contact-row"><span class="contact-icon">\uD83D\uDCDE</span><div><div class="contact-label">Telefon</div><div class="contact-val"><a href="tel:+4531165553">+45 31 16 55 53</a></div></div></div>
           <div class="contact-row"><span class="contact-icon">\u2709\uFE0F</span><div><div class="contact-label">Email</div><div class="contact-val"><a href="mailto:info@stronggym.dk">info@stronggym.dk</a></div></div></div>
-          <div class="contact-row"><span class="contact-icon">\uD83D\uDCCD</span><div><div class="contact-label">Adresse</div><div class="contact-val">Haderslevvej 27D<br>3000 Helsing\u00f8r</div></div></div>
+          <div class="contact-row"><span class="contact-icon">\uD83D\uDCCD</span><div><div class="contact-label">Adresse</div><div class="contact-val">Industrivej 8<br>3000 Helsing\u00f8r</div></div></div>
         </div>
         <div class="contact-info-card">
           <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem"><span style="color:var(--primary)">\uD83D\uDD50</span><h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em">\u00c5bningstider</h3></div>
@@ -875,6 +965,21 @@ function classifyType(name){
   if(n.includes('børn'))return'boern';
   if(n.includes('member'))return'members';
   return'wod';
+}
+
+// Aktiviteter der vises i planen, men ikke er hold man kan tilmelde sig.
+// Rengøring står i kalenderen for at vise at hallen er optaget, og
+// Ungeenheden er en ekstern gruppe der låner hallen - ingen af dem har
+// deltagere, så "0 tilmeldt" var misvisende.
+//
+// Ungeenheden matches på navn, ikke på type: classifyType() giver typen
+// 'unge' til alt med "unge" i navnet, og et rigtigt ungdomshold (fx
+// "Unge 13-17") skal stadig kunne tilmeldes.
+const NO_SIGNUP_TYPES=['rengoring'];
+const NO_SIGNUP_NAMES=[/ungeenhed/i];
+function isInfoOnly(c){
+  if(NO_SIGNUP_TYPES.indexOf(c.type)!==-1)return true;
+  return NO_SIGNUP_NAMES.some(function(re){return re.test(c.name||'');});
 }
 
 function mapSlot(s){
@@ -943,7 +1048,7 @@ function getUpcomingLive(n){
   const out=[];
   Object.keys(liveCache).filter(k=>k>=todayKey).sort().forEach(k=>{
     liveCache[k].forEach(c=>{
-      if(c.cancelled||c.type==='rengoring')return; // spring aflyste + rengøring over
+      if(c.cancelled||isInfoOnly(c))return; // spring aflyste + aktiviteter uden tilmelding over
       const endHM=(c.time.split('–')[1]||'').trim();
       if(k===todayKey&&endHM&&endHM<nowHM)return; // allerede afsluttet i dag
       out.push(Object.assign({dateKey:k},c));
@@ -985,7 +1090,8 @@ function renderSchedule(){
       const isFull=c.max>0&&c.booked>=c.max;
       classByUid[uid]=Object.assign({uid:uid,dateKey:localKey(date)},c);
       let spotsHtml;
-      if(c.cancelled){spotsHtml=`<span class="class-spots full">\uD83D\uDC64 Aflyst</span>`;}
+      if(isInfoOnly(c)){spotsHtml='';}
+      else if(c.cancelled){spotsHtml=`<span class="class-spots full">\uD83D\uDC64 Aflyst</span>`;}
       else if(c.max<=0){spotsHtml=`<span class="class-spots">\uD83D\uDC64 ${c.booked} tilmeldt</span>`;}
       else if(isFull){spotsHtml=`<span class="class-spots full">\uD83D\uDC64 ${c.booked}/${c.max}</span><span class="wait-badge">Venteliste${c.waiting>0?' ('+c.waiting+')':''}</span>`;}
       else{spotsHtml=`<span class="class-spots">\uD83D\uDC64 ${c.booked}/${c.max}</span>`;}
@@ -1033,8 +1139,13 @@ function classDetailHtml(c){
   const dateStr=new Date(c.dateKey+'T00:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});
   const coach=c.coach?c.coach:'Ingen coach tilknyttet';
   const isSigned=signedUpIds.has(c.uid);
+  const detailRows=isInfoOnly(c)
+    ?`<div class="cd-row"><span class="cd-label">Bemærk</span><span>Ikke et hold – ingen tilmelding</span></div>`
+    :`<div class="cd-row"><span class="cd-label">Coach</span><span>${coach}</span></div>
+      <div class="cd-row"><span class="cd-label">Pladser</span><span>${pladser}</span></div>`;
   let actionBtn='';
-  if(c.cancelled)actionBtn='';
+  if(isInfoOnly(c))actionBtn='';
+  else if(c.cancelled)actionBtn='';
   else if(!isLoggedIn)actionBtn='<button class="btn btn-primary btn-sm" onclick="goLoginFromDialog()">Log ind for at tilmelde</button>';
   else if(isSigned)actionBtn='<span class="signed-badge">✓ Tilmeldt</span>';
   else actionBtn='<button class="btn btn-primary btn-sm" onclick="confirmSignup()">'+(isFull?'Skriv på venteliste':'Tilmeld')+'</button>';
@@ -1042,8 +1153,7 @@ function classDetailHtml(c){
     <div class="class-detail-rows">
       <div class="cd-row"><span class="cd-label">Dato</span><span style="text-transform:capitalize">${dateStr}</span></div>
       <div class="cd-row"><span class="cd-label">Tid</span><span>${c.time}</span></div>
-      <div class="cd-row"><span class="cd-label">Coach</span><span>${coach}</span></div>
-      <div class="cd-row"><span class="cd-label">Pladser</span><span>${pladser}</span></div>
+      ${detailRows}
     </div>
     <div class="dialog-actions" style="margin-top:1.5rem">
       <button class="btn btn-outline btn-sm" onclick="closeClassDialog()">Luk</button>
