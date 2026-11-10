@@ -946,7 +946,7 @@ function renderIndex(){
           <div class="wod-meta">${wd} ${fmtShort(w.dateKey)} · ${w.time}</div>
           <h3>${escHtml(w.name)}</h3>
           <p>${w.coach?('Træner: '+escHtml(w.coach)):'Fælles træning'}</p>
-          <div class="wod-footer"><span>${w.time}</span><span class="wod-spots"${full?' style="color:var(--danger)"':''}>${spots}</span></div>
+          <div class="wod-footer" style="justify-content:flex-end"><span class="wod-spots"${full?' style="color:var(--danger)"':''}>${spots}</span></div>
         </div>`;
       }).join('')
     : `<div class="pillar reveal" style="grid-column:1/-1">
@@ -1006,12 +1006,12 @@ function renderIndex(){
     <div class="wrap">
       <div class="head-row reveal">
         <div>
-          <span class="eyebrow">Stemningen</span>
-          <h2 class="display display--sm">Sådan ser en helt almindelig uge ud</h2>
+          <span class="eyebrow">Holdplan</span>
+          <h2 class="display display--sm">De næste hold</h2>
         </div>
-        <a class="see-all" href="https://www.facebook.com/stronggym3000/" target="_blank" rel="noopener">Flere billeder på Facebook &rarr;</a>
+        <span class="see-all" onclick="navigate('schedule')">Hele ugen &rarr;</span>
       </div>
-      <div class="mood reveal">${stemningHtml()}</div>
+      <div class="wod-grid">${holdHtml}</div>
     </div>
   </section>
 
@@ -1049,12 +1049,12 @@ function renderIndex(){
     <div class="wrap">
       <div class="head-row reveal">
         <div>
-          <span class="eyebrow">Holdplan</span>
-          <h2 class="display display--sm">De næste hold</h2>
+          <span class="eyebrow">Stemningen</span>
+          <h2 class="display display--sm">Sådan ser en helt almindelig uge ud</h2>
         </div>
-        <span class="see-all" onclick="navigate('schedule')">Hele ugen &rarr;</span>
+        <a class="see-all" href="https://www.facebook.com/stronggym3000/" target="_blank" rel="noopener">Flere billeder på Facebook &rarr;</a>
       </div>
-      <div class="wod-grid">${holdHtml}</div>
+      <div class="mood reveal">${stemningHtml()}</div>
     </div>
   </section>
 
