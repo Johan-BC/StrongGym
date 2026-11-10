@@ -436,17 +436,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 .pillar h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.03em;margin:.5rem 0 .7rem}
 .pillar p{font-size:.9rem;line-height:1.6;color:var(--muted);margin:0;position:relative;z-index:1}
 
-/* ── stemningsgitter (fotos) ─────────────────────────────────────── */
-.mood{display:grid;gap:clamp(.6rem,1.2vw,1rem);grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(110px,15vw,190px)}
-.mood figure{margin:0;position:relative;overflow:hidden;border-radius:var(--radius);background:var(--bg2);border:1px solid var(--border)}
-.mood img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--ease)}
-.mood figure:hover img{transform:scale(1.05)}
-.mood .tall{grid-row:span 2}
-.mood .wide{grid-column:span 2}
-.mood figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.4rem 1rem .9rem;font-size:.78rem;color:#fff;
-  background:linear-gradient(transparent,rgba(0,0,0,.78));opacity:0;transition:opacity .3s}
-.mood figure:hover figcaption{opacity:1}
-
 /* tom plads: bevidst grafik frem for et brudt billede */
 .slot{display:grid;place-items:center;position:relative;background:
   repeating-linear-gradient(135deg,rgba(255,255,255,.018) 0 12px,transparent 12px 24px),var(--bg2)}
@@ -466,7 +455,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 .quote__who span{font-size:.74rem;color:var(--muted)}
 
 /* ── trænerstribe ────────────────────────────────────────────────── */
-.crew{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:clamp(.8rem,1.6vw,1.25rem)}
+/* Faste kolonner frem for auto-fit: 12 traenere gaar op i 6, 4 og 3,
+   saa sidste raekke aldrig staar halvtom. */
+.crew{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(.8rem,1.6vw,1.25rem)}
 .crew a{display:block;text-align:center;group:crew}
 .crew__ph{aspect-ratio:1;border-radius:50%;overflow:hidden;background:var(--bg2);border:1px solid var(--border);margin-bottom:.85rem;transition:border-color .25s,transform .25s var(--ease)}
 .crew a:hover .crew__ph{border-color:var(--primary);transform:translateY(-4px)}
@@ -485,15 +476,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 
 /* ── responsivt ──────────────────────────────────────────────────── */
 @media(max-width:900px){
-  .mood{grid-template-columns:repeat(2,1fr);grid-auto-rows:clamp(130px,30vw,180px)}
-  .mood .wide{grid-column:span 2}
+  .crew{grid-template-columns:repeat(4,1fr)}
   .head-row{align-items:flex-start}
 }
 @media(max-width:560px){
   .hero2{padding:6.5rem 0 5rem}
   .hero2__actions .btn{width:100%;justify-content:center}
   .facts{gap:1.5rem 2.25rem}
-  .mood .tall{grid-row:span 1}
+  .crew{grid-template-columns:repeat(3,1fr)}
 }
 
 </style>
@@ -864,32 +854,9 @@ const udtalelser = [
    navn:'Mette', rolle:'Medlem og frivillig'}
 ];
 
-/* Stemningsbilleder. Tomme felter tegnes som grafik i stedet for at vise
-   et brudt billede. Læg filer i billeder/stemning/ og skriv filnavnet
-   ind her — så er der ikke mere at lave. */
-const stemning = [
-  {fil:'', tekst:'Fredagens WOD',     form:'wide'},
-  {fil:'', tekst:'Stangen er klar',   form:''},
-  {fil:'', tekst:'Efter sidste runde', form:'tall'},
-  {fil:'', tekst:'Morgenholdet',      form:''},
-  {fil:'', tekst:'Hele holdet',       form:'wide'}
-];
-
 function slotSvg(){
   return `<svg viewBox="0 0 120 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
     <path d="M14 20h92M8 8v24M20 6v28M100 6v28M112 8v24"/></svg>`;
-}
-
-function stemningHtml(){
-  return stemning.map(function(b){
-    const form = b.form ? ' class="' + b.form + '"' : '';
-    if (b.fil) {
-      return `<figure${form}><img src="billeder/stemning/${escHtml(b.fil)}" alt="${escHtml(b.tekst)}" loading="lazy">
-        <figcaption>${escHtml(b.tekst)}</figcaption></figure>`;
-    }
-    return `<figure${form}><div class="slot" style="width:100%;height:100%;color:var(--primary)">
-      ${slotSvg()}<span>Foto mangler</span></div></figure>`;
-  }).join('');
 }
 
 function kvoteHtml(){
@@ -918,8 +885,9 @@ function kvoteHtml(){
 }
 
 function crewHtml(){
-  const vis = coaches.slice(0, 6);
-  return vis.map(function(c){
+  // Alle traenere, ikke et udvalg: listen er kort nok til at vises hel,
+  // og et udvalg rejser bare spoergsmaalet om hvem der blev valgt fra.
+  return coaches.map(function(c){
     const foto = c.photo
       ? `<img src="${escHtml(c.photo)}" alt="${escHtml(c.name)}" loading="lazy">`
       : `<div class="slot" style="width:100%;height:100%;color:var(--primary)">${slotSvg()}</div>`;
@@ -1045,18 +1013,6 @@ function renderIndex(){
     </div>
   </section>
 
-  <section class="band band--step band--line">
-    <div class="wrap">
-      <div class="head-row reveal">
-        <div>
-          <span class="eyebrow">Stemningen</span>
-          <h2 class="display display--sm">Sådan ser en helt almindelig uge ud</h2>
-        </div>
-        <a class="see-all" href="https://www.facebook.com/stronggym3000/" target="_blank" rel="noopener">Flere billeder på Facebook &rarr;</a>
-      </div>
-      <div class="mood reveal">${stemningHtml()}</div>
-    </div>
-  </section>
 
   <section class="band band--line">
     <div class="wrap">
@@ -1065,7 +1021,7 @@ function renderIndex(){
           <span class="eyebrow">Holdet bag</span>
           <h2 class="display display--sm">Trænerne</h2>
         </div>
-        <span class="see-all" onclick="navigate('coaches')">Mød dem alle &rarr;</span>
+        <span class="see-all" onclick="navigate('coaches')">Læs om dem &rarr;</span>
       </div>
       <div class="crew">${crewHtml()}</div>
     </div>

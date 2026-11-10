@@ -218,7 +218,7 @@ skala og bevægelse der er lavet om.
 Siden er bygget af `band`-afsnit med fælles lodret rytme. Fælles klasser:
 `.wrap` (bredde), `.eyebrow` (lille overskrift), `.display` (stor
 overskrift), `.lede` (manchet), `.pillar` (kort), `.quote` (udtalelse),
-`.mood` (billedgitter), `.finale` (afsluttende kald).
+`.finale` (afsluttende kald).
 
 **Indtoning ved scroll** styres af `setupReveal()`, som kaldes fra
 `render()`. Alt med klassen `.reveal` toner ind, når det kommer i
@@ -226,7 +226,7 @@ synsfeltet. Kan browseren ikke `IntersectionObserver`, vises alt med det
 samme — der mangler aldrig indhold. `prefers-reduced-motion` slår både
 indtoning og baggrundsbevægelse fra.
 
-### To ting der skal på plads, før siden går live
+### Én ting der skal på plads, før siden går live
 
 **Udtalelserne er opdigtede.** `udtalelser` i [`index.html`](index.html)
 indeholder tre citater fra Line, Thomas og Mette. De findes ikke. De er
@@ -235,10 +235,6 @@ rigtige citater fra rigtige medlemmer — ellers står der opdigtede
 mennesker på en offentlig side. Konstanten
 `UDTALELSER_ER_PLACEHOLDER` står lige over listen som påmindelse. Sæt
 listen til `[]` for at skjule afsnittet helt.
-
-**Stemningsbillederne mangler.** `stemning`-listen har fem tomme felter,
-der tegnes som grafik. Se
-[`billeder/stemning/LÆS_MIG.md`](billeder/stemning/L%C3%86S_MIG.md).
 
 Nøgletallene i heroen (`12 trænere`, `7 dage med hold`, `0 ejere med
 udbytte`) er valgt, fordi de kan efterprøves. Undgå at sætte medlemstal
