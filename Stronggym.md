@@ -161,8 +161,222 @@ Holdplanen henter nu **live data** fra stronggym.dk's offentlige kalender-API vi
 ## Åbne punkter / mulige fremtidige forbedringer
 - Holdplanen viser nu live-data (inkl. engangsbegivenheder og aflysninger) direkte fra API'et — den gamle begrænsning til det faste ugentlige mønster er løst. Det hardcodede array bruges kun som fallback.
 - Galleri-sektionen på forsiden er stadig placeholder-ikoner (🏋️), ikke rigtige billeder.
-- Selve tilmelding/login/signup er stadig mock (client-side state der nulstilles ved refresh) — KUN holdplan-/forside-visningen er live. Rigtig tilmelding ville kræve autentificeret skrive-adgang til Memberlink (bevidst undladt).
+- Selve tilmelding/login/signup er stadig mock (client-side state der nulstilles ved refresh) — KUN holdplan-/forside-visningen er live. Rigtig tilmelding ville kræve autentificeret skrive-adgang til Memberlink (bevidst undladt). Se **Opgave: Login og tilmelding** nedenfor.
 - Middleman'en afhænger af at Cloudflare-worker'en kører og at Memberlinks API-format er uændret (se [`setup.md`](setup.md)).
+
+---
+
+## Opgave: Login og tilmelding — embed eller link til goMember
+
+**Status:** ikke påbegyndt. Login og tilmelding er stadig mock — client-side
+state der nulstilles ved refresh.
+
+**Beslutningen er i princippet allerede truffet** i Phase 1 længere nede:
+login, redigering af persondata og indmeldelse skal pege på goMembers eget
+portal — via link eller embed — frem for at blive bygget om. To grunde
+holder stadig:
+
+1. At bygge det selv flytter ansvaret for passwords og persondata over på
+   os, GDPR-forpligtelsen inklusive. goMember har allerede en fungerende og
+   vedligeholdt løsning.
+2. Rigtig tilmelding kræver autentificeret **skrive**-adgang til goMember.
+   Hele projektet er bygget uden en eneste skrivevej: `gomember_client.py`
+   har kun `get()`, og `generate.py` parser kun GET-operationer. At åbne en
+   skrivevej fra en offentlig hjemmeside er en væsentligt større beslutning
+   end denne opgave — den skal i givet fald tages for sig.
+
+Det reelle valg er derfor **link kontra iframe**, ikke embed kontra rebuild.
+
+### Undersøgt 21. oktober 2026 — resultat
+
+**Framing er ikke blokeret.** Hverken `/`, `/Account/Login` eller
+tilmeldingssiden sender `X-Frame-Options` eller `Content-Security-Policy`.
+Iframe er altså teknisk muligt i dag.
+
+Fundne URL'er:
+
+- Tilmelding: `https://www.stronggym.dk/Account/Signup/Tag2517869245434174618`
+- Login: `https://www.stronggym.dk/Account/Login`
+- Medlemsadministration: `https://www.stronggym.dk/info/medlemsadministration`
+
+**Men det vigtigste fund er et andet: www.stronggym.dk ER goMember-sitet.**
+Det er ikke en gammel hjemmeside der henter data fra goMember — det er
+goMembers egen hostede tenant. Beviserne:
+
+- `X-AspNetMvc-Version: 5.3`, `X-Powered-By: ASP.NET`, Azure-`ARRAffinity`-cookies
+- Aktiver fra `memberlinkcdn.blob.core.windows.net` og `gomember.com`
+- En `memberlink-footer` og et goMember-POS-logo i markup'en
+
+Det flytter det blokerende spørgsmål et niveau op.
+
+### Det ægte blokerende spørgsmål: hvor skal det nye site bo?
+
+`/Account/Login` og `/Account/Signup/...` findes kun, fordi goMember
+serverer hele `www.stronggym.dk`. Overtager det nye statiske site det
+domæne, forsvinder de to stier med det samme — og så er både link og
+iframe brudt.
+
+| Model | Konsekvens for login/tilmelding |
+|---|---|
+| Nyt site på `www.stronggym.dk`, goMember flyttet til subdomæne | Login/tilmelding bliver **cross-origin**. Third-party cookies i spil igen, og iframe bliver skrøbelig. Link er det robuste valg |
+| Nyt site på subdomæne, goMember beholder `www` | Alt virker uden ændringer, men medlemmerne møder to forskellige sites |
+| Nyt site erstatter dele af det nuværende | Ikke muligt — man kan ikke delvist erstatte en hostet ASP.NET-app |
+
+Det spørgsmål skal afklares med goMember, ikke i kode. Og det skal afklares
+**før** der bruges tid på login- og tilmeldingssiderne, fordi svaret
+bestemmer hvilken af dem der overhovedet er mulig.
+
+**Afklaret 10. november 2026 — model 1 er valgt.** Se afsnittet nedenfor.
+
+En note til iframe-sporet uanset udfald: at framing virker i dag skyldes
+at goMember **ikke** sætter en header. Det er deres valg, og det kan ændre
+sig uden varsel. At bygge foreningens indmeldelsesflow oven på en manglende
+sikkerhedsheader hos en leverandør er skrøbeligt, også når det virker.
+
+### Afklaret med goMember 10. november 2026
+
+goMember kan servere medlemsportalen på `medlem.stronggym.dk` med certifikat,
+uden ekstra betaling. Model 1 i tabellen ovenfor er altså farbar, og det er
+den vi går efter: nyt statisk site på `www.stronggym.dk`, goMember-portalen
+på `medlem.stronggym.dk`.
+
+Hvad de bekræftede:
+
+- **Subdomæne og certifikat.** Vi opretter det selv under Site indstillinger →
+  Domain adresser → "Opret ny domain adresse" → "Et domæne vi selv ejer".
+  DNS-værdierne vises under "DNS ændring krævet"; adressen er klar når der
+  står "Live og klar til brug". Certifikat er inkluderet, ingen ekstra pris.
+- **Stierne følger med uændret.** `/Account/Login` bliver
+  `medlem.stronggym.dk/Account/Login`, og det samme gælder
+  `/Account/Signup/Tag2517869245434174618` og resten.
+- **Mails og betaling klarer sig selv.** Links i de automatiske mails og
+  retur-URL'en fra MobilePay/Vipps bruger den **primære** adresse. Når
+  `medlem.stronggym.dk` er sat som primær, følger de med automatisk.
+- **Redirects er vores opgave.** goMember laver dem ikke. Når www peger på
+  vores site, rammer de gamle links og medlemmernes bogmærker os — ikke dem.
+
+#### Rækkefølgen er kritisk
+
+"Sæt som primær"-knappen vises kun når **alle** tenantens adresser står som
+Live. Derfor:
+
+1. Opret `medlem.stronggym.dk` hos goMember, indsæt DNS-værdierne hos
+   domæneudbyderen, vent på "Live og klar til brug".
+2. Sæt `medlem.stronggym.dk` som primær.
+3. **Først nu** skiftes DNS for `www.stronggym.dk` og `stronggym.dk` til det
+   nye site.
+4. Skriv til goMember, så de fjerner `www.stronggym.dk` og `stronggym.dk` fra
+   tenanten.
+
+Ændres www først, er den ikke længere Live hos goMember, og så kan medlem
+ikke sættes som primær. Man sidder da fast med portalen på et domæne man
+netop har peget væk — mails og MobilePay-returlinks peger ind i vores nye
+site, hvor der ikke er nogen portal.
+
+#### To ting goMember ikke nævnte, og som brækker sitet
+
+**1. Holdplanens live-data dør ved trin 3.** `UPSTREAM` i
+[`worker.js`](worker.js) peger på
+`https://www.stronggym.dk/api/activity/event/days`. Det endpoint findes kun,
+fordi goMember serverer www. Efter trin 3 svarer www vores eget statiske
+site, og proxyen får intet brugbart tilbage — både holdplan-siden og
+"Kommende WODs" på forsiden falder tilbage til det hardcodede fallback-array
+med "Kunne ikke hente live-data".
+
+**Løst 10. november 2026.** [`worker.js`](worker.js) har ikke længere én
+hardkodet adresse, men en liste (`UPSTREAM_HOSTS`): `medlem.stronggym.dk`
+først, `www.stronggym.dk` som fallback. Den bruger den første adresse der
+svarer med et array af dage — ikke blot HTTP 200, fordi vores eget statiske
+site sandsynligvis svarer 200 med HTML på `/api/...`. Den adresse der virkede,
+huskes i 10 minutter, så skiftet fanges automatisk derefter.
+
+Dermed er der ikke længere et tidsvindue der skal rammes: samme worker virker
+før, under og efter skiftet. To ting at huske alligevel:
+
+- **Deploy worker'en før trin 3.** Koden i repoet hjælper ikke, hvis det er den
+  gamle version der kører på Cloudflare.
+- **Slet www-linjen fra `UPSTREAM_HOSTS`, når trin 4 er gennemført.** Ellers
+  bliver hvert kald, hvor medlem svarer dårligt, først forsøgt mod vores eget
+  site — unods ventetid på noget der aldrig leverer holdplan-data.
+
+Svaret bærer `X-Upstream-Host`, så man kan se hvilken adresse der leverede
+data. Verificér med den efter trin 1 og igen efter trin 3. Logikken er testet
+med stubbet fetch (17 cases: fallback, HTML-200 afvist, 503, tomt array,
+hukommelse og udløb) og validatoren er prøvet mod det rigtige API-svar.
+
+**2. Redirects fra de gamle stier.** Når www er vores, skal mindst disse
+sendes videre til `medlem.stronggym.dk`:
+
+| Gammel sti | Sendes til |
+|---|---|
+| `/Account/Login` | `medlem.stronggym.dk/Account/Login` |
+| `/Account/Signup/*` | samme sti på medlem |
+| `/info/medlemsadministration` | samme sti på medlem |
+| `/Activity/ActivityView` | vores egen holdplan-side (eller medlem) |
+
+Lav dem som rigtige 301'ere på hostingen af det nye site, ikke som
+JS-redirect — bogmærker, mails og Google-resultater skal følge med.
+
+#### Det løbende vedligehold de advarede om
+
+Certifikatet fornyes ikke altid lydløst. Står der rød "DNS ændring krævet"
+ud for en adresse under Site indstillinger → Domain adresser, skal den nye
+værdi indsættes hos domæneudbyderen, ellers udløber certifikatet og portalen
+vises som usikker. Der kommer ingen notifikation — det opdages ved at se på
+den side. Sæt en kvartalsvis kalenderpåmindelse. En medlemsportal med
+certifikatadvarsel er reelt nede.
+
+#### Konsekvens for login/tilmelding-opgaven
+
+Model 1 betyder cross-origin: `www.stronggym.dk` → `medlem.stronggym.dk`.
+Dermed er iframe-sporet reelt dødt. Third-party cookie-blokering i Safari og
+Chrome brækker login i iframe, og det rammer nu også tilmeldingsflowet, fordi
+det foregår på et andet origin end sitet. **Link (ny fane) er valget for
+både login og tilmelding** — det er ikke længere et åbent spørgsmål.
+Afhængigheden til dashboardet (`isLoggedIn`-mock'en) står uændret.
+
+#### Stadig uafklaret
+
+- Hvor hostes det nye statiske site? Valget af hosting afgør hvordan 301'erne
+  ovenfor laves, så de to punkter hænger sammen.
+- goMember svarede ikke konkret på hvad de plejer at se gå galt ud over
+  rækkefølgen og certifikatet. De to punkter ovenfor er fundet her, ikke
+  oplyst af dem — der kan være mere af samme slags, som først viser sig ved
+  selve skiftet. Hav et rollback klar: DNS tilbage til goMember.
+
+
+### Link kontra iframe
+
+| | Link (ny fane) | Iframe |
+|---|---|---|
+| Virker det | Altid | Kun hvis headers tillader framing |
+| Visuel sammenhæng | Brugeren forlader sitet | Ser ud som en del af sitet |
+| Login og cookies | Virker | Third-party cookie-blokering i Safari og Chrome brækker ofte login i iframe |
+| Mobil | Fint | Formularer i iframe fungerer ofte dårligt på mobil |
+| Arbejde | Minimalt | Højde, scroll, styling, fejlhåndtering |
+
+**Anbefaling:** link for login — cookie-blokering gør iframe-login for
+skrøbeligt til at satse på. For tilmelding kan iframe overvejes hvis
+headers tillader det, men link er fortsat det robuste valg.
+
+### Hvad opgaven omfatter
+
+- Find de faktiske URL'er til goMembers login- og tilmeldingsside for Strong Gym
+- Kør framing-tjekket ovenfor
+- Erstat `renderLogin()` og `renderSignup()` i `index.html` med sider der
+  forklarer hvad der sker og sender brugeren videre — ikke mock-formularer
+  der ser ægte ud
+- `navigate('login')` og `navigate('signup')` kaldes flere steder: topmenu,
+  mobilmenu og CTA-knapper på forsiden. Alle skal pege det rigtige sted hen
+- Ryd op i `isLoggedIn`-mock'en
+
+### Afhængighed til dashboardet
+
+Dashboard-siden er gemt bag `isLoggedIn`, som er mock og ikke er
+adgangskontrol. Flyttes login ud til goMember, findes der ikke længere
+nogen login-tilstand på sitet overhovedet — og så skal Dashboard-linket
+enten fjernes eller have en rigtig adgangsmekanisme. Afklar det sammen med
+denne opgave, ikke bagefter.
 
 ---
 
