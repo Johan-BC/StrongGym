@@ -389,7 +389,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 }
 
 /* ── hero ────────────────────────────────────────────────────────── */
-.hero2{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;isolation:isolate;text-align:center;padding:8rem 0 6rem}
+.hero2{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;isolation:isolate;text-align:center;padding:8rem 0 9rem}
 .hero2__sky{position:absolute;inset:-25%;z-index:-3;animation:drift 26s ease-in-out infinite alternate;
   background:
     radial-gradient(58% 48% at 50% 10%,rgba(212,168,67,.22),transparent 68%),
@@ -425,6 +425,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 .scrollcue__rail{width:1px;height:46px;background:linear-gradient(var(--primary),transparent);position:relative;overflow:hidden}
 .scrollcue__dot{position:absolute;top:0;left:-1px;width:3px;height:8px;border-radius:2px;background:var(--primary);animation:fall 2.4s var(--ease) infinite}
 @keyframes fall{0%{transform:translateY(-8px);opacity:0}25%{opacity:1}100%{transform:translateY(46px);opacity:0}}
+@media(max-height:780px){.scrollcue{display:none}}
 
 /* ── søjler med tekst + kant ─────────────────────────────────────── */
 .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(1rem,2vw,1.5rem);margin-top:clamp(2rem,4vw,3rem)}
@@ -899,6 +900,18 @@ function crewHtml(){
   }).join('');
 }
 
+/* Nøgletal i heroen.
+   De to første kan efterprøves: trænerantallet kommer fra listen ovenfor,
+   og holdplanen har hold alle ugens dage.
+   Medlemstallet er et skøn fra 10. november 2026 og bevidst skrevet som
+   et gulv ('130+') frem for et præcist tal, fordi ingen har talt efter.
+   Det rigtige tal står i goMember. */
+const heroTal = [
+  {tal:String(coaches.length), tekst:'Trænere'},
+  {tal:'7',                    tekst:'Dage med hold'},
+  {tal:'130+',                 tekst:'Glade medlemmer'}
+];
+
 function renderIndex(){
   ensureUpcoming();
   const upcoming = getUpcomingLive(40).filter(w=>w.type==='wod'||w.type==='members').slice(0,3);
@@ -933,9 +946,7 @@ function renderIndex(){
         <button class="btn btn-outline btn-xl" onclick="navigate('schedule')">Se holdplanen</button>
       </div>
       <div class="facts">
-        <div class="fact"><b>${coaches.length}</b><span>Trænere</span></div>
-        <div class="fact"><b>7</b><span>Dage med hold</span></div>
-        <div class="fact"><b>0</b><span>Ejere med udbytte</span></div>
+        ${heroTal.map(function(t){return `<div class="fact"><b>${escHtml(t.tal)}</b><span>${escHtml(t.tekst)}</span></div>`;}).join('')}
       </div>
     </div>
     <div class="scrollcue"><span>Rul ned</span><span class="scrollcue__rail"><span class="scrollcue__dot"></span></span></div>

@@ -236,6 +236,10 @@ mennesker på en offentlig side. Konstanten
 `UDTALELSER_ER_PLACEHOLDER` står lige over listen som påmindelse. Sæt
 listen til `[]` for at skjule afsnittet helt.
 
-Nøgletallene i heroen (`12 trænere`, `7 dage med hold`, `0 ejere med
-udbytte`) er valgt, fordi de kan efterprøves. Undgå at sætte medlemstal
-eller årstal ind, som ingen har bekræftet.
+**Medlemstallet i heroen er ikke bekræftet.** Nøgletallene står i
+`heroTal` i [`index.html`](index.html). Trænerantallet kommer fra
+`coaches`-listen, og holdplanen har hold alle ugens dage — de to kan
+efterprøves. `130+ glade medlemmer` er derimod et skøn fra 10. november
+2026. Det er skrevet som et gulv frem for et præcist tal, fordi ingen har
+talt efter — en side skal ikke påstå noget, den ikke ved. Det rigtige tal
+står i goMember.
