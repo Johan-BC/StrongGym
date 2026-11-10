@@ -494,16 +494,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
 
 <div id="toast-container"></div>
 
-<div class="dialog-overlay" id="confirm-dialog">
-  <div class="dialog">
-    <h3>Bekræft tilmelding</h3>
-    <p>Er du sikker på, at du vil tilmelde dig dette hold?</p>
-    <div class="dialog-actions">
-      <button class="btn btn-outline btn-sm" onclick="closeDialog()">Annuller</button>
-      <button class="btn btn-primary btn-sm" onclick="confirmSignup()">Tilmeld</button>
-    </div>
-  </div>
-</div>
 <div class="dialog-overlay" id="class-dialog">
   <div class="dialog" id="class-dialog-body"></div>
 </div>
@@ -526,7 +516,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
       <li><a href="#" onclick="navigate('contact')" data-page="contact">Kontakt</a></li>
       <li><a href="#" onclick="navigate('signup')"><button class="btn-nav-cta">Bliv Medlem</button></a></li>
       <li id="nav-login-item"><a href="#" onclick="navigate('login')" data-page="login">Log Ind</a></li>
-      <li id="nav-logout-item" style="display:none"><a href="#" onclick="doLogout()">Log Ud</a></li>
     </ul>
     <button class="nav-hamburger" onclick="toggleMobile()">&#9776;</button>
   </div>
@@ -541,7 +530,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3.5rem 0
   <a href="#" onclick="navigate('signup');closeMobile()">Bliv Medlem</a>
   <a href="#" onclick="navigate('contact');closeMobile()">Kontakt</a>
   <a href="#" id="mob-login" onclick="navigate('login');closeMobile()">Log Ind</a>
-  <a href="#" id="mob-logout" style="display:none" onclick="doLogout();closeMobile()">Log Ud</a>
 </div>
 
 <main id="app"></main>
@@ -728,8 +716,6 @@ const allWorkouts = generateWorkouts();
 
 /* ══ STATE ══ */
 let currentPage='index';
-let isLoggedIn=false;
-let signedUpIds=new Set();
 let pendingWId=null;
 let classByUid={};
 let weekOffset=0;
@@ -740,12 +726,12 @@ let signupSubmitted=false;
 function navigate(page){currentPage=page;window.scrollTo(0,0);render();updateNav();}
 function updateNav(){
   document.querySelectorAll('[data-page]').forEach(el=>el.classList.toggle('active',el.dataset.page===currentPage));
-  document.getElementById('nav-login-item').style.display=isLoggedIn?'none':'';
-  document.getElementById('nav-logout-item').style.display=isLoggedIn?'':'none';
-  document.getElementById('mob-login').style.display=isLoggedIn?'none':'';
-  document.getElementById('mob-logout').style.display=isLoggedIn?'':'none';
-  document.getElementById('nav-dash-item').style.display=isLoggedIn?'':'none';
-  document.getElementById('mob-dash').style.display=isLoggedIn?'':'none';
+  // Siden har ingen session: den bor i goMember. "Log ind" peger derhen,
+  // og der er derfor intet at logge ud af her - menupunkterne er fjernet.
+  // Bestyrelsens dashboard er mock-tal og har ingen adgangskontrol. Det er
+  // skjult, indtil der er besluttet en rigtig gate for det.
+  document.getElementById('nav-dash-item').style.display='none';
+  document.getElementById('mob-dash').style.display='none';
 }
 function render(){
   const app=document.getElementById('app');
@@ -1093,20 +1079,18 @@ function setupReveal(){
 /* ══ LOGIN ══ */
 function renderLogin(){
   return `<div class="login-page"><div class="login-card fade-in">
-    <h1>Log Ind</h1><p class="login-sub">Velkommen tilbage til Strong Gym</p>
-    <div class="form-group"><label>Email</label><input type="email" id="li-email" placeholder="din@email.dk" /></div>
-    <div class="form-group"><label>Adgangskode</label><input type="password" id="li-pass" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" /><a href="#" class="forgot">Glemt adgangskode?</a></div>
-    <button class="btn btn-primary btn-full" onclick="doLogin()">Log Ind</button>
+    <h1>Log ind</h1>
+    <p class="login-sub">Dit login hører til medlemsportalen</p>
+    <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:1.6rem">
+      Medlemskab, holdtilmelding og betaling ligger i goMember. Du logger ind
+      det samme sted som altid — vi beder dig aldrig om din adgangskode her.
+    </p>
+    <a class="btn btn-primary btn-full" style="display:flex;justify-content:center"
+       href="${PORTAL_LOGIN}" target="_blank" rel="noopener">Åbn medlemsportalen &rarr;</a>
     <div class="login-divider">eller</div>
-    <p class="login-register">Ikke medlem endnu? <a href="#" onclick="navigate('signup')">Bliv Medlem</a></p>
+    <p class="login-register">Ikke medlem endnu? <a href="#" onclick="navigate('signup');return false;">Bliv medlem</a></p>
   </div></div>`;
 }
-function doLogin(){
-  const e=document.getElementById('li-email').value,p=document.getElementById('li-pass').value;
-  if(!e||!p){toast('Udfyld alle felter','','error');return;}
-  isLoggedIn=true;toast('Logget ind!','Velkommen tilbage.');navigate('index');
-}
-function doLogout(){isLoggedIn=false;toast('Logget ud','Vi ses n\u00e6ste gang!');navigate('index');}
 
 /* ══ COACHES ══ */
 function renderCoaches(){
@@ -1294,6 +1278,26 @@ function getWeekDates(offset){
 function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
 
 /* ══ LIVE HOLDPLAN (via middleman) ══ */
+/* ══ MEDLEMSPORTALEN (goMember) ══ */
+// Vi håndterer ALDRIG medlemmernes adgangskoder. Login, nulstilling af
+// kodeord, betaling og holdtilmelding bor i goMember, som i forvejen har
+// kontiene. Siden sender medlemmet derhen i stedet for at bede om et
+// kodeord, den ikke kan bruge til noget.
+//
+// DOMÆNESKIFTET: portalen flytter til medlem.stronggym.dk, når www bliver
+// vores eget site. Ret PORTAL her samtidig med UPSTREAM_HOSTS i worker.js
+// — rækkefølgen står i Stronggym.md.
+const PORTAL='https://www.stronggym.dk';
+const PORTAL_LOGIN=PORTAL+'/Account/Login';
+
+// goMember har en side pr. hold: /Event/<activityId>/<eventId>.
+// Mangler et af id'erne, lander vi på aktivitetskalenderen i stedet.
+function portalEventUrl(c){
+  return (c&&c.activityId&&c.eventId)
+    ? PORTAL+'/Event/'+encodeURIComponent(c.activityId)+'/'+encodeURIComponent(c.eventId)
+    : PORTAL+'/Activity/ActivityView';
+}
+
 const MIDDLEMAN='https://stronggym.jbchristophersen.workers.dev/';
 let liveCache={};      // 'YYYY-MM-DD' -> [card,...]  (undefined = endnu ikke hentet)
 let liveLoading={};    // ugenøgle -> true mens fetch kører
@@ -1333,6 +1337,8 @@ function isInfoOnly(c){
 function mapSlot(s){
   return {
     id:s.eventId||s.entityId||(s.name+s.startTime),
+    activityId:s.activityId||'',
+    eventId:s.eventId||'',
     name:(s.name||'').trim(),
     time:(s.startTime||'').slice(11,16)+'–'+(s.endTime||'').slice(11,16),
     start:s.startTime||'',
@@ -1434,7 +1440,6 @@ function renderSchedule(){
     if(!classes.length)return`<div class="week-col">${header}</div>`;
     const cards=classes.map(c=>{
       const uid=c.id+'_'+localKey(date);
-      const isSigned=signedUpIds.has(uid);
       const isFull=c.max>0&&c.booked>=c.max;
       classByUid[uid]=Object.assign({uid:uid,dateKey:localKey(date)},c);
       let spotsHtml;
@@ -1443,7 +1448,7 @@ function renderSchedule(){
       else if(c.max<=0){spotsHtml=`<span class="class-spots">\uD83D\uDC64 ${c.booked} tilmeldt</span>`;}
       else if(isFull){spotsHtml=`<span class="class-spots full">\uD83D\uDC64 ${c.booked}/${c.max}</span><span class="wait-badge">Venteliste${c.waiting>0?' ('+c.waiting+')':''}</span>`;}
       else{spotsHtml=`<span class="class-spots">\uD83D\uDC64 ${c.booked}/${c.max}</span>`;}
-      const signedBadge=isSigned&&!c.cancelled?`<span class="signed-badge" style="font-size:0.66rem;display:block;margin-top:0.3rem">\u2713 Tilmeldt</span>`:'';
+      const signedBadge='';
       return`<div class="class-card type-${c.type}${isPast||c.cancelled?' past':''}" onclick="openClassDetail('${uid}')"><span class="class-name">${c.name}</span><span class="class-time">${c.time}</span>${spotsHtml}${signedBadge}</div>`;
     }).join('');
     return`<div class="week-col">${header}${cards}</div>`;
@@ -1453,7 +1458,7 @@ function renderSchedule(){
     <div class="text-center mb-10 fade-in">
       <h1 class="section-title">Holdplan</h1>
       <p class="text-muted">Ugeoversigt \u2013 n\u00e6ste og forrige uger via pilene</p>
-      ${!isLoggedIn?'<p class="login-hint">Log ind for at tilmelde dig hold</p>':''}
+      <p class="login-hint">Tilmelding sker i medlemsportalen</p>
     </div>
     <div class="schedule-nav">
       <button class="schedule-nav-btn" onclick="changeWeek(-1)">&larr;</button>
@@ -1486,17 +1491,15 @@ function classDetailHtml(c){
   else pladser=c.booked+'/'+c.max+' ('+spotsLeft+' ledige)';
   const dateStr=new Date(c.dateKey+'T00:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});
   const coach=c.coach?c.coach:'Ingen coach tilknyttet';
-  const isSigned=signedUpIds.has(c.uid);
   const detailRows=isInfoOnly(c)
     ?`<div class="cd-row"><span class="cd-label">Bemærk</span><span>Ikke et hold – ingen tilmelding</span></div>`
     :`<div class="cd-row"><span class="cd-label">Coach</span><span>${coach}</span></div>
       <div class="cd-row"><span class="cd-label">Pladser</span><span>${pladser}</span></div>`;
+  // Tilmelding sker i goMember, ikke her. Knappen aabner det praecise hold.
   let actionBtn='';
-  if(isInfoOnly(c))actionBtn='';
-  else if(c.cancelled)actionBtn='';
-  else if(!isLoggedIn)actionBtn='<button class="btn btn-primary btn-sm" onclick="goLoginFromDialog()">Log ind for at tilmelde</button>';
-  else if(isSigned)actionBtn='<span class="signed-badge">✓ Tilmeldt</span>';
-  else actionBtn='<button class="btn btn-primary btn-sm" onclick="confirmSignup()">'+(isFull?'Skriv på venteliste':'Tilmeld')+'</button>';
+  if(isInfoOnly(c)||c.cancelled)actionBtn='';
+  else actionBtn='<a class="btn btn-primary btn-sm" href="'+portalEventUrl(c)+'" target="_blank" rel="noopener">'
+    +(isFull?'Venteliste i portalen':'Tilmeld i portalen')+'</a>';
   return `<div class="cd-title"><span class="cd-dot" style="background:${typeColor(c.type)}"></span><h3 style="margin:0">${c.name}</h3></div>
     <div class="class-detail-rows">
       <div class="cd-row"><span class="cd-label">Dato</span><span style="text-transform:capitalize">${dateStr}</span></div>
@@ -1516,11 +1519,7 @@ function openClassDetail(uid){
   document.getElementById('class-dialog').classList.add('open');
 }
 function closeClassDialog(){pendingWId=null;document.getElementById('class-dialog').classList.remove('open');}
-function goLoginFromDialog(){closeClassDialog();navigate('login');}
 
-function openClassDlg(uid){pendingWId=uid;document.getElementById('confirm-dialog').classList.add('open');}
-function closeDialog(){pendingWId=null;document.getElementById('confirm-dialog').classList.remove('open');}
-function confirmSignup(){if(pendingWId){signedUpIds.add(pendingWId);closeClassDialog();closeDialog();toast('Tilmeldt!','Du er nu tilmeldt dette hold.');render();}}
 
 /* ══ 404 ══ */
 function renderNotFound(){
@@ -1543,7 +1542,6 @@ function toast(title,desc='',type=''){
 function toggleMobile(){document.getElementById('nav-mobile').classList.toggle('open');}
 function closeMobile(){document.getElementById('nav-mobile').classList.remove('open');}
 
-document.getElementById('confirm-dialog').addEventListener('click',function(e){if(e.target===this)closeDialog();});
 document.getElementById('class-dialog').addEventListener('click',function(e){if(e.target===this)closeClassDialog();});
 
 render();

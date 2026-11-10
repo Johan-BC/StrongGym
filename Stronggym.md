@@ -268,6 +268,12 @@ Live. Derfor:
 4. Skriv til goMember, så de fjerner `www.stronggym.dk` og `stronggym.dk` fra
    tenanten.
 
+**Ret samtidig `PORTAL` i [`index.html`](index.html)** til
+`https://medlem.stronggym.dk`. Den konstant styrer, hvor "Log ind" og
+"Tilmeld i portalen" peger hen. Modsat worker'en kan siden ikke selv prøve
+sig frem — et link skal virke på det første klik — så den skal rettes i hånden
+ved trin 3.
+
 Ændres www først, er den ikke længere Live hos goMember, og så kan medlem
 ikke sættes som primær. Man sidder da fast med portalen på et domæne man
 netop har peget væk — mails og MobilePay-returlinks peger ind i vores nye

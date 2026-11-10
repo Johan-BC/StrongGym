@@ -243,3 +243,52 @@ efterprøves. `130+ glade medlemmer` er derimod et skøn fra 10. november
 2026. Det er skrevet som et gulv frem for et præcist tal, fordi ingen har
 talt efter — en side skal ikke påstå noget, den ikke ved. Det rigtige tal
 står i goMember.
+
+## Medlemslogin og tilmelding
+
+**Sitet håndterer ikke adgangskoder.** Login, nulstilling af kodeord,
+betaling og holdtilmelding ligger i goMember, som i forvejen har
+kontiene. Siden sender medlemmet derhen.
+
+Det var ikke sådan før. Den gamle `doLogin()` godtog hvilken som helst
+email og adgangskode og sagde "Logget ind!", og `confirmSignup()` lagde
+holdet i en lokal liste, der aldrig nåede goMember. Et medlem kunne stå
+med et "✓ Tilmeldt" på skærmen og ingen plads på holdet. Begge dele er
+fjernet.
+
+### Hvordan det virker nu
+
+- **"Log ind"** fører til en side, der forklarer hvor loginet hører
+  hjemme, og et link til `PORTAL/Account/Login`.
+- **"Tilmeld i portalen"** i holddialogen dyb-linker til det præcise
+  hold: `PORTAL/Event/<activityId>/<eventId>`. goMember beder selv om
+  login, hvis medlemmet ikke allerede er logget ind. Begge id'er kommer
+  fra holdplan-data, så der er ikke noget at vedligeholde.
+- Sitet har **ingen session**. Der er intet at logge ud af, og
+  logud-punkterne er fjernet fra menuen.
+
+### Hvorfor ikke et rigtigt login på sitet
+
+Det ville kræve, at vores worker tog imod medlemmernes adgangskoder og
+sendte dem videre til goMember. Så er vi mellemmand for hvert eneste
+kodeord — en fejl, en logline eller en senere ændring, og de ligger
+åbent. goMember håndterer allerede kodeordsnulstilling, spærring og
+betalinger. Der er intet at vinde og meget at tabe.
+
+Dertil: goMembers autentificering er **ikke bekræftet**. Ifølge
+CLAUDE.md er `check_auth.py` aldrig kørt mod produktion, og
+request-body'en til `/auth/token` er gættet ud fra swagger-filen.
+
+### Noter
+- `PORTAL` i [`index.html`](index.html) skal rettes ved domæneskiftet —
+  se trinlisten i [`Stronggym.md`](Stronggym.md).
+- **Bestyrelsens dashboard er skjult.** Det var gated på den attrap-login,
+  der nu er væk. Siden findes stadig og kan nås med `navigate('dashboard')`,
+  men den har ingen adgangskontrol og viser mock-tal. Den skal have en
+  rigtig gate, før den må være synlig.
+- **Tilmeldingsformularen under "Bliv medlem" er stadig attrap.** Den
+  samler navn, email og telefon og sender dem ingen steder hen. goMember
+  har en rigtig indmeldelse på `/Account/Signup/<tag>` og
+  `/indmeldelse`. Den bør samme vej som loginet.
+- goMember skriver adressen som **Industrivej 8B** — sitet skriver
+  Industrivej 8. Et af de to steder er forkert.
