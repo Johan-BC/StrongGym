@@ -84,3 +84,10 @@ gør.
 | `check_auth.py` | Selvstændig test af login + ét GET-kald, kør før Claude Code-opsætning |
 | `.env.example` | Skabelon til credentials (kopiér til `.env`, som ikke må committes) |
 | `README.md` | Opsætningstrin (venv, Claude Code-registrering) |
+
+## Sådan skal Claude forklare ting til Johan
+
+Forklar i almindeligt sprog, ikke teknisk. Sig hvad der sker, hvorfor, og
+hvad Johan skal tage stilling til. Undgå fagord som proxy, miljø, branch,
+endpoint osv. - eller forklar dem kort, hvis de ikke kan undgås. Bed aldrig
+om godkendelse af noget, uden først at have forklaret hvad det betyder.
