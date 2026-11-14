@@ -157,6 +157,27 @@ textarea{width:100%;min-height:10rem;font-family:ui-monospace,Menlo,Consolas,mon
 .await{display:inline-block;font-size:0.72rem;font-weight:500;padding:0.05rem 0.45rem;border-radius:0.3rem;background:#262626;color:#c9c3b8;border:1px solid #3a3a3a}
 .notice{border:1px solid rgba(96,165,250,0.35);background:rgba(96,165,250,0.07);border-radius:var(--radius);padding:0.8rem 1rem;font-size:0.88rem;margin-bottom:1rem}
 .notice.gold{border-color:rgba(212,168,67,0.45);background:var(--gold-wash)}
+.stat .sub{font-size:0.72rem;color:var(--muted);margin-top:0.3rem;line-height:1.35}
+.mcard .cnt{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;line-height:1;margin-top:0.2rem}
+.mcard .cnt small{font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--muted);letter-spacing:0;margin-left:0.3rem}
+.mcard.zero{opacity:0.6}
+.mgrid.tight{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.mgrid.tight .card{padding:0.7rem 0.8rem}
+.mcard .pr{font-size:0.82rem;color:var(--primary2);margin-top:0.35rem}
+.chart{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.9rem 0.8rem 0.7rem}
+.mbars{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;align-items:end;height:150px;border-bottom:1px solid var(--border2)}
+.mcol{display:flex;flex-direction:column;justify-content:flex-end;height:100%;min-width:0}
+.mcol .val{font-size:0.74rem;text-align:center;font-variant-numeric:tabular-nums;margin-bottom:2px;white-space:nowrap}
+.mcol .b{background:var(--primary);border-radius:3px 3px 0 0;min-height:2px}
+.mcol .b.cur{background:rgba(212,168,67,0.55)}
+.mcol .b.sup{background:repeating-linear-gradient(135deg,#555 0 3px,transparent 3px 6px);border:1px dashed #777;border-bottom:none}
+.mlabs{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;margin-top:0.25rem}
+.mlabs span{font-size:0.7rem;color:var(--muted);text-align:center;line-height:1.2;overflow:hidden}
+.mlabs span b{display:block;font-weight:400;color:#7d786f;font-size:0.64rem}
+.defs{display:grid;gap:0.55rem;font-size:0.86rem}
+.defs dt{font-weight:500}
+.defs dd{color:var(--muted);margin-bottom:0.25rem}
+.num{text-align:right!important;font-variant-numeric:tabular-nums}
 
 /* ---------- Rettelser ---------- */
 .groups{list-style:none;display:grid;grid-template-columns:minmax(0,1fr);gap:0.75rem}
@@ -241,7 +262,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
 </main>
 
 <footer>
-  <p><strong>Adgang:</strong> Siden viser kun offentlige data (holdplan og trænernavne, som også står på hjemmesiden). Den skal have rigtig adgangskontrol (login), før den nogensinde viser medlemsdata.</p>
+  <p><strong>Adgang:</strong> Holdplan og trænernavne er offentlige (de står også på hjemmesiden). Medlemstallene i <code>styring-medlemmer.json</code> er samlede optællinger uden navne, og klubben har godkendt, at de må være offentlige. Siden må aldrig vise data om enkelte medlemmer; skal den det, kræver det først rigtig adgangskontrol (login).</p>
   <p>Rettelser gemmes kun lokalt i din browser. Siden sender intet til goMember eller andre steder.</p>
 </footer>
 
@@ -255,6 +276,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   /* ================================================================ grundlag */
   var STORE_KEY = 'strongGymStyring.rettelser.v1';
   var D = null;                 // data fra styring-data.json
+  var M = null;                 // anonyme, samlede medlemstal fra styring-medlemmer.json (valgfri)
   var drafts = [];              // kladde-rettelser
   var TYPES = {}, ACTS = {}, EVS = {};
   var SNAP = '';                // "YYYY-MM-DDTHH:MM" - "nu" i prototypen
@@ -907,7 +929,113 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   }
 
   /* ================================================================ MEDLEMMER */
+  function validMembers(m) {
+    return m && typeof m === 'object' && typeof m.total === 'number' && m.noegletal && Array.isArray(m.medlemskaber) ? m : null;
+  }
+  // Tal fra styring-medlemmer.json: number, "<3" (lille gruppe) eller null (udeladt).
+  function mval(v) {
+    if (v === null || v === undefined) return '<span class="muted" title="Udeladt: ville sammen med andre tal afsløre en gruppe på 1-2">udeladt</span>';
+    if (typeof v === 'number') return num(v);
+    return esc(v);
+  }
+  function mstat(v, label, sub, cls) {
+    return '<div class="stat' + (cls ? ' ' + cls : '') + '"><div class="v">' + mval(v) + '</div><div class="l">' + esc(label) + '</div>' +
+      (sub ? '<div class="sub">' + esc(sub) + '</div>' : '') + '</div>';
+  }
+  var UNCLEAR_TAGS = { 'Oprettelse': 1, 'Alle medlemmer': 1, '6 måneder': 1, '12 måneder': 1, 'Bero gebyr': 1 };
+  var MONTHS_LONG = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
+
+  function renderMedlemmerData() {
+    var m = M, k = m.noegletal, o = m.opfoelgning || {};
+    var hentet = m.hentet || '';
+    var h = '<h2 id="h-medlemmer" tabindex="-1">Medlemmer</h2>';
+    h += '<p class="lead">Anonyme tal fra goMembers medlemsliste, hentet ' + esc(fDayY(hentet)) + ' kl. ' + esc(hm(hentet)) +
+      '. Siden viser kun antal – ingen navne eller medlemsnumre. Er en gruppe på 1 eller 2, står der <strong>&lt;3</strong>; står der <em>udeladt</em>, ville tallet sammen med de andre afsløre sådan en lille gruppe.</p>';
+    h += '<div class="notice gold"><strong>Kun samlede tal.</strong> Tallene i <code>styring-medlemmer.json</code> er optællinger, og klubben har godkendt, at de må være offentlige. Siden må aldrig vise data om enkelte medlemmer (navne, numre eller hvem der har en etiket).</div>';
+
+    h += '<h3>Nøgletal</h3><div class="stats">' +
+      mstat(k.medlemmerIAlt, 'Medlemmer i alt', 'Alle rækker i medlemslisten – også trænere, testkonti og læse-kontoen') +
+      mstat(k.betalendeMedlemskaber.antal, 'Betalende medlemskaber', 'Sum af etiketterne ' + k.betalendeMedlemskaber.summeret.join(' + ')) +
+      mstat(k.oenskerUdmelding, 'Ønsker udmelding', 'Etiketten “Ønsker udmelding”', 'warn') +
+      mstat(k.pause, 'Pause', 'Etiketten “Pause”') +
+      mstat(k.nyeSeneste30Dage, 'Nye seneste 30 dage', 'Oprettet i goMember de seneste 30 dage') + '</div>';
+
+    var price = {};
+    D.memberships.forEach(function (x) { price[x.id] = x; });
+    h += '<h3>Medlemmer pr. medlemskab</h3><p class="small muted" style="margin-bottom:0.6rem">Antal med etiketten. Et medlem kan have flere. Pris fra de offentlige produkter, hvor den findes.</p><div class="mgrid tight">' +
+      m.medlemskaber.map(function (r) {
+        var p = price[r.tagId];
+        var pr = p ? num(p.price) + ' kr. ' + esc(p.priceUnit) : '<span class="muted">ingen offentlig pris</span>';
+        return '<div class="card mcard' + (r.antal === 0 ? ' zero' : '') + '"><div class="small muted">' + esc(r.navn) +
+          (UNCLEAR_TAGS[r.navn] ? ' <span class="badge b-warn">betydning uklar</span>' : '') + '</div><div class="cnt">' + mval(r.antal) +
+          '<small>medlemmer</small></div><div class="pr">' + pr + '</div></div>';
+      }).join('') + '</div>';
+    h += '<p class="small muted" style="margin-top:0.5rem">Uden nogen medlemskabs-etiket: ' + mval(m.udenMedlemskabsEtiket) + ' · uden nogen etiket overhovedet: ' + mval(m.udenEtiketter) + '.</p>';
+
+    // Nye pr. måned
+    var rows = m.nyePrMaaned || [];
+    var maxN = Math.max(1, Math.max.apply(null, rows.map(function (r) { return typeof r.antal === 'number' ? r.antal : 0; })));
+    var cur = hentet.slice(0, 7);
+    h += '<h3>Nye medlemmer pr. måned</h3><figure class="chart" aria-labelledby="nyeCap">';
+    h += '<figcaption id="nyeCap" class="small muted" style="margin-bottom:0.6rem">Oprettet i goMember pr. måned, seneste 12 måneder. Skraveret søjle = 1 eller 2 (vises som &lt;3). ' +
+      esc(MONTHS_LONG[+cur.slice(5, 7) - 1] || '') + ' er ikke slut endnu (lysere søjle).</figcaption>';
+    h += '<div class="mbars" aria-hidden="true">' + rows.map(function (r) {
+      var sup = typeof r.antal !== 'number';
+      var hgt = sup ? 12 : Math.round(r.antal / maxN * 100);
+      return '<div class="mcol"><span class="val">' + mval(r.antal) + '</span><div class="b' + (sup ? ' sup' : '') + (r.maaned === cur ? ' cur' : '') + '" style="height:' + Math.round(hgt * 1.15) + 'px"></div></div>';
+    }).join('') + '</div><div class="mlabs" aria-hidden="true">' + rows.map(function (r, i) {
+      var mi = +r.maaned.slice(5, 7) - 1;
+      return '<span>' + MONTHS[mi].replace('.', '') + ((i === 0 || mi === 0) ? '<b>' + r.maaned.slice(2, 4) + '</b>' : '<b>&nbsp;</b>') + '</span>';
+    }).join('') + '</div>';
+    h += '<table class="sr-only"><caption>Nye medlemmer pr. måned</caption><thead><tr><th>Måned</th><th>Antal</th></tr></thead><tbody>' +
+      rows.map(function (r) { var mi = +r.maaned.slice(5, 7) - 1; return '<tr><td>' + MONTHS_LONG[mi] + ' ' + r.maaned.slice(0, 4) + '</td><td>' + (typeof r.antal === 'number' ? r.antal : 'færre end 3') + '</td></tr>'; }).join('') +
+      '</tbody></table></figure>';
+    h += '<p class="small muted" style="margin-top:0.5rem">Oprettet før perioden: ' + mval(m.nyeFoerPerioden) + '. Oprettelsesdatoen er ikke nødvendigvis datoen, medlemskabet startede.</p>';
+
+    // Opfølgning
+    h += '<h3>Opfølgning</h3><div class="stats">' +
+      mstat(o.oenskerUdmelding, 'Ønsker udmelding', null, 'warn') +
+      mstat(o.pause, 'Pause') +
+      mstat(o.rykker, 'Rykker') +
+      mstat(o.manglendeFremmoede, 'Manglende fremmøde') +
+      mstat(o.beroGebyr, 'Bero gebyr') + '</div>';
+    h += '<p class="small muted" style="margin:0.6rem 0">' + mval(o.oenskerUdmelding) + ' har “Ønsker udmelding”, mens ' + mval(o.udmeldSlutIAlt) +
+      ' i alt har en “Udmeld slut &lt;måned&gt;”-etiket. Etiketterne har intet årstal, så en måned kan være forældet.</p>';
+    var us = o.udmeldSlut || [], bs = o.beroSlut || [];
+    h += '<div class="card tablewrap"><table class="plain"><caption class="sr-only">Udmeldelser og bero pr. måned</caption><thead><tr><th scope="col">Måned (fra nu)</th><th scope="col" class="num">Udmeld slut</th><th scope="col" class="num">Bero slut</th></tr></thead><tbody>' +
+      us.map(function (r, i) {
+        var b = bs[i] || {};
+        function cell(x) { return x === null || x === undefined ? '<span class="muted small">ingen etiket</span>' : (x.antal > 0 ? '<strong>' + mval(x.antal) + '</strong>' : '<span class="muted">0</span>'); }
+        return '<tr><td>' + esc(cap1(r.maaned)) + '</td><td class="num">' + cell(r.antal === null ? null : r) + '</td><td class="num">' + cell(b.antal === null ? null : b) + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+
+    // Roller og andet
+    h += '<h3>Roller og andre etiketter</h3><div class="mgrid tight">' +
+      (m.roller || []).concat(m.andet || []).map(function (r) {
+        return '<div class="card mcard' + (r.antal === 0 ? ' zero' : '') + '"><div class="small muted">' + esc(r.navn) +
+          (UNCLEAR_TAGS[r.navn] ? ' <span class="badge b-warn">betydning uklar</span>' : '') + '</div><div class="cnt">' + mval(r.antal) + '</div></div>';
+      }).join('') + '</div>';
+
+    h += '<h3>Ikke med endnu</h3><div class="mgrid">' +
+      emptyBlock('No-shows og fremmøde', 'Står ikke i medlemslisten. Kræver et andet kald, som ikke er afprøvet.') + '</div>';
+
+    h += '<h3>Definitioner</h3><div class="card"><dl class="defs">' + (m.definitioner || []).map(function (d) {
+      return '<div><dt>' + esc(d.term) + '</dt><dd>' + esc(d.tekst) + '</dd></div>';
+    }).join('') + '</dl><p class="small muted" style="margin-top:0.6rem">Etiketternes betydning er klubbens egen. Vi gætter ikke på uklare etiketter som “Oprettelse” og “Alle medlemmer” – det skal klubben selv afklare.</p></div>';
+
+    h += tagNamesBlock();
+    $('#v-medlemmer').innerHTML = h;
+  }
+
+  function tagNamesBlock() {
+    return '<h3>Etiketter i goMember (kun navne)</h3><p class="small muted" style="margin-bottom:0.6rem">Etiketterne bruges i dag til flere ting på én gang.</p><div class="mgrid">' +
+      D.tagGroups.map(function (g) {
+        return '<div class="card"><div><strong>' + esc(cap1(g.group)) + '</strong> <span class="muted small">(' + g.count + ')</span></div><p class="small muted" style="margin-top:0.3rem">' + esc(g.names.join(', ')) + '</p></div>';
+      }).join('') + '</div>';
+  }
+
   function renderMedlemmer() {
+    if (M) return renderMedlemmerData();
     var h = '<h2 id="h-medlemmer" tabindex="-1">Medlemmer</h2>';
     h += '<p class="lead">Her skal medlemsoverblikket ligge. Vi har endnu <strong>ingen medlemsdata</strong>: de kræver det skrivebeskyttede login til goMember, som ikke er sat op og afprøvet. Felterne nedenfor er tomme med vilje – der er ingen opdigtede tal.</p>';
     h += '<div class="notice"><strong>Før denne side viser medlemsdata</strong> skal den have rigtig adgangskontrol (login for bestyrelse/trænere) og må ikke ligge åbent på nettet. Prototypen viser kun offentlige oplysninger.</div>';
@@ -924,10 +1052,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
       emptyBlock('Bero og udmeldelser', 'Hvem der står med “Bero slut <måned>” og “Udmeld slut <måned>”, så I kan se, hvem der kommer tilbage eller stopper hvornår.') +
       emptyBlock('No-shows og fremmøde', 'Udeblivelser pr. hold og medlem (udeblivelsesgebyret er 25 kr.), og hvilke hold der registrerer fremmøde.') +
       emptyBlock('Opfølgning', 'Medlemmer med “Rykker”, “Manglende fremmøde” eller “Ønsker udmelding”.') + '</div>';
-    h += '<h3>Etiketter i goMember (kun navne)</h3><p class="small muted" style="margin-bottom:0.6rem">Etiketterne bruges i dag til flere ting på én gang. Kun navnene er offentlige – ikke hvem der har dem.</p><div class="mgrid">' +
-      D.tagGroups.map(function (g) {
-        return '<div class="card"><div><strong>' + esc(cap1(g.group)) + '</strong> <span class="muted small">(' + g.count + ')</span></div><p class="small muted" style="margin-top:0.3rem">' + esc(g.names.join(', ')) + '</p></div>';
-      }).join('') + '</div>';
+    h += tagNamesBlock();
     $('#v-medlemmer').innerHTML = h;
   }
   function cap1(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -1089,10 +1214,18 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   }
 
   bind();
-  // Eneste netværkskald på siden: læs den lokale datafil (GET).
+  // Sidens eneste to netværkskald, begge GET af lokale filer:
+  // 1) holdplanen, 2) anonyme, samlede medlemstal (godkendt til offentliggørelse - mangler filen, vises "afventer login").
+  var membersReq = fetch('styring-medlemmer.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(validMembers)
+    .catch(function () { return null; });
   fetch('styring-data.json', { cache: 'no-store' })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(init)
+    .then(function (data) {
+      init(data);
+      membersReq.then(function (m) { if (m) { M = m; renderMedlemmer(); } });
+    })
     .catch(function (err) {
       var l = $('#loading');
       if (l) l.innerHTML = 'Kunne ikke indlæse <code>styring-data.json</code> (' + esc(err.message) + ').<br>Siden skal åbnes via en webserver, fx <code>python3 -m http.server</code> i repo-roden.';

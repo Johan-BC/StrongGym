@@ -1,0 +1,366 @@
+{
+ "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
+ "hentet": "2026-11-14T22:32",
+ "tidszone": "Europe/Copenhagen",
+ "kilde": {
+  "kald": [
+   "GET /api/members?filter.pageSize=1000&filter.currentPage=1",
+   "GET /api/tag"
+  ],
+  "etiketnavne": "live (GET /api/tag)"
+ },
+ "total": 195,
+ "totalFraGoMember": null,
+ "noegletal": {
+  "medlemmerIAlt": 195,
+  "betalendeMedlemskaber": {
+   "antal": 122,
+   "summeret": [
+    "Premium medlemskab",
+    "Ung 15-24 år medlemskab",
+    "Klippekort (10 klip)",
+    "Fordels medlemskab"
+   ],
+   "personerMedMindstEn": null
+  },
+  "oenskerUdmelding": 20,
+  "pause": 3,
+  "nyeSeneste30Dage": 7
+ },
+ "medlemskaber": [
+  {
+   "tagId": "Tag2517253147042177325",
+   "navn": "Premium medlemskab",
+   "antal": 98
+  },
+  {
+   "tagId": "Tag2517869245434174618",
+   "navn": "Klippekort (10 klip)",
+   "antal": 21
+  },
+  {
+   "tagId": "Tag2518007440748131293",
+   "navn": "12 måneder",
+   "antal": 7
+  },
+  {
+   "tagId": "Tag2518007451728538626",
+   "navn": "Ung 15-24 år medlemskab",
+   "antal": 2
+  },
+  {
+   "tagId": "Tag2518007439372993219",
+   "navn": "Fordels medlemskab",
+   "antal": 1
+  },
+  {
+   "tagId": "Tag2518007440403499043",
+   "navn": "6 måneder",
+   "antal": 0
+  },
+  {
+   "tagId": "Tag2518137174801674575",
+   "navn": "Børnemedlemsskab 7-14",
+   "antal": 0
+  },
+  {
+   "tagId": "Tag2518007433850536126",
+   "navn": "PT klippekort",
+   "antal": 0
+  },
+  {
+   "tagId": "Tag2516138032599593326",
+   "navn": "Studerende",
+   "antal": 0
+  }
+ ],
+ "roller": [
+  {
+   "tagId": "Tag2",
+   "navn": "Alle medlemmer",
+   "antal": 179
+  },
+  {
+   "tagId": "Tag2518007428832244134",
+   "navn": "Trænere",
+   "antal": 12
+  },
+  {
+   "tagId": "Tag2516281008124910542",
+   "navn": "Bestyrelsesmedlem",
+   "antal": 8
+  },
+  {
+   "tagId": "Tag1",
+   "navn": "Administrator",
+   "antal": 3
+  }
+ ],
+ "andet": [
+  {
+   "tagId": "Tag2518007450850497760",
+   "navn": "Oprettelse",
+   "antal": 45
+  },
+  {
+   "tagId": "Tag2516128188990002511",
+   "navn": "Sponsorat 10000 kr.",
+   "antal": 0
+  },
+  {
+   "tagId": "Tag2516128182985175263",
+   "navn": "Sponsorat 15000 kr",
+   "antal": 0
+  }
+ ],
+ "status": [
+  {
+   "tagId": "Tag2517016445257204779",
+   "navn": "Ønsker udmelding",
+   "antal": 20
+  },
+  {
+   "tagId": "Tag2517016442477144395",
+   "navn": "Pause",
+   "antal": 3
+  },
+  {
+   "tagId": "Tag2517928754246739310",
+   "navn": "Bero gebyr",
+   "antal": 0
+  },
+  {
+   "tagId": "Tag2517895173267893064",
+   "navn": "Manglende fremmøde",
+   "antal": 0
+  },
+  {
+   "tagId": "Tag2517786257047085624",
+   "navn": "Rykker",
+   "antal": 0
+  }
+ ],
+ "ukendteEtiketter": [],
+ "udenEtiketter": 13,
+ "udenMedlemskabsEtiket": null,
+ "udenBetalendeMedlemskab": null,
+ "nyePrMaaned": [
+  {
+   "maaned": "2025-12",
+   "antal": "<3"
+  },
+  {
+   "maaned": "2026-01",
+   "antal": 5
+  },
+  {
+   "maaned": "2026-02",
+   "antal": 4
+  },
+  {
+   "maaned": "2026-03",
+   "antal": 5
+  },
+  {
+   "maaned": "2026-04",
+   "antal": 3
+  },
+  {
+   "maaned": "2026-05",
+   "antal": 4
+  },
+  {
+   "maaned": "2026-06",
+   "antal": 4
+  },
+  {
+   "maaned": "2026-07",
+   "antal": 5
+  },
+  {
+   "maaned": "2026-08",
+   "antal": 5
+  },
+  {
+   "maaned": "2026-09",
+   "antal": 4
+  },
+  {
+   "maaned": "2026-10",
+   "antal": 5
+  },
+  {
+   "maaned": "2026-11",
+   "antal": 4
+  }
+ ],
+ "nyeFoerPerioden": null,
+ "udenOprettelsesdato": 0,
+ "opfoelgning": {
+  "oenskerUdmelding": 20,
+  "pause": 3,
+  "rykker": 0,
+  "manglendeFremmoede": 0,
+  "beroGebyr": 0,
+  "udmeldSlut": [
+   {
+    "maaned": "november",
+    "etiket": "Udmeld slut nov",
+    "antal": 0
+   },
+   {
+    "maaned": "december",
+    "etiket": "Udmeld slut dec",
+    "antal": 0
+   },
+   {
+    "maaned": "januar",
+    "etiket": "Udmeld slut jan",
+    "antal": 0
+   },
+   {
+    "maaned": "februar",
+    "etiket": "Udmeld slut feb",
+    "antal": 0
+   },
+   {
+    "maaned": "marts",
+    "etiket": "Udmeld slut marts",
+    "antal": 1
+   },
+   {
+    "maaned": "april",
+    "etiket": "Udmeld slut april",
+    "antal": 0
+   },
+   {
+    "maaned": "maj",
+    "etiket": "Udmeld slut maj",
+    "antal": 0
+   },
+   {
+    "maaned": "juni",
+    "etiket": "Udmeld slut juni",
+    "antal": 0
+   },
+   {
+    "maaned": "juli",
+    "etiket": "Udmeld slut juli",
+    "antal": 0
+   },
+   {
+    "maaned": "august",
+    "etiket": "Udmeld slut august",
+    "antal": 0
+   },
+   {
+    "maaned": "september",
+    "etiket": null,
+    "antal": null
+   },
+   {
+    "maaned": "oktober",
+    "etiket": "Udmeld slut okt",
+    "antal": 0
+   }
+  ],
+  "udmeldSlutIAlt": 1,
+  "beroSlut": [
+   {
+    "maaned": "november",
+    "etiket": "Bero slut nov",
+    "antal": 0
+   },
+   {
+    "maaned": "december",
+    "etiket": "Bero slut dec",
+    "antal": 0
+   },
+   {
+    "maaned": "januar",
+    "etiket": "Bero slut jan",
+    "antal": 0
+   },
+   {
+    "maaned": "februar",
+    "etiket": "Bero slut feb",
+    "antal": 0
+   },
+   {
+    "maaned": "marts",
+    "etiket": "Bero slut marts",
+    "antal": 0
+   },
+   {
+    "maaned": "april",
+    "etiket": "Bero slut april",
+    "antal": 0
+   },
+   {
+    "maaned": "maj",
+    "etiket": "Bero slut maj",
+    "antal": 0
+   },
+   {
+    "maaned": "juni",
+    "etiket": "Bero slut juni",
+    "antal": 0
+   },
+   {
+    "maaned": "juli",
+    "etiket": "Bero slut juli",
+    "antal": 0
+   },
+   {
+    "maaned": "august",
+    "etiket": "Bero slut august",
+    "antal": 0
+   },
+   {
+    "maaned": "september",
+    "etiket": "Bero slut sep",
+    "antal": 0
+   },
+   {
+    "maaned": "oktober",
+    "etiket": "Bero slut okt",
+    "antal": 0
+   }
+  ],
+  "beroSlutIAlt": 0
+ },
+ "definitioner": [
+  {
+   "term": "Medlemmer i alt",
+   "tekst": "Antal rækker i goMembers medlemsliste (GET /api/members) på hentetidspunktet. Kan indeholde trænere, bestyrelse, udmeldte der stadig står i listen, testkonti og den fiktive læse-konto, som denne side selv bruger. Det er ikke det samme som betalende medlemmer."
+  },
+  {
+   "term": "Betalende medlemskaber",
+   "tekst": "Summen af antal pr. etiket for Premium medlemskab, Ung 15-24 år medlemskab, Klippekort (10 klip), Fordels medlemskab. Et medlem med to af etiketterne tælles to gange i summen; \"personer med mindst én\" tæller hvert medlem én gang. Om etiketten betyder, at medlemmet betaler lige nu, ved vi ikke – den kan stå tilbage efter udmelding eller under pause."
+  },
+  {
+   "term": "Antal pr. etiket",
+   "tekst": "Hvor mange medlemmer der har etiketten i goMember. Etiketterne er klubbens egne og bruges til flere ting på én gang. Et medlem kan have flere etiketter."
+  },
+  {
+   "term": "Nye pr. måned / nye seneste 30 dage",
+   "tekst": "Baseret på hvornår medlemmet blev oprettet i goMember (createdTs), ikke hvornår medlemskabet startede eller blev betalt. Medlemmer flyttet ind fra et andet system kan have importdatoen. Måneder med 1 eller 2 vises som \"<3\" af hensyn til anonymitet. Antal oprettet før perioden udelades, når en måned er skjult, fordi det ellers kunne regnes ud."
+  },
+  {
+   "term": "Udeladte tal",
+   "tekst": "Et tal står som \"udeladt\", når det sammen med de andre tal på siden ville afsløre en gruppe på 1 eller 2 medlemmer (fx hvor mange der har to medlemskabs-etiketter på én gang)."
+  },
+  {
+   "term": "Uden medlemskabs-etiket",
+   "tekst": "Medlemmer uden nogen etiket fra gruppen medlemskab/produkt (Premium, Ung, Klippekort, Børn, Studerende, PT klippekort, Fordels, 6/12 måneder)."
+  },
+  {
+   "term": "Udmeld slut <måned> / Bero slut <måned>",
+   "tekst": "Antal med etiketten. Etiketten har intet årstal, så vi ved ikke, om den gælder i år eller er glemt fra sidste år. En etiket for en måned, der allerede er gået, kan være forældet."
+  },
+  {
+   "term": "Uklare etiketter",
+   "tekst": "Vi gætter ikke på betydningen af \"Oprettelse\", \"Alle medlemmer\", \"6 måneder\", \"12 måneder\" og \"Bero gebyr\". \"Oprettelse\" kan være et oprettelsesgebyr eller en markering af nye medlemmer; \"Alle medlemmer\" er ikke sat på alle. Det skal klubben selv afklare."
+  }
+ ]
+}

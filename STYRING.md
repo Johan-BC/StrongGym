@@ -79,7 +79,10 @@ Siden er én fil uden byggetrin og uden eksterne JavaScript-biblioteker.
 Skrifttyperne hentes fra Google Fonts som på hjemmesiden. Siden har
 `noindex`, og der er ingen link til den fra `index.html`.
 
-**Netværk:** siden laver præcis ét datakald: `GET styring-data.json`.
+**Netværk:** siden laver præcis to datakald: `GET styring-data.json` og
+`GET styring-medlemmer.json` (samlede medlemstal, bygget af
+`gomember-mcp/kortlaegning/byg_medlemsstatistik.py`; mangler filen, viser
+Medlemmer "afventer login").
 Den indeholder ingen anden `fetch`, `XMLHttpRequest`, `sendBeacon` eller
 formular-afsendelse. Rettelser gemmes i `localStorage` (siden virker også
 uden). Eksport som JSON sker med en lokal download i browseren.
