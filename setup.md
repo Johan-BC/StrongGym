@@ -296,5 +296,4 @@ request-body'en til `/auth/token` er gættet ud fra swagger-filen.
   (499 / 199 / 299 / 850 kr) stammer fra det oprindelige mock-site. Ingen
   kilde. De rigtige kontingenter står i goMember og skal ind, før siden går
   live — ellers lover sitet en pris, portalen ikke opkræver.
-- goMember skriver adressen som **Industrivej 8B** — sitet skriver
-  Industrivej 8. Et af de to steder er forkert.
+- Adressen er **Industrivej 8B** (bekræftet 14. november 2026).
