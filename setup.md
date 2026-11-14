@@ -286,9 +286,15 @@ request-body'en til `/auth/token` er gættet ud fra swagger-filen.
   der nu er væk. Siden findes stadig og kan nås med `navigate('dashboard')`,
   men den har ingen adgangskontrol og viser mock-tal. Den skal have en
   rigtig gate, før den må være synlig.
-- **Tilmeldingsformularen under "Bliv medlem" er stadig attrap.** Den
-  samler navn, email og telefon og sender dem ingen steder hen. goMember
-  har en rigtig indmeldelse på `/Account/Signup/<tag>` og
-  `/indmeldelse`. Den bør samme vej som loginet.
+- **"Bliv medlem" sender til goMembers indmeldelse** på
+  `PORTAL_SIGNUP` (`/Account/Signup/Tag2517869245434174618`). Den gamle
+  formular samlede navn, email og telefon, sendte dem ingen steder hen og
+  sagde "Tak for din tilmelding!". Den er fjernet. Tag-id'et er fundet
+  21. oktober 2026 og ikke genkontrolleret siden — tjek at linket stadig
+  rammer indmeldelsen, og at det følger med til `medlem.stronggym.dk`.
+- **Priserne under "Bliv medlem" er ikke bekræftet.** `membershipTypes`
+  (499 / 199 / 299 / 850 kr) stammer fra det oprindelige mock-site. Ingen
+  kilde. De rigtige kontingenter står i goMember og skal ind, før siden går
+  live — ellers lover sitet en pris, portalen ikke opkræver.
 - goMember skriver adressen som **Industrivej 8B** — sitet skriver
   Industrivej 8. Et af de to steder er forkert.

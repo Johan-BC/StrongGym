@@ -208,14 +208,10 @@ input::placeholder,textarea::placeholder{color:var(--muted)}
 
 /* SIGNUP */
 .membership-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:2.5rem}
-.membership-type{text-align:left;padding:1.25rem;border-radius:var(--radius);border:2px solid var(--border);background:var(--card);cursor:pointer;transition:border-color 0.2s,background 0.2s;color:var(--fg) !important}
-.membership-type:hover{border-color:var(--border2)}
-.membership-type.selected{border-color:var(--primary);background:rgba(212,168,67,0.08)}
+.membership-type{text-align:left;padding:1.25rem;border-radius:var(--radius);border:2px solid var(--border);background:var(--card);color:var(--fg) !important}
 .membership-type h3{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;margin-bottom:0.25rem;color:var(--fg) !important}
 .membership-type .price{color:var(--primary) !important;font-weight:500;font-size:0.95rem;margin-bottom:0.25rem}
 .membership-type .desc{font-size:0.78rem;color:var(--muted) !important}
-.signup-success{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
-.check-circle{width:80px;height:80px;background:rgba(212,168,67,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1.5rem}
 
 /* CONTACT */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;max-width:960px;margin:0 auto}
@@ -719,8 +715,6 @@ let currentPage='index';
 let pendingWId=null;
 let classByUid={};
 let weekOffset=0;
-let selectedMembership='';
-let signupSubmitted=false;
 
 /* ══ ROUTER ══ */
 function navigate(page){currentPage=page;window.scrollTo(0,0);render();updateNav();}
@@ -1210,27 +1204,19 @@ function renderNews(){
 }
 
 /* ══ SIGNUP ══ */
+// Indmeldelse sker i goMember, ligesom login. Den gamle formular samlede
+// navn, email og telefon og sendte dem ingen steder hen - men sagde "Tak
+// for din tilmelding!". Medlemskortene her er kun til orientering.
 function renderSignup(){
-  if(signupSubmitted)return`<div class="page"><div class="container"><div class="signup-success fade-in"><div class="check-circle">\u2713</div><h1 class="section-title">Tak for din tilmelding!</h1><p class="text-muted" style="margin-top:0.5rem">Vi vender tilbage til dig hurtigst muligt.</p></div></div></div>`;
   return `<div class="page"><div class="container" style="max-width:680px">
-    <div class="text-center mb-10 fade-in"><h1 class="section-title">Bliv Medlem</h1><p class="text-muted">V\u00e6lg dit medlemskab og bliv en del af f\u00e6llesskabet.</p></div>
-    <div class="membership-grid">${membershipTypes.map(t=>`<button class="membership-type ${selectedMembership===t.id?'selected':''}" onclick="pickMembership('${t.id}')"><h3>${t.name}</h3><div class="price">${t.price}</div><div class="desc">${t.description}</div></button>`).join('')}</div>
+    <div class="text-center mb-10 fade-in"><h1 class="section-title">Bliv Medlem</h1><p class="text-muted">Se medlemskaberne herunder. Selve indmeldelsen foreg\u00e5r i medlemsportalen.</p></div>
+    <div class="membership-grid">${membershipTypes.map(t=>`<div class="membership-type"><h3>${t.name}</h3><div class="price">${t.price}</div><div class="desc">${t.description}</div></div>`).join('')}</div>
     <div class="card fade-in"><div class="card-body">
-      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;margin-bottom:.25rem">Dine Oplysninger</h2>
-      <p class="text-muted" style="font-size:.85rem;margin-bottom:1.5rem">Udfyld formularen nedenfor</p>
-      <div class="form-group"><label>Fulde Navn</label><input type="text" id="su-name" placeholder="Dit navn" /></div>
-      <div class="form-group"><label>Email</label><input type="email" id="su-email" placeholder="din@email.dk" /></div>
-      <div class="form-group"><label>Telefon</label><input type="tel" id="su-phone" placeholder="+45 00 00 00 00" /></div>
-      <button class="btn btn-primary btn-full" onclick="submitSignup()" ${!selectedMembership?'style="opacity:0.55"':''}>Send Tilmelding</button>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.04em;margin-bottom:.25rem">Meld dig ind</h2>
+      <p class="text-muted" style="font-size:.85rem;margin-bottom:1.5rem">Du opretter dig, v\u00e6lger medlemskab og betaler i goMember. Vi gemmer ingen oplysninger om dig her.</p>
+      <a class="btn btn-primary btn-full" style="display:flex;justify-content:center" href="${PORTAL_SIGNUP}" target="_blank" rel="noopener">G\u00e5 til indmeldelse &rarr;</a>
     </div></div>
   </div></div>`;
-}
-function pickMembership(id){selectedMembership=id;render();}
-function submitSignup(){
-  const n=document.getElementById('su-name').value,e=document.getElementById('su-email').value,p=document.getElementById('su-phone').value;
-  if(!n||!e||!p){toast('Udfyld alle felter','','error');return;}
-  if(!selectedMembership){toast('V\u00e6lg et medlemskab','','error');return;}
-  signupSubmitted=true;toast('Tak for din tilmelding!','Vi kontakter dig hurtigst muligt.');render();
 }
 
 /* ══ CONTACT ══ */
@@ -1289,6 +1275,8 @@ function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b
 // — rækkefølgen står i Stronggym.md.
 const PORTAL='https://www.stronggym.dk';
 const PORTAL_LOGIN=PORTAL+'/Account/Login';
+// Indmeldelsens tag-id er fundet 21. oktober 2026 (se Stronggym.md).
+const PORTAL_SIGNUP=PORTAL+'/Account/Signup/Tag2517869245434174618';
 
 // goMember har en side pr. hold: /Event/<activityId>/<eventId>.
 // Mangler et af id'erne, lander vi på aktivitetskalenderen i stedet.
