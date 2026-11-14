@@ -5,6 +5,11 @@ i styring.html.
 
     python3 byg_medlemsstatistik.py            # henter fra goMember (2 GET-kald + login)
     python3 byg_medlemsstatistik.py --struktur # viser kun svarets form (nøgler/typer), skriver intet
+    python3 byg_medlemsstatistik.py --force    # skriv selv om fornuftskontrollen fejler
+
+Fornuftskontrol: ændrer det samlede antal medlemmer sig mere end 25 % i forhold
+til den forrige styring-medlemmer.json, eller er listen afskåret af
+sidestørrelsen, stopper scriptet uden at skrive (medmindre --force).
 
 Regler (se CLAUDE.md):
 - Alle kald går gennem GoMemberClient.get(). Ingen rå HTTP, ingen skrivekald.
@@ -27,13 +32,15 @@ import sys
 from zoneinfo import ZoneInfo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.abspath(os.path.join(HERE, "..")))
-from gomember_client import GoMemberClient  # noqa: E402  (kun get())
+sys.path.insert(0, HERE)
+import stier  # noqa: E402
+from netlag import Hentning, NetFejl  # noqa: E402  (GoMemberClient.get() - kun GET)
 
-ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "styring-medlemmer.json")
+OUT = os.path.join(stier.STYRING_UD, "styring-medlemmer.json")
 TZ = ZoneInfo("Europe/Copenhagen")
 MIN_CELLE = 3  # tal under dette vises som "<3" for kombinationer
+SIDE = 1000    # sidestørrelse for medlemslisten
+MAKS_AENDRING = 0.25  # fornuftskontrol mod forrige fil
 
 # Etiketter hvis tal lægges sammen til "betalende medlemskaber"
 BETALENDE = ["Premium medlemskab", "Ung 15-24 år medlemskab", "Klippekort (10 klip)", "Fordels medlemskab"]
@@ -95,7 +102,7 @@ def rows_of(resp):
         for v in resp.values():
             if isinstance(v, list) and v and isinstance(v[0], dict) and "tagsAssigned" in v[0]:
                 return v, total
-    raise SystemExit("Kunne ikke finde medlemslisten i svaret (kør med --struktur).")
+    raise NetFejl("Kunne ikke finde medlemslisten i svaret fra goMember (kør byg_medlemsstatistik.py --struktur).")
 
 
 def tag_ref(x):
@@ -128,35 +135,50 @@ def struktur(resp):
     print("createdTs-mønstre:", collections.Counter(mask(r.get("createdTs")) for r in rows).most_common(3))
 
 
-def main():
-    only_struktur = "--struktur" in sys.argv
-    client = GoMemberClient()
+def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
+    """Hent medlemslisten via hent (netlag.Hentning) og skriv optællingerne til ud.
+    Returnerer en kort opsummering. Rejser NetFejl ved fejl eller fejlet fornuftskontrol."""
     kald = []
 
-    resp = client.get("/api/members", query_params={"filter.pageSize": 1000, "filter.currentPage": 1})
-    kald.append("GET /api/members?filter.pageSize=1000&filter.currentPage=1")
+    _, resp = hent.get("/api/members", {"filter.pageSize": SIDE, "filter.currentPage": 1}, tilladt=())
+    kald.append(f"GET /api/members?filter.pageSize={SIDE}&filter.currentPage=1")
     if only_struktur:
         struktur(resp)
-        return
+        return None
 
     rows, total_felt = rows_of(resp)
     # Behold KUN createdTs og tagsAssigned. Alt andet kasseres her.
     slim = [{"c": r.get("createdTs"), "t": [tag_ref(x) for x in (r.get("tagsAssigned") or [])]} for r in rows]
     n_rows = len(rows)
     del rows, resp
+    if n_rows >= SIDE or (isinstance(total_felt, int) and total_felt > n_rows):
+        raise NetFejl(f"Medlemslisten er afskåret ({n_rows} rækker, goMember siger {total_felt}); "
+                      "tallene ville være forkerte.")
+    if n_rows == 0:
+        raise NetFejl("Medlemslisten fra goMember var tom.")
+    prev = stier.forrige("styring-medlemmer.json")
+    gl = (prev or {}).get("total")
+    if isinstance(gl, int) and gl > 0 and abs(n_rows - gl) / gl > MAKS_AENDRING:
+        msg = (f"Antal medlemmer ændrer sig fra {gl} til {n_rows} ({100 * (n_rows - gl) / gl:+.0f} %) - "
+               f"mere end {MAKS_AENDRING:.0%} i forhold til forrige fil")
+        if not force:
+            raise NetFejl(msg + " (brug --force, hvis det er rigtigt).")
+        print("ADVARSEL (--force):", msg, file=sys.stderr)
 
     # Etiketnavne: live, ellers det gemte snapshot
     try:
-        tags_live = client.get("/api/tag")
+        _, tags_live = hent.get("/api/tag", None, tilladt=())
         kald.append("GET /api/tag")
         tag_kilde = "live (GET /api/tag)"
-    except Exception:  # noqa: BLE001
-        tags_live = load(os.path.join(HERE, "data", "tag.json"))
+    except NetFejl as e:
+        if "Login" in str(e) or "Loftet" in str(e):
+            raise
+        tags_live = load(os.path.join(stier.DATA_DIR, "tag.json"))
         tag_kilde = "snapshot data/tag.json"
     if isinstance(tags_live, dict):
         tags_live = next((v for v in tags_live.values() if isinstance(v, list)), [])
 
-    ht = load(os.path.join(HERE, "holdtyper.json"))
+    ht = load(os.path.join(stier.KORTLAEG_DIR, "holdtyper.json"))
     gruppe_af = {t["tagId"]: t["gruppe"] for t in ht["tags"]}
     navn_af = {}
     for t in tags_live:
@@ -173,7 +195,7 @@ def main():
             return ref
         return id_af_navn.get(ref, ref)
 
-    now = dt.datetime.now(TZ)
+    now = now or dt.datetime.now(TZ)
     pr_tag = collections.Counter()  # antal pr. etiket (ingen personer)
     uden_tags = 0
     uden_medlemskab = 0
@@ -354,10 +376,21 @@ def main():
                       "markering af nye medlemmer; \"Alle medlemmer\" er ikke sat på alle. Det skal klubben selv afklare."},
         ],
     }
-    with open(OUT, "w", encoding="utf-8") as f:
+    with open(ud, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
         f.write("\n")
-    print(f"Skrev {OUT}: {n_rows} medlemmer, {len(kald)} GET-kald ({', '.join(kald)}).")
+    return {"medlemmer": n_rows, "kald": kald, "forrige": gl}
+
+
+def main():
+    only_struktur = "--struktur" in sys.argv
+    hent = Hentning(loft=10, anonym=False)
+    try:
+        res = byg(hent, ud=OUT, force="--force" in sys.argv, only_struktur=only_struktur)
+    except NetFejl as e:
+        sys.exit(f"FEJL: {e} Ingen fil skrevet.")
+    if res:
+        print(f"Skrev {OUT}: {res['medlemmer']} medlemmer, {len(res['kald'])} GET-kald ({', '.join(res['kald'])}).")
 
 
 if __name__ == "__main__":

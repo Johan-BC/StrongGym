@@ -2,11 +2,12 @@
 """
 Bygger ../../styring-data.json til prototypen styring.html.
 
-Kører helt offline: læser kun de gemte, anonyme snapshots i data/, adgang.json
-og holdtyper.json (fra analyse_holdtyper.py). Laver ingen netværkskald og
-skriver kun styring-data.json i repo-roden.
+Kører helt offline: læser kun de gemte snapshots i data/ (fra kortlaeg.py eller
+den lette holdplan.py), adgang.json og holdtyper.json (fra analyse_holdtyper.py).
+Laver ingen netværkskald og skriver kun styring-data.json i repo-roden.
 
-    python3 byg_styringsdata.py
+    python3 byg_styringsdata.py           # stopper med fejl, hvis der ingen hold er de næste 7 dage
+    python3 byg_styringsdata.py --force   # skriv alligevel
 
 Skrive-endpoints i outputtet er inaktive tekststrenge (dokumentation til et
 senere, separat sync-lag). Prototypen kalder dem ikke - se CLAUDE.md.
@@ -17,11 +18,15 @@ import glob
 import json
 import os
 import re
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(HERE, "data")
-ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "styring-data.json")
+sys.path.insert(0, HERE)
+import stier  # noqa: E402
+
+DATA = stier.DATA_DIR
+OUT = os.path.join(stier.STYRING_UD, "styring-data.json")
+FORCE = "--force" in sys.argv
 
 WD = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
 # Typer der ikke er træningshold (ingen træner/tilmelding forventet)
@@ -47,13 +52,16 @@ def ncolor(c):
     return (c or "").lstrip("#").lower() or None
 
 
-ht = load(os.path.join(HERE, "holdtyper.json"))
-adgang = load(os.path.join(HERE, "adgang.json"))
+ht = load(os.path.join(stier.KORTLAEG_DIR, "holdtyper.json"))
 acts_raw = {a["entityId"]: a for a in load(os.path.join(DATA, "activity.json"))}
 tags_raw = load(os.path.join(DATA, "tag.json"))
 products = load(os.path.join(DATA, "product.json"))["products"]
-snapshot = adgang["generated"]  # lokal tid (Europe/Copenhagen)
-assert snapshot == ht["_meta"]["kilde_snapshot"], "holdtyper.json er bygget af et andet snapshot"
+snapshot, snapshot_kilde = stier.snapshot_tid()  # lokal tid (Europe/Copenhagen)
+if snapshot != ht["_meta"]["kilde_snapshot"]:
+    sys.exit("FEJL: holdtyper.json er bygget af et andet øjebliksbillede - kør analyse_holdtyper.py først.")
+mode = "anonym"
+if snapshot_kilde == "holdplan_meta.json":
+    mode = load(os.path.join(DATA, "holdplan_meta.json")).get("mode", "anonym")
 
 mapping = ht["mapping"]
 type_name = {t["id"]: t["navn"] for t in ht["holdtyper"]}
@@ -73,7 +81,7 @@ for e in sorted(raw_events, key=lambda e: (e["startTime"], e["name"])):
         "id": e["entityId"],
         "activityId": e["activityId"],
         "eventId": e["eventId"],
-        "typeId": mapping.get(e["activityId"], {}).get("type", "ukendt_opstart"),
+        "typeId": mapping.get(e["activityId"], {}).get("type", "ukendt"),
         "name": e["name"],
         "start": e["startTime"][:16],
         "end": e["endTime"][:16],
@@ -274,8 +282,17 @@ for y in years:
                      ("12-31", "Nytårsaften"), ("01-01", "Nytårsdag")]:
         holidays.append({"date": f"{y}-{md}", "name": name})
 
+# ------------------------------------------------------------------ fornuftskontrol
+snap_dt = dt.datetime.fromisoformat(snapshot)
+uge_frem = [e for e in events if snapshot[:16] <= e["start"] < (snap_dt + dt.timedelta(days=7)).isoformat()[:16]
+            and e["status"] != "cancelled"]
+if not uge_frem and not FORCE:
+    sys.exit("FEJL: holdplanen har 0 hold de næste 7 dage - det ligner en fejl hos goMember eller i "
+             "hentningen. Ingen fil skrevet (brug --force for at skrive alligevel).")
+
 out = {
-    "_om": ("Afledt af anonyme læsekald mod goMember (kun GET, ingen login). Trænernavne er offentlige. "
+    "_om": ("Afledt af læsekald mod goMember (kun GET, " + ("med det skrivebeskyttede login" if mode == "login" else "uden login")
+            + "). Trænernavne er offentlige; medlemsnumre/-id'er er fjernet. "
             "Ingen medlemsdata. Skrive-endpoints herunder er inaktiv dokumentation til et senere, "
             "separat sync-lag og kaldes ikke af styring.html."),
     "snapshot": snapshot,
@@ -300,4 +317,5 @@ with open(OUT, "w", encoding="utf-8") as f:
     json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
 
 print(f"Skrev {OUT}: {os.path.getsize(OUT)} bytes, {len(events)} hold, "
-      f"{len(activities)} aktiviteter, {sum(t['real'] for t in types)} holdtyper, snapshot {snapshot}")
+      f"{len(activities)} aktiviteter, {sum(t['real'] for t in types)} holdtyper, snapshot {snapshot}, "
+      f"{len(uge_frem)} hold de næste 7 dage")

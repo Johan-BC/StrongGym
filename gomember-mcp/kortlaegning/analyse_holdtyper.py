@@ -20,18 +20,21 @@ import statistics
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = os.path.join(HERE, "data")
+sys.path.insert(0, HERE)
+import stier  # noqa: E402
+
+DATA = stier.DATA_DIR
 SWAGGER = os.path.join(HERE, "..", "SGSwagger.json")
-OUT = os.path.join(HERE, "holdtyper.json")
+OUT = os.path.join(stier.KORTLAEG_DIR, "holdtyper.json")
 
 QUIET = "--quiet" in sys.argv
 WD = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
 WD_SHORT = ["Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"]
 
-# Analysevinduer (begrundelse i HOLDTYPER.md afsnit 6)
-GRID_FROM = "2026-11-02"   # første mandag efter at fuld ugeplan starter
-GRID_TO = "2027-01-04"     # eksklusiv: 9 hele uger (2/11 - 3/1)
-LOAD_FROM = "2026-11-01"   # afholdte hold i den fulde ugeplan
+# Analysevinduer (begrundelse i HOLDTYPER.md afsnit 6). Beregnes ud fra
+# øjebliksbilledet længere nede; FULD_PLAN_FRA er en fast dato: før flytningen
+# til Industrivej (1/11 2026) var holdplanen ufuldstændig.
+FULD_PLAN_FRA = dt.date(2026, 11, 1)
 PREBOOK_DAYS = 7           # kommende hold op til 7 dage frem vises særskilt
 
 
@@ -51,9 +54,10 @@ A = {a["entityId"]: a for a in acts}
 tags = load("tag.json")
 T = {t["entityId"]: t for t in tags}
 products = load("product.json")["products"]
-with open(os.path.join(HERE, "adgang.json"), encoding="utf-8") as f:
+with open(os.path.join(stier.KORTLAEG_DIR, "adgang.json"), encoding="utf-8") as f:
     adgang = json.load(f)
-SNAPSHOT = dt.datetime.fromisoformat(adgang["generated"])  # lokal tid
+SNAPSHOT_TXT, SNAPSHOT_KILDE = stier.snapshot_tid()
+SNAPSHOT = dt.datetime.fromisoformat(SNAPSHOT_TXT)  # lokal tid
 
 events = []
 for fn in sorted(glob.glob(os.path.join(DATA, "schedule_*.json"))):
@@ -99,6 +103,10 @@ def trainer_names(e):
     return [r.get("displayName") for r in e.get("responsible", []) if r.get("displayName")]
 
 
+def tname(t):
+    return T.get(t, {}).get("name", t)
+
+
 def is_materialized(e):
     """Hold med egen gemt record (overstyring). Kendetegn: felterne
     locationName/rules findes kun på disse."""
@@ -107,6 +115,18 @@ def is_materialized(e):
 
 for e in events:
     e["_dt"] = st(e)
+
+# Rullende vinduer ud fra holdplanen (8 uger tilbage -> 8 uger frem):
+# - grid (standarduge): hele uger fra første mandag i den fulde plan til sidste hele uge
+# - belastning: afholdte hold fra den fulde plans start (dog højst holdplanens start)
+_first = min(e["_dt"].date() for e in events)
+_last = max(e["_dt"].date() for e in events)
+_load_from = max(FULD_PLAN_FRA, _first)
+_grid_from = _load_from + dt.timedelta(days=(7 - _load_from.weekday()) % 7)
+_grid_to = (_last + dt.timedelta(days=1)) - dt.timedelta(days=(_last + dt.timedelta(days=1)).weekday())
+if _grid_to <= _grid_from:
+    _grid_to = _grid_from + dt.timedelta(days=7)
+GRID_FROM, GRID_TO, LOAD_FROM = _grid_from.isoformat(), _grid_to.isoformat(), _load_from.isoformat()
 
 # ------------------------------------------------- holdtype-forslag + mapping
 TYPES = [
@@ -173,7 +193,16 @@ MAPPING = {
 # alle activityId'er (fra listen + dem der kun ses i holdplanen)
 all_aids = list(A) + sorted({e["activityId"] for e in events} - set(A))
 missing = [a for a in all_aids if a not in MAPPING]
-assert not missing, f"umappede aktiviteter: {missing}"
+# Nye aktiviteter, som mappingen ikke kender, må ikke stoppe den natlige
+# opdatering: de lægges i typen "ukendt" og nævnes i opsummeringen.
+UNKNOWN = []
+if missing:
+    TYPES.append(("ukendt", "Ukendt (ny aktivitet)", "Aktivitet som holdtype-mappingen ikke kender endnu - skal placeres manuelt i analyse_holdtyper.py"))
+    TYPE_NAME["ukendt"] = TYPES[-1][1]
+    for aid in missing:
+        nm = (A.get(aid) or {}).get("name") or next((e["name"] for e in events if e["activityId"] == aid), None)
+        MAPPING[aid] = ("ukendt", "usikker", f"Ny/ukendt aktivitet ({nm or 'uden navn'}) - ikke mappet endnu")
+        UNKNOWN.append({"activityId": aid, "navn": nm})
 
 by_act = collections.defaultdict(list)
 for e in events:
@@ -309,14 +338,14 @@ for eid, d in sorted(details.items()):
             detail_diff[k] += 1
             out(f"    {d['name']} {eid[-12:]} {k}: holdplan={s.get(k)!r} detalje={d.get(k)!r}")
     out(f"    {d['name']}: noShowPrice={d.get('noShowPrice')!r} prices={d.get('prices')!r}")
-out("Priskald pr. aktivitet:", {A[k]["name"]: v for k, v in price_calls.items()})
+out("Priskald pr. aktivitet:", {A.get(k, {}).get("name", k): v for k, v in price_calls.items()})
 for aid, P in prices.items():
     for p in P:
-        out(f"    {A[aid]['name']}: priceType={p['priceType']} price={p['price']} currency={p.get('currency','')} tag={T.get(p['tag'],{}).get('name', p['tag'])}")
+        out(f"    {A.get(aid, {}).get('name', aid)}: priceType={p['priceType']} price={p['price']} currency={p.get('currency','')} tag={T.get(p['tag'],{}).get('name', p['tag'])}")
 
 # ---------------------------------------------------------------- 2 inventar
 out("=" * 70)
-out("2. INVENTAR (39 aktiviteter + aktiviteter kun i holdplan)")
+out(f"2. INVENTAR ({len(acts)} aktiviteter + aktiviteter kun i holdplan)")
 inventory = []
 for aid in all_aids:
     a = A.get(aid)
@@ -387,8 +416,8 @@ for r in inventory:
         f"| uden navn={r['hold_uden_navngiven_traener']} | ansv.std={r['antal_standard_ansvarlige']} | frist={r['tilmeldingsfrist']} "
         f"| klip={r['pris_klip']} noshow={r['udeblivelsesgebyr']} | opr={r['oprettet']} ændr={r['sidst_aendret']}")
 stat_c = collections.Counter(r["status"] for r in inventory if r["i_activity_listen"])
-out("Status for de 39 i /api/activity:", dict(stat_c))
-out("Ens på tværs af alle 39: ", {k: dict(collections.Counter(str(a[k]) for a in acts)) for k in
+out(f"Status for de {len(acts)} i /api/activity:", dict(stat_c))
+out(f"Ens på tværs af alle {len(acts)}: ", {k: dict(collections.Counter(str(a[k]) for a in acts)) for k in
                                   ["onlyLoggedIn", "allowNonMember", "maxGuestsPerMember", "hideFromOverview", "allowSingle", "allowRecurring", "isSuperEvent", "eventsCount", "invitationMedia", "autoPromote", "minAttendees"]})
 fr = collections.Counter(k for r in inventory for k, v in r["tilmeldingsfrist"].items() for _ in range(v))
 out("Tilmeldingsfrist på hold med feltet (signUpDeadlineUtc):", dict(fr), "; hold uden felt:", sum("signUpDeadline" not in e for e in events))
@@ -468,9 +497,9 @@ months = ["jan", "feb", "marts", "april", "maj", "juni", "juli", "august", "sep"
 for prefix in ("Udmeld slut", "Bero slut"):
     have = [t["name"][len(prefix) + 1:] for t in tags if t["name"].startswith(prefix)]
     out(f"   '{prefix} ...': {len(have)} stk, mangler måned: {[m for m in months if m not in have]}")
-out("Tags brugt på hold:", {T[t]["name"]: n for t, n in used_on_events.most_common()})
-out("Tags brugt på aktiviteter:", {T[t]["name"]: n for t, n in used_on_acts.most_common()})
-combo = collections.Counter(tuple(T[t]["name"] for t in e["tagsAssigned"]) for e in events)
+out("Tags brugt på hold:", {tname(t): n for t, n in used_on_events.most_common()})
+out("Tags brugt på aktiviteter:", {tname(t): n for t, n in used_on_acts.most_common()})
+combo = collections.Counter(tuple(tname(t) for t in e["tagsAssigned"]) for e in events)
 out("Tag-kombinationer på hold:", {", ".join(k) or "(ingen)": v for k, v in combo.most_common()})
 # ugedags-tag passer med holdets ugedag?
 wdtag = {t["entityId"]: t["name"] for t in tags if t["category"] == WEEKDAY_CAT}
@@ -486,7 +515,7 @@ for e in events:
 out("Ugedags-tag vs. holdets ugedag:", dict(wd_ok))
 by_type_tags = collections.defaultdict(collections.Counter)
 for e in events:
-    by_type_tags[MAPPING[e["activityId"]][0]][", ".join(T[t]["name"] for t in e["tagsAssigned"] if t not in wdtag) or "(ingen ud over ugedag)"] += 1
+    by_type_tags[MAPPING[e["activityId"]][0]][", ".join(tname(t) for t in e["tagsAssigned"] if t not in wdtag) or "(ingen ud over ugedag)"] += 1
 out("Ikke-ugedags-tags pr. type:", {TYPE_NAME[k]: dict(v) for k, v in by_type_tags.items()})
 missing_tag_refs = sorted({p["tagRequired"] for p in products if p.get("tagRequired") and p["tagRequired"] not in T})
 out("tagRequired i product.json der ikke findes i tag.json:", missing_tag_refs,
@@ -531,9 +560,9 @@ for t in times:
     out("   " + t + " " + " | ".join(f"{(grid_matrix[t][d] or '-')[:14]:14s}" for d in WD))
 
 # Afvigelser: manglende uger pr. slot (helligdage?), aflyste, engangsnavne
-out("Manglende datoer pr. slot i hele perioden 2026-11-01..2027-01-08:")
+full_from, full_to = _load_from, _last
+out(f"Manglende datoer pr. slot i hele perioden {full_from}..{full_to}:")
 holes = []
-full_from, full_to = dt.date(2026, 11, 1), dt.date(2027, 1, 8)
 for r in standard_week:
     dates = {e["_dt"].date() for e in events if e["activityId"] in r["activityIds"]
              and e["_dt"].weekday() == r["ugedag_nr"] and hhmm(e) == r["start"]}
@@ -546,13 +575,17 @@ for r in standard_week:
 for h in holes:
     out(f"   mangler {h['dato']} {h['ugedag']} {h['start']} {h['type']}")
 out("   (i alt", len(holes), "huller mellem første og sidste forekomst)")
-out("Slots der starter senere end 2026-11-01..07:", [(r["ugedag"], r["start"], r["type_navn"], r["foerste_dato"]) for r in standard_week if r["foerste_dato"] > "2026-11-07"])
-HOLI = {"2026-12-24": "juleaften", "2026-12-25": "1. juledag", "2026-12-26": "2. juledag", "2026-12-31": "nytårsaften", "2027-01-01": "nytårsdag"}
+_wk1 = (_load_from + dt.timedelta(days=6)).isoformat()
+out(f"Slots der starter senere end {LOAD_FROM}..{_wk1}:", [(r["ugedag"], r["start"], r["type_navn"], r["foerste_dato"]) for r in standard_week if r["foerste_dato"] > _wk1])
+HOLI = {f"{y}-{md}": n for y in sorted({e["startTime"][:4] for e in events})
+        for md, n in (("12-24", "juleaften"), ("12-25", "1. juledag"), ("12-26", "2. juledag"),
+                      ("12-31", "nytårsaften"), ("01-01", "nytårsdag"))
+        if _first.isoformat() <= f"{y}-{md}" <= _last.isoformat()}
 holiday_events = {f"{d} ({n})": [f"{e['startTime'][11:16]} {e['name']} [{e['status']}]" for e in events if e["startTime"][:10] == d] for d, n in HOLI.items()}
 out("Hold på hellig-/højtidsdage:", {k: len(v) for k, v in holiday_events.items()})
 for k, v in holiday_events.items():
     out("   ", k, v)
-out("Status-fordeling (alle 303):", dict(collections.Counter(e["status"] for e in events)))
+out(f"Status-fordeling (alle {len(events)}):", dict(collections.Counter(e["status"] for e in events)))
 out("Aflyste hold:")
 cancelled = []
 for e in sorted(events, key=lambda e: e["startTime"]):
@@ -662,8 +695,8 @@ out("Pr. tid på dagen (afholdte):", {k: (v["hold"], v["tilmeldt"], v["kapacitet
 pre = [e for e in events if e["_dt"] >= SNAPSHOT and (e["_dt"] - SNAPSHOT).days < PREBOOK_DAYS and e["status"] != "cancelled" and e.get("maxAttendees")]
 prebook_by_type = {TYPE_NAME[t]: load_stats([e for e in pre if MAPPING[e["activityId"]][0] == t]) for t in sorted({MAPPING[e["activityId"]][0] for e in pre})}
 out(f"Forhåndsbooking næste {PREBOOK_DAYS} dage ({len(pre)} hold):", {k: (v["tilmeldt"], v["kapacitet"], v["fyldning_pct"]) for k, v in prebook_by_type.items()})
-nov = [e for e in events if e["startTime"][:7] == "2026-11" and e.get("maxAttendees")]
-out("Kontrol mod RAPPORT.md (hele november, alle med loft inkl. aflyste/fremtidige):", sum(e["booked"] for e in nov), "/", sum(e["maxAttendees"] for e in nov))
+nov = [e for e in events if e["startTime"][:7] == SNAPSHOT.strftime("%Y-%m") and e.get("maxAttendees")]
+out(f"Kontrol (hele {SNAPSHOT:%Y-%m}, alle med loft inkl. aflyste/fremtidige):", sum(e["booked"] for e in nov), "/", sum(e["maxAttendees"] for e in nov))
 
 # ---------------------------------------------------------------- 7 trænere
 out("=" * 70)
@@ -739,7 +772,10 @@ issue("indstilling", "HYROX-søskende med forskellige indstillinger",
       [{k: r[k] for k in ("navn", "farve", "tags", "registerAttendance", "pris_klip", "antal_standard_ansvarlige")} for r in hy])
 issue("indstilling", "Aktive hold uden tags (alle andre har 'Alle medlemmer')", sorted({e["name"] for e in events if not e["tagsAssigned"] and MAPPING[e["activityId"]][0] not in ("rengoering", "ungeenhed")}))
 issue("tags", "Ugedags-tags bruges ikke konsekvent", dict(wd_ok))
-issue("tags", "Månedsrække 'Udmeld slut' mangler september", [m for m in months if m not in [t["name"][12:] for t in tags if t["name"].startswith("Udmeld slut")]])
+_udm_mangler = [m for m in months if m not in [t["name"][12:] for t in tags if t["name"].startswith("Udmeld slut")]]
+if _udm_mangler:
+    _lang = {"jan": "januar", "feb": "februar", "sep": "september", "okt": "oktober", "nov": "november", "dec": "december"}
+    issue("tags", "Månedsrække 'Udmeld slut' mangler " + ", ".join(_lang.get(m, m) for m in _udm_mangler), _udm_mangler)
 issue("tags", "Produkter peger på tag der ikke findes i tag-listen", missing_tag_refs)
 issue("trænere", "Hold kaldt 'uden træner' har alligevel navngiven ansvarlig", f"{len(udt)} hold, fx {udt[:2]}")
 issue("trænere", "Trænernavn ikke synligt på genererede hold (kun aktivitetens standard-ansvarlig, uden navn)",
@@ -819,11 +855,13 @@ for t, navn, beskr in TYPES:
 result = {
     "_meta": {
         "genereret_af": "analyse_holdtyper.py",
-        "kilde_snapshot": adgang["generated"],
+        "kilde_snapshot": SNAPSHOT_TXT,
+        "snapshot_kilde": SNAPSHOT_KILDE,
+        "ukendte_aktiviteter": UNKNOWN,
         "holdplan_vindue": [min(e["startTime"] for e in events), max(e["startTime"] for e in events)],
         "grid_vindue": [GRID_FROM, GRID_TO],
-        "belastning_vindue": [LOAD_FROM, adgang["generated"]],
-        "note": "Afledt af anonyme læsekald. Trænernavne er offentlige. Ingen medlemsdata.",
+        "belastning_vindue": [LOAD_FROM, SNAPSHOT_TXT],
+        "note": "Afledt af læsekald (kun GET). Trænernavne er offentlige. Ingen medlemsdata.",
     },
     "holdtyper": type_rows,
     "mapping": {aid: {"type": MAPPING[aid][0], "sikkerhed": MAPPING[aid][1], "note": MAPPING[aid][2]} for aid in all_aids},

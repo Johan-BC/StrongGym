@@ -4,8 +4,9 @@
    "2026-05-14",
    "2026-11-14"
   ],
+  "hentet": "2026-11-14T23:32",
   "genereret_af": "deltagelse.py",
-  "kald_i_alt_alle_koersler": 1967,
+  "kald_i_alt_alle_koersler": 1999,
   "koersler": [
    {
     "kald": 979,
@@ -21,10 +22,39 @@
      "200": 561,
      "404": 427
     }
+   },
+   {
+    "kald": 29,
+    "run": "2026-11-14T23:26:08",
+    "status": {
+     "200": 3,
+     "404": 26
+    }
+   },
+   {
+    "kald": 1,
+    "run": "2026-11-14T23:26:56",
+    "status": {
+     "200": 1
+    }
+   },
+   {
+    "kald": 1,
+    "run": "2026-11-14T23:29:46",
+    "status": {
+     "200": 1
+    }
+   },
+   {
+    "run": "2026-11-14T23:32:04",
+    "kald": 1,
+    "status": {
+     "200": 1
+    }
    }
   ],
-  "detaljekald_i_cache": 1398,
-  "heraf_404": 702,
+  "detaljekald_i_cache": 1424,
+  "heraf_404": 728,
   "note": "Kun antal - ingen navne, medlems-id'er eller andre personværdier."
  },
  "klassifikation": [
@@ -2282,7 +2312,7 @@
    "hold_med_mindst_et_fremmoede": 0
   }
  },
- "kontrol_nov_1_14": {
+ "kontrol_maaned_til_dato": {
   "afholdt": 46,
   "tilmeldte": 369,
   "snit_pr_hold": 8.02,

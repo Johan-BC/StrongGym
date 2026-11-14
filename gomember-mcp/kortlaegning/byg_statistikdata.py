@@ -4,6 +4,7 @@ Bygger ../../styring-statistik.json til fanen "Statistik" i styring.html.
 
     python3 deltagelse.py --offline   # (eller uden --offline) -> deltagelse.json
     python3 byg_statistikdata.py      # -> styring-statistik.json
+    python3 byg_statistikdata.py --force   # skriv selv om fornuftskontrollen mod forrige fil fejler
 
 Kører helt offline: læser kun deltagelse.json (+ holdtyper.json for navne og
 farver). Ingen kald til goMember, ingen persondata - kun antal pr. holdtype,
@@ -11,8 +12,13 @@ ugedag, tidspunkt, måned og uge. Ingen tal pr. træner.
 
 Alle tal regnes forfra ud fra rækkerne i deltagelse.json -> "hold" og
 kontrolleres mod de summer deltagelse.py selv har skrevet (i_alt, pr_type,
-pr_maaned, pr_uge, pr_fast_tid, top/bund). Stemmer noget ikke, stopper
-scriptet med en fejl, og der skrives ingen fil.
+pr_maaned, pr_uge, pr_fast_tid, top/bund), og summerne pr. ugedag, holdtype,
+tid, måned og uge skal give totalen. Stemmer noget ikke, stopper scriptet med
+en fejl, og der skrives ingen fil.
+
+Fornuftskontrol mod den forrige styring-statistik.json: ændrer antal afholdte
+hold eller tilmeldinger sig mere end 30 % (op eller ned), stopper scriptet
+(medmindre --force). Det fanger fx en halv hentning eller et skift i goMember.
 
 Regler (samme som DELTAGELSE.md):
 - Kun hold med klassifikation "afholdt" (mindst 1 tilmeldt) indgår i snit,
@@ -26,17 +32,22 @@ import datetime as dt
 import json
 import os
 import sys
+from zoneinfo import ZoneInfo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-SRC = os.path.join(HERE, "deltagelse.json")
-HOLDTYPER = os.path.join(HERE, "holdtyper.json")
-OUT = os.path.join(ROOT, "styring-statistik.json")
+sys.path.insert(0, HERE)
+import stier  # noqa: E402
+
+SRC = os.path.join(stier.KORTLAEG_DIR, "deltagelse.json")
+HOLDTYPER = os.path.join(stier.KORTLAEG_DIR, "holdtyper.json")
+OUT = os.path.join(stier.STYRING_UD, "styring-statistik.json")
+FORCE = "--force" in sys.argv
 
 WD = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
 FAST_MIN = 8        # en "fast tid" har mindst 8 afholdte hold i perioden (som deltagelse.py)
 FAA_HOLD = 4        # færre afholdte hold end dette = "få hold" (nedtonet i varmekortet)
-EXPECT = {"afholdt": 560, "tilmeldte": 4526}
+MAKS_AENDRING = 0.30  # fornuftskontrol mod forrige fil: maks +/-30 %
+FELTER = ("afholdt", "tilmeldte", "aflyst", "fuldt", "udeladt", "nul", "pladser")
 
 errors = []
 
@@ -103,8 +114,8 @@ def main():
     # ---------------- i alt
     tot = agg(rows)
     cross("i_alt", tot, d["i_alt"])
-    for k, v in EXPECT.items():
-        check(f"forventet {k}", tot[k], v)
+    if tot["afholdt"] == 0:
+        errors.append("0 afholdte hold i perioden")
     held = [r for r in rows if r["klassifikation"] == "afholdt"]
     tot["venteliste"] = sum(r["waitingList"] for r in held)
     tot["hold_med_venteliste"] = sum(1 for r in held if r["waitingList"] > 0)
@@ -130,7 +141,7 @@ def main():
         typer.append(dict(id=tid, navn=tnavn.get(tid, d["pr_type"].get(tid, {}).get("navn", tid)),
                           farve=tfarve.get(tid, "888888"), **a))
     typer.sort(key=lambda t: (-t["afholdt"], -t["tilmeldte"]))
-    for f in ("afholdt", "tilmeldte", "aflyst", "fuldt", "udeladt", "nul", "pladser"):
+    for f in FELTER:
         check(f"sum pr. type {f}", sum(t[f] for t in typer), tot[f])
 
     # ---------------- pr. ugedag
@@ -138,7 +149,7 @@ def main():
     for r in rows:
         by_wd[WD.index(r["ugedag"])].append(r)
     ugedage = [dict(i=i, navn=WD[i], **agg(by_wd[i])) for i in range(7)]
-    for f in ("afholdt", "tilmeldte", "aflyst", "fuldt", "udeladt", "nul", "pladser"):
+    for f in FELTER:
         check(f"sum pr. ugedag {f}", sum(u[f] for u in ugedage), tot[f])
 
     # ---------------- pr. ugedag x tidspunkt x holdtype (tidspunkt = holdets faktiske starttid)
@@ -158,7 +169,7 @@ def main():
     if len(tider) != len(d["pr_fast_tid"]):
         errors.append(f"antal tider {len(tider)} != {len(d['pr_fast_tid'])}")
     tider.sort(key=lambda s: (s["d"], s["t"], s["type"]))
-    for f in ("afholdt", "tilmeldte", "aflyst"):
+    for f in FELTER:
         check(f"sum pr. tid {f}", sum(s[f] for s in tider), tot[f])
 
     # Top / bund blandt faste tider (samme sortering som deltagelse.py)
@@ -200,7 +211,7 @@ def main():
         maaneder.append(dict(m=m, fra=first, til=last, delvis=partial,
                              fremmoede_hold=src["hold_med_fremmoede_registrering"],
                              fremmoede_pct=src["fremmoede_pct_af_tilmeldte"], **a))
-    for f in ("afholdt", "tilmeldte", "aflyst"):
+    for f in FELTER:
         check(f"sum pr. måned {f}", sum(m[f] for m in maaneder), tot[f])
 
     # ---------------- pr. uge (ISO)
@@ -220,29 +231,49 @@ def main():
         uger.append({"uge": n, "mandag": mon.isoformat(), "delvis": mon < d_fra or sun > d_til,
                      "afholdt": a["afholdt"], "tilmeldte": a["tilmeldte"], "snit": a["snit"],
                      "fyldning": a["fyldning"], "aflyst": a["aflyst"]})
-    check("sum pr. uge afholdt", sum(u["afholdt"] for u in uger), tot["afholdt"])
+    for f in FELTER:
+        check(f"sum pr. uge {f}", sum(agg(by_w[w])[f] for w in by_w), tot[f])
+    check("sum pr. uge afholdt (output)", sum(u["afholdt"] for u in uger), tot["afholdt"])
+    check("sum pr. uge tilmeldte (output)", sum(u["tilmeldte"] for u in uger), tot["tilmeldte"])
 
     # ---------------- fremmøde (kun som forklaring på hvorfor vi tæller tilmeldte)
     ia = d["i_alt"]
+    # Seneste måned med afholdte hold (feltnavnene nov_* er bevaret, så siden virker uændret)
+    sidste_m = max((m for m in d["pr_maaned"] if d["pr_maaned"][m].get("afholdt")), default=None)
     fremmoede = {
         "hold_med_registrering": ia["hold_med_fremmoede_registrering"],
         "afholdt": ia["afholdt"],
         "fremmoedte": ia["fremmoede_registreret"],
         "pct_af_tilmeldte": ia["fremmoede_pct_af_tilmeldte"],
-        "nov_hold_med_registrering": d["pr_maaned"].get("2026-11", {}).get("hold_med_fremmoede_registrering"),
-        "nov_afholdt": d["pr_maaned"].get("2026-11", {}).get("afholdt"),
+        "seneste_maaned": sidste_m,
+        "nov_hold_med_registrering": d["pr_maaned"].get(sidste_m, {}).get("hold_med_fremmoede_registrering"),
+        "nov_afholdt": d["pr_maaned"].get(sidste_m, {}).get("afholdt"),
         "tekst": "Fra maj til midt i oktober blev fremmøde registreret på de fleste hold, og ca. 9 ud af 10 "
                  "tilmeldte mødte op. Efter flytningen til Industrivej er det næsten holdt op. Derfor tæller "
                  "statistikken tilmeldte, ikke fremmødte.",
     }
 
+    # ---------------- fornuftskontrol mod forrige fil
+    advarsler = []
+    prev = stier.forrige("styring-statistik.json")
+    if prev and isinstance(prev.get("i_alt"), dict):
+        for f in ("afholdt", "tilmeldte"):
+            gl, ny = prev["i_alt"].get(f), tot[f]
+            if isinstance(gl, int) and gl > 0 and abs(ny - gl) / gl > MAKS_AENDRING:
+                msg = (f"{f} ændrer sig fra {gl} til {ny} ({100 * (ny - gl) / gl:+.0f} %) i forhold til "
+                       f"forrige styring-statistik.json - mere end {MAKS_AENDRING:.0%}")
+                (advarsler if FORCE else errors).append(msg)
+
     if errors:
         fail()
+    for a in advarsler:
+        print("ADVARSEL (--force):", a, file=sys.stderr)
 
     out = {
         "_om": "Samlede tal om deltagelse på hold, bygget offline af gomember-mcp/kortlaegning/byg_statistikdata.py "
                "ud fra deltagelse.json. Kun antal - ingen navne, medlems-id'er eller tal pr. træner.",
-        "bygget": dt.datetime.now().isoformat(timespec="minutes"),
+        # tidspunkt for hentningen (lokal tid), ellers byggetidspunktet
+        "bygget": d["_meta"].get("hentet") or dt.datetime.now(ZoneInfo("Europe/Copenhagen")).strftime("%Y-%m-%dT%H:%M"),
         "periode": {"fra": fra, "til": til},
         "regler": {"fast_tid_min_afholdt": FAST_MIN, "faa_hold_under": FAA_HOLD},
         "i_alt": tot,
@@ -277,7 +308,7 @@ def main():
 
 
 def fail():
-    print("FEJL: tallene stemmer ikke med deltagelse.json - der er ikke skrevet nogen fil.", file=sys.stderr)
+    print("FEJL: kontrollen af statistikken fejlede - der er ikke skrevet nogen fil.", file=sys.stderr)
     for e in errors:
         print("  -", e, file=sys.stderr)
     sys.exit(1)

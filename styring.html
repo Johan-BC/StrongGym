@@ -1054,7 +1054,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     var T = S.i_alt, P = S.periode;
     var dage = Math.round((toDate(P.til) - toDate(P.fra)) / 864e5) + 1;
     h += '<p class="lead">' + esc(fLong(P.fra)) + ' – ' + esc(fLong(P.til)) + ' (' + dage + ' dage, ca. 6 måneder). Alle tal er <strong>tilmeldte</strong>, ikke fremmødte: ' +
-      'fremmøde blev kun registreret på de fleste hold indtil flytningen midt i oktober, og i november kun på ' + esc(S.fremmoede.nov_hold_med_registrering) + ' af ' + esc(S.fremmoede.nov_afholdt) +
+      'fremmøde blev kun registreret på de fleste hold indtil flytningen midt i oktober, og i ' + esc(S.fremmoede.seneste_maaned ? MONTHS_LONG[+S.fremmoede.seneste_maaned.slice(5, 7) - 1] : 'november') + ' kun på ' + esc(S.fremmoede.nov_hold_med_registrering) + ' af ' + esc(S.fremmoede.nov_afholdt) +
       ' hold. Kun afholdte træningshold tæller med i snit og pladser; aflyste hold og hold uden tilmeldte står for sig.</p>';
 
     // Nøgletal

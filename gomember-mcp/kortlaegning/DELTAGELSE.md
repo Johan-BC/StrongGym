@@ -220,6 +220,6 @@ tilmeldte (POP UP WOD, opstartsweekenden 25.-27/9 m.fl.).
 
 | Fil | Indhold |
 |---|---|
-| `deltagelse.py` | Henter (med cache, 2 kald/s, loft 2.500 pr. kørsel) og regner. `--offline` bruger kun cachen. |
+| `deltagelse.py` | Henter (med cache, 2 kald/s, loft 2.500 pr. manuel kørsel) og regner for de seneste 6 måneder til i dag. `--offline` bruger kun cachen, `--dato`/`--plan` til test. Køres hver nat af `opdater.py`. |
 | `deltagelse_cache.json` | Afledte felter pr. hold-opslag og bookingantal - ingen personværdier. Slet for at hente forfra. |
 | `deltagelse.json` | Alle summer + én række pr. hold (dato, aktivitet, type, status, tilmeldte, fremmøde, pladser, venteliste, klassifikation). |

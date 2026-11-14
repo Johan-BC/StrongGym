@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Deltagelse pr. hold over de seneste 6 måneder (14/5 - 14/11 2026).
+Deltagelse pr. hold over de seneste 6 måneder (rullende: 6 måneder tilbage -> i dag).
 
 Bruger KUN GoMemberClient.get() (se ../CLAUDE.md) og kun disse GET-stier:
   /api/activity
@@ -8,8 +8,18 @@ Bruger KUN GoMemberClient.get() (se ../CLAUDE.md) og kun disse GET-stier:
   /api/activity/{activityId}/event/{eventId}
   /api/activity/{activityId}/event/{eventId}/bookings
 
-    python3 deltagelse.py            # henter det der mangler (cache) + skriver deltagelse.json
-    python3 deltagelse.py --offline  # ingen netkald, kun cache -> deltagelse.json
+    python3 deltagelse.py                    # henter det der mangler (cache) + skriver deltagelse.json
+    python3 deltagelse.py --offline          # ingen netkald, kun cache -> deltagelse.json
+    python3 deltagelse.py --dato 2026-11-14  # perioden regnes ud fra en anden dato
+    python3 deltagelse.py --plan             # tæl kun hvor mange kald en kørsel ville bruge
+
+Cache og friskhed (natlig kørsel via opdater.py):
+- Holdplanen hentes i hele kalendermåneder. En måned hentes igen, hvis den har
+  dage inden for de seneste 14 dage (eller lå i fremtiden, da den blev hentet).
+- Et hold (detaljekald/bookinger) hentes kun, hvis det ikke er i cachen, eller
+  hvis det ligger inden for de seneste 14 dage / lå i fremtiden, da det blev
+  hentet - og højst én gang pr. dag. Ældre hold er endelige og hentes aldrig igen.
+- Står holdet i en frisk holdplan, bruges den og der laves intet detaljekald.
 
 Persondata: booking-listerne indeholder navne/medlems-id'er. De reduceres til
 antal i hukommelsen med det samme (`_count_bookings`), og kun antallene gemmes
@@ -23,26 +33,25 @@ import datetime as dt
 import json
 import os
 import sys
-import time
 from zoneinfo import ZoneInfo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.dirname(HERE))
+sys.path.insert(0, HERE)
+import stier  # noqa: E402
 
-CACHE = os.path.join(HERE, "deltagelse_cache.json")
-OUT = os.path.join(HERE, "deltagelse.json")
-HOLDTYPER = os.path.join(HERE, "holdtyper.json")
+CACHE = OUT = HOLDTYPER = None   # sættes af configure()
 
 TZ = ZoneInfo("Europe/Copenhagen")
-WIN_FROM = dt.date(2026, 5, 14)
-WIN_TO = dt.date(2026, 11, 14)          # inklusiv
-NOW = dt.datetime(2026, 11, 14, 22, 0)  # lokal; alle hold 14/11 er afholdt
+WIN_FROM = WIN_TO = TODAY = NOW = None  # sættes af configure(): 6 måneder tilbage -> i dag
+FRISK_DAGE = 14       # hold nyere end dette kan stadig ændre sig og hentes igen
+LEGACY_H = "2026-11-14T21:54:20"  # cache-poster fra før friskheds-stemplet (første kørsel)
 
-MIN_INTERVAL = 0.5    # maks 2 kald pr. sekund
-HARD_CAP = 2500       # loft pr. kørsel
+HARD_CAP = 2500       # loft pr. manuel kørsel (natlig kørsel: opdater.py sætter 600 i alt)
 GAP_BUDGET = 500      # maks kald til at lede efter ukendte tidspunkter
 
-OFFLINE = "--offline" in sys.argv
+OFFLINE = False
+PLAN = False
+plan_count = collections.Counter()
 WD = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
 WD_TAG = {"mandag": 0, "tirsdag": 1, "onsdag": 2, "torsdag": 3, "fredag": 4, "lørdag": 5, "søndag": 6}
 
@@ -79,10 +88,73 @@ def load_cache():
     return {"activities": {}, "days": {}, "events": {}, "bookings": {}, "requests": []}
 
 
-cache = load_cache()
+cache = None
+H_NU = None   # friskheds-stempel for poster hentet i denne kørsel
+
+
+def months_before(d, n):
+    y, m = d.year, d.month - n
+    while m < 1:
+        y, m = y - 1, m + 12
+    last = (dt.date(y + (m == 12), m % 12 + 1, 1) - dt.timedelta(days=1)).day
+    return dt.date(y, m, min(d.day, last))
+
+
+def configure(idag, nu, hent=None, offline=False, plan=False, mappe=None):
+    """Sæt periode, stier og netlag. idag = sidste dag i perioden, nu = lokal tid (naiv)."""
+    global CACHE, OUT, HOLDTYPER, WIN_FROM, WIN_TO, TODAY, NOW, OFFLINE, PLAN, cache, _hent, H_NU
+    global n_requests, status_count
+    mappe = mappe or stier.KORTLAEG_DIR
+    CACHE = os.path.join(mappe, "deltagelse_cache.json")
+    OUT = os.path.join(mappe, "deltagelse.json")
+    HOLDTYPER = os.path.join(mappe, "holdtyper.json")
+    TODAY = idag
+    WIN_TO = idag
+    WIN_FROM = months_before(idag, 6)
+    NOW = nu
+    H_NU = nu.strftime("%Y-%m-%dT%H:%M:%S")
+    OFFLINE, PLAN = offline, plan
+    _hent = hent
+    n_requests = 0
+    status_count = collections.Counter()
+    plan_count.clear()
+    cache = load_cache()
+    # Ældre cache-format: holdplanen i bidder som ren liste -> {"h": ..., "events": [...]}
+    for k, v in list(cache["days"].items()):
+        if not k[8:10] == "01":
+            del cache["days"][k]      # ældre bidder, der ikke var hele måneder (bruges ikke længere)
+        elif isinstance(v, list):
+            cache["days"][k] = {"h": LEGACY_H, "events": v}
+
+
+def h_date(rec):
+    return dt.date.fromisoformat((rec.get("h") or LEGACY_H)[:10])
+
+
+def needs_refresh(rec, occ_date):
+    """Skal en cachet post for et hold på occ_date hentes igen?"""
+    if rec is None:
+        return True
+    if "nf" in rec:
+        return False            # "Event not found" ændrer sig ikke
+    if "err" in rec:
+        return True
+    h = h_date(rec)
+    if h >= TODAY:
+        return False            # allerede hentet i dag
+    return occ_date >= TODAY - dt.timedelta(days=FRISK_DAGE) or occ_date >= h
+
+
+def occ_date_of(eid):
+    try:
+        return dt.date(int(eid[:4]), int(eid[4:6]), int(eid[6:8]))
+    except ValueError:
+        return TODAY
 
 
 def save_cache():
+    if PLAN:
+        return
     tmp = CACHE + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(cache, f, ensure_ascii=False, indent=0, sort_keys=True)
@@ -90,8 +162,7 @@ def save_cache():
 
 
 # ---------------------------------------------------------------- netværk
-_client = None
-_last = 0.0
+_hent = None          # netlag.Hentning (rate limit, genforsøg, loft) - kun GET
 n_requests = 0
 status_count = collections.Counter()
 
@@ -101,27 +172,17 @@ class CapReached(RuntimeError):
 
 
 def get(path, query=None):
-    """Ét GET-kald via GoMemberClient med rate limit og loft. Returnerer (status, data)."""
-    global _client, _last, n_requests
+    """Ét GET-kald via netlag.Hentning -> GoMemberClient.get(). Returnerer (status, data).
+    404 returneres; andre fejl stopper kørslen (NetFejl) efter højst 2 genforsøg."""
+    global n_requests
     if OFFLINE:
         raise CapReached("offline")
-    if n_requests >= HARD_CAP:
-        raise CapReached("loft nået")
-    if _client is None:
-        from gomember_client import GoMemberClient
-        _client = GoMemberClient()
-    wait = MIN_INTERVAL - (time.time() - _last)
-    if wait > 0:
-        time.sleep(wait)
-    _last = time.time()
+    if PLAN:
+        plan_count["holdplan" if path.endswith("/event/days") else "bookinger" if path.endswith("/bookings")
+                   else "detalje" if "/event/" in path else path] += 1
+        return None, None
     n_requests += 1
-    try:
-        data = _client.get(path, query_params=query)
-        status = 200
-    except Exception:
-        r = _client.last_response
-        status = getattr(r, "status_code", None) or -1
-        data = None
+    status, data = _hent.get(path, query)
     status_count[status] += 1
     return status, data
 
@@ -153,11 +214,17 @@ def _slim(d):
 
 def event_detail(aid, eid):
     key = f"{aid}|{eid}"
-    if key in cache["events"]:
-        return cache["events"][key]
+    rec = cache["events"].get(key)
+    if OFFLINE:
+        return rec if rec is not None else {"nf": 1}   # offline: kun cachen (ukendt = ikke fundet)
+    if not needs_refresh(rec, occ_date_of(eid)):
+        return rec
     status, d = get(f"/api/activity/{aid}/event/{eid}")
+    if PLAN:
+        return {"plan": 1}
     if status == 200 and isinstance(d, dict):
         rec = _slim(d)
+        rec["h"] = H_NU
     elif status == 404:
         rec = {"nf": 1}
     else:
@@ -183,15 +250,19 @@ def _count_bookings(rows):
     return c
 
 
-def bookings(aid, eid):
+def bookings(aid, eid, occ_date):
     key = f"{aid}|{eid}"
-    if key in cache["bookings"]:
-        return cache["bookings"][key]
+    rec = cache["bookings"].get(key)
+    if OFFLINE or not needs_refresh(rec, occ_date):
+        return rec
     status, d = get(f"/api/activity/{aid}/event/{eid}/bookings", {"filter.pageSize": 200})
+    if PLAN:
+        return {}
     if status == 200:
         rows = d if isinstance(d, list) else (d or {}).get("items", []) if isinstance(d, dict) else []
         rec = _count_bookings(rows)
         rec["truncated"] = len(rows) >= 200
+        rec["h"] = H_NU
         del rows
     else:
         rec = {"err": status}
@@ -222,9 +293,11 @@ def collect():
     ht = json.load(open(HOLDTYPER, encoding="utf-8"))
     mapping = {k: v["type"] for k, v in ht["mapping"].items()}
 
-    # 1. aktivitetsliste
-    if not cache["activities"]:
+    # 1. aktivitetsliste (hentes hver gang: 1 kald; ældre aktiviteter bevares i cachen)
+    if not OFFLINE:
         st, acts = get("/api/activity")
+        if not PLAN and not isinstance(acts, list):
+            raise CapReached("aktivitetslisten havde et uventet format")
         for a in acts or []:
             wd_tags = sorted({WD_TAG[t["name"].lower()] for t in a.get("assignedTags", []) or []
                               if (t.get("name") or "").lower() in WD_TAG})
@@ -235,27 +308,47 @@ def collect():
             }
         save_cache()
 
-    # 2. holdplan for vinduet (månedsbidder)
-    months = [WIN_FROM, dt.date(2026, 6, 1), dt.date(2026, 7, 1), dt.date(2026, 8, 1), dt.date(2026, 9, 1),
-              dt.date(2026, 10, 1), dt.date(2026, 11, 1), WIN_TO + dt.timedelta(days=1)]
-    for a, b in zip(months, months[1:]):
+    # 2. holdplan for vinduet i hele kalendermåneder (faste cache-nøgler)
+    months = []
+    m = dt.date(WIN_FROM.year, WIN_FROM.month, 1)
+    while m <= WIN_TO:
+        nxt = dt.date(m.year + (m.month == 12), m.month % 12 + 1, 1)
+        months.append((m, nxt))
+        m = nxt
+    for a, b in months:
         k = f"{a}_{b}"
-        if k in cache["days"]:
+        rec = cache["days"].get(k)
+        if rec is not None:
+            h = h_date(rec)
+            last = b - dt.timedelta(days=1)
+            if h >= TODAY or (last < TODAY - dt.timedelta(days=FRISK_DAGE) and last < h):
+                continue
+        if OFFLINE:
             continue
         st, d = get("/api/activity/event/days", {"eventsToShow": 300, "fromOffset": f"{a}T00:00:00",
                                                  "toTime": f"{b}T00:00:00"})
+        if PLAN:
+            continue
+        if not isinstance(d, list):
+            raise CapReached(f"holdplanen for {a:%Y-%m} havde et uventet format")
         evs = []
         for day in d or []:
             for s in day.get("slots", []) or []:
                 evs.append(dict(_slim(s), activityId=s.get("activityId"), eventId=s.get("eventId")))
-        cache["days"][k] = evs
+        if len(evs) >= 300:
+            raise CapReached(f"holdplanen for {a:%Y-%m} ramte loftet på 300 hold")
+        cache["days"][k] = {"h": H_NU, "events": evs}
         save_cache()
     days_events = {}
-    for evs in cache["days"].values():
-        for e in evs:
+    for a, b in months:
+        rec = cache["days"].get(f"{a}_{b}")
+        for e in (rec or {}).get("events", []):
             st = parse_local(e["startTime"])
             if st and WIN_FROM <= st.date() <= WIN_TO:
-                days_events[f"{e['activityId']}|{e['eventId']}"] = e
+                days_events[f"{e['activityId']}|{e['eventId']}"] = dict(e, h=rec.get("h"))
+    # Holdplanens hold efter (aktivitet, lokal starttid) - så et frisk hold ikke kræver detaljekald
+    listed_local = {(k.split("|")[0], parse_local(e["startTime"]).strftime("%Y%m%d%H%M"))
+                    for k, e in days_events.items()}
 
     # 3. faste tider pr. aktivitet: fra holdtyper.json (nuværende plan) + holdplanen i vinduet
     slots = collections.defaultdict(set)   # aid -> {(weekday, "HHMM" lokal)}
@@ -282,6 +375,8 @@ def collect():
 
     def probe(aid, d, hhmm):
         """Prøv eventId = dato+lokal tid, derefter kendte forskydninger. Returnér eid ved fund."""
+        if (aid, d.strftime("%Y%m%d") + hhmm) in listed_local:
+            return "holdplan"     # står i holdplanen - ingen detaljekald nødvendige
         variants = [hhmm] + [hhmm_shift(hhmm, o) for o in sorted(offsets.get(aid, ()), key=abs)]
         for v in variants:
             eid = d.strftime("%Y%m%d") + v
@@ -348,12 +443,17 @@ def collect():
                     d = cands[len(cands) // 2]
                     for hhmm in sorted(day_times[wd]):
                         if gap_used >= GAP_BUDGET:
+                            if not OFFLINE and not PLAN:
+                                print(f"Bemærk: budgettet på {GAP_BUDGET} kald til at lede efter ukendte "
+                                      "tidspunkter er brugt; resten afsøges ved næste kørsel.")
                             break
                         for off in (0, -60, -120):
                             eid = d.strftime("%Y%m%d") + hhmm_shift(hhmm, off)
                             fresh = f"{aid}|{eid}" not in cache["events"]
                             rec = event_detail(aid, eid)
                             gap_used += fresh
+                            if "plan" in rec:
+                                break
                             if "nf" not in rec and "err" not in rec:
                                 st = parse_local(rec["startTime"])
                                 gap_found[f"{aid}|{eid}"] = [st.weekday(), st.strftime("%H%M"), off]
@@ -372,18 +472,31 @@ def collect():
                 probe(aid, d, hhmm)
             save_cache()
 
-    # 6. bookinger for alle afholdte hold med tilmeldte
-    for key, rec in list(cache["events"].items()) + [(k, v) for k, v in days_events.items()]:
-        if "nf" in rec or "err" in rec:
-            continue
+    # 6. bookinger for alle afholdte hold med tilmeldte (samme hold, nyeste kilde vinder)
+    for key, rec in merged_occurrences(days_events).items():
         st = parse_local(rec["startTime"])
         if not (WIN_FROM <= st.date() <= WIN_TO) or st > NOW:
             continue
-        if (rec.get("booked") or 0) > 0 or (rec.get("waitingList") or 0) > 0:
+        if ((rec.get("booked") or 0) > 0 or (rec.get("waitingList") or 0) > 0
+                or key in cache["bookings"]):
             aid, eid = key.split("|")
-            bookings(aid, eid)
+            bookings(aid, eid, st.date())
     save_cache()
     return ht, mapping, days_events, slots
+
+
+def merged_occurrences(days_events):
+    """Alle kendte hold: detaljekald + holdplan. Er et hold i begge, vinder den nyeste hentning
+    (ved lige gammel: holdplanen - tallene er de samme, se DELTAGELSE.md)."""
+    occ = {}
+    for key, rec in cache["events"].items():
+        if "nf" in rec or "err" in rec or "startTime" not in rec:
+            continue
+        occ[key] = rec
+    for key, e in days_events.items():
+        if key not in occ or (e.get("h") or LEGACY_H) >= (occ[key].get("h") or LEGACY_H):
+            occ[key] = e
+    return occ
 
 
 # ---------------------------------------------------------------- analyse
@@ -412,13 +525,7 @@ def analyse(ht, mapping, days_events, slots):
     acts = cache["activities"]
     typ_name = {h["id"]: h["navn"] for h in ht["holdtyper"]}
     typ_name.update({"andet": "Andet (fx fodbold)"})
-    occ = {}
-    for key, rec in cache["events"].items():
-        if "nf" in rec or "err" in rec:
-            continue
-        occ[key] = rec
-    for key, e in days_events.items():
-        occ.setdefault(key, e)
+    occ = merged_occurrences(days_events)
     rows = []
     for key, rec in occ.items():
         aid, eid = key.split("|")
@@ -497,7 +604,8 @@ def analyse(ht, mapping, days_events, slots):
     per_month = {k: agg(v) for k, v in sorted(group(lambda r: r["dato"][:7]).items())}
     per_week = {k: agg(v) for k, v in sorted(group(
         lambda r: dt.date.fromisoformat(r["dato"]).strftime("%G-U%V")).items())}
-    nov = [r for r in rows if "2026-11-01" <= r["dato"] <= "2026-11-14" and r["capacity"]
+    m0 = WIN_TO.replace(day=1).isoformat()
+    nov = [r for r in rows if m0 <= r["dato"] <= WIN_TO.isoformat() and r["capacity"]
            and r["klassifikation"] != "ikke_traening"]
     nov_check = agg(nov)
     total = agg([r for r in rows if r["klassifikation"] != "ikke_traening"])
@@ -508,28 +616,19 @@ def analyse(ht, mapping, days_events, slots):
                                       for k, n in sorted(cls_count.items())])
 
 
-def main():
+def koer():
+    """Hent (efter configure()) og skriv deltagelse.json. Returnerer en kort opsummering.
+    Netværksfejl (netlag.NetFejl) og CapReached sendes videre til kalderen."""
     # Ældre cache-versioner gemte aflysningsteksten - erstat med kategori.
-    for rec in list(cache["events"].values()) + [e for evs in cache["days"].values() for e in evs]:
+    for rec in list(cache["events"].values()) + [e for v in cache["days"].values() for e in v["events"]]:
         if "cancellationMessage" in rec:
             rec["cancelReason"] = cancel_reason(rec.pop("cancellationMessage"))
-    try:
-        ht, mapping, days_events, slots = collect()
-    except CapReached as e:
-        print("Stoppet:", e)
-        save_cache()
-        if not OFFLINE:
-            raise
-        ht = json.load(open(HOLDTYPER, encoding="utf-8"))
-        mapping = {k: v["type"] for k, v in ht["mapping"].items()}
-        days_events = {}
-        for evs in cache["days"].values():
-            for e in evs:
-                days_events[f"{e['activityId']}|{e['eventId']}"] = e
-        slots = {}
+    ht, mapping, days_events, slots = collect()
+    if PLAN:
+        return {"plan": dict(plan_count), "kald": sum(plan_count.values())}
     if n_requests:
-        cache["requests"].append({"run": dt.datetime.now().isoformat(timespec="seconds"),
-                                  "kald": n_requests, "status": dict(status_count)})
+        cache["requests"].append({"run": H_NU, "kald": n_requests,
+                                  "status": {str(k): v for k, v in status_count.items()}})
         save_cache()
     rows, ag = analyse(ht, mapping, days_events, slots)
     # Faste tider = mindst 8 afholdte hold i vinduet (engangshold/flyttede hold tæller ikke som fast tid)
@@ -542,9 +641,10 @@ def main():
     out = {
         "_meta": {
             "vindue": [WIN_FROM.isoformat(), WIN_TO.isoformat()],
+            "hentet": NOW.strftime("%Y-%m-%dT%H:%M"),
             "genereret_af": "deltagelse.py",
             "kald_i_alt_alle_koersler": sum(r["kald"] for r in cache["requests"]),
-            "koersler": cache["requests"],
+            "koersler": cache["requests"][-30:],
             "detaljekald_i_cache": len(probes), "heraf_404": nf,
             "note": "Kun antal - ingen navne, medlems-id'er eller andre personværdier.",
         },
@@ -555,15 +655,49 @@ def main():
         "pr_fast_tid": ag["per_slot"],
         "pr_maaned": ag["per_month"],
         "pr_uge": ag["per_week"],
-        "kontrol_nov_1_14": ag["nov_check"],
+        "kontrol_maaned_til_dato": ag["nov_check"],
         "top_10_faste_tider": top10,
         "bund_10_faste_tider": bund10,
         "hold": rows,
     }
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
-    print(f"kald denne kørsel: {n_requests} {dict(status_count)}; hold i vinduet: {len(rows)}")
-    print("klassifikation:", ag["klassifikation"])
+    return {"kald": n_requests, "status": dict(status_count), "hold": len(rows),
+            "afholdt": ag["total"]["afholdt"], "tilmeldte": ag["total"]["tilmeldte"],
+            "klassifikation": ag["klassifikation"]}
+
+
+def main():
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--offline", action="store_true", help="ingen netkald, kun cachen")
+    ap.add_argument("--plan", action="store_true", help="tæl kun de kald en kørsel ville lave (skriver intet)")
+    ap.add_argument("--dato", help="sidste dag i perioden (YYYY-MM-DD); standard: i dag")
+    a = ap.parse_args()
+    nu = dt.datetime.now(TZ).replace(tzinfo=None, microsecond=0)
+    if a.dato:
+        idag = dt.date.fromisoformat(a.dato)
+        nu = dt.datetime.combine(idag, dt.time(23, 59)) if idag < nu.date() else dt.datetime.combine(idag, nu.time())
+    else:
+        idag = nu.date()
+    hent = None
+    if not a.offline and not a.plan:
+        from netlag import Hentning
+        hent = Hentning(loft=HARD_CAP, anonym=False)
+    configure(idag, nu, hent=hent, offline=a.offline, plan=a.plan)
+    try:
+        res = koer()
+    except CapReached as e:
+        save_cache()
+        sys.exit(f"Stoppet: {e}")
+    except Exception as e:  # netlag.NetFejl m.fl.: gem det hentede, så næste kørsel kan fortsætte
+        save_cache()
+        sys.exit(f"FEJL: {e}")
+    if a.plan:
+        print(f"Plan for {idag} (periode {WIN_FROM}..{WIN_TO}): ca. {res['kald']} kald {res['plan']}")
+        return
+    print(f"kald denne kørsel: {res['kald']} {res['status']}; hold i vinduet: {res['hold']}")
+    print("klassifikation:", res["klassifikation"])
 
 
 if __name__ == "__main__":

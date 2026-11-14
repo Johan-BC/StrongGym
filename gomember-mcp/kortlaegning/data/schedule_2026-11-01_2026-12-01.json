@@ -3450,7 +3450,7 @@
     "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 12,
+    "booked": 11,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -3463,33 +3463,35 @@
     "hideFromOverview": false,
     "onlyLoggedIn": false,
     "locationName": "",
-    "maxAttendees": 12,
+    "maxAttendees": 20,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-11-15T07:00:00Z",
     "name": "WOD Søndag 0800",
     "onlineSignup": true,
     "price": 0.0,
     "rules": "",
     "responsible": [
      {
-      "displayName": "Thomas Ronne"
+      "displayName": "Peter Alexander Schougaard"
      }
     ],
     "signUpDeadline": "2026-11-15T07:00:00Z",
     "signupOpen": false,
     "startTime": "2026-11-15T08:00:00",
     "formDefinition": [],
-    "status": "booked",
+    "status": "scheduled",
     "invitationMedia": "sms",
     "inviteMembers": {
      "_count": 0
     },
     "inviteTags": [],
-    "waitingList": 2,
+    "waitingList": 0,
     "reservations": 0,
     "startTimeUtc": "2026-11-15T07:00:00Z",
     "endTimeUtc": "2026-11-15T08:00:00Z",
+    "meetTimeUtc": "2026-11-15T07:00:00Z",
     "signUpDeadlineUtc": "2026-11-15T07:00:00Z",
-    "registerAttendance": true,
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -3499,7 +3501,7 @@
     "isParent": false,
     "sequence": "Activity2517743103297333604",
     "createdTs": "2025-12-17T03:48:19.3175091Z",
-    "modifiedTs": "2026-11-14T12:12:27.0413288Z",
+    "modifiedTs": "2026-11-14T21:59:34.8629192Z",
     "tagsAssigned": [
      "Tag2",
      "Tag2517986616748194159"
@@ -3508,9 +3510,10 @@
    {
     "activityHasPrice": false,
     "activityId": "Activity2516140240740267054",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 7,
+    "booked": 5,
     "color": "66bb6a",
     "description": "<p>Den lange søndags WOD </p>\n<p>selve workout er 60 min. </p>",
     "isSuperEvent": false,
@@ -3522,16 +3525,19 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
     "name": "Lang WOD",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Peter Alexander Schougaard"
      }
     ],
+    "signUpDeadline": "2026-11-15T08:00:00Z",
     "signupOpen": false,
     "startTime": "2026-11-15T09:00:00",
     "formDefinition": [],
@@ -3545,7 +3551,8 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-15T08:00:00Z",
     "endTimeUtc": "2026-11-15T09:30:00Z",
-    "registerAttendance": true,
+    "signUpDeadlineUtc": "2026-11-15T08:00:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -3555,7 +3562,7 @@
     "isParent": false,
     "sequence": "Activity2516140240740267054",
     "createdTs": "2026-09-01T15:32:06.4420422Z",
-    "modifiedTs": "2026-09-01T15:32:06.4420422Z",
+    "modifiedTs": "2026-11-14T21:59:07.1658634Z",
     "tagsAssigned": [
      "Tag2"
     ]
@@ -3796,7 +3803,7 @@
     "activityId": "Activity2516363572535700946",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 10,
+    "booked": 11,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -3973,7 +3980,7 @@
     "activityId": "Activity2516088149026514920",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 8,
+    "booked": 9,
     "color": "9ccc65",
     "description": "<p>Dagens WOD</p>",
     "isSuperEvent": false,
@@ -4625,7 +4632,7 @@
      "_count": 0
     },
     "inviteTags": [],
-    "waitingList": 3,
+    "waitingList": 4,
     "reservations": 0,
     "startTimeUtc": "2026-11-19T15:30:00Z",
     "endTimeUtc": "2026-11-19T16:30:00Z",
@@ -4773,7 +4780,7 @@
     "activityId": "Activity2517743106713615054",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 3,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -5007,7 +5014,7 @@
     "activityId": "Activity2517743104814044562",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 3,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,

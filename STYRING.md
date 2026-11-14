@@ -51,8 +51,9 @@ glemme noget.
 - Den viser **ingen medlemsdata** (antal medlemmer, bero, udmeldelser,
   no-shows). Det kræver et login, som ikke er sat op og afprøvet endnu.
   Siden viser tomme felter mærket "afventer login" og ingen opdigtede tal.
-- Dataene er et **øjebliksbillede** fra 14. nov. 2026 kl. 20:37. Siden
-  regner den dato som "i dag".
+- Dataene er et **øjebliksbillede** fra det tidspunkt, de sidst blev hentet
+  (står øverst på siden). Siden regner den dato som "i dag". De kan opdateres
+  automatisk hver nat med én kommando (se "Automatisk opdatering").
 - Kladden ligger kun i den browser, den er lavet i. Den deles ikke mellem
   personer.
 - Det er ikke muligt at slette hold eller aktiviteter. Det skal heller ikke
@@ -103,15 +104,58 @@ uden). Eksport som JSON sker med en lokal download i browseren.
 
 1. `python3 deltagelse.py` henter deltagelsen fra goMember (kun læsekald,
    med cache) og skriver `deltagelse.json`. `--offline` bruger kun cachen.
-   Perioden står i toppen af scriptet (`WIN_FROM`/`WIN_TO`).
+   Perioden er de seneste 6 måneder til i dag (`--dato ÅÅÅÅ-MM-DD` for en
+   anden dato, `--plan` tæller kun hvor mange kald en kørsel ville bruge).
 2. `python3 byg_statistikdata.py` regner tallene forfra ud fra holdene i
    `deltagelse.json`, kontrollerer dem mod summerne i samme fil og skriver
-   `styring-statistik.json` (ca. 19 KB). Stemmer noget ikke, stopper den med
-   en fejl og skriver ingen fil. Kontrollen af de faste totaler (560 hold,
-   4.526 tilmeldte) i `EXPECT` skal rettes, når perioden ændres.
+   `styring-statistik.json` (ca. 19 KB). Stemmer noget ikke, eller har tallene
+   flyttet sig mere end 30 % siden forrige fil, stopper den med en fejl og
+   skriver ingen fil (`--force` tillader et stort spring).
 
 Regler og forbehold for tallene står i `gomember-mcp/kortlaegning/DELTAGELSE.md`
 og i fanen under "Sådan er tallene lavet".
+
+### Automatisk opdatering
+
+Alle tre datafiler opdateres med én kommando, der er lavet til at køre af sig
+selv hver nat (fx fra cron på en maskine med login-oplysningerne sat):
+
+```
+python3 gomember-mcp/kortlaegning/opdater.py          # "i dag" = dags dato (dansk tid)
+python3 gomember-mcp/kortlaegning/opdater.py --dato 2026-11-15   # kun til test
+```
+
+**Hvad den henter** (kun læsning, alt gennem `GoMemberClient.get()`):
+
+1. Holdplanen 8 uger tilbage og 8 uger frem, aktivitetslisten, etiketterne og
+   medlemskaberne (ca. 8 kald, `holdplan.py`). Den store kortlægning
+   (`kortlaeg.py`, ca. 100 adresser i goMember) køres ikke om natten.
+2. Medlemslisten, talt op til antal med det samme (2 kald).
+3. Deltagelsen de seneste 6 måneder. Gamle hold ligger gemt i en cache og
+   hentes aldrig igen. Kun hold fra de seneste 14 dage, nye hold og hold der
+   lå i fremtiden sidst, hentes igen. En normal nat er ca. 50-60 kald; i alt
+   ca. 65 kald og under et minut.
+
+Derefter regnes `styring-data.json`, `styring-medlemmer.json` og
+`styring-statistik.json` ud uden at kontakte goMember.
+
+**Sikkerhed og kontroller:**
+
+- Alt bygges først i en midlertidig mappe. Filerne skiftes kun ud, hvis
+  **alle** trin og kontroller er gået igennem. Ellers røres intet, der skrives
+  en kort dansk forklaring, og kommandoen slutter med fejlkode 1.
+- Højst 2 kald i sekundet, 30 sekunders ventetid, højst 2 nye forsøg ved
+  fejl hos goMember, og et loft på 600 kald pr. kørsel. Et login, der fejler,
+  prøves ikke igen (så kontoen ikke bliver låst).
+- Kontroller: der skal være hold de næste 7 dage; antal medlemmer må højst
+  ændre sig 25 % og antal afholdte hold/tilmeldinger højst 30 % i forhold til
+  forrige fil (`--force` tillader det); alle summer i statistikken skal passe
+  sammen; tal på 1-2 vises stadig som "<3".
+- En ny aktivitet, som holdtype-opdelingen ikke kender, stopper ikke
+  kørslen. Den vises som "Ukendt (ny aktivitet)" og nævnes i opsummeringen,
+  så nogen kan placere den i `analyse_holdtyper.py`.
+- Ingen navne, medlemsnumre, tokens eller adgangskoder skrives ud.
+  Trænernavne på holdene er offentlige og gemmes kun som navn.
 
 ## 2. Fra 39 aktiviteter til 10 holdtyper
 
@@ -268,8 +312,8 @@ udvides med skrivemetoder. Forslaget respekterer det.
 1. **Nu:** brug prototypen internt (lokalt eller på en ikke-linket,
    beskyttet adresse) til overblik og tjeklister. Lav juleaflysningerne
    manuelt ud fra tjeklisten.
-2. **Opdatér data jævnligt:** kør de skrivebeskyttede snapshots og
-   `byg_styringsdata.py` dagligt. Det giver også en belægningshistorik.
+2. **Opdatér data jævnligt:** kør `opdater.py` hver nat (se "Automatisk
+   opdatering"). Det giver også en belægningshistorik.
 3. **Login:** kør `check_auth.py` med den skrivebeskyttede testkonto og
    bekræft, hvad den kan læse.
 4. **Adgangskontrol:** læg siden bag login, før der kommer medlemsdata på.
