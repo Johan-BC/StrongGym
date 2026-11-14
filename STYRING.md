@@ -4,7 +4,9 @@
 goMember er ændret eller slettet.*
 
 Filer: `styring.html` (siden), `styring-data.json` (data),
-`gomember-mcp/kortlaegning/byg_styringsdata.py` (bygger data).
+`gomember-mcp/kortlaegning/byg_styringsdata.py` (bygger data),
+`styring-statistik.json` (deltagelsesstatistik, bygget af
+`gomember-mcp/kortlaegning/byg_statistikdata.py`).
 
 ---
 
@@ -29,6 +31,13 @@ glemme noget.
 - **Holdtyper:** de 10 typer, deres faste tider, hvor mange
   goMember-aktiviteter der ligger bag, og hvor indstillingerne er forskellige.
   Med én knap kan man rette noget for alle hold af en type.
+- **Statistik:** hvor mange der har været tilmeldt, på hvilke hold og på
+  hvilke dage de sidste 6 måneder (14. maj – 14. nov. 2026): nøgletal,
+  pr. ugedag, et varmekort over ugedag × tidspunkt, pr. holdtype, holdtype ×
+  dag, udvikling pr. måned og uge, og de mest og mindst fyldte faste hold.
+  Tallene er **tilmeldte, ikke fremmødte**, fordi fremmøde næsten ikke er
+  registreret siden flytningen i oktober. Kun samlede antal - ingen navne
+  og ingen tal pr. træner.
 - **Rettelser (kladde):** alle rettelser samles i en liste: skift træner,
   aflys, ændr pladser, flyt tid, venteliste til/fra, fremmøde til/fra og
   omdøb. Gælder for ét hold, for dette og de fremtidige hold på samme tid
@@ -71,6 +80,7 @@ glemme noget.
 
 ```
 python3 gomember-mcp/kortlaegning/byg_styringsdata.py   # bygger styring-data.json (offline)
+python3 gomember-mcp/kortlaegning/byg_statistikdata.py   # bygger styring-statistik.json (offline)
 python3 -m http.server 8000                               # i repo-roden
 # åbn http://localhost:8000/styring.html
 ```
@@ -79,13 +89,29 @@ Siden er én fil uden byggetrin og uden eksterne JavaScript-biblioteker.
 Skrifttyperne hentes fra Google Fonts som på hjemmesiden. Siden har
 `noindex`, og der er ingen link til den fra `index.html`.
 
-**Netværk:** siden laver præcis to datakald: `GET styring-data.json` og
+**Netværk:** siden laver præcis tre datakald: `GET styring-data.json`,
 `GET styring-medlemmer.json` (samlede medlemstal, bygget af
 `gomember-mcp/kortlaegning/byg_medlemsstatistik.py`; mangler filen, viser
-Medlemmer "afventer login").
+Medlemmer "afventer login") og `GET styring-statistik.json` (mangler filen,
+viser Statistik "Statistikken er ikke bygget endnu"; resten af siden
+virker).
 Den indeholder ingen anden `fetch`, `XMLHttpRequest`, `sendBeacon` eller
 formular-afsendelse. Rettelser gemmes i `localStorage` (siden virker også
 uden). Eksport som JSON sker med en lokal download i browseren.
+
+**Statistik opdateres** i to trin i `gomember-mcp/kortlaegning`:
+
+1. `python3 deltagelse.py` henter deltagelsen fra goMember (kun læsekald,
+   med cache) og skriver `deltagelse.json`. `--offline` bruger kun cachen.
+   Perioden står i toppen af scriptet (`WIN_FROM`/`WIN_TO`).
+2. `python3 byg_statistikdata.py` regner tallene forfra ud fra holdene i
+   `deltagelse.json`, kontrollerer dem mod summerne i samme fil og skriver
+   `styring-statistik.json` (ca. 19 KB). Stemmer noget ikke, stopper den med
+   en fejl og skriver ingen fil. Kontrollen af de faste totaler (560 hold,
+   4.526 tilmeldte) i `EXPECT` skal rettes, når perioden ændres.
+
+Regler og forbehold for tallene står i `gomember-mcp/kortlaegning/DELTAGELSE.md`
+og i fanen under "Sådan er tallene lavet".
 
 ## 2. Fra 39 aktiviteter til 10 holdtyper
 

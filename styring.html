@@ -87,7 +87,7 @@ h3{font-size:1.35rem;margin:1.5rem 0 0.6rem}
 table.plain{width:100%;border-collapse:collapse;font-size:0.84rem}
 table.plain th,table.plain td{text-align:left;padding:0.35rem 0.5rem;border-bottom:1px solid var(--border);vertical-align:top}
 table.plain th{color:var(--muted);font-weight:400}
-.tablewrap{overflow-x:auto;max-width:100%}
+.tablewrap{overflow-x:auto;max-width:100%;position:relative}
 
 /* ---------- Uge ---------- */
 .weekbar{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-bottom:0.9rem}
@@ -179,6 +179,94 @@ textarea{width:100%;min-height:10rem;font-family:ui-monospace,Menlo,Consolas,mon
 .defs dd{color:var(--muted);margin-bottom:0.25rem}
 .num{text-align:right!important;font-variant-numeric:tabular-nums}
 
+/* ---------- Statistik ---------- */
+.st-sec{margin-top:2rem}
+.st-sec > h3{margin-top:0}
+.st-note{color:var(--muted);font-size:0.85rem;margin:-0.2rem 0 0.75rem;max-width:52rem}
+.st-two{display:grid;grid-template-columns:minmax(0,1fr);gap:0.75rem}
+@media (min-width:900px){.st-two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.st-stats .stat .v{font-size:2.1rem}
+/* vandrette søjler (pr. dag) */
+.hbars{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:0.45rem 0.6rem;align-items:center;font-size:0.86rem}
+.hbars .lb{color:var(--fg)}
+.hbars .tr{height:1.05rem;background:#2a2a2a;border-radius:3px;overflow:hidden}
+.hbars .tr i{display:block;height:100%;background:var(--primary);border-radius:3px 0 0 3px}
+.hbars .vl{font-variant-numeric:tabular-nums;text-align:right;min-width:2.6rem}
+.hbars .vl small{color:var(--muted);font-size:0.74rem;margin-left:0.25rem}
+.hbars .best .vl{color:var(--primary2);font-weight:500}
+/* lille fyldningssøjle i tabeller */
+.minibar{display:flex;align-items:center;gap:0.45rem;min-width:7.5rem}
+.minibar .bar{flex:1;margin:0;height:7px;min-width:3rem}
+.minibar span{font-variant-numeric:tabular-nums;min-width:2.6rem;text-align:right}
+table.plain tfoot td,table.plain tfoot th{border-top:1px solid var(--border2);border-bottom:none;font-weight:500;color:var(--fg)}
+table.plain td.nw,table.plain th.nw{white-space:nowrap}
+.tdot{display:inline-flex;align-items:center;gap:0.4rem;white-space:nowrap}
+/* varmekort dag x tidspunkt */
+table.hm{width:100%;border-collapse:separate;border-spacing:4px;table-layout:fixed;font-size:0.78rem}
+table.hm th{font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:0.06em;font-size:1rem;color:var(--muted);padding:0.15rem 0.2rem;border-bottom:1px solid var(--border)}
+table.hm th.tm{font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0;text-align:right;vertical-align:top;padding-top:0.4rem;border:none;width:3.4rem;font-variant-numeric:tabular-nums}
+table.hm td{vertical-align:top;padding:0}
+table.hm col.tcol{width:3.6rem}
+.hs{--tc:var(--primary);border:1px solid var(--border);border-left:4px solid var(--tc);border-radius:0.35rem;padding:0.3rem 0.4rem 0.35rem 0.45rem;line-height:1.25;color:var(--fg);display:grid;gap:0.05rem;min-width:0}
+.hs + .hs{margin-top:4px}
+.hs .ty{font-weight:500;overflow-wrap:anywhere}
+.hs .av{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:0.03em;line-height:1}
+.hs .av small{font-family:'DM Sans',sans-serif;font-size:0.7rem;letter-spacing:0;margin-left:0.2rem}
+.hs .mt{font-size:0.72rem;font-variant-numeric:tabular-nums}
+.hs.f0{background:rgba(212,168,67,0.05)}
+.hs.f1{background:rgba(212,168,67,0.17)}
+.hs.f2{background:rgba(212,168,67,0.30)}
+.hs.f3{background:rgba(212,168,67,0.46)}
+.hs.f4{background:#d9b04d;color:#111;border-color:#d9b04d}
+.hs.few{background:transparent;border-style:dashed;border-left-style:solid;color:var(--muted)}
+.hs.few .av{font-size:1.15rem}
+.hs .fb{display:inline-block;font-size:0.66rem;font-weight:500;padding:0 0.3rem;border-radius:0.25rem;border:1px dashed #6b665e;color:#c9c3b8;margin-left:0.2rem;vertical-align:1px}
+.hmleg{display:flex;flex-wrap:wrap;gap:0.4rem 0.9rem;font-size:0.78rem;color:var(--muted);margin:0 0 0.7rem}
+.hmleg span{display:inline-flex;align-items:center;gap:0.35rem}
+.hmleg i{display:inline-block;width:1.4rem;height:0.9rem;border-radius:0.2rem;border:1px solid var(--border2)}
+.hmlist{display:none}
+.hmlist .day{margin-bottom:0.9rem}
+.hmlist h4{font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:0.05em;font-size:1.2rem;margin:0.3rem 0 0.35rem}
+.hmlist ul{list-style:none;display:grid;gap:4px}
+.hmlist .hs{grid-template-columns:3.2rem minmax(0,1fr) auto;column-gap:0.6rem;align-items:center;font-size:0.84rem}
+.hmlist .hs .tt{font-variant-numeric:tabular-nums;font-weight:500}
+.hmlist .hs .av{text-align:right;font-size:1.4rem}
+.hmlist .hs .mt{grid-column:2 / 4}
+@media (max-width:860px){table.hm{display:none}.hmlist{display:block}}
+/* matrix holdtype x dag */
+table.mx td.c{text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.mx th.c{text-align:center}
+table.mx td.c small{display:block;color:var(--muted);font-size:0.7rem;line-height:1.1}
+table.mx td.none{color:#5f5b55;text-align:center}
+/* lodrette søjler (måned / uge) */
+.vbars{display:grid;gap:4px;align-items:end;height:150px;border-bottom:1px solid var(--border2)}
+.vbars .mcol .b.part{background:repeating-linear-gradient(135deg,var(--primary) 0 4px,rgba(212,168,67,0.45) 4px 8px)}
+.vlabs{display:grid;gap:4px;margin-top:0.25rem}
+.vlabs span{font-size:0.7rem;color:var(--muted);text-align:center;line-height:1.2;overflow:hidden;white-space:nowrap}
+.vlabs span b{display:block;font-weight:400;color:#8f897f;font-size:0.64rem}
+.wbars{height:110px}
+.wbars .mcol .b{border-radius:2px 2px 0 0}
+.wbars .mcol .b.dip{background:var(--warn)}
+.wbars .mcol .val{font-size:0.62rem}
+@media (max-width:640px){.wbars .mcol .val{display:none}.wbars .mcol .val.keep{display:block;overflow:visible}}
+.wlabs span{overflow:visible}
+@media (max-width:520px){.minibar{min-width:0}.minibar .bar{display:none}.minibar span{min-width:0}}
+.chart-note{font-size:0.78rem;color:var(--muted);margin-top:0.5rem}
+.chart-note .k{display:inline-block;width:0.8rem;height:0.8rem;border-radius:0.15rem;vertical-align:-0.1rem;margin-right:0.25rem}
+/* top / bund */
+ol.rank{list-style:none;display:grid;gap:0.45rem;counter-reset:r}
+ol.rank li{counter-increment:r;display:grid;grid-template-columns:1.4rem minmax(0,1fr) auto;gap:0.1rem 0.6rem;align-items:baseline;border-top:1px solid var(--border);padding-top:0.45rem}
+ol.rank li:first-child{border-top:none;padding-top:0}
+ol.rank li::before{content:counter(r) ".";color:var(--muted);font-variant-numeric:tabular-nums}
+ol.rank .n{font-weight:500}
+ol.rank .s{grid-column:2 / 4;font-size:0.78rem;color:var(--muted)}
+ol.rank .av{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;letter-spacing:0.03em}
+ol.rank .av small{font-family:'DM Sans',sans-serif;font-size:0.7rem;color:var(--muted);letter-spacing:0;margin-left:0.2rem}
+details.how{margin-top:2rem}
+details.how > summary{cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:0.04em;color:var(--primary2)}
+details.how ul{margin:0.4rem 0 0.4rem 1.1rem;font-size:0.86rem;display:grid;gap:0.3rem}
+details.how h4{font-weight:500;font-size:0.92rem;margin:1rem 0 0.3rem}
+
 /* ---------- Rettelser ---------- */
 .groups{list-style:none;display:grid;grid-template-columns:minmax(0,1fr);gap:0.75rem}
 .group{background:var(--card);border:1px dashed var(--primary);border-radius:var(--radius);padding:0.85rem 1rem}
@@ -248,6 +336,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   <button type="button" data-view="overblik">Overblik</button>
   <button type="button" data-view="uge">Uge</button>
   <button type="button" data-view="holdtyper">Holdtyper</button>
+  <button type="button" data-view="statistik">Statistik</button>
   <button type="button" data-view="medlemmer">Medlemmer</button>
   <button type="button" data-view="rettelser">Rettelser<span class="count-pill" id="draftCount">0</span></button>
 </nav>
@@ -257,6 +346,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   <section class="view" id="v-overblik" hidden aria-labelledby="h-overblik"></section>
   <section class="view" id="v-uge" hidden aria-labelledby="h-uge"></section>
   <section class="view" id="v-holdtyper" hidden aria-labelledby="h-holdtyper"></section>
+  <section class="view" id="v-statistik" hidden aria-labelledby="h-statistik"></section>
   <section class="view" id="v-medlemmer" hidden aria-labelledby="h-medlemmer"></section>
   <section class="view" id="v-rettelser" hidden aria-labelledby="h-rettelser"></section>
 </main>
@@ -928,6 +1018,202 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     addDrafts(makeDrafts(kind, 'type', anchor, after, { from: from + 'T00:00', groupTitle: gt }), 'Lagt i kladden for hele typen');
   }
 
+  /* ================================================================ STATISTIK */
+  // Data: styring-statistik.json (samlede antal, bygget offline af byg_statistikdata.py). Valgfri.
+  var S = null, S_LOADED = false;
+  function validStat(s) {
+    return s && typeof s === 'object' && s.i_alt && s.periode && Array.isArray(s.ugedage) && s.ugedage.length === 7 &&
+      Array.isArray(s.typer) && Array.isArray(s.tider) && Array.isArray(s.maaneder) && Array.isArray(s.uger) ? s : null;
+  }
+  function d1(x) { return x == null ? '–' : Number(x).toLocaleString('da-DK', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+  function p0(x) { return x == null ? '–' : Math.round(x) + ' %'; }
+  function fLong(s) { var d = toDate(s); return d.getDate() + '. ' + MONTHS_LONG[d.getMonth()] + ' ' + d.getFullYear(); }
+  function fillBucket(f) { return f == null ? 0 : f >= 90 ? 4 : f >= 75 ? 3 : f >= 60 ? 2 : f >= 40 ? 1 : 0; }
+  var FILL_LABELS = ['under 40 %', '40–59 %', '60–74 %', '75–89 %', '90 % og derover'];
+  function minibar(f) {
+    var w = f == null ? 0 : Math.max(0, Math.min(100, f));
+    return '<div class="minibar"><div class="bar" aria-hidden="true"><i style="width:' + w + '%"></i></div><span>' + p0(f) + '</span></div>';
+  }
+  function stType(id) {
+    for (var i = 0; i < S.typer.length; i++) if (S.typer[i].id === id) return S.typer[i];
+    return { id: id, navn: typeName(id), farve: TYPES[id] ? TYPES[id].colour : '888888' };
+  }
+  function tdot(id) { var t = stType(id); return '<span class="tdot"><span class="dot" style="background:' + hex(t.farve) + '" aria-hidden="true"></span>' + esc(t.navn) + '</span>'; }
+  function slotName(s) { return WD[s.d] + ' ' + s.t + ' · ' + stType(s.type).navn; }
+
+  function renderStatistik() {
+    var el = $('#v-statistik');
+    var h = '<h2 id="h-statistik" tabindex="-1">Statistik</h2>';
+    if (!S_LOADED) { el.innerHTML = h + '<p class="lead">Indlæser statistik …</p>'; return; }
+    if (!S) {
+      h += '<p class="lead">Hvor mange der har været tilmeldt, på hvilke hold og på hvilke dage.</p>';
+      h += '<div class="empty"><div class="row" style="justify-content:space-between"><strong>Statistikken er ikke bygget endnu</strong><span class="await">mangler data</span></div>' +
+        '<p class="small muted" style="margin-top:0.4rem">Filen <code>styring-statistik.json</code> findes ikke ved siden af siden. Den laves i <code>gomember-mcp/kortlaegning</code>: kør først <code>deltagelse.py</code> (læser deltagelsen fra goMember, kun læsning) og derefter <code>byg_statistikdata.py</code> (regner tallene sammen uden at kontakte goMember). Resten af siden virker som normalt.</p></div>';
+      el.innerHTML = h; return;
+    }
+    var T = S.i_alt, P = S.periode;
+    var dage = Math.round((toDate(P.til) - toDate(P.fra)) / 864e5) + 1;
+    h += '<p class="lead">' + esc(fLong(P.fra)) + ' – ' + esc(fLong(P.til)) + ' (' + dage + ' dage, ca. 6 måneder). Alle tal er <strong>tilmeldte</strong>, ikke fremmødte: ' +
+      'fremmøde blev kun registreret på de fleste hold indtil flytningen midt i oktober, og i november kun på ' + esc(S.fremmoede.nov_hold_med_registrering) + ' af ' + esc(S.fremmoede.nov_afholdt) +
+      ' hold. Kun afholdte træningshold tæller med i snit og pladser; aflyste hold og hold uden tilmeldte står for sig.</p>';
+
+    // Nøgletal
+    var SHORT_REASON = { 'flytning/nyt gym ikke klar': 'flytning', 'andet/ukendt': 'andet' };
+    var aars = (T.aflyst_aarsag || []).map(function (a) { return a.antal + ' ' + (SHORT_REASON[a.aarsag] || a.aarsag); }).join(', ');
+    h += '<div class="stats st-stats" id="st-tiles">' +
+      stat(num(T.afholdt), 'hold afholdt', '', 'Ikke med: ' + T.nul + ' hold med 0 tilmeldte og ' + T.udeladt + ' datoer taget ud af serien') +
+      stat(num(T.tilmeldte), 'tilmeldinger i alt') +
+      stat(d1(T.snit), 'tilmeldte pr. hold i snit') +
+      stat(p0(T.fyldning), 'af pladserne brugt', '', num(T.tilmeldte) + ' af ' + num(T.pladser) + ' pladser') +
+      stat(num(T.fuldt), 'fuldt bookede hold') +
+      stat(num(T.aflyst), 'aflyste hold', 'bad', aars) +
+      '</div>';
+
+    // Pr. dag
+    var U = S.ugedage;
+    var maxU = Math.max.apply(null, U.map(function (u) { return u.snit || 0; }));
+    var scaleU = Math.ceil(maxU + 0.5);
+    var best = U.reduce(function (a, b) { return (b.snit || 0) > (a.snit || 0) ? b : a; });
+    var worst = U.reduce(function (a, b) { return (b.snit || 99) < (a.snit || 99) ? b : a; });
+    h += '<section class="st-sec" aria-labelledby="st-dag"><h3 id="st-dag">Pr. dag</h3>';
+    h += '<p class="st-note">Flest tilmeldte pr. hold om ' + esc(best.navn.toLowerCase()) + 'en (' + d1(best.snit) + '), færrest om ' + esc(worst.navn.toLowerCase()) + 'en (' + d1(worst.snit) + ').</p>';
+    h += '<div class="st-two"><figure class="chart"><figcaption class="small muted" style="margin-bottom:0.6rem">Tilmeldte pr. afholdt hold i snit, pr. ugedag. Tallene står også i tabellen.</figcaption>' +
+      '<div class="hbars" aria-hidden="true">' + U.map(function (u) {
+        var c = u === best ? ' class="best"' : '';
+        return '<span class="lb">' + esc(u.navn) + '</span><div class="tr"><i style="width:' + ((u.snit || 0) / scaleU * 100).toFixed(1) + '%"></i></div>' +
+          '<span class="vl"' + c + '>' + d1(u.snit) + '</span>';
+      }).join('') + '</div></figure>';
+    var tf = function (k) { return U.reduce(function (s, u) { return s + u[k]; }, 0); };
+    h += '<div class="card tablewrap"><table class="plain" id="st-wd-table"><caption class="sr-only">Tilmeldte pr. ugedag</caption><thead><tr><th scope="col">Dag</th><th scope="col" class="num">Hold afholdt</th><th scope="col" class="num">Tilmeldte</th><th scope="col" class="num">Snit pr. hold</th><th scope="col">Pladser brugt</th><th scope="col" class="num">Aflyst</th></tr></thead><tbody>' +
+      U.map(function (u) {
+        return '<tr><th scope="row" style="font-weight:400;color:var(--fg)">' + esc(u.navn) + '</th><td class="num">' + num(u.afholdt) + '</td><td class="num">' + num(u.tilmeldte) + '</td><td class="num">' + d1(u.snit) + '</td><td>' + minibar(u.fyldning) + '</td><td class="num">' + num(u.aflyst) + '</td></tr>';
+      }).join('') + '</tbody><tfoot><tr><th scope="row">I alt</th><td class="num">' + num(tf('afholdt')) + '</td><td class="num">' + num(tf('tilmeldte')) + '</td><td class="num">' + d1(T.snit) + '</td><td>' + minibar(T.fyldning) + '</td><td class="num">' + num(tf('aflyst')) + '</td></tr></tfoot></table></div></div></section>';
+
+    // Dag x tidspunkt
+    var slots = S.tider.filter(function (s) { return s.afholdt > 0; });
+    var few = S.regler && S.regler.faa_hold_under || 4;
+    var times = []; slots.forEach(function (s) { if (times.indexOf(s.t) < 0) times.push(s.t); }); times.sort();
+    function slotBox(s, list) {
+        var isFew = s.afholdt < few, b = fillBucket(s.fyldning);
+        var cls = 'hs ' + (isFew ? 'few' : 'f' + b);
+        var meta = p0(s.fyldning) + ' af pladserne · ' + s.afholdt + ' hold' + (s.fuldt ? ' · fuldt ' + s.fuldt + '×' : '');
+        var tag = list ? 'li' : 'div';
+        return '<' + tag + ' class="' + cls + '" style="--tc:' + hex(stType(s.type).farve) + '">' +
+          (list ? '<span class="tt">' + esc(s.t) + '</span>' : '') +
+          '<span class="ty">' + esc(stType(s.type).navn) + (isFew ? '<span class="fb">få hold</span>' : '') + '</span>' +
+          '<span class="av">' + d1(s.snit) + '<small>i snit</small></span>' +
+          '<span class="mt">' + meta + '</span></' + tag + '>';
+    }
+    h += '<section class="st-sec" aria-labelledby="st-tid"><h3 id="st-tid">Dag × tidspunkt</h3>';
+    h += '<p class="st-note">Hvert felt er ét hold på en bestemt ugedag og starttid: holdtype, tilmeldte i snit, hvor stor en del af pladserne der blev brugt, og hvor mange gange holdet blev afholdt. Jo kraftigere farve, jo fyldere. Felter med stiplet kant havde under ' + few + ' afholdte hold i perioden (engangshold eller flyttede hold) og siger ikke så meget.</p>';
+    h += '<div class="hmleg" aria-label="Farveforklaring: pladser brugt">' + FILL_LABELS.map(function (l, i) {
+      return '<span><i class="hs f' + i + '" style="padding:0;border-left-width:1px"></i>' + l + '</span>';
+    }).join('') + '<span><i class="hs few" style="padding:0;border-left-width:1px;border-style:dashed"></i>få hold (under ' + few + ')</span></div>';
+    h += '<div class="card" style="padding:0.5rem"><table class="hm"><caption class="sr-only">Tilmeldte i snit pr. ugedag og starttid</caption><colgroup><col class="tcol">' + WD.map(function () { return '<col>'; }).join('') + '</colgroup>' +
+      '<thead><tr><th scope="col" class="tm">Tid</th>' + WD.map(function (w) { return '<th scope="col">' + esc(w) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      times.map(function (t) {
+        return '<tr><th scope="row" class="tm">' + esc(t) + '</th>' + WD.map(function (w, di) {
+          var here = slots.filter(function (s) { return s.d === di && s.t === t; });
+          return '<td>' + here.map(function (s) { return slotBox(s, false); }).join('') + '</td>';
+        }).join('') + '</tr>';
+      }).join('') + '</tbody></table>';
+    h += '<div class="hmlist">' + WD.map(function (w, di) {
+      var here = slots.filter(function (s) { return s.d === di; }).sort(function (a, b) { return a.t < b.t ? -1 : a.t > b.t ? 1 : 0; });
+      return '<div class="day"><h4>' + esc(w) + '</h4><ul>' + here.map(function (s) { return slotBox(s, true); }).join('') + '</ul></div>';
+    }).join('') + '</div></div></section>';
+
+    // Pr. holdtype
+    h += '<section class="st-sec" aria-labelledby="st-type"><h3 id="st-type">Pr. holdtype</h3>';
+    h += '<div class="card tablewrap"><table class="plain" id="st-type-table"><caption class="sr-only">Tilmeldte pr. holdtype</caption><thead><tr><th scope="col">Holdtype</th><th scope="col" class="num">Hold afholdt</th><th scope="col" class="num">Tilmeldte</th><th scope="col" class="num">Snit</th><th scope="col">Pladser brugt</th><th scope="col" class="num">Fuldt booket</th><th scope="col" class="num">Aflyst</th></tr></thead><tbody>' +
+      S.typer.map(function (t) {
+        return '<tr><th scope="row" style="font-weight:400;color:var(--fg)">' + tdot(t.id) + '</th><td class="num">' + num(t.afholdt) + '</td><td class="num">' + num(t.tilmeldte) + '</td><td class="num">' + d1(t.snit) + '</td><td>' + minibar(t.fyldning) + '</td><td class="num">' + num(t.fuldt) + '</td><td class="num">' + num(t.aflyst) + '</td></tr>';
+      }).join('') + '</tbody><tfoot><tr><th scope="row">I alt</th><td class="num">' + num(T.afholdt) + '</td><td class="num">' + num(T.tilmeldte) + '</td><td class="num">' + d1(T.snit) + '</td><td>' + minibar(T.fyldning) + '</td><td class="num">' + num(T.fuldt) + '</td><td class="num">' + num(T.aflyst) + '</td></tr></tfoot></table></div>';
+    var basis = S.typer.filter(function (t) { return t.id === 'basis'; })[0];
+    if (basis) h += '<p class="chart-note">' + esc(basis.navn) + ' har kun 8 pladser, så snittet er lavt, selv om ' + p0(basis.fyldning) + ' af pladserne blev brugt.</p>';
+    h += '</section>';
+
+    // Holdtype x dag
+    h += '<section class="st-sec" aria-labelledby="st-mx"><h3 id="st-mx">Holdtype × dag</h3><p class="st-note">Tilmeldte pr. hold i snit. Det lille tal er antal afholdte hold. Tom = holdtypen har ikke kørt den dag.</p>';
+    h += '<div class="card tablewrap"><table class="plain mx"><caption class="sr-only">Tilmeldte i snit pr. holdtype og ugedag</caption><thead><tr><th scope="col">Holdtype</th>' +
+      WD.map(function (w, i) { return '<th scope="col" class="c"><abbr title="' + esc(w) + '" style="text-decoration:none">' + esc(WD_SHORT[i].replace('.', '')) + '</abbr></th>'; }).join('') + '</tr></thead><tbody>' +
+      (S.type_x_ugedag || []).map(function (m) {
+        return '<tr><th scope="row" style="font-weight:400;color:var(--fg)">' + tdot(m.type) + '</th>' + m.celler.map(function (c) {
+          return c ? '<td class="c">' + d1(c.snit) + '<small>' + c.afholdt + ' hold</small></td>' : '<td class="none"><span aria-hidden="true">·</span><span class="sr-only">kører ikke</span></td>';
+        }).join('') + '</tr>';
+      }).join('') + '</tbody></table></div></section>';
+
+    // Udvikling
+    var Mo = S.maaneder, nM = Mo.length;
+    var maxM = Math.max.apply(null, Mo.map(function (m) { return m.snit || 0; }));
+    h += '<section class="st-sec" aria-labelledby="st-udv"><h3 id="st-udv">Udvikling</h3>';
+    h += '<div class="st-two"><figure class="chart"><figcaption class="small muted" style="margin-bottom:0.6rem">Tilmeldte pr. hold i snit, pr. måned. Skraveret = kun en del af måneden er med.</figcaption>' +
+      '<div class="vbars" aria-hidden="true" style="grid-template-columns:repeat(' + nM + ',minmax(0,1fr))">' + Mo.map(function (m) {
+        return '<div class="mcol"><span class="val">' + d1(m.snit) + '</span><div class="b' + (m.delvis ? ' part' : '') + '" style="height:' + Math.round((m.snit || 0) / (maxM * 1.12) * 130) + 'px"></div></div>';
+      }).join('') + '</div><div class="vlabs" aria-hidden="true" style="grid-template-columns:repeat(' + nM + ',minmax(0,1fr))">' + Mo.map(function (m) {
+        var fd = toDate(m.fra), td = toDate(m.til);
+        return '<span>' + MONTHS[+m.m.slice(5, 7) - 1].replace('.', '') + '<b>' + (m.delvis ? fd.getDate() + '.–' + td.getDate() + '.' : '&nbsp;') + '</b></span>';
+      }).join('') + '</div></figure>';
+
+    var W = S.uger, nW = W.length;
+    var maxW = Math.max.apply(null, W.map(function (w) { return w.afholdt; }));
+    var medW = W.map(function (w) { return w.afholdt; }).sort(function (a, b) { return a - b; })[Math.floor(nW / 2)];
+    var dips = W.filter(function (w) { return !w.delvis && w.afholdt < medW * 0.65; });
+    h += '<figure class="chart"><figcaption class="small muted" style="margin-bottom:0.6rem">Afholdte hold pr. uge. Første og sidste uge er kun delvist med (skraveret).</figcaption>' +
+      '<div class="vbars wbars" aria-hidden="true" style="grid-template-columns:repeat(' + nW + ',minmax(0,1fr));gap:2px">' + W.map(function (w) {
+        var dip = dips.indexOf(w) >= 0;
+        return '<div class="mcol"><span class="val' + (dip ? ' keep' : '') + '">' + w.afholdt + '</span><div class="b' + (w.delvis ? ' part' : '') + (dip ? ' dip' : '') + '" style="height:' + Math.round(w.afholdt / (maxW * 1.15) * 95) + 'px"></div></div>';
+      }).join('') + '</div><div class="vlabs wlabs" aria-hidden="true" style="grid-template-columns:repeat(' + nW + ',minmax(0,1fr));gap:2px">' + W.map(function (w, i) {
+        return '<span>' + (i % 4 === 0 || dips.indexOf(w) >= 0 ? w.uge : '') + '</span>';
+      }).join('') + '</div><p class="chart-note">Uge-nummer under søjlen. ' + (dips.length ? '<span class="k" style="background:var(--warn)" aria-hidden="true"></span>' + dips.map(function (w) {
+        return 'Uge ' + w.uge + ' (' + fDateShort(w.mandag) + '): ' + w.afholdt + ' hold, ' + w.aflyst + ' aflyst';
+      }).join('; ') + ' – flytningen til Industrivej.' : '') + '</p></figure></div>';
+
+    h += '<div class="card tablewrap" style="margin-top:0.75rem"><table class="plain"><caption class="sr-only">Pr. måned</caption><thead><tr><th scope="col">Måned</th><th scope="col" class="num">Hold afholdt</th><th scope="col" class="num">Tilmeldte</th><th scope="col" class="num">Snit</th><th scope="col">Pladser brugt</th><th scope="col" class="num">Fuldt booket</th><th scope="col" class="num">Aflyst</th><th scope="col" class="num">Fremmøde registreret</th></tr></thead><tbody>' +
+      Mo.map(function (m) {
+        var mi = +m.m.slice(5, 7) - 1;
+        return '<tr><th scope="row" class="nw" style="font-weight:400;color:var(--fg)">' + cap1(MONTHS_LONG[mi]) + (m.delvis ? ' <span class="muted small">(' + toDate(m.fra).getDate() + '.–' + toDate(m.til).getDate() + '.)</span>' : '') + '</th><td class="num">' + num(m.afholdt) + '</td><td class="num">' + num(m.tilmeldte) + '</td><td class="num">' + d1(m.snit) + '</td><td>' + minibar(m.fyldning) +
+          '</td><td class="num">' + num(m.fuldt) + '</td><td class="num">' + num(m.aflyst) + '</td><td class="num nw">' + m.fremmoede_hold + ' af ' + m.afholdt + ' hold</td></tr>';
+      }).join('') + '</tbody></table></div>';
+    h += '<details style="margin-top:0.6rem"><summary class="small" style="cursor:pointer;color:var(--primary2)">Vis tal pr. uge</summary><div class="card tablewrap" style="margin-top:0.5rem"><table class="plain"><caption class="sr-only">Pr. uge</caption><thead><tr><th scope="col">Uge</th><th scope="col">Fra mandag</th><th scope="col" class="num">Hold afholdt</th><th scope="col" class="num">Tilmeldte</th><th scope="col" class="num">Snit</th><th scope="col" class="num">Aflyst</th></tr></thead><tbody>' +
+      W.map(function (w) {
+        return '<tr><td>' + w.uge + (w.delvis ? ' <span class="muted small">(delvis)</span>' : '') + '</td><td class="nw">' + fDateShort(w.mandag) + '</td><td class="num">' + w.afholdt + '</td><td class="num">' + num(w.tilmeldte) + '</td><td class="num">' + d1(w.snit) + '</td><td class="num">' + w.aflyst + '</td></tr>';
+      }).join('') + '</tbody></table></div></details></section>';
+
+    // Top / bund
+    function rank(list) {
+      return '<ol class="rank">' + list.map(function (s) {
+        return '<li><span class="n">' + esc(WD[s.d]) + ' ' + esc(s.t) + ' · ' + esc(stType(s.type).navn) + '</span><span class="av">' + d1(s.snit) + '<small>i snit</small></span>' +
+          '<span class="s">' + p0(s.fyldning) + ' af pladserne · ' + s.afholdt + ' hold' + (s.fuldt ? ' · fuldt booket ' + s.fuldt + ' gange' : '') + '</span></li>';
+      }).join('') + '</ol>';
+    }
+    var fastMin = S.regler && S.regler.fast_tid_min_afholdt || 8;
+    h += '<section class="st-sec" aria-labelledby="st-top"><h3 id="st-top">Mest og mindst fyldte faste hold</h3><p class="st-note">Faste hold = samme ugedag, tid og holdtype med mindst ' + fastMin + ' afholdte hold i perioden. Sorteret efter tilmeldte i snit.</p>' +
+      '<div class="st-two"><div class="card"><h4 class="small muted" style="font-weight:500;margin-bottom:0.5rem">Mest fyldte (top 5)</h4>' + rank(S.top5 || []) + '</div>' +
+      '<div class="card"><h4 class="small muted" style="font-weight:500;margin-bottom:0.5rem">Mindst fyldte (bund 5)</h4>' + rank(S.bund5 || []) + '</div></div></section>';
+
+    // Sådan er tallene lavet
+    var F = S.fremmoede || {};
+    h += '<details class="how"><summary>Sådan er tallene lavet</summary><div class="card" style="margin-top:0.5rem">' +
+      '<p class="small">Tallene er hentet fra goMember med et login, der kun kan læse, og regnet sammen til antal. Der er ingen navne, medlemsnumre eller tal pr. træner i statistikken.</p>' +
+      '<h4>Det betyder ordene</h4><dl class="defs">' + (S.definitioner || []).map(function (x) {
+        return '<div><dt>' + esc(x.term) + '</dt><dd>' + esc(x.tekst) + '</dd></div>';
+      }).join('') + '</dl>' +
+      '<h4>Det er ikke med</h4><ul>' +
+      '<li>' + (S.ikke_traening_udeladt || []).map(function (x) { return esc(x.navn) + ' (' + x.antal + ')'; }).join(', ') + ' – det er ikke træningshold.</li>' +
+      '<li>' + T.aflyst + ' aflyste hold, ' + T.udeladt + ' datoer taget ud af serien og ' + T.nul + ' hold med 0 tilmeldte. De står for sig og trækker ikke snittet ned. Regnes hold med 0 tilmeldte med, falder snittet fra ' + d1(T.snit) + ' til ' + d1(T.nul_tilmeldte_snit_hvis_med) + '.</li>' +
+      '<li>Afmeldinger før holdet. Tilmeldte er det tal, der stod på holdet, efter det var afholdt.</li></ul>' +
+      '<h4>Forbehold</h4><ul>' +
+      '<li><strong>Tilmeldte, ikke fremmødte.</strong> ' + esc(F.tekst || '') + ' Fremmøde blev registreret på ' + num(F.hold_med_registrering) + ' af ' + num(F.afholdt) + ' hold; på dem mødte ' + d1(F.pct_af_tilmeldte) + ' % af de tilmeldte.</li>' +
+      '<li>Tidspunktet er holdets faktiske starttid. Et flyttet hold (fx en anden dag eller tid) står derfor på sin nye tid, ofte som et felt med “få hold”.</li>' +
+      '<li>Holdtyperne er klubbens egen inddeling (se Holdtyper). Kl. 06-holdene og tirsdag 08:15 i sommer tæller som “WOD uden træner”.</li>' +
+      '<li>Et hold på en tid, som aldrig har stået i holdplanen, kan være overset. En ekstra søgning fandt ingen, så risikoen vurderes som lille.</li>' +
+      '<li>Fuldt booket betyder, at tilmeldte nåede pladsloftet. ' + num(T.venteliste) + ' stod på venteliste fordelt på ' + T.hold_med_venteliste + ' hold.</li></ul>' +
+      '<p class="small muted" style="margin-top:0.8rem">Kilde: <code>gomember-mcp/kortlaegning/deltagelse.json</code> → <code>byg_statistikdata.py</code> → <code>styring-statistik.json</code>. Uddybning i <code>DELTAGELSE.md</code>.</p>' +
+      '</div></details>';
+
+    el.innerHTML = h;
+  }
+
   /* ================================================================ MEDLEMMER */
   function validMembers(m) {
     return m && typeof m === 'object' && typeof m.total === 'number' && m.noegletal && Array.isArray(m.medlemskaber) ? m : null;
@@ -1209,22 +1495,33 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     $('#dataStamp').textContent = 'Data fra ' + fDayY(SNAP) + ' kl. ' + hm(SNAP) + ' · prototypen regner den dato som “i dag”';
     $('#loading').remove();
     renderMedlemmer();
+    renderStatistik();
     renderAll();
     setView(location.hash.slice(1) || 'overblik', false);
   }
 
   bind();
-  // Sidens eneste to netværkskald, begge GET af lokale filer:
-  // 1) holdplanen, 2) anonyme, samlede medlemstal (godkendt til offentliggørelse - mangler filen, vises "afventer login").
+  // Sidens eneste tre netværkskald, alle GET af lokale filer:
+  // 1) holdplanen, 2) anonyme, samlede medlemstal (godkendt til offentliggørelse - mangler filen, vises "afventer login"),
+  // 3) samlet deltagelsesstatistik (kun antal - mangler filen, viser Statistik "ikke bygget endnu").
   var membersReq = fetch('styring-medlemmer.json', { cache: 'no-store' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(validMembers)
+    .catch(function () { return null; });
+  var statReq = fetch('styring-statistik.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(validStat)
     .catch(function () { return null; });
   fetch('styring-data.json', { cache: 'no-store' })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (data) {
       init(data);
       membersReq.then(function (m) { if (m) { M = m; renderMedlemmer(); } });
+      statReq.then(function (s) {
+        S = s; S_LOADED = true;
+        try { renderStatistik(); }
+        catch (e) { if (window.console) console.error('Statistik:', e); S = null; renderStatistik(); }
+      });
     })
     .catch(function (err) {
       var l = $('#loading');
