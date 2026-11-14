@@ -61,17 +61,26 @@ teknikalitet. Vurder samtidig om et nyt endpoint hører hjemme i
 skal holdes ude, indtil nogen har bekræftet mod den faktiske server hvad det
 gør.
 
-## Status - hvad er IKKE testet endnu
+## Status
 
-- `check_auth.py` er ikke kørt mod produktion endnu. Autentificeringsformen
-  (OAuth2 Resource Owner Password, POST til `/auth/token`) er antaget ud fra
-  swagger-filens `securityDefinitions`, men selve request-body'en
-  (`grant_type=password&username=...&password=...`, evt. `client_id`) er ikke
-  bekræftet mod den faktiske server.
-- Om goMember rent faktisk afviser skrivekald fra det fiktive medlems login
-  er ikke testet og kan ikke testes af denne kodebase, fordi den aldrig
-  foretager et skrivekald. Det er stadig en åben antagelse.
-- `.env` er ikke udfyldt endnu - login til det fiktive medlem mangler.
+**Login virker (bekræftet 14. november 2026).** `/auth/token` kræver, ud
+over `grant_type=password&username=...&password=...`, en fast klient-kode i
+`Authorization: Basic ...` - den samme som goMembers egen login-boks bruger
+(fundet i deres offentlige main.js). Uden den svarer serveren HTTP 500, også
+på forkerte logins. Klubben (Johan) har godkendt at vi bruger koden. Den står
+i `WEB_CLIENT_BASIC` i `gomember_client.py` og kan overstyres med
+`GOMEMBER_CLIENT_BASIC`. Login-oplysningerne ligger som miljøvariabler i
+cloud-miljøet "stronggym", ikke i en `.env` i repoet.
+
+**Det fiktive medlem er IKKE skrivebeskyttet i goMember.** `/api/members/me`
+viser `adminRoles: activity, booking, createEvent, tagsAndTeams, partAdmin`
+- administrator af hold, bookinger og etiketter, præcis som frygtet ovenfor.
+Det kan også læse hele medlemslisten (navne, medlemsnummer, etiketter).
+Koden er derfor stadig det eneste værn mod skrivning. Brugerens rettigheder
+bør skæres ned i goMember (Site indstillinger > Rettigheder).
+
+**Stadig ikke testet:** om goMember afviser skrivekald fra brugeren. Med de
+roller ovenfor må man gå ud fra, at det IKKE gør.
 
 ## Filer
 

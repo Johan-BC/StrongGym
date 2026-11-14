@@ -30,6 +30,9 @@ class GoMemberAuthError(RuntimeError):
 
 USER_AGENT = "StrongGym-kortlaegning"
 
+# Fast klient-kode fra goMembers offentlige web-klient (main.js).
+WEB_CLIENT_BASIC = "d2ViY2xpZW50OmJvcm4ycnVu"
+
 
 class GoMemberClient:
     def __init__(
@@ -48,6 +51,8 @@ class GoMemberClient:
         # MemberLink/goMember-installationer kræver det, andre ikke. Sæt
         # GOMEMBER_CLIENT_ID hvis test-kaldet i README fejler med "invalid_client".
         self.client_id = client_id or os.environ.get("GOMEMBER_CLIENT_ID")
+        # Kan overstyres med GOMEMBER_CLIENT_BASIC, hvis goMember skifter koden.
+        self.client_basic = os.environ.get("GOMEMBER_CLIENT_BASIC") or WEB_CLIENT_BASIC
 
         if not anonymous and (not self.username or not self.password):
             raise GoMemberAuthError(
@@ -75,7 +80,12 @@ class GoMemberClient:
         if self.client_id:
             data["client_id"] = self.client_id
 
-        resp = self._session.post(f"{self.base_url}/auth/token", data=data, timeout=30)
+        # goMembers egen login-boks sender en fast klient-kode med som
+        # "Authorization: Basic ..." (set i deres offentlige main.js 14. november
+        # 2026). Uden den svarer /auth/token med HTTP 500 - også på forkerte
+        # logins. Brug godkendt af klubben (Johan) 14. november 2026.
+        headers = {"Authorization": f"Basic {self.client_basic}"}
+        resp = self._session.post(f"{self.base_url}/auth/token", data=data, headers=headers, timeout=30)
         if resp.status_code != 200:
             raise GoMemberAuthError(
                 f"Kunne ikke hente token fra /auth/token (status {resp.status_code}): {resp.text[:500]}"
