@@ -1,0 +1,2744 @@
+{
+ "generated": "2026-11-14T20:37:05",
+ "base_url": "https://www.stronggym.dk",
+ "mode": "anonymous (ingen login, ingen Authorization-header)",
+ "requests_made": 102,
+ "status_counts": {
+  "200": 48,
+  "401": 42,
+  "400": 1,
+  "403": 3,
+  "500": 8
+ },
+ "schedule_window": {
+  "from": "2026-09-19T00:00:00",
+  "to": "2027-01-09T00:00:00",
+  "chunks": [
+   {
+    "from": "2026-09-19T00:00:00",
+    "to": "2026-10-01T00:00:00",
+    "days": 4,
+    "events": 8
+   },
+   {
+    "from": "2026-10-01T00:00:00",
+    "to": "2026-11-01T00:00:00",
+    "days": 10,
+    "events": 10
+   },
+   {
+    "from": "2026-11-01T00:00:00",
+    "to": "2026-12-01T00:00:00",
+    "days": 30,
+    "events": 123
+   },
+   {
+    "from": "2026-12-01T00:00:00",
+    "to": "2027-01-01T00:00:00",
+    "days": 31,
+    "events": 130
+   },
+   {
+    "from": "2027-01-01T00:00:00",
+    "to": "2027-01-09T00:00:00",
+    "days": 8,
+    "events": 32
+   }
+  ],
+  "events_total": 303,
+  "distinct_activities": 31,
+  "distinct_tags": 10
+ },
+ "endpoints": [
+  {
+   "path": "/api/activity/{id}",
+   "tag": "ActivityApi",
+   "requires_security": false,
+   "operationId": "ActivityApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "object",
+   "item_count": null,
+   "fields": [
+    "activityMode",
+    "allowActivityCode",
+    "allowAddBooking",
+    "allowAutonomous",
+    "allowBundle",
+    "allowColor",
+    "allowCourse",
+    "allowForm",
+    "allowInvite",
+    "allowLocation",
+    "allowNonMember",
+    "allowPartner",
+    "allowPromote",
+    "allowRecurring",
+    "allowResourceBooking",
+    "allowResponsible",
+    "allowRules",
+    "allowSeating",
+    "allowSeatingTemplate",
+    "allowSingle",
+    "allowTags",
+    "allowedToCreate",
+    "assignedTags",
+    "attendanceMessage",
+    "attendancePrivacy",
+    "autoPromote",
+    "bookingPostStart",
+    "color",
+    "commentsAll",
+    "commentsNoSend",
+    "createdTs",
+    "description",
+    "entityId",
+    "eventsCount",
+    "excludeResourceIds",
+    "formDefinition",
+    "hasWaitingList",
+    "hideFromOverview",
+    "invitationMedia",
+    "isDayBooking",
+    "isFlexible",
+    "isGroup",
+    "isSuperEvent",
+    "maxAttendees",
+    "maxGuestsPerMember",
+    "maxResourcesSimultaneous",
+    "maxSlots",
+    "minAttendees",
+    "minSlots",
+    "modifiedTs",
+    "name",
+    "onlineSignup",
+    "onlyLoggedIn",
+    "registerAttendance",
+    "requestMode",
+    "resourceIds",
+    "resourceTypes",
+    "responsibleUsersIds",
+    "showDescription",
+    "tagsAssigned",
+    "viewOrder"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Activity2517743105127783782"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "id": "Activity2517743104814044562"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "id": "Activity2516147394819805210"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/activity",
+   "tag": "ActivityApi",
+   "requires_security": true,
+   "operationId": "ActivityApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "list",
+   "item_count": 39,
+   "fields": [
+    "activityMode",
+    "allowActivityCode",
+    "allowAddBooking",
+    "allowAutonomous",
+    "allowBundle",
+    "allowColor",
+    "allowCourse",
+    "allowForm",
+    "allowInvite",
+    "allowLocation",
+    "allowNonMember",
+    "allowPartner",
+    "allowPromote",
+    "allowRecurring",
+    "allowResourceBooking",
+    "allowResponsible",
+    "allowRules",
+    "allowSeating",
+    "allowSeatingTemplate",
+    "allowSingle",
+    "allowTags",
+    "allowedToCreate",
+    "assignedTags",
+    "attendanceMessage",
+    "attendancePrivacy",
+    "autoPromote",
+    "bookingPostStart",
+    "color",
+    "commentsAll",
+    "commentsNoSend",
+    "createdTs",
+    "description",
+    "entityId",
+    "eventsCount",
+    "excludeResourceIds",
+    "formDefinition",
+    "hasWaitingList",
+    "hideFromOverview",
+    "invitationMedia",
+    "isDayBooking",
+    "isFlexible",
+    "isGroup",
+    "isSuperEvent",
+    "maxAttendees",
+    "maxGuestsPerMember",
+    "maxResourcesSimultaneous",
+    "maxSlots",
+    "minAttendees",
+    "minSlots",
+    "modifiedTs",
+    "name",
+    "onlineSignup",
+    "onlyLoggedIn",
+    "registerAttendance",
+    "requestMode",
+    "resourceIds",
+    "resourceTypes",
+    "responsibleUsersIds",
+    "showDescription",
+    "tagsAssigned",
+    "viewOrder"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "filter.pageSize": 200,
+      "filter.currentPage": 1
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 39,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/activitydata/griddata/{id}",
+   "tag": "ActivityDataApi",
+   "requires_security": true,
+   "operationId": "ActivityDataApi_GetActivityGridData",
+   "skip_reason": "skipped – unsure hvilken id-type {id} er",
+   "called": false
+  },
+  {
+   "path": "/api/activitydata/resource/{id}",
+   "tag": "ActivityDataApi",
+   "requires_security": true,
+   "operationId": "ActivityDataApi_GetResourceForm",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Activity2517743105127783782"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Activity2517743104814044562"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Activity2516147394819805210"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/activitydata/batchupdate/{id}",
+   "tag": "ActivityDataApi",
+   "requires_security": true,
+   "operationId": "ActivityDataApi_ActivityBatchUpdateForm",
+   "skip_reason": "skipped – DENIED_PATHS i generate.py",
+   "called": false
+  },
+  {
+   "path": "/api/activitydata/clone/{id}",
+   "tag": "ActivityDataApi",
+   "requires_security": true,
+   "operationId": "ActivityDataApi_GetCloneForm",
+   "skip_reason": "skipped – DENIED_PATHS i generate.py",
+   "called": false
+  },
+  {
+   "path": "/api/activitydata/event/{xmlForm}/{id}",
+   "tag": "ActivityDataApi",
+   "requires_security": true,
+   "operationId": "ActivityDataApi_GetEventForm",
+   "skip_reason": "skipped – xmlForm-værdi ukendt",
+   "called": false
+  },
+  {
+   "path": "/api/ActivityDataApi",
+   "tag": "ActivityDataApi",
+   "requires_security": false,
+   "operationId": "ActivityDataApi_GetEntity",
+   "skip_reason": "skipped – lavniveau ?partitionKey=&rowKey= entity-endpoint",
+   "called": false
+  },
+  {
+   "path": "/api/activityeventdata/griddata",
+   "tag": "ActivityEventDataApi",
+   "requires_security": true,
+   "operationId": "ActivityEventDataApi_GetEventGridData",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 20,
+      "searchText": "",
+      "tagFilter": "",
+      "notTagFilter": "",
+      "departmentFilter": "",
+      "customFilter": ""
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/ActivityEventDataApi",
+   "tag": "ActivityEventDataApi",
+   "requires_security": false,
+   "operationId": "ActivityEventDataApi_GetEntity",
+   "skip_reason": "skipped – lavniveau ?partitionKey=&rowKey= entity-endpoint",
+   "called": false
+  },
+  {
+   "path": "/api/booking/{id}",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_GetById",
+   "skip_reason": "skipped – intet booking-id i offentlige data",
+   "called": false
+  },
+  {
+   "path": "/api/activity/{activityId}/event/{eventId}/bookings/{id}",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_Get",
+   "skip_reason": "skipped – intet booking-id i offentlige data",
+   "called": false
+  },
+  {
+   "path": "/api/booking/{id}/validatecancel",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_ValidateBookingCancellation",
+   "skip_reason": "skipped – segment 'validatecancel' indeholder 'cancel'",
+   "called": false
+  },
+  {
+   "path": "/api/booking/booked-resources/{activityId}",
+   "tag": "BookingApi",
+   "requires_security": false,
+   "operationId": "BookingApi_GetBookedResources",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782"
+     },
+     "query": {
+      "fromTime": "2026-11-14T00:00:00",
+      "toTime": "2026-11-28T00:00:00"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562"
+     },
+     "query": {
+      "fromTime": "2026-11-14T00:00:00",
+      "toTime": "2026-11-28T00:00:00"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210"
+     },
+     "query": {
+      "fromTime": "2026-11-14T00:00:00",
+      "toTime": "2026-11-28T00:00:00"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    }
+   ]
+  },
+  {
+   "path": "/api/booking",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 400,
+   "statuses": [
+    400
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Ugyldig filter\"}",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "filter.pageSize": 1,
+      "filter.currentPage": 1
+     },
+     "status": 400,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Ugyldig filter\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/event/{eventId}/bookings",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_GetBookingsForEvent",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782",
+      "eventId": "202611140800"
+     },
+     "query": {
+      "filter.pageSize": 1
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562",
+      "eventId": "202611140900"
+     },
+     "query": {
+      "filter.pageSize": 1
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210",
+      "eventId": "202611141000"
+     },
+     "query": {
+      "filter.pageSize": 1
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/event/{eventId}/locked",
+   "tag": "BookingApi",
+   "requires_security": false,
+   "operationId": "BookingApi_GetLockedSeatsForEvent",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782",
+      "eventId": "202611140800"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562",
+      "eventId": "202611140900"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210",
+      "eventId": "202611141000"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/attendance",
+   "tag": "BookingApi",
+   "requires_security": false,
+   "operationId": "BookingApi_GetAttendance",
+   "skip_reason": null,
+   "called": true,
+   "status": 403,
+   "statuses": [
+    403,
+    403,
+    403
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Du har ikke rettighed til at hente booking\"}",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782"
+     },
+     "query": {},
+     "status": 403,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Du har ikke rettighed til at hente booking\"}"
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562"
+     },
+     "query": {},
+     "status": 403,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Du har ikke rettighed til at hente booking\"}"
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210"
+     },
+     "query": {},
+     "status": 403,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Du har ikke rettighed til at hente booking\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/member/{memberId}",
+   "tag": "BookingApi",
+   "requires_security": false,
+   "operationId": "BookingApi_GetAttendanceForMemberDay",
+   "skip_reason": "skipped – kræver memberId (persondata; ingen id fra offentlige data, gættes ikke)",
+   "called": false
+  },
+  {
+   "path": "/api/booking/grid/{activityId}",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_GetBookingGrid",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "object",
+   "item_count": null,
+   "fields": [
+    "days",
+    "schedules",
+    "slotPools"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782"
+     },
+     "query": {
+      "filter.fromDate": "2026-11-14T00:00:00",
+      "filter.days": 7
+     },
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": "",
+     "structure": {
+      "days": "list[7]",
+      "days[].slotDate": "str",
+      "days[].slotPoolId": "int",
+      "slotPools": "list[1]",
+      "slotPools[].id": "int",
+      "slotPools[].slots": "list[1]",
+      "slotPools[].slots[].to": "int",
+      "slotPools[].slots[].from": "int",
+      "slotPools[].slots[].schedules": "list[1]",
+      "schedules": "list[1]",
+      "schedules[].scheduleId": "str"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562"
+     },
+     "query": {
+      "filter.fromDate": "2026-11-14T00:00:00",
+      "filter.days": 7
+     },
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": "",
+     "structure": {
+      "days": "list[7]",
+      "days[].slotDate": "str",
+      "days[].slotPoolId": "int",
+      "slotPools": "list[1]",
+      "slotPools[].id": "int",
+      "slotPools[].slots": "list[1]",
+      "slotPools[].slots[].to": "int",
+      "slotPools[].slots[].from": "int",
+      "slotPools[].slots[].schedules": "list[1]",
+      "schedules": "list[1]",
+      "schedules[].scheduleId": "str"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210"
+     },
+     "query": {
+      "filter.fromDate": "2026-11-14T00:00:00",
+      "filter.days": 7
+     },
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": "",
+     "structure": {
+      "days": "list[7]",
+      "days[].slotDate": "str",
+      "days[].slotPoolId": "int",
+      "slotPools": "list[1]",
+      "slotPools[].id": "int",
+      "slotPools[].slots": "list[1]",
+      "slotPools[].slots[].to": "int",
+      "slotPools[].slots[].from": "int",
+      "slotPools[].slots[].schedules": "list[1]",
+      "schedules": "list[1]",
+      "schedules[].scheduleId": "str"
+     }
+    }
+   ]
+  },
+  {
+   "path": "/api/booking/calendar/{activityId}",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_GetBookingCalendar",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": "",
+     "structure": {
+      "[]": "list[0]"
+     }
+    }
+   ]
+  },
+  {
+   "path": "/api/booking/partners/{activityId}",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_GetBookingPartners",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/booking/griddata/{activityId}",
+   "tag": "BookingApi",
+   "requires_security": true,
+   "operationId": "BookingApi_GetBookingGridData",
+   "skip_reason": null,
+   "called": true,
+   "status": 500,
+   "statuses": [
+    500,
+    500,
+    500
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"An error has occurred.\",\"exceptionMessage\":\"Value cannot be null.\\r\\nParameter name: key\",\"exceptionType\":\"System.ArgumentNullException\",\"stackTrace\":\" at System.ThrowHelper.ThrowArgumentN",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782"
+     },
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 1,
+      "daysToShow": 7,
+      "customFilter": ""
+     },
+     "status": 500,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"An error has occurred.\",\"exceptionMessage\":\"Value cannot be null.\\r\\nParameter name: key\",\"exceptionType\":\"S"
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562"
+     },
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 1,
+      "daysToShow": 7,
+      "customFilter": ""
+     },
+     "status": 500,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"An error has occurred.\",\"exceptionMessage\":\"Value cannot be null.\\r\\nParameter name: key\",\"exceptionType\":\"S"
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210"
+     },
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 1,
+      "daysToShow": 7,
+      "customFilter": ""
+     },
+     "status": 500,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"An error has occurred.\",\"exceptionMessage\":\"Value cannot be null.\\r\\nParameter name: key\",\"exceptionType\":\"S"
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/event/days",
+   "tag": "EventApi",
+   "requires_security": true,
+   "operationId": "EventApi_GetEventDayList",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200,
+    200,
+    200
+   ],
+   "kind": "list",
+   "item_count": 4,
+   "fields": [
+    "date",
+    "slots"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-09-19T00:00:00",
+      "toTime": "2026-10-01T00:00:00"
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 4,
+     "error": ""
+    },
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-10-01T00:00:00",
+      "toTime": "2026-11-01T00:00:00"
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 10,
+     "error": ""
+    },
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-11-01T00:00:00",
+      "toTime": "2026-12-01T00:00:00"
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 30,
+     "error": ""
+    },
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-12-01T00:00:00",
+      "toTime": "2027-01-01T00:00:00"
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 31,
+     "error": ""
+    },
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2027-01-01T00:00:00",
+      "toTime": "2027-01-09T00:00:00"
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 8,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/event/{id}",
+   "tag": "EventApi",
+   "requires_security": false,
+   "operationId": "EventApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "object",
+   "item_count": null,
+   "fields": [
+    "activityHasPrice",
+    "activityId",
+    "allowInvite",
+    "allowNonMember",
+    "allowPartner",
+    "assignedTags",
+    "attendanceMessage",
+    "attendancePrivacy",
+    "booked",
+    "color",
+    "commentsAll",
+    "commentsNoSend",
+    "createdTs",
+    "description",
+    "disableComments",
+    "endTime",
+    "endTimeUtc",
+    "entityId",
+    "eventId",
+    "hasPrice",
+    "hasSeating",
+    "hasWaitingList",
+    "hideFromOverview",
+    "invitationMedia",
+    "isParent",
+    "isSuperEvent",
+    "locationName",
+    "maxAttendees",
+    "maxGuestsPerMember",
+    "meetTime",
+    "meetTimeUtc",
+    "modifiedTs",
+    "name",
+    "noShowPrice",
+    "onlineSignup",
+    "onlyLoggedIn",
+    "paymentRules",
+    "price",
+    "prices",
+    "registerAttendance",
+    "reservations",
+    "responsible",
+    "rules",
+    "signUpDeadline",
+    "signUpDeadlineUtc",
+    "signupOpen",
+    "startTime",
+    "startTimeUtc",
+    "status",
+    "tagsAssigned",
+    "waitingList"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Activity2517743105127783782-202611140800"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "id": "Activity2517743104814044562-202611140900"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "id": "Activity2516147394819805210-202611141000"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/event/{id}",
+   "tag": "EventApi",
+   "requires_security": true,
+   "operationId": "EventApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "object",
+   "item_count": null,
+   "fields": [
+    "activityHasPrice",
+    "activityId",
+    "allowInvite",
+    "allowNonMember",
+    "allowPartner",
+    "assignedTags",
+    "attendanceMessage",
+    "attendancePrivacy",
+    "booked",
+    "color",
+    "commentsAll",
+    "commentsNoSend",
+    "createdTs",
+    "description",
+    "disableComments",
+    "endTime",
+    "endTimeUtc",
+    "entityId",
+    "eventId",
+    "hasPrice",
+    "hasSeating",
+    "hasWaitingList",
+    "hideFromOverview",
+    "invitationMedia",
+    "isParent",
+    "isSuperEvent",
+    "locationName",
+    "maxAttendees",
+    "maxGuestsPerMember",
+    "meetTime",
+    "meetTimeUtc",
+    "modifiedTs",
+    "name",
+    "noShowPrice",
+    "onlineSignup",
+    "onlyLoggedIn",
+    "paymentRules",
+    "price",
+    "prices",
+    "registerAttendance",
+    "reservations",
+    "responsible",
+    "signUpDeadline",
+    "signUpDeadlineUtc",
+    "signupOpen",
+    "startTime",
+    "startTimeUtc",
+    "status",
+    "tagsAssigned",
+    "waitingList"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782",
+      "id": "202611140800"
+     },
+     "query": {
+      "isAnonymous": "true"
+     },
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562",
+      "id": "202611140900"
+     },
+     "query": {
+      "isAnonymous": "true"
+     },
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210",
+      "id": "202611141000"
+     },
+     "query": {
+      "isAnonymous": "true"
+     },
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/event",
+   "tag": "EventApi",
+   "requires_security": true,
+   "operationId": "EventApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "filter.pageSize": 200,
+      "filter.currentPage": 1
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/event/{id}/myprice",
+   "tag": "EventApi",
+   "requires_security": true,
+   "operationId": "EventApi_GetEventPrice",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782",
+      "id": "202611140800"
+     },
+     "query": {
+      "isGuest": "true"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562",
+      "id": "202611140900"
+     },
+     "query": {
+      "isGuest": "true"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210",
+      "id": "202611141000"
+     },
+     "query": {
+      "isGuest": "true"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/event/relevant",
+   "tag": "EventApi",
+   "requires_security": true,
+   "operationId": "EventApi_GetRelevantEventsForMember",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-11-14T00:00:00",
+      "toTime": "2026-11-28T00:00:00"
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/event/list",
+   "tag": "EventApi",
+   "requires_security": true,
+   "operationId": "EventApi_GetEventList",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "list",
+   "item_count": 31,
+   "fields": [
+    "date",
+    "slots"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-11-14T00:00:00",
+      "toTime": "2026-11-28T00:00:00"
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 31,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/event/groups",
+   "tag": "EventApi",
+   "requires_security": true,
+   "operationId": "EventApi_GetActivityTypeEventList",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-11-14T00:00:00",
+      "toTime": "2026-11-28T00:00:00"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{ActivityId}/event",
+   "tag": "EventApi",
+   "requires_security": false,
+   "operationId": "EventApi_GetEventsForActivity",
+   "skip_reason": null,
+   "called": true,
+   "status": 500,
+   "statuses": [
+    500,
+    500,
+    500
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Object reference not set to an instance of an object.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "ActivityId": "Activity2517743105127783782"
+     },
+     "query": {
+      "filter.pageSize": 50
+     },
+     "status": 500,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Object reference not set to an instance of an object.\"}"
+    },
+    {
+     "path_params": {
+      "ActivityId": "Activity2517743104814044562"
+     },
+     "query": {
+      "filter.pageSize": 50
+     },
+     "status": 500,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Object reference not set to an instance of an object.\"}"
+    },
+    {
+     "path_params": {
+      "ActivityId": "Activity2516147394819805210"
+     },
+     "query": {
+      "filter.pageSize": 50
+     },
+     "status": 500,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Object reference not set to an instance of an object.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/event/v3/{eventId}",
+   "tag": "EventNewApi",
+   "requires_security": true,
+   "operationId": "EventNewApi_GetEventDetails",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "eventId": "Activity2517743105127783782-202611140800"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "eventId": "Activity2517743104814044562-202611140900"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "eventId": "Activity2516147394819805210-202611141000"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/event/v3/calendar",
+   "tag": "EventNewApi",
+   "requires_security": true,
+   "operationId": "EventNewApi_GetEventsForCalendar",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "eventsToShow": 300,
+      "fromOffset": "2026-11-14T00:00:00",
+      "toTime": "2026-11-28T00:00:00"
+     },
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/event/{eventId}/price",
+   "tag": "PriceApi",
+   "requires_security": false,
+   "operationId": "PriceApi_GetPricesForEvent",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782",
+      "eventId": "202611140800"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562",
+      "eventId": "202611140900"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210",
+      "eventId": "202611141000"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/activity/{activityId}/price",
+   "tag": "PriceApi",
+   "requires_security": false,
+   "operationId": "PriceApi_GetPricesForEvent",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200,
+    200,
+    200
+   ],
+   "kind": "list",
+   "item_count": 2,
+   "fields": [
+    "createdTs",
+    "currency",
+    "entityId",
+    "fromTime",
+    "modifiedTs",
+    "name",
+    "option",
+    "price",
+    "priceType",
+    "productId",
+    "quantity",
+    "tag",
+    "tagsAssigned",
+    "vatId",
+    "weekdays"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "activityId": "Activity2517743105127783782"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "list",
+     "item_count": 2,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2517743104814044562"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "list",
+     "item_count": 2,
+     "error": ""
+    },
+    {
+     "path_params": {
+      "activityId": "Activity2516147394819805210"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/price",
+   "tag": "PriceApi",
+   "requires_security": true,
+   "operationId": "PriceApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/pricedata/product/{id}",
+   "tag": "PriceDataApi",
+   "requires_security": true,
+   "operationId": "PriceDataApi_GetProductPriceForm",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Tag2517253147042177325"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2518007451728538626"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2517869245434174618"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/pricedata/activity/{actType}/{id}",
+   "tag": "PriceDataApi",
+   "requires_security": true,
+   "operationId": "PriceDataApi_GetActivityPriceFormForm",
+   "skip_reason": "skipped – actType-værdi ukendt",
+   "called": false
+  },
+  {
+   "path": "/api/pricedata/tag/{id}",
+   "tag": "PriceDataApi",
+   "requires_security": true,
+   "operationId": "PriceDataApi_GetTagPriceFormForm",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Tag2517869245434174618"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2517986617775210869"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/PriceDataApi",
+   "tag": "PriceDataApi",
+   "requires_security": false,
+   "operationId": "PriceDataApi_GetEntity",
+   "skip_reason": "skipped – lavniveau ?partitionKey=&rowKey= entity-endpoint",
+   "called": false
+  },
+  {
+   "path": "/api/product",
+   "tag": "ProductApi",
+   "requires_security": false,
+   "operationId": "ProductApi_ProductSearch",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "object",
+   "item_count": null,
+   "fields": [
+    "ageSplitType",
+    "cutDate",
+    "products"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/product/tags",
+   "tag": "ProductApi",
+   "requires_security": true,
+   "operationId": "ProductApi_TagProducts",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "empty",
+   "item_count": 0,
+   "fields": [],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {},
+     "status": 200,
+     "kind": "empty",
+     "item_count": 0,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/signup/family",
+   "tag": "SignupApi",
+   "requires_security": false,
+   "operationId": "SignupApi_GetFamilySignup",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "object",
+   "item_count": null,
+   "fields": [
+    "collapse",
+    "fluid",
+    "formSavedText",
+    "formSections",
+    "noChangeRequiredToSubmit",
+    "viewDescription",
+    "viewName",
+    "viewSubmitText"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": "",
+     "structure": {
+      "fluid": "bool",
+      "viewName": "str",
+      "viewDescription": "str",
+      "viewSubmitText": "str",
+      "noChangeRequiredToSubmit": "bool",
+      "collapse": "bool",
+      "formSavedText": "str",
+      "formSections": "list[3]",
+      "formSections[].formItems": "list[9]",
+      "formSections[].formItems[]._defaultValue": "str",
+      "formSections[].formItems[]._value": "str",
+      "formSections[].formItems[].checkEmail": "bool",
+      "formSections[].formItems[].errorIfExists": "bool",
+      "formSections[].formItems[].checkErrorMessage": "str",
+      "formSections[].formItems[].capFirst": "bool",
+      "formSections[].formItems[].defaultValue": "str",
+      "formSections[].formItems[].value": "str",
+      "formSections[].formItems[].itemType": "str",
+      "formSections[].formItems[].fieldName": "str",
+      "formSections[].formItems[].friendlyName": "str",
+      "formSections[].formItems[].friendlyDescription": "str",
+      "formSections[].formItems[].colSpan": "int",
+      "formSections[].formItems[].triggerAsyncCheck": "bool",
+      "formSections[].formItems[].isDynamic": "bool",
+      "formSections[].formItems[].isCookie": "bool",
+      "formSections[].formItems[].tooltipHelp": "bool",
+      "formSections[].formItems[].isRequired": "bool",
+      "formSections[].formItems[].isPublic": "bool",
+      "formSections[].formItems[].isDisabled": "bool",
+      "formSections[].formItems[].isReadOnly": "bool",
+      "formSections[].formItems[].fullLine": "bool",
+      "formSections[].formItems[].isHidden": "bool",
+      "formSections[].formItems[].access": "int",
+      "formSections[].formItems[].viewOrder": "int",
+      "formSections[].id": "str",
+      "formSections[].name": "str",
+      "formSections[].fluid": "bool",
+      "formSections[].tagsSelected": "str",
+      "formSections[].isPrimarySelected": "bool"
+     }
+    }
+   ]
+  },
+  {
+   "path": "/api/signup/{id}",
+   "tag": "SignupApi",
+   "requires_security": false,
+   "operationId": "SignupApi_GetSignup",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "object",
+   "item_count": null,
+   "fields": [
+    "collapse",
+    "fluid",
+    "formSavedText",
+    "formSections",
+    "noChangeRequiredToSubmit",
+    "secureFields",
+    "viewDescription",
+    "viewName",
+    "viewSubmitText"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Tag2517869245434174618"
+     },
+     "query": {},
+     "status": 200,
+     "kind": "object",
+     "item_count": null,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/signup/GetOrderForMember/{exclusive}",
+   "tag": "SignupApi",
+   "requires_security": true,
+   "operationId": "SignupApi_GetOrderForMember",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "exclusive": "false"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/SignupApi",
+   "tag": "SignupApi",
+   "requires_security": false,
+   "operationId": "SignupApi_GetEntity",
+   "skip_reason": "skipped – lavniveau ?partitionKey=&rowKey= entity-endpoint",
+   "called": false
+  },
+  {
+   "path": "/api/tag/{id}",
+   "tag": "TagApi",
+   "requires_security": true,
+   "operationId": "TagApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Tag2517869245434174618"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2517986617775210869"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tag",
+   "tag": "TagApi",
+   "requires_security": false,
+   "operationId": "TagApi_Get",
+   "skip_reason": null,
+   "called": true,
+   "status": 200,
+   "statuses": [
+    200
+   ],
+   "kind": "list",
+   "item_count": 51,
+   "fields": [
+    "category",
+    "color",
+    "createdTs",
+    "displayName",
+    "entityId",
+    "modifiedTs",
+    "name",
+    "tagType",
+    "tagsAssigned",
+    "viewOrder"
+   ],
+   "error": "",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "filter.pageSize": 500,
+      "filter.currentPage": 1
+     },
+     "status": 200,
+     "kind": "list",
+     "item_count": 51,
+     "error": ""
+    }
+   ]
+  },
+  {
+   "path": "/api/tagcategorydata/griddata",
+   "tag": "TagCategoryDataApi",
+   "requires_security": true,
+   "operationId": "TagCategoryDataApi_GetridData",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 100,
+      "searchText": "",
+      "tagFilter": "",
+      "notTagFilter": "",
+      "departmentFilter": "",
+      "customFilter": ""
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagcategorydata/wizard",
+   "tag": "TagCategoryDataApi",
+   "requires_security": true,
+   "operationId": "TagCategoryDataApi_GetWizardCategories",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagcategorydata/wizard/{id}",
+   "tag": "TagCategoryDataApi",
+   "requires_security": true,
+   "operationId": "TagCategoryDataApi_GetWizard",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "TC2517931454368378777"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "TC2517985027101079731"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagcategorydata/{id}",
+   "tag": "TagCategoryDataApi",
+   "requires_security": true,
+   "operationId": "TagCategoryDataApi_GetForm",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "TC2517931454368378777"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "TC2517985027101079731"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagcategorydata/clone/{id}",
+   "tag": "TagCategoryDataApi",
+   "requires_security": true,
+   "operationId": "TagCategoryDataApi_GetCloneForm",
+   "skip_reason": "skipped – DENIED_PATHS i generate.py",
+   "called": false
+  },
+  {
+   "path": "/api/TagCategoryDataApi",
+   "tag": "TagCategoryDataApi",
+   "requires_security": false,
+   "operationId": "TagCategoryDataApi_GetEntity",
+   "skip_reason": "skipped – lavniveau ?partitionKey=&rowKey= entity-endpoint",
+   "called": false
+  },
+  {
+   "path": "/api/tagdata/griddata",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetGridData",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 100,
+      "searchText": "",
+      "tagFilter": "",
+      "notTagFilter": "",
+      "departmentFilter": "",
+      "customFilter": ""
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagdata/tagcategory/griddata/{id}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GridTagsInCategoryData",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "id": "TC2517931454368378777"
+     },
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 100,
+      "searchText": "",
+      "tagFilter": "",
+      "notTagFilter": "",
+      "departmentFilter": "",
+      "customFilter": ""
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "TC2517985027101079731"
+     },
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 100,
+      "searchText": "",
+      "tagFilter": "",
+      "notTagFilter": "",
+      "departmentFilter": "",
+      "customFilter": ""
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagdata/clone/{id}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetCloneForm",
+   "skip_reason": "skipped – DENIED_PATHS i generate.py",
+   "called": false
+  },
+  {
+   "path": "/api/tagdata/members/{id}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetTagMemberForm",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": true,
+   "calls": [
+    {
+     "path_params": {
+      "id": "Tag2517869245434174618"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "id": "Tag2517986617775210869"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagdata/autoassign/{departmentId}/{id}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetAutoAssign",
+   "skip_reason": "skipped – segment 'autoassign' indeholder 'assign'",
+   "called": false
+  },
+  {
+   "path": "/api/tagdata/reorder/{category}/{id}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_TeamReOrder",
+   "skip_reason": "skipped – unsure (reorder lyder som en ændring)",
+   "called": false
+  },
+  {
+   "path": "/api/tagdata/category/{tagCategoryId}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetGrid",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401,
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {
+      "tagCategoryId": "TC2517931454368378777"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    },
+    {
+     "path_params": {
+      "tagCategoryId": "TC2517985027101079731"
+     },
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagdata/category/{tagCategoryId}/{id}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetTagForm",
+   "skip_reason": "skipped – unsure om {id} er tag-id; ikke afprøvet",
+   "called": false
+  },
+  {
+   "path": "/api/tagdata/membershipcard",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetTagRoleData",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {},
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagdata/{type}/{id}",
+   "tag": "TagDataApi",
+   "requires_security": true,
+   "operationId": "TagDataApi_GetForm",
+   "skip_reason": "skipped – type-værdi ukendt",
+   "called": false
+  },
+  {
+   "path": "/api/TagDataApi",
+   "tag": "TagDataApi",
+   "requires_security": false,
+   "operationId": "TagDataApi_GetEntity",
+   "skip_reason": "skipped – lavniveau ?partitionKey=&rowKey= entity-endpoint",
+   "called": false
+  },
+  {
+   "path": "/api/tagpricedata/griddata",
+   "tag": "TagPriceDataApi",
+   "requires_security": true,
+   "operationId": "TagPriceDataApi_GetTagPriceGridItems",
+   "skip_reason": null,
+   "called": true,
+   "status": 401,
+   "statuses": [
+    401
+   ],
+   "kind": "error",
+   "item_count": null,
+   "fields": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}",
+   "personal_reduced_to_counts": false,
+   "calls": [
+    {
+     "path_params": {},
+     "query": {
+      "sidx": "",
+      "sord": "asc",
+      "page": 1,
+      "rows": 100,
+      "customFilter": "",
+      "searchText": ""
+     },
+     "status": 401,
+     "kind": "error",
+     "item_count": null,
+     "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+    }
+   ]
+  },
+  {
+   "path": "/api/tagpricedata/{id}",
+   "tag": "TagPriceDataApi",
+   "requires_security": true,
+   "operationId": "TagPriceDataApi_GetPrice",
+   "skip_reason": "skipped – ingen id fra offentlige data",
+   "called": false
+  },
+  {
+   "path": "/api/TagPriceDataApi",
+   "tag": "TagPriceDataApi",
+   "requires_security": false,
+   "operationId": "TagPriceDataApi_GetEntity",
+   "skip_reason": "skipped – lavniveau ?partitionKey=&rowKey= entity-endpoint",
+   "called": false
+  }
+ ],
+ "member_probe": [
+  {
+   "path": "/api/members",
+   "query": {
+    "filter.pageSize": 1,
+    "filter.currentPage": 1
+   },
+   "status": 500,
+   "kind": "error",
+   "content_type": "application/json",
+   "top_level_keys": [],
+   "count_fields": {},
+   "row_field_names": [],
+   "error": "{\"message\":\"An error has occurred.\",\"exceptionMessage\":\"Du har ikke rettighed til at hente medlemmer\",\"exceptionType\":\"ClubPortal.Shared.ServiceException\",\"stackTrace\":\" at ClubPortal.Api.MemberApiCon"
+  },
+  {
+   "path": "/api/memberdata/grid/data",
+   "query": {
+    "sidx": "",
+    "sord": "asc",
+    "page": 1,
+    "rows": 1,
+    "searchText": "",
+    "tagFilter": "",
+    "allTagFilter": "",
+    "notTagFilter": "",
+    "departmentFilter": "",
+    "customFilter": ""
+   },
+   "status": 401,
+   "kind": "error",
+   "content_type": "application/json",
+   "top_level_keys": [],
+   "count_fields": {},
+   "row_field_names": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+  },
+  {
+   "path": "/api/members/gallery",
+   "query": {},
+   "status": 500,
+   "kind": "error",
+   "content_type": "application/json",
+   "top_level_keys": [],
+   "count_fields": {},
+   "row_field_names": [],
+   "error": "{\"message\":\"An error has occurred.\",\"exceptionMessage\":\"Object reference not set to an instance of an object.\",\"exceptionType\":\"System.NullReferenceException\",\"stackTrace\":\" at ClubPortal.Api.MemberAp"
+  },
+  {
+   "path": "/api/members/family",
+   "query": {},
+   "status": 401,
+   "kind": "error",
+   "content_type": "application/json",
+   "top_level_keys": [],
+   "count_fields": {},
+   "row_field_names": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+  },
+  {
+   "path": "/api/members/dataresponsible",
+   "query": {},
+   "status": 401,
+   "kind": "error",
+   "content_type": "application/json",
+   "top_level_keys": [],
+   "count_fields": {},
+   "row_field_names": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+  },
+  {
+   "path": "/api/members/me",
+   "query": {},
+   "status": 401,
+   "kind": "error",
+   "content_type": "application/json",
+   "top_level_keys": [],
+   "count_fields": {},
+   "row_field_names": [],
+   "error": "{\"message\":\"Account credentials were good, but member authentication is required.\"}"
+  }
+ ]
+}

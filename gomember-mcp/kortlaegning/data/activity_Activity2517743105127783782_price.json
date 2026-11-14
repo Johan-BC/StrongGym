@@ -1,0 +1,35 @@
+[
+ {
+  "name": "",
+  "option": "",
+  "price": 1.0,
+  "priceType": "perOnlineSignup",
+  "productId": "Activity2517743105127783782",
+  "quantity": 1,
+  "tag": "Tag2517869245434174618",
+  "weekdays": 0,
+  "fromTime": 0,
+  "currency": "point",
+  "vatId": "",
+  "createdTs": "2023-09-15T14:59:23.3290193",
+  "entityId": "Price25170751803667098062",
+  "modifiedTs": "2023-09-15T12:59:23.3290193Z",
+  "tagsAssigned": []
+ },
+ {
+  "name": "",
+  "option": "",
+  "price": 25.0,
+  "priceType": "noShow",
+  "productId": "Activity2517743105127783782",
+  "quantity": 1,
+  "tag": "",
+  "weekdays": 0,
+  "fromTime": 0,
+  "vatId": "",
+  "createdTs": "2021-08-15T00:45:12.1246792",
+  "entityId": "Price25177331968787532071",
+  "modifiedTs": "2023-09-15T12:59:23.3290193Z",
+  "tagsAssigned": []
+ }
+]

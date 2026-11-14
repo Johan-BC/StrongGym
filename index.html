@@ -650,11 +650,14 @@ const openingHours = [
   {day:"Helligdage",hours:"10:00 \u2013 13:00"},
 ];
 
-// Fra goMembers indmeldelsesside 14. november 2026. Retter klubben
-// priserne i goMember, skal de også rettes her.
+// Fra goMembers produktliste (/api/product) 14. november 2026. Prisen er
+// feltet displayPrice - "price" er forholdsmæssig for resten af måneden.
+// Retter klubben priserne i goMember, skal de også rettes her.
 const membershipTypes = [
-  {id:"premium",name:"Premium medlemskab",price:"499 kr/md",description:"Alle WODs, selvtræning alle ugens dage kl. 6\u201323 og adgang til klubbens events."},
+  {id:"premium",name:"Premium medlemskab",price:"499 kr/md",description:"Alle WODs, selvtr\u00e6ning alle ugens dage kl. 6\u201323 og adgang til klubbens events."},
+  {id:"young",name:"Ung 15\u201324 \u00e5r",price:"299 kr/md",description:"Samme adgang som Premium. Er du 15\u201317 \u00e5r, kr\u00e6ver det samtykke fra en for\u00e6lder."},
   {id:"clip10",name:"Klippekort (10 klip)",price:"850 kr",description:"Personligt klippekort, gyldigt i 6 m\u00e5neder fra k\u00f8bsdato."},
+  {id:"child",name:"B\u00f8rn 7\u201314 \u00e5r",price:"0 kr",description:"Kun for medlemmers b\u00f8rn."},
 ];
 
 /* ══ HOLDPLAN DATA ══ */

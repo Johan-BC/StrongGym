@@ -146,10 +146,13 @@ Holdplanen henter nu **live data** fra stronggym.dk's offentlige kalender-API vi
 | Type | Pris | Beskrivelse |
 |---|---|---|
 | Premium medlemskab | 499 kr/md | Alle WODs, selvtræning alle dage kl. 6–23, events |
+| Ung 15–24 år | 299 kr/md | Samme adgang som Premium. 15–17 år kræver forældresamtykke |
 | Klippekort (10 klip) | 850 kr | Personligt, gyldigt 6 måneder fra købsdato |
+| Børn 7–14 år | 0 kr | Kun for medlemmers børn |
 
-Kilde: goMembers indmeldelsesside, 14. november 2026. Der findes ingen
-børne- eller ungepris - de stod på mock-sitet og er fjernet.
+Kilde: goMembers produktliste (`/api/product`), 14. november 2026 - se
+`gomember-mcp/kortlaegning/`. Feltet `displayPrice` er månedsprisen; `price`
+er forholdsmæssig for resten af indmeldelsesmåneden og må ikke vises som pris.
 
 ---
 

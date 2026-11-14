@@ -292,8 +292,8 @@ request-body'en til `/auth/token` er gættet ud fra swagger-filen.
   sagde "Tak for din tilmelding!". Den er fjernet. Tag-id'et er fundet
   21. oktober 2026 og ikke genkontrolleret siden — tjek at linket stadig
   rammer indmeldelsen, og at det følger med til `medlem.stronggym.dk`.
-- **Priserne under "Bliv medlem"** er hentet fra goMembers
-  indmeldelsesside 14. november 2026: Premium 499 kr/md og klippekort
-  850 kr. Mock-sitets børne- og ungepriser fandtes ikke og er fjernet.
-  `membershipTypes` skal rettes i hånden, hvis klubben ændrer priserne.
+- **Priserne under "Bliv medlem"** er fra goMembers produktliste
+  14. november 2026: Premium 499 kr/md, Ung 15–24 år 299 kr/md, klippekort
+  850 kr og Børn 7–14 år 0 kr (kun medlemmers børn). `membershipTypes`
+  skal rettes i hånden, hvis klubben ændrer priserne.
 - Adressen er **Industrivej 8B** (bekræftet 14. november 2026).

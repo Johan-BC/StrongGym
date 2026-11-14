@@ -10,6 +10,11 @@ Autentificering sker via OAuth2 "Resource Owner Password Credentials" mod
 /auth/token, sådan som swagger-filens securityDefinitions angiver. Token
 caches i hukommelsen og forny's automatisk når det udløber eller et kald
 fejler med 401.
+
+Anonym tilstand (GoMemberClient(anonymous=True)) bruges til at kortlægge hvad
+goMember udstiller offentligt uden login: ingen credentials kræves, der hentes
+aldrig token (/auth/token kaldes ikke), get() sender ingen Authorization-header
+og forsøger ikke at logge ind igen ved 401. Stadig kun GET.
 """
 import os
 import time
@@ -23,6 +28,9 @@ class GoMemberAuthError(RuntimeError):
     pass
 
 
+USER_AGENT = "StrongGym-kortlaegning"
+
+
 class GoMemberClient:
     def __init__(
         self,
@@ -30,7 +38,9 @@ class GoMemberClient:
         username: Optional[str] = None,
         password: Optional[str] = None,
         client_id: Optional[str] = None,
+        anonymous: bool = False,
     ):
+        self.anonymous = anonymous
         self.base_url = (base_url or os.environ.get("GOMEMBER_BASE_URL") or "https://www.stronggym.dk").rstrip("/")
         self.username = username or os.environ.get("GOMEMBER_USERNAME")
         self.password = password or os.environ.get("GOMEMBER_PASSWORD")
@@ -39,13 +49,19 @@ class GoMemberClient:
         # GOMEMBER_CLIENT_ID hvis test-kaldet i README fejler med "invalid_client".
         self.client_id = client_id or os.environ.get("GOMEMBER_CLIENT_ID")
 
-        if not self.username or not self.password:
+        if not anonymous and (not self.username or not self.password):
             raise GoMemberAuthError(
                 "GOMEMBER_USERNAME og GOMEMBER_PASSWORD skal være sat som miljøvariabler "
                 "(login for det fiktive read-only medlem i goMember)."
             )
 
         self._session = requests.Session()
+        if anonymous:
+            # Fast, høflig User-Agent uden persondata. Kun i anonym tilstand, så
+            # den autentificerede adfærd er uændret.
+            self._session.headers["User-Agent"] = USER_AGENT
+        # Seneste HTTP-svar (kun til diagnostik, fx statuskode/content-type ved fejl)
+        self.last_response: Optional[requests.Response] = None
         self._token: Optional[str] = None
         self._token_expires_at: float = 0.0
         self._lock = threading.Lock()
@@ -81,10 +97,22 @@ class GoMemberClient:
 
     def get(self, path_template: str, path_params: Optional[dict] = None, query_params: Optional[dict] = None) -> dict:
         """Udfør et GET-kald mod goMember API'et. Ingen andre HTTP-metoder er implementeret."""
-        self._ensure_token()
         path = path_template.format(**(path_params or {}))
         url = f"{self.base_url}{path}"
 
+        if self.anonymous:
+            # Intet token, ingen Authorization-header, intet nyt login-forsøg ved 401.
+            resp = self._session.get(url, params=query_params or {}, timeout=30)
+            self.last_response = resp
+            resp.raise_for_status()
+            if not resp.content:
+                return {}
+            try:
+                return resp.json()
+            except ValueError:
+                return {"raw_text": resp.text}
+
+        self._ensure_token()
         headers = {"Authorization": f"Bearer {self._token}"}
         resp = self._session.get(url, params=query_params or {}, headers=headers, timeout=30)
 
@@ -96,6 +124,7 @@ class GoMemberClient:
             headers = {"Authorization": f"Bearer {self._token}"}
             resp = self._session.get(url, params=query_params or {}, headers=headers, timeout=30)
 
+        self.last_response = resp
         resp.raise_for_status()
         if not resp.content:
             return {}
