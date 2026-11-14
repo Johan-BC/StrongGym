@@ -48,9 +48,9 @@ glemme noget.
 
 - Den **sender ikke noget til goMember.** Hver rettelse er en kladde.
   Øverst på siden står hele tiden "Kladde — intet er sendt til goMember".
-- Den viser **ingen medlemsdata** (antal medlemmer, bero, udmeldelser,
-  no-shows). Det kræver et login, som ikke er sat op og afprøvet endnu.
-  Siden viser tomme felter mærket "afventer login" og ingen opdigtede tal.
+- Medlemmer viser kun **samlede tal** (antal pr. etiket, nye pr. måned,
+  bero/udmeld-etiketter og udmeldinger efter udmeldingsdato). Ingen navne,
+  numre eller data om enkeltpersoner. No-shows vises ikke.
 - Dataene er et **øjebliksbillede** fra det tidspunkt, de sidst blev hentet
   (står øverst på siden). Siden regner den dato som "i dag". De kan opdateres
   automatisk hver nat med én kommando (se "Automatisk opdatering").
@@ -100,6 +100,21 @@ Den indeholder ingen anden `fetch`, `XMLHttpRequest`, `sendBeacon` eller
 formular-afsendelse. Rettelser gemmes i `localStorage` (siden virker også
 uden). Eksport som JSON sker med en lokal download i browseren.
 
+**Udmeldinger efter udmeldingsdato** (Medlemmer → Opfølgning): for de
+medlemmer, der har etiketten "Ønsker udmelding", hentes feltet
+"Udmeldingsdato" (og indmeldingsdatoen) fra deres medlemskort i goMember,
+`GET /api/memberdata/{id}` – ét kald pr. medlem, ca. 20. Svaret er medlemmets
+fulde stamkort (navn, adresse, e-mail, telefon …). Scriptet læser **kun**
+felterne `LeftDate` og `JoinedDate` og smider resten væk med det samme. Intet
+id, ingen dato og intet andet fra svaret gemmes eller skrives ud – kun:
+antal med etiketten, med/uden dato, allerede passeret/kommende, antal pr.
+måned og medlemstid i grove grupper. Antal pr. måned vises præcist, også 1
+og 2 (klubben har godkendt samlede tal uden navne; ellers ville grafen være
+tom), men kun som måned, aldrig som dato. Medlemstid vises kun for hele
+gruppen, med "<3" for 1-2. Tallene viser, at de fleste med etiketten
+allerede er udmeldt, men stadig står i listen – det rigtige antal medlemmer
+er altså lavere end "Medlemmer i alt".
+
 **Statistik opdateres** i to trin i `gomember-mcp/kortlaegning`:
 
 1. `python3 deltagelse.py` henter deltagelsen fra goMember (kun læsekald,
@@ -130,11 +145,14 @@ python3 gomember-mcp/kortlaegning/opdater.py --dato 2026-11-15   # kun til test
 1. Holdplanen 8 uger tilbage og 8 uger frem, aktivitetslisten, etiketterne og
    medlemskaberne (ca. 8 kald, `holdplan.py`). Den store kortlægning
    (`kortlaeg.py`, ca. 100 adresser i goMember) køres ikke om natten.
-2. Medlemslisten, talt op til antal med det samme (2 kald).
+2. Medlemslisten, talt op til antal med det samme (2 kald), og
+   udmeldingsdatoen for medlemmer med etiketten "Ønsker udmelding" (1 kald
+   til listen + ca. 20 kald til `/api/memberdata/{id}`, hvor kun
+   udmeldings- og indmeldingsdato læses; se "Udmeldinger" ovenfor).
 3. Deltagelsen de seneste 6 måneder. Gamle hold ligger gemt i en cache og
    hentes aldrig igen. Kun hold fra de seneste 14 dage, nye hold og hold der
    lå i fremtiden sidst, hentes igen. En normal nat er ca. 50-60 kald; i alt
-   ca. 65 kald og under et minut.
+   ca. 85 kald og omkring et minut.
 
 Derefter regnes `styring-data.json`, `styring-medlemmer.json` og
 `styring-statistik.json` ud uden at kontakte goMember.
@@ -150,7 +168,10 @@ Derefter regnes `styring-data.json`, `styring-medlemmer.json` og
 - Kontroller: der skal være hold de næste 7 dage; antal medlemmer må højst
   ændre sig 25 % og antal afholdte hold/tilmeldinger højst 30 % i forhold til
   forrige fil (`--force` tillader det); alle summer i statistikken skal passe
-  sammen; tal på 1-2 vises stadig som "<3".
+  sammen; tal på 1-2 vises stadig som "<3". Udmeldingsdato: trinnet fejler,
+  hvis ingen har etiketten, hvis filteret på etiketten ikke giver præcis
+  lige så mange som medlemslisten, hvis over 20 % af medlemskortene ikke kan
+  hentes, eller hvis feltet `LeftDate` er forsvundet fra kortet.
 - En ny aktivitet, som holdtype-opdelingen ikke kender, stopper ikke
   kørslen. Den vises som "Ukendt (ny aktivitet)" og nævnes i opsummeringen,
   så nogen kan placere den i `analyse_holdtyper.py`.

@@ -90,9 +90,11 @@ class Hentning:
             time.sleep(wait)
         self._last = time.time()
 
-    def get(self, path, query=None, tilladt=(404,)):
+    def get(self, path, query=None, tilladt=(404,), vis=None):
         """GET path. Returnerer (status, data). 200 og statusser i `tilladt` returneres;
-        alt andet stopper kørslen med NetFejl efter højst 2 genforsøg (kun ved 429/5xx/timeout)."""
+        alt andet stopper kørslen med NetFejl efter højst 2 genforsøg (kun ved 429/5xx/timeout).
+        vis: tekst der bruges i fejlbeskeder i stedet for path (fx når path rummer et medlems-id)."""
+        vis = vis or path
         forsoeg = 0
         while True:
             if self.n >= self.loft:
@@ -115,7 +117,7 @@ class Hentning:
                 if st in tilladt:
                     return st, None
                 if st == 401 or st == 403:
-                    raise NetFejl(f"goMember afviste adgang (HTTP {st}) til {path}.") from None
+                    raise NetFejl(f"goMember afviste adgang (HTTP {st}) til {vis}.") from None
                 kan_igen = st == 429 or st >= 500
                 beskrivelse = f"HTTP {st}"
             except requests.Timeout:
@@ -128,7 +130,7 @@ class Hentning:
                 self.status["andet"] += 1
                 kan_igen, beskrivelse = False, type(e).__name__
             if not kan_igen or forsoeg >= EKSTRA_FORSOEG:
-                raise NetFejl(f"Kaldet til {path} fejlede ({beskrivelse})"
+                raise NetFejl(f"Kaldet til {vis} fejlede ({beskrivelse})"
                               + (f" også efter {forsoeg} genforsøg." if forsoeg else ".")) from None
             time.sleep(PAUSER[forsoeg])
             forsoeg += 1

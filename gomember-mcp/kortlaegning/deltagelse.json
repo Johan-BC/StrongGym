@@ -4,9 +4,9 @@
    "2026-05-14",
    "2026-11-14"
   ],
-  "hentet": "2026-11-14T23:32",
+  "hentet": "2026-11-14T23:34",
   "genereret_af": "deltagelse.py",
-  "kald_i_alt_alle_koersler": 1999,
+  "kald_i_alt_alle_koersler": 2000,
   "koersler": [
    {
     "kald": 979,
@@ -46,7 +46,14 @@
     }
    },
    {
+    "kald": 1,
     "run": "2026-11-14T23:32:04",
+    "status": {
+     "200": 1
+    }
+   },
+   {
+    "run": "2026-11-14T23:34:23",
     "kald": 1,
     "status": {
      "200": 1

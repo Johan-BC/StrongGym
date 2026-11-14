@@ -3,7 +3,7 @@
 Bygger ../../styring-medlemmer.json: anonyme medlemstal til Medlemmer-visningen
 i styring.html.
 
-    python3 byg_medlemsstatistik.py            # henter fra goMember (2 GET-kald + login)
+    python3 byg_medlemsstatistik.py            # henter fra goMember (ca. 23 GET-kald + login)
     python3 byg_medlemsstatistik.py --struktur # viser kun svarets form (nøgler/typer), skriver intet
     python3 byg_medlemsstatistik.py --force    # skriv selv om fornuftskontrollen fejler
 
@@ -16,6 +16,10 @@ Regler (se CLAUDE.md):
 - Fra medlemslisten bruges KUN createdTs og tagsAssigned. Navne, numre og
   id'er læses aldrig ind i egne variabler, printes, logges eller gemmes.
   Rækkerne kasseres straks efter optællingen.
+- Udmeldingsdato: for medlemmer med etiketten "Ønsker udmelding" (og kun dem)
+  hentes GET /api/memberdata/{id}, og KUN felterne LeftDate/JoinedDate læses ud.
+  Svaret er medlemmets fulde stamkort og kasseres straks; id'er og datoer gemmes
+  ikke - kun antal pr. måned og grove medlemstids-grupper.
 - Outputtet indeholder kun optællinger. Tal for kombinationer (fx "uden
   medlemskab", nye pr. måned) vises som "<3", når de er 1 eller 2.
   Tal pr. enkelt etiket vises som de er.
@@ -103,6 +107,152 @@ def rows_of(resp):
             if isinstance(v, list) and v and isinstance(v[0], dict) and "tagsAssigned" in v[0]:
                 return v, total
     raise NetFejl("Kunne ikke finde medlemslisten i svaret fra goMember (kør byg_medlemsstatistik.py --struktur).")
+
+
+# ---------------------------------------------------------------- udmeldingsdato
+UDMELD_ETIKET = "Ønsker udmelding"
+MAKS_FEJL_ANDEL = 0.20        # flere mislykkede medlemskald end dette -> trinnet fejler
+LAENGDE_GRUPPER = ["under 6 mdr", "6-12 mdr", "1-2 år", "over 2 år", "ukendt"]
+
+
+def _dato(v):
+    """'YYYY-MM-DDTHH:MM:SS' -> date, ellers None."""
+    if not isinstance(v, str) or len(v) < 10:
+        return None
+    try:
+        return dt.date.fromisoformat(v[:10])
+    except ValueError:
+        return None
+
+
+def _formdatoer(data):
+    """Find KUN felterne LeftDate og JoinedDate i medlemsformularen.
+    Returnerer (har_leftdate_felt, leftdate, joineddate). Intet andet læses ud."""
+    fundet = {}
+
+    def walk(x):
+        if isinstance(x, dict):
+            fn = x.get("fieldName")
+            if fn in ("LeftDate", "JoinedDate") and fn not in fundet:
+                v = x.get("value")
+                if v in (None, ""):
+                    v = x.get("_value")
+                fundet[fn] = _dato(v)
+            for v in x.values():
+                if isinstance(v, (dict, list)):
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+    walk(data)
+    return "LeftDate" in fundet, fundet.get("LeftDate"), fundet.get("JoinedDate")
+
+
+def _laengde(ind, ud):
+    if not ind or not ud or ud < ind:
+        return "ukendt"
+    mdr = (ud.year - ind.year) * 12 + (ud.month - ind.month) - (ud.day < ind.day)
+    if mdr < 6:
+        return "under 6 mdr"
+    if mdr < 12:
+        return "6-12 mdr"
+    if mdr < 24:
+        return "1-2 år"
+    return "over 2 år"
+
+
+def hent_udmeldinger(hent, tag_id, forventet, idag, kald):
+    """Udmeldingsdato for medlemmer med etiketten 'Ønsker udmelding'.
+
+    Kun to kald-typer: GET /api/members?filter.tags=<etiket> (kun entityId bruges) og
+    GET /api/memberdata/{id}, hvor KUN felterne LeftDate/JoinedDate læses. Svarene
+    kasseres straks; der gemmes kun måned og en grov længde-gruppe pr. medlem - uden id.
+    Fejlbeskeder nævner aldrig id'er eller indhold."""
+    if not tag_id:
+        raise NetFejl(f"Etiketten '{UDMELD_ETIKET}' findes ikke længere i goMember.")
+    _, resp = hent.get("/api/members", {"filter.tags": tag_id, "filter.pageSize": SIDE, "filter.currentPage": 1},
+                       tilladt=(), vis="/api/members?filter.tags=…")
+    kald.append("GET /api/members?filter.tags=<Ønsker udmelding>&filter.pageSize=1000")
+    rows, _ = rows_of(resp)
+    ids = [r.get("entityId") for r in rows if isinstance(r, dict) and r.get("entityId")]
+    del rows, resp
+    if not ids:
+        raise NetFejl(f"Ingen medlemmer med etiketten '{UDMELD_ETIKET}' - det ligner en fejl; stopper.")
+    if len(ids) != forventet:
+        raise NetFejl(f"Filteret på etiketten gav {len(ids)} medlemmer, men {forventet} har etiketten i "
+                      "medlemslisten - filteret virker ikke som forventet; stopper.")
+    n_ids = len(ids)
+    datoer = []          # (leftdate, joineddate) - uden id, kun i hukommelsen
+    fejl = 0
+    har_felt = 0
+    for mid in ids:
+        try:
+            st, data = hent.get(f"/api/memberdata/{mid}", None, tilladt=(404,), vis="/api/memberdata/{id}")
+        except NetFejl as e:
+            if "Login" in str(e) or "Loftet" in str(e) or "login" in str(e):
+                raise
+            fejl += 1
+            continue
+        if st != 200 or not isinstance(data, dict):
+            fejl += 1
+            del data
+            continue
+        try:
+            felt, ud, ind = _formdatoer(data)
+        except Exception:  # noqa: BLE001 - aldrig indholdet i en fejlbesked
+            felt, ud, ind = False, None, None
+        del data
+        har_felt += felt
+        datoer.append((ud, ind))
+    ids = None
+    kald.append(f"GET /api/memberdata/{{id}} x {len(datoer) + fejl}")
+    if fejl > MAKS_FEJL_ANDEL * (len(datoer) + fejl):
+        raise NetFejl(f"Udmeldingsdato kunne ikke hentes for {fejl} af {len(datoer) + fejl} medlemmer "
+                      f"(mere end {MAKS_FEJL_ANDEL:.0%}); stopper.")
+    if datoer and har_felt == 0:
+        raise NetFejl("Medlemsformularen i goMember har ikke længere feltet 'LeftDate' (udmeldingsdato) - "
+                      "statistikken kan ikke laves; stopper.")
+
+    med = [(u, i) for u, i in datoer if u]
+    pr_m = collections.defaultdict(lambda: {"passeret": 0, "kommende": 0})
+    for u, _ in med:
+        pr_m[u.strftime("%Y-%m")]["passeret" if u < idag else "kommende"] += 1
+    maaneder = []
+    if pr_m:
+        keys = sorted(pr_m)
+        y, m = int(keys[0][:4]), int(keys[0][5:])
+        alle = []
+        while f"{y:04d}-{m:02d}" <= keys[-1]:
+            alle.append(f"{y:04d}-{m:02d}")
+            y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+        if len(alle) > 36:          # meget spredte datoer: kun måneder med udmeldinger
+            alle = keys
+        for k in alle:
+            c = pr_m.get(k, {"passeret": 0, "kommende": 0})
+            maaneder.append({"maaned": k, "antal": c["passeret"] + c["kommende"],
+                             "passeret": c["passeret"], "kommende": c["kommende"]})
+    lg = collections.Counter(_laengde(i, u) for u, i in datoer)
+    grupper = [{"gruppe": g, "antal": skjul(lg.get(g, 0))} for g in LAENGDE_GRUPPER]
+    # Sekundær skjulning: er præcis én gruppe skjult, kunne den regnes ud fra totalen.
+    skjulte = [x for x in grupper if x["antal"] == "<3"]
+    if len(skjulte) == 1:
+        rest = [x for x in grupper if isinstance(x["antal"], int) and x["antal"] > 0]
+        if rest:
+            min(rest, key=lambda x: x["antal"])["antal"] = None
+    del datoer, med
+    return {
+        "etiket": UDMELD_ETIKET,
+        "medEtiket": n_ids,
+        "hentet": sum(lg.values()),
+        "kunneIkkeHentes": fejl,
+        "medDato": sum(c["passeret"] + c["kommende"] for c in pr_m.values()),
+        "udenDato": sum(lg.values()) - sum(c["passeret"] + c["kommende"] for c in pr_m.values()),
+        "passeret": sum(c["passeret"] for c in pr_m.values()),
+        "kommende": sum(c["kommende"] for c in pr_m.values()),
+        "denneMaaned": idag.strftime("%Y-%m"),
+        "prMaaned": maaneder,
+        "medlemstid": grupper,
+    }
 
 
 def tag_ref(x):
@@ -298,6 +448,7 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
     maaned_skjult = any(0 < pr_maaned.get(k, 0) < MIN_CELLE for k in maaneder)
     foer_ud = None if maaned_skjult else skjul(foer_periode)
     udmeld = maaned_tags(UDMELD_RE)
+    udm = hent_udmeldinger(hent, id_af_navn.get(UDMELD_ETIKET), antal(UDMELD_ETIKET), now.date(), kald)
     bero = maaned_tags(BERO_RE)
 
     out = {
@@ -332,6 +483,7 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
         "nyePrMaaned": [{"maaned": k, "antal": skjul(pr_maaned.get(k, 0))} for k in maaneder],
         "nyeFoerPerioden": foer_ud,
         "udenOprettelsesdato": skjul(uden_dato),
+        "udmeldinger": udm,
         "opfoelgning": {
             "oenskerUdmelding": antal("Ønsker udmelding"),
             "pause": antal("Pause"),
@@ -344,6 +496,19 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
             "beroSlutIAlt": sum(x["antal"] or 0 for x in bero),
         },
         "definitioner": [
+            {"term": "Udmeldingsdato",
+             "tekst": "Feltet \"Udmeldingsdato\" (LeftDate) på medlemmer med etiketten \"Ønsker udmelding\", hentet ét "
+                      "medlem ad gangen (GET /api/memberdata/{id}). Kun udmeldings- og indmeldingsdato læses; resten af "
+                      "svaret kasseres straks. Siden viser kun måned, aldrig den præcise dato. \"Allerede passeret\" = "
+                      "datoen ligger før hentedagen; \"kommende\" = hentedagen eller senere."},
+            {"term": "Udmeldinger pr. måned",
+             "tekst": "Antal pr. måned vises præcist, også når det er 1 eller 2 – klubben har godkendt samlede tal uden "
+                      "navne, og ellers ville grafen være tom. Derfor vises der aldrig andet om de samme personer pr. "
+                      "måned (fx medlemstid)."},
+            {"term": "Medlemstid ved udmelding",
+             "tekst": "Fra indmeldingsdato (JoinedDate) til udmeldingsdato, i grove grupper og kun for hele gruppen. "
+                      "Grupper med 1 eller 2 vises som \"<3\"; er kun én gruppe skjult, udelades også den mindste anden "
+                      "gruppe, så tallet ikke kan regnes ud. \"Ukendt\" = en af datoerne mangler."},
             {"term": "Medlemmer i alt",
              "tekst": "Antal rækker i goMembers medlemsliste (GET /api/members) på hentetidspunktet. Kan indeholde "
                       "trænere, bestyrelse, udmeldte der stadig står i listen, testkonti og den fiktive "
@@ -379,7 +544,7 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
     with open(ud, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
         f.write("\n")
-    return {"medlemmer": n_rows, "kald": kald, "forrige": gl}
+    return {"medlemmer": n_rows, "kald": kald, "forrige": gl, "udmeldinger": udm}
 
 
 def main():

@@ -11,7 +11,7 @@ Trin (alle kald er GET gennem GoMemberClient.get(); se ../CLAUDE.md):
                  etiketter, produkter (ca. 8 kald). Ingen medlems-kald.
   2. Holdtyper   analyse_holdtyper.py (offline)
   3. Ugeplan     byg_styringsdata.py (offline) -> styring-data.json
-  4. Medlemstal  byg_medlemsstatistik.py (2 kald) -> styring-medlemmer.json
+  4. Medlemstal  byg_medlemsstatistik.py (ca. 23 kald: liste, etiketter, udmeldingsdato) -> styring-medlemmer.json
   5. Deltagelse  deltagelse.py med cache (typisk 50-100 kald) -> deltagelse.json
   6. Statistik   byg_statistikdata.py (offline) -> styring-statistik.json
 
@@ -200,9 +200,11 @@ def main(argv=None):
                          "opdateret - de gamle filer er beholdt.")
         else:
             trin = "4/6 Medlemstal"
+            n_foer = hent.n
             res["medlemmer"] = byg_medlemsstatistik.byg(
                 hent, now=dt.datetime.combine(idag, nu.time(), tzinfo=TZ),
                 ud=os.path.join(UD, "styring-medlemmer.json"), force=a.force)
+            res["medlemmer"]["http"] = hent.n - n_foer
 
             trin = "5/6 Deltagelse"
             n_foer = hent.n
@@ -250,7 +252,12 @@ def main(argv=None):
     if "medlemmer" in res:
         m = res["medlemmer"]
         print(f"- Medlemmer: {m['medlemmer']} i alt" + (f" (før: {m['forrige']})" if m.get("forrige") else "")
-              + f" ({len(m['kald'])} kald).")
+              + f" ({m['http']} kald).")
+        u = m.get("udmeldinger") or {}
+        if u:
+            print(f"- Udmeldingsdato ('{u['etiket']}'): {u['medEtiket']} med etiketten, {u['medDato']} med dato "
+                  f"({u['passeret']} allerede passeret, {u['kommende']} kommende), {u['udenDato']} uden dato"
+                  + (f", {u['kunneIkkeHentes']} kunne ikke hentes" if u['kunneIkkeHentes'] else "") + ".")
     if "deltagelse" in res:
         st = load(os.path.join(REPO, "styring-statistik.json"))
         d = res["deltagelse"]

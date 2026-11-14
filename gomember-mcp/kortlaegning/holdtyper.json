@@ -1,7 +1,7 @@
 {
  "_meta": {
   "genereret_af": "analyse_holdtyper.py",
-  "kilde_snapshot": "2026-11-14T23:32:04",
+  "kilde_snapshot": "2026-11-14T23:34:23",
   "snapshot_kilde": "holdplan_meta.json",
   "ukendte_aktiviteter": [],
   "holdplan_vindue": [
@@ -14,7 +14,7 @@
   ],
   "belastning_vindue": [
    "2026-11-01",
-   "2026-11-14T23:32:04"
+   "2026-11-14T23:34:23"
   ],
   "note": "Afledt af læsekald (kun GET). Trænernavne er offentlige. Ingen medlemsdata."
  },
@@ -2823,16 +2823,16 @@
    "waitingList"
   ],
   "felter_der_varierer_pr_hold": {
-   "rules": 27,
-   "responsible": 27,
    "registerAttendance": 23,
-   "hasWaitingList": 18,
    "locationName": 26,
    "attendanceMessage": 26,
    "maxAttendees": 5,
+   "responsible": 27,
+   "hasWaitingList": 18,
+   "rules": 27,
    "onlyLoggedIn": 1,
-   "color": 8,
    "name": 4,
+   "color": 8,
    "description": 2
   },
   "felter_der_aldrig_varierer": [

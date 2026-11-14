@@ -61,6 +61,28 @@ teknikalitet. Vurder samtidig om et nyt endpoint hører hjemme i
 skal holdes ude, indtil nogen har bekræftet mod den faktiske server hvad det
 gør.
 
+## Udvidelse af scopet: styringssiden (14. november 2026)
+
+Scopet ovenfor gælder MCP-serveren. Til styringssiden (`styring.html`) har
+klubben (Johan) bevidst åbnet for mere læsning, altid via
+`GoMemberClient.get()` og altid kun som antal:
+
+- `gomember-mcp/kortlaegning/opdater.py` er den ene kommando, der opdaterer
+  sidens data. Den kører hver nat som en planlagt opgave.
+- Medlemslisten (`/api/members`) læses for at tælle medlemmer pr. etiket og
+  pr. oprettelsesmåned. Kun `createdTs` og etiketter bruges.
+- `GET /api/memberdata/{id}` kaldes én gang pr. medlem med etiketten "Ønsker
+  udmelding" - kun for felterne `LeftDate` (udmeldingsdato) og `JoinedDate`
+  (indmeldingsdato). Svaret er medlemmets fulde stamkort; alt andet kasseres
+  straks. Intet id, ingen præcis dato og intet andet fra svaret må printes,
+  logges eller gemmes - kun antal pr. måned og grove grupper.
+- Bookinglister pr. hold læses for at tælle tilmeldte og fremmødte.
+
+Regel: der må aldrig vises, gemmes eller printes oplysninger om enkelte
+medlemmer - heller ikke i fejlbeskeder eller under fejlsøgning. Grupper på
+1-2 personer vises som "<3", undtagen udmeldinger pr. måned, som klubben har
+godkendt med præcise antal.
+
 ## Status
 
 **Login virker (bekræftet 14. november 2026).** `/auth/token` kræver, ud

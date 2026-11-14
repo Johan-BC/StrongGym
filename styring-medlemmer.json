@@ -1,11 +1,13 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-14T23:32",
+ "hentet": "2026-11-14T23:34",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
    "GET /api/members?filter.pageSize=1000&filter.currentPage=1",
-   "GET /api/tag"
+   "GET /api/tag",
+   "GET /api/members?filter.tags=<Ønsker udmelding>&filter.pageSize=1000",
+   "GET /api/memberdata/{id} x 20"
   ],
   "etiketnavne": "live (GET /api/tag)"
  },
@@ -196,6 +198,119 @@
  ],
  "nyeFoerPerioden": null,
  "udenOprettelsesdato": 0,
+ "udmeldinger": {
+  "etiket": "Ønsker udmelding",
+  "medEtiket": 20,
+  "hentet": 20,
+  "kunneIkkeHentes": 0,
+  "medDato": 18,
+  "udenDato": 2,
+  "passeret": 16,
+  "kommende": 2,
+  "denneMaaned": "2026-11",
+  "prMaaned": [
+   {
+    "maaned": "2025-11",
+    "antal": 2,
+    "passeret": 2,
+    "kommende": 0
+   },
+   {
+    "maaned": "2025-12",
+    "antal": 2,
+    "passeret": 2,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-01",
+    "antal": 1,
+    "passeret": 1,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-02",
+    "antal": 1,
+    "passeret": 1,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-03",
+    "antal": 2,
+    "passeret": 2,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-04",
+    "antal": 2,
+    "passeret": 2,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-05",
+    "antal": 1,
+    "passeret": 1,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-06",
+    "antal": 0,
+    "passeret": 0,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-07",
+    "antal": 3,
+    "passeret": 3,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-08",
+    "antal": 1,
+    "passeret": 1,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-09",
+    "antal": 0,
+    "passeret": 0,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-10",
+    "antal": 1,
+    "passeret": 1,
+    "kommende": 0
+   },
+   {
+    "maaned": "2026-11",
+    "antal": 2,
+    "passeret": 0,
+    "kommende": 2
+   }
+  ],
+  "medlemstid": [
+   {
+    "gruppe": "under 6 mdr",
+    "antal": 5
+   },
+   {
+    "gruppe": "6-12 mdr",
+    "antal": 5
+   },
+   {
+    "gruppe": "1-2 år",
+    "antal": null
+   },
+   {
+    "gruppe": "over 2 år",
+    "antal": "<3"
+   },
+   {
+    "gruppe": "ukendt",
+    "antal": 5
+   }
+  ]
+ },
  "opfoelgning": {
   "oenskerUdmelding": 20,
   "pause": 3,
@@ -330,6 +445,18 @@
   "beroSlutIAlt": 0
  },
  "definitioner": [
+  {
+   "term": "Udmeldingsdato",
+   "tekst": "Feltet \"Udmeldingsdato\" (LeftDate) på medlemmer med etiketten \"Ønsker udmelding\", hentet ét medlem ad gangen (GET /api/memberdata/{id}). Kun udmeldings- og indmeldingsdato læses; resten af svaret kasseres straks. Siden viser kun måned, aldrig den præcise dato. \"Allerede passeret\" = datoen ligger før hentedagen; \"kommende\" = hentedagen eller senere."
+  },
+  {
+   "term": "Udmeldinger pr. måned",
+   "tekst": "Antal pr. måned vises præcist, også når det er 1 eller 2 – klubben har godkendt samlede tal uden navne, og ellers ville grafen være tom. Derfor vises der aldrig andet om de samme personer pr. måned (fx medlemstid)."
+  },
+  {
+   "term": "Medlemstid ved udmelding",
+   "tekst": "Fra indmeldingsdato (JoinedDate) til udmeldingsdato, i grove grupper og kun for hele gruppen. Grupper med 1 eller 2 vises som \"<3\"; er kun én gruppe skjult, udelades også den mindste anden gruppe, så tallet ikke kan regnes ud. \"Ukendt\" = en af datoerne mangler."
+  },
   {
    "term": "Medlemmer i alt",
    "tekst": "Antal rækker i goMembers medlemsliste (GET /api/members) på hentetidspunktet. Kan indeholde trænere, bestyrelse, udmeldte der stadig står i listen, testkonti og den fiktive læse-konto, som denne side selv bruger. Det er ikke det samme som betalende medlemmer."
