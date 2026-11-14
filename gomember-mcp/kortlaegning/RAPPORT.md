@@ -1,5 +1,13 @@
 # Kortlægning: hvad kan man læse i goMember uden login?
 
+> **Rettelse 14. november 2026 (senere samme dag):** Denne rapport siger, at
+> holdplanen bagud i tid er næsten tom, og at den fulde plan først startede
+> 1. november. Det er forkert. Holdplanskaldet viser bare ikke gamle hold fra
+> faste serier. Med login kan hvert hold slås op enkeltvis, og der har kørt
+> fuld ugeplan hele perioden. De rigtige tal for 14. maj - 14. november står i
+> `DELTAGELSE.md` (560 afholdte hold, 4.526 tilmeldinger).
+
+
 Dato: 14. november 2026. Kilde: www.stronggym.dk (goMember/MemberLink).
 Metode: kun læsekald (GET), uden login, via `kortlaeg.py`. Der er ikke ændret
 eller slettet noget i goMember, og login-adressen `/auth/token` er ikke brugt.

@@ -1,5 +1,13 @@
 # Holdtyper i goMember - kortlægning
 
+> **Rettelse 14. november 2026 (senere samme dag):** Denne rapport siger, at
+> holdplanen bagud i tid er næsten tom, og at den fulde plan først startede
+> 1. november. Det er forkert. Holdplanskaldet viser bare ikke gamle hold fra
+> faste serier. Med login kan hvert hold slås op enkeltvis, og der har kørt
+> fuld ugeplan hele perioden. De rigtige tal for 14. maj - 14. november står i
+> `DELTAGELSE.md` (560 afholdte hold, 4.526 tilmeldinger).
+
+
 Dato: 14. november 2026. Grundlag: de anonyme snapshots i `data/` (hentet
 14/11 kl. 20:37, se `RAPPORT.md`). Ingen nye kald mod goMember.
 Alle tal kommer fra `analyse_holdtyper.py` (kør `python3 analyse_holdtyper.py`
