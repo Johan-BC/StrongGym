@@ -145,10 +145,11 @@ Holdplanen henter nu **live data** fra stronggym.dk's offentlige kalender-API vi
 ## Medlemskabstyper
 | Type | Pris | Beskrivelse |
 |---|---|---|
-| Premium Medlem | 499 kr/md | Ubegrænset adgang til alle hold og faciliteter |
-| Barn | 199 kr/md | For børn under 15 år. Inkluderer udvalgte hold |
-| Ung (18–25 år) | 299 kr/md | Særlig ung-pris for studerende og unge |
-| 10-turs Klippekort | 850 kr | Fleksibel adgang – brug det i dit eget tempo |
+| Premium medlemskab | 499 kr/md | Alle WODs, selvtræning alle dage kl. 6–23, events |
+| Klippekort (10 klip) | 850 kr | Personligt, gyldigt 6 måneder fra købsdato |
+
+Kilde: goMembers indmeldelsesside, 14. november 2026. Der findes ingen
+børne- eller ungepris - de stod på mock-sitet og er fjernet.
 
 ---
 
