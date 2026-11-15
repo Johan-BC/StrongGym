@@ -328,8 +328,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
 </header>
 
 <nav class="tabs" aria-label="Visninger">
-  <button type="button" data-view="bestyrelse">Bestyrelsesmøde</button>
-  <button type="button" data-view="overblik">Drift</button>
+  <button type="button" data-view="overblik">Overblik</button>
+  <button type="button" data-view="drift">Drift</button>
   <button type="button" data-view="holdtyper">Holdtyper</button>
   <button type="button" data-view="statistik">Statistik</button>
   <button type="button" data-view="medlemmer">Medlemmer</button>
@@ -338,8 +338,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
 
 <main id="main">
   <div class="loading" id="loading">Indlæser holdplan …</div>
-  <section class="view" id="v-bestyrelse" hidden aria-labelledby="h-bestyrelse"></section>
   <section class="view" id="v-overblik" hidden aria-labelledby="h-overblik"></section>
+  <section class="view" id="v-drift" hidden aria-labelledby="h-drift"></section>
   <section class="view" id="v-holdtyper" hidden aria-labelledby="h-holdtyper"></section>
   <section class="view" id="v-statistik" hidden aria-labelledby="h-statistik"></section>
   <section class="view" id="v-medlemmer" hidden aria-labelledby="h-medlemmer"></section>
@@ -365,7 +365,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   var drafts = [];              // kladde-rettelser
   var TYPES = {}, ACTS = {}, EVS = {};
   var SNAP = '';                // "YYYY-MM-DDTHH:MM" - "nu" i prototypen
-  var state = { view: 'bestyrelse' };
+  var state = { view: 'overblik' };
   var KIND_LABEL = {
     traener: 'Skift træner', aflys: 'Aflys hold', kapacitet: 'Ændr max. pladser', tid: 'Flyt tidspunkt',
     venteliste: 'Venteliste', fremmoede: 'Fremmøderegistrering', navn: 'Omdøb hold', farve: 'Ensret farve'
@@ -608,7 +608,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3200);
   }
   function setView(v, focus) {
-    if (!document.getElementById('v-' + v)) v = 'bestyrelse';
+    if (!document.getElementById('v-' + v)) v = 'overblik';
     state.view = v;
     $all('nav.tabs button').forEach(function (b) {
       if (b.dataset.view === v) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
@@ -634,7 +634,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     var cancelled = raw.filter(function (e) { return e.status === 'cancelled'; }).length;
     var done = training.filter(isPast).length;
 
-    var h = '<h2 id="h-overblik" tabindex="-1">Drift</h2>';
+    var h = '<h2 id="h-drift" tabindex="-1">Drift</h2>';
     h += '<p class="lead">Uge ' + isoWeek(wk) + ' (' + fDateShort(wk) + '–' + fDateShort(addDays(wk, 6)) + '). "I dag" er datoen for dataudtrækket: ' +
       fDayY(SNAP) + ' kl. ' + hm(SNAP) + '. Tallene er goMembers tal – dine kladder er ikke regnet med.</p>';
     h += '<div class="stats">' +
@@ -650,7 +650,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
         ' hold. <button class="btn small" type="button" data-goto="rettelser">Se rettelser</button></p>';
     }
     h += '<h3>Kræver opmærksomhed</h3><ul class="attn">' + attentionItems().join('') + '</ul>';
-    $('#v-overblik').innerHTML = h;
+    $('#v-drift').innerHTML = h;
   }
   function stat(v, l, cls, sub) {
     return '<div class="stat ' + (cls || '') + '"><div class="v">' + v + '</div><div class="l">' + esc(l) + '</div>' +
@@ -957,9 +957,9 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   }
 
   function renderBestyrelse() {
-    var el = $('#v-bestyrelse'); if (!el || !D) return;
+    var el = $('#v-overblik'); if (!el || !D) return;
     var k = M && M.noegletal, u = M && M.udmeldinger, T = S && S.i_alt;
-    var h = '<h2 id="h-bestyrelse" tabindex="-1">Bestyrelsesmøde</h2>';
+    var h = '<h2 id="h-overblik" tabindex="-1">Overblik</h2>';
     var src = [];
     if (M) src.push('Medlemstal hentet ' + fDayY(M.hentet) + ' kl. ' + hm(M.hentet));
     if (S) src.push('holdtal for ' + fLong(S.periode.fra) + ' – ' + fLong(S.periode.til));
@@ -1467,7 +1467,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
       '<button class="btn" type="button" id="undoLast"' + (drafts.length ? '' : ' disabled') + '>Fortryd seneste</button>' +
       '<button class="btn danger" type="button" id="clearAll"' + (drafts.length ? '' : ' disabled') + '>Ryd hele kladden</button></div>';
     if (!drafts.length) {
-      h += '<p class="card muted">Kladden er tom. Åbn et hold fra <button class="btn small" type="button" data-goto="overblik">Drift</button> eller brug “Ret for alle hold af denne type” under <button class="btn small" type="button" data-goto="holdtyper">Holdtyper</button>.</p>';
+      h += '<p class="card muted">Kladden er tom. Åbn et hold fra <button class="btn small" type="button" data-goto="drift">Drift</button> eller brug “Ret for alle hold af denne type” under <button class="btn small" type="button" data-goto="holdtyper">Holdtyper</button>.</p>';
     } else {
       h += '<p class="small muted" style="margin-bottom:0.6rem">' + drafts.length + ' rettelser i ' + gs.length + ' grupper.</p><ol class="groups">' + gs.map(function (g) {
         var f = g.list[0];
@@ -1602,7 +1602,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     renderMedlemmer();
     renderStatistik();
     renderAll();
-    setView(location.hash.slice(1) || 'bestyrelse', false);
+    setView(location.hash.slice(1) || 'overblik', false);
   }
 
   bind();

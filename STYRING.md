@@ -20,14 +20,14 @@ glemme noget.
 
 **Hvad kan man i dag?**
 
-- **Bestyrelsesmøde** (åbner som standard): det, bestyrelsen skal bruge på
-  mødet, på én side der kan udskrives. Medlemmer pr. medlemskab, nye
+- **Overblik** (åbner som standard): det, bestyrelsen skal bruge på
+  bestyrelsesmødet, på én side der kan udskrives. Medlemmer pr. medlemskab, nye
   medlemmer og udmeldinger pr. måned de seneste 12 måneder, fyldning pr.
   holdtype og pr. måned, og en liste over faste hold, hvor under 50 % af
   pladserne bliver brugt. Fyldning er tilmeldte i forhold til pladser, ikke
   fremmøde. Økonomien har en tom plads, indtil den kobles på fra
   bestyrelsens egen side (`/bestyrelse/` på branchen `bestyrelse-okonomi`).
-- **Drift** (hed tidligere Overblik): ugens nøgletal (antal hold, tilmeldte i forhold til pladser,
+- **Drift**: ugens nøgletal (antal hold, tilmeldte i forhold til pladser,
   fuldt bookede, hold uden synlig træner, aflyste) og en liste over det,
   der kræver opmærksomhed. Det kan være juleaften og nytårsdag, hvor alle hold
   stadig står som normalt, overbookede hold, faste tider med meget få
