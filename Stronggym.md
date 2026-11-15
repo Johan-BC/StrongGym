@@ -31,10 +31,10 @@ Single-file HTML-website for Strong Gym Helsingør (CrossFit-center). Bygget som
 
 ## Sidestruktur (7 sider, vist via JS-routing)
 1. **Forside (index)** — Hero m. logo + tagline "Her løfter vi ikke kun vægte, men også hinanden", CrossFit-forklaring, kommende WODs (3 stk.), galleri-placeholders (8 stk.), nyheder-preview (2 stk.)
-2. **Log Ind (login)** — Mock login (email + password, ingen rigtig backend). Sætter `isLoggedIn = true` og giver adgang til tilmelding på holdplan.
+2. **Log Ind (login)** — Forklarer at login sker i goMember og linker til `PORTAL/Account/Login`. Sitet har ingen session og tager ikke imod adgangskoder. (Var oprindeligt et mock-login, fjernet 10. november 2026.)
 3. **Trænere (coaches)** — Grid med 6 trænere (navn, speciale, bio)
 4. **Nyheder (news)** — 4 nyhedsartikler + social media sidebar (Facebook/Instagram links)
-5. **Bliv Medlem (signup)** — Valg af medlemskabstype + formular (navn, email, telefon) → success-state efter submit
+5. **Bliv Medlem (signup)** — Medlemskaber og priser til orientering; selve indmeldelsen linker til goMembers portal (`PORTAL_SIGNUP`). (Var oprindeligt en formular, der ikke sendte data nogen steder hen.)
 6. **Kontakt (contact)** — Kontaktformular + telefon/email/adresse + åbningstider + map-placeholder
 7. **Holdplan (schedule)** — Se separat sektion nedenfor; dette er den mest komplekse side
 
@@ -99,6 +99,7 @@ Holdplanen henter nu **live data** fra stronggym.dk's offentlige kalender-API vi
 - **Farvekodning** pr. holdtype (inspireret af stronggym.dk's eget board): hvert kort har tonet baggrund + farvet venstre kant + farvet tid-tekst. **grøn=WOD/Members** (ændret fra guld for at matche det rigtige board), blå=HYROX, grå=MASH, pink=Børnehold, orange/amber=Basis/MIKKOS, lilla=Tons/Unge, rød=Rengøring + legend øverst på siden. Implementeret med CSS `color-mix()` og en `--tc`-variabel pr. `.type-*` (virker i moderne browsere; falder tilbage til ren mørk card-baggrund i ældre)
 - Guld (`--primary`) er stadig brandfarven på resten af siden; kun holdkortene bruger nu grøn til WOD
 - Tilmeld-knap vises kun når `isLoggedIn === true` (samme login-gate som hele siden havde fra start). Knappen siger "Skriv på venteliste" på fyldte hold
+  - *Senere ændret (10. november 2026):* login-gaten er fjernet. Knappen hedder nu "Tilmeld i portalen" / "Venteliste i portalen" og dyb-linker til holdet i goMember (`PORTAL/Event/<activityId>/<eventId>`).
 - Hvert hold får et unikt instance-ID (`holdId_dato`) så tilmelding er specifik per ugedag-instans, ikke kun per holdtype
 - Lille status-indikator under uge-navigationen: grøn prik "Live booking-tal fra stronggym.dk", pulserende ved load, rød ved fejl
 
@@ -118,11 +119,11 @@ Holdplanen henter nu **live data** fra stronggym.dk's offentlige kalender-API vi
 ---
 
 ## Tekniske detaljer / konventioner brugt i koden
-- State holdes i globale JS-variabler: `currentPage`, `isLoggedIn`, `signedUpIds` (Set), `pendingWId`, `weekOffset`, `selectedMembership`, `signupSubmitted`
+- State holdes i globale JS-variabler: `currentPage`, `pendingWId`, `weekOffset` m.fl. (`isLoggedIn`, `signedUpIds`, `selectedMembership` og `signupSubmitted` er fjernet sammen med mock-login og -tilmelding)
 - `render()` skifter indhold i `#app` baseret på `currentPage` via et objekt-lookup af render-funktioner (`renderIndex`, `renderLogin`, osv.)
 - Toast-notifikationer via simpel `toast(title, desc, type)`-funktion der injicerer og auto-fjerner DOM-elementer
 - Bekræftelsesdialog (tilmelding til hold) er en generisk overlay (`#confirm-dialog`) der genbruges af holdplan-siden
-- Ingen ægte backend — alt er mock/in-memory. Sider nulstilles ved refresh.
+- Ingen egen backend og ingen session. Holdplanen hentes live via Cloudflare-worker'en; login, tilmelding og indmeldelse sker i goMembers portal.
 
 ---
 
@@ -165,15 +166,21 @@ er forholdsmæssig for resten af indmeldelsesmåneden og må ikke vises som pris
 ## Åbne punkter / mulige fremtidige forbedringer
 - Holdplanen viser nu live-data (inkl. engangsbegivenheder og aflysninger) direkte fra API'et — den gamle begrænsning til det faste ugentlige mønster er løst. Det hardcodede array bruges kun som fallback.
 - Galleri-sektionen på forsiden er stadig placeholder-ikoner (🏋️), ikke rigtige billeder.
-- Selve tilmelding/login/signup er stadig mock (client-side state der nulstilles ved refresh) — KUN holdplan-/forside-visningen er live. Rigtig tilmelding ville kræve autentificeret skrive-adgang til Memberlink (bevidst undladt). Se **Opgave: Login og tilmelding** nedenfor.
+- Login, tilmelding til hold og indmeldelse linker til goMembers portal (løst 10. november 2026, se **Opgave: Login og tilmelding** nedenfor). Sitet skriver aldrig til goMember.
+- Bestyrelsens dashboard i `index.html` er skjult, men kan stadig nås med `navigate('dashboard')`. Det viser mock-tal og har ingen adgangskontrol. Afløseren er `styring.html` (se [`STYRING.md`](STYRING.md)).
+- `styring.html`s data (`styring-*.json`) opdateres kun, når `opdater.py` køres manuelt og resultatet committes. Der er endnu ingen natlig kørsel.
+- Tre trænere (Mika Zillo, Sebastian Meier, Katja Kliem) har stadig generisk tekst, markeret `// TODO` i `index.html`.
+- Hosting af det nye site og 301-redirects ved domæneskiftet er uafklaret (se nedenfor).
 - Middleman'en afhænger af at Cloudflare-worker'en kører og at Memberlinks API-format er uændret (se [`setup.md`](setup.md)).
 
 ---
 
 ## Opgave: Login og tilmelding — embed eller link til goMember
 
-**Status:** ikke påbegyndt. Login og tilmelding er stadig mock — client-side
-state der nulstilles ved refresh.
+**Status:** løst 10. november 2026 (commit `e908833`, indmeldelse i `0fb8de4`).
+Login, tilmelding til hold og indmeldelse linker nu til goMembers portal i
+ny fane. Mock-login, `isLoggedIn` og den lokale tilmeldingsliste er fjernet.
+Afsnittet herunder er beholdt som beslutningsgrundlag.
 
 **Beslutningen er i princippet allerede truffet** i Phase 1 længere nede:
 login, redigering af persondata og indmeldelse skal pege på goMembers eget
@@ -343,7 +350,7 @@ Dermed er iframe-sporet reelt dødt. Third-party cookie-blokering i Safari og
 Chrome brækker login i iframe, og det rammer nu også tilmeldingsflowet, fordi
 det foregår på et andet origin end sitet. **Link (ny fane) er valget for
 både login og tilmelding** — det er ikke længere et åbent spørgsmål.
-Afhængigheden til dashboardet (`isLoggedIn`-mock'en) står uændret.
+Dashboardet blev skjult, da `isLoggedIn`-mock'en blev fjernet (se nedenfor).
 
 #### Stadig uafklaret
 
@@ -369,7 +376,7 @@ Afhængigheden til dashboardet (`isLoggedIn`-mock'en) står uændret.
 skrøbeligt til at satse på. For tilmelding kan iframe overvejes hvis
 headers tillader det, men link er fortsat det robuste valg.
 
-### Hvad opgaven omfatter
+### Hvad opgaven omfattede (alt udført)
 
 - Find de faktiske URL'er til goMembers login- og tilmeldingsside for Strong Gym
 - Kør framing-tjekket ovenfor
@@ -387,6 +394,10 @@ adgangskontrol. Flyttes login ud til goMember, findes der ikke længere
 nogen login-tilstand på sitet overhovedet — og så skal Dashboard-linket
 enten fjernes eller have en rigtig adgangsmekanisme. Afklar det sammen med
 denne opgave, ikke bagefter.
+
+**Udfald:** Dashboard-linket er skjult i menuen. Siden findes stadig i koden
+uden adgangskontrol og med mock-tal; den skal fjernes eller have en rigtig
+gate, før den må være synlig.
 
 ---
 
