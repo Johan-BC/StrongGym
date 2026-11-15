@@ -20,14 +20,21 @@ glemme noget.
 
 **Hvad kan man i dag?**
 
-- **Overblik:** ugens nøgletal (antal hold, tilmeldte i forhold til pladser,
+- **Bestyrelsesmøde** (åbner som standard): det, bestyrelsen skal bruge på
+  mødet, på én side der kan udskrives. Medlemmer pr. medlemskab, nye
+  medlemmer og udmeldinger pr. måned de seneste 12 måneder, fyldning pr.
+  holdtype og pr. måned, og en liste over faste hold, hvor under 50 % af
+  pladserne bliver brugt. Fyldning er tilmeldte i forhold til pladser, ikke
+  fremmøde. Økonomien har en tom plads, indtil den kobles på fra
+  bestyrelsens egen side (`/bestyrelse/` på branchen `bestyrelse-okonomi`).
+- **Drift** (hed tidligere Overblik): ugens nøgletal (antal hold, tilmeldte i forhold til pladser,
   fuldt bookede, hold uden synlig træner, aflyste) og en liste over det,
   der kræver opmærksomhed. Det kan være juleaften og nytårsdag, hvor alle hold
   stadig står som normalt, overbookede hold, faste tider med meget få
   tilmeldte, og holdtyper hvor indstillingerne ikke er ens.
-- **Uge:** ugeplanen uge for uge (22. sep. 2026 – 8. jan. 2027) med
-  træner, tilmeldte og status. Klik på et hold for at se detaljer og lave
-  en rettelse.
+- **Uge**-fanen (ugeplanen) er fjernet 15. nov. 2026 – bestyrelsen brugte
+  den ikke, og holdplanen findes allerede på hjemmesiden. Enkelte hold kan
+  stadig åbnes og rettes fra Drift.
 - **Holdtyper:** de 10 typer, deres faste tider, hvor mange
   goMember-aktiviteter der ligger bag, og hvor indstillingerne er forskellige.
   Med én knap kan man rette noget for alle hold af en type.
@@ -250,10 +257,8 @@ En rettelse er en post i en lokal kladde:
 - **Aflys** og **flyt tid** kan ikke bruges for "alle af typen". Det giver
   ikke mening at give alle WOD-tider samme klokkeslæt. Aflys er altid en
   aflysning med besked og aldrig en sletning. "Luk for jul" laves fra
-  Overblik som én aflysningskladde pr. hold den dag.
-- Ugeplanen viser **den planlagte tilstand**: hold med kladder har stiplet
-  guldkant og mærket "kladde" og viser de nye værdier. Nøgletallene på
-  Overblik viser bevidst goMembers egne tal.
+  Drift som én aflysningskladde pr. hold den dag.
+- Nøgletallene på Drift viser bevidst goMembers egne tal, ikke kladderne.
 - Rettelser kan ikke laves på hold, der allerede er afholdt.
 - **Træner** er fritekst for nu. Et sync-lag skal slå navnet op til et
   medlems-id. Det kræver login.
