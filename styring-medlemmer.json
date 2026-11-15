@@ -16,12 +16,13 @@
  "noegletal": {
   "medlemmerIAlt": 195,
   "betalendeMedlemskaber": {
-   "antal": 122,
+   "antal": 129,
    "summeret": [
     "Premium medlemskab",
     "Ung 15-24 år medlemskab",
     "Klippekort (10 klip)",
-    "Fordels medlemskab"
+    "Fordels medlemskab",
+    "12 måneder"
    ],
    "personerMedMindstEn": null
   },
@@ -463,7 +464,7 @@
   },
   {
    "term": "Betalende medlemskaber",
-   "tekst": "Summen af antal pr. etiket for Premium medlemskab, Ung 15-24 år medlemskab, Klippekort (10 klip), Fordels medlemskab. Et medlem med to af etiketterne tælles to gange i summen; \"personer med mindst én\" tæller hvert medlem én gang. Om etiketten betyder, at medlemmet betaler lige nu, ved vi ikke – den kan stå tilbage efter udmelding eller under pause."
+   "tekst": "Summen af antal pr. etiket for Premium medlemskab, Ung 15-24 år medlemskab, Klippekort (10 klip), Fordels medlemskab, 12 måneder. Et medlem med to af etiketterne tælles to gange i summen; \"personer med mindst én\" tæller hvert medlem én gang. Om etiketten betyder, at medlemmet betaler lige nu, ved vi ikke – den kan stå tilbage efter udmelding eller under pause."
   },
   {
    "term": "Antal pr. etiket",
@@ -487,7 +488,7 @@
   },
   {
    "term": "Uklare etiketter",
-   "tekst": "Vi gætter ikke på betydningen af \"Oprettelse\", \"Alle medlemmer\", \"6 måneder\", \"12 måneder\" og \"Bero gebyr\". \"Oprettelse\" kan være et oprettelsesgebyr eller en markering af nye medlemmer; \"Alle medlemmer\" er ikke sat på alle. Det skal klubben selv afklare."
+   "tekst": "Vi gætter ikke på betydningen af \"Oprettelse\", \"Alle medlemmer\", \"6 måneder\" og \"Bero gebyr\". (\"12 måneder\" er årsabonnementet.) \"Oprettelse\" kan være et oprettelsesgebyr eller en markering af nye medlemmer; \"Alle medlemmer\" er ikke sat på alle. Det skal klubben selv afklare."
   }
  ]
 }

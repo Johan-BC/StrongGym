@@ -207,6 +207,17 @@ for p in sorted(products, key=lambda p: p.get("viewOrder", 0)):
         "ageTo": p.get("ageTo"),
     })
 
+# Medlemskaber uden offentligt produkt i goMember. Priserne er oplyst af klubben
+# (Johan) 15. november 2026 og skal rettes her, hvis de ændres.
+KENDTE_PRISER = [
+    {"id": "Tag2518007440748131293", "name": "12 måneder (årsabonnement)", "price": 5500.0, "priceUnit": "pr. år"},
+    {"id": "Tag2518007439372993219", "name": "Fordels medlemskab", "price": 199.0, "priceUnit": "pr. md."},
+]
+_kendte_id = {m["id"] for m in memberships}
+for k in KENDTE_PRISER:
+    if k["id"] not in _kendte_id:
+        memberships.append(dict(k, ageFrom=None, ageTo=None, kilde="oplyst af klubben 15. nov. 2026"))
+
 # ------------------------------------------------------------------ belastning pr. fast tid
 load_slots = [{
     "weekdayName": s["ugedag"], "start": s["start"], "typeName": s["type"],

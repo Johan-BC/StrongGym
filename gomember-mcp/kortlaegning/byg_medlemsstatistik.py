@@ -47,7 +47,8 @@ SIDE = 1000    # sidestørrelse for medlemslisten
 MAKS_AENDRING = 0.25  # fornuftskontrol mod forrige fil
 
 # Etiketter hvis tal lægges sammen til "betalende medlemskaber"
-BETALENDE = ["Premium medlemskab", "Ung 15-24 år medlemskab", "Klippekort (10 klip)", "Fordels medlemskab"]
+BETALENDE = ["Premium medlemskab", "Ung 15-24 år medlemskab", "Klippekort (10 klip)", "Fordels medlemskab", "12 måneder"]
+# "12 måneder" = årsabonnement (5.500 kr. pr. år), oplyst af klubben 15. november 2026.
 MAANED_NAVN = ["jan", "feb", "marts", "april", "maj", "juni", "juli", "august", "sep", "okt", "nov", "dec"]
 MAANED_LANG = ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august",
                "september", "oktober", "november", "december"]
@@ -536,8 +537,8 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
              "tekst": "Antal med etiketten. Etiketten har intet årstal, så vi ved ikke, om den gælder i år eller er "
                       "glemt fra sidste år. En etiket for en måned, der allerede er gået, kan være forældet."},
             {"term": "Uklare etiketter",
-             "tekst": "Vi gætter ikke på betydningen af \"Oprettelse\", \"Alle medlemmer\", \"6 måneder\", "
-                      "\"12 måneder\" og \"Bero gebyr\". \"Oprettelse\" kan være et oprettelsesgebyr eller en "
+             "tekst": "Vi gætter ikke på betydningen af \"Oprettelse\", \"Alle medlemmer\", \"6 måneder\" "
+                      "og \"Bero gebyr\". (\"12 måneder\" er årsabonnementet.) \"Oprettelse\" kan være et oprettelsesgebyr eller en "
                       "markering af nye medlemmer; \"Alle medlemmer\" er ikke sat på alle. Det skal klubben selv afklare."},
         ],
     }

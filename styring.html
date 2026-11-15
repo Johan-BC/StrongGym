@@ -986,7 +986,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
       h += '<div class="card tablewrap"><table class="plain"><caption class="sr-only">Medlemmer pr. medlemskab</caption><thead><tr><th scope="col">Medlemskab</th><th scope="col" class="num">Medlemmer</th><th scope="col" class="num">Pris</th></tr></thead><tbody>' +
         rows.map(function (r) {
           var pr = price[r.tagId];
-          return '<tr><th scope="row" style="font-weight:400;color:var(--fg)">' + esc(r.navn) + (UNCLEAR_TAGS[r.navn] ? ' <span class="badge b-warn">betydning uklar</span>' : '') +
+          return '<tr><th scope="row" style="font-weight:400;color:var(--fg)">' + esc(pr ? pr.name : r.navn) + (UNCLEAR_TAGS[r.navn] ? ' <span class="badge b-warn">betydning uklar</span>' : '') +
             '</th><td class="num">' + mval(r.antal) + '</td><td class="num nw">' + (pr ? num(pr.price) + ' kr. ' + esc(pr.priceUnit) : '<span class="muted">–</span>') + '</td></tr>';
         }).join('') + '</tbody></table></div>';
       h += '<p class="chart-note">Antal med etiketten i goMember. Et medlem kan have flere etiketter, og en etiket kan stå tilbage efter udmelding.' +
@@ -1280,7 +1280,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     return '<div class="stat' + (cls ? ' ' + cls : '') + '"><div class="v">' + mval(v) + '</div><div class="l">' + esc(label) + '</div>' +
       (sub ? '<div class="sub">' + esc(sub) + '</div>' : '') + '</div>';
   }
-  var UNCLEAR_TAGS = { 'Oprettelse': 1, 'Alle medlemmer': 1, '6 måneder': 1, '12 måneder': 1, 'Bero gebyr': 1 };
+  var UNCLEAR_TAGS = { 'Oprettelse': 1, 'Alle medlemmer': 1, '6 måneder': 1, 'Bero gebyr': 1 };
   var MONTHS_LONG = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
 
   function renderMedlemmerData() {
