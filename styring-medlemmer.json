@@ -1,6 +1,6 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-19T10:27",
+ "hentet": "2026-11-19T10:32",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
@@ -13,12 +13,12 @@
   ],
   "etiketnavne": "live (GET /api/tag)"
  },
- "total": 196,
+ "total": 190,
  "totalFraGoMember": null,
- "aktive": 171,
+ "aktive": 165,
  "ikkeAktive": 25,
  "udelukket": {
-  "testkonti": 0,
+  "testkonti": 6,
   "laesekonto": 1
  },
  "betalendeHistorik": {
@@ -91,12 +91,12 @@
   {
    "dato": "2026-11-19",
    "betalende": 116,
-   "aktive": 171
+   "aktive": 165
   }
  ],
  "noegletal": {
-  "medlemmerIAlt": 196,
-  "aktiveMedlemmer": 171,
+  "medlemmerIAlt": 190,
+  "aktiveMedlemmer": 165,
   "ikkeAktive": 25,
   "betalendeMedlemskaber": {
    "antal": 116,
@@ -164,7 +164,7 @@
   {
    "tagId": "Tag2",
    "navn": "Alle medlemmer",
-   "antal": 161
+   "antal": 155
   },
   {
    "tagId": "Tag2518007428832244134",
@@ -554,7 +554,7 @@
   },
   {
    "term": "Udelukkede konti",
-   "tekst": "Testkonti (ordet \"test\" i navnet) og den læse-konto, siden selv bruger, tælles ikke med i nogen medlemstal."
+   "tekst": "Testkonti (navne med dummy, demo, prøve eller test) og den læse-konto, siden selv bruger, tælles ikke med i nogen medlemstal."
   },
   {
    "term": "Medlemmer i alt",

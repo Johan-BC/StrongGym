@@ -84,8 +84,8 @@ klubben (Johan) bevidst åbnet for mere læsning, altid via
 - Bookinglister pr. hold læses for at tælle tilmeldte og fremmødte.
 
 - Testkonti og læse-kontoen tælles aldrig med i medlemstal. Læse-kontoen
-  kendes på sit id (`GET /api/members/me`). Testkonti kendes på ordet "test"
-  i navnet (klubbens valg, 19. november 2026). Det er den ENESTE undtagelse
+  kendes på sit id (`GET /api/members/me`). Testkonti kendes på dummy, demo,
+  prøve eller test i navnet (klubbens valg, 19. november 2026). Det er den ENESTE undtagelse
   fra reglen om aldrig at læse navne: navnet bruges kun inde i
   `er_testkonto()` i `byg_medlemsstatistik.py` til et ja/nej og gemmes,
   printes eller logges aldrig. Kun antallet af udelukkede gemmes.

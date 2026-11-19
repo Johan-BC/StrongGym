@@ -17,8 +17,8 @@ Regler (se CLAUDE.md):
   medlemmer, hvis udmeldingsdato skal slås op). Navne og numre læses aldrig ind
   i egne variabler, printes, logges eller gemmes. Rækkerne kasseres straks.
 - Testkonti og læse-kontoen tælles aldrig med. Læse-kontoen kendes på sit id
-  (GET /api/members/me). En testkonto kendes på ordet "test" i navnet (klubbens
-  valg, 19. nov. 2026): navnet læses KUN ind i er_testkonto(), som returnerer
+  (GET /api/members/me). En testkonto kendes på dummy, demo, prøve eller test i
+  navnet (klubbens valg, 19. nov. 2026): navnet læses KUN ind i er_testkonto(), som returnerer
   ja/nej; navnet gemmes, printes og logges aldrig. Kun antallet udelukkede gemmes.
 - Udmeldte medlemmer bliver stående i goMember som "ikke aktive". Listen hentes
   derfor tre gange: alle (til nye pr. måned), aktive (filter.isActive=true, til
@@ -119,9 +119,10 @@ def rows_of(resp):
 
 
 # ---------------------------------------------------------------- udelukkede konti
-# "test" som selvstændigt ord, evt. med tal (Test, test2, Test-bruger), eller som
-# starten af testkonto/testbruger/testmedlem. Rammer ikke fx "Testrup".
-_TEST_RE = re.compile(r"(?<![a-zæøå])test(?:\d*|konto|bruger|medlem)(?![a-zæøå])", re.I)
+# Klubbens testkonti hedder noget med dummy, demo eller prøve (oplyst 19. nov. 2026) -
+# de ord tæller overalt i navnet (fx "Dummybruger"). "test" kun som selvstændigt ord,
+# evt. med tal eller konto/bruger/medlem, så fx "Testrup" ikke rammes.
+_TEST_RE = re.compile(r"dummy|demo|prøve|proeve|(?<![a-zæøå])test(?:\d*|konto|bruger|medlem)(?![a-zæøå])", re.I)
 
 
 def er_testkonto(r):
@@ -635,7 +636,7 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
                       "Skiftede et medlem medlemskab undervejs, eller fik et udmeldt medlem fjernet sin etiket, "
                       "passer måneden ikke helt. Fra 19. nov. 2026 gemmes det faktiske tal hver nat."},
             {"term": "Udelukkede konti",
-             "tekst": "Testkonti (ordet \"test\" i navnet) og den læse-konto, siden selv bruger, tælles ikke med i "
+             "tekst": "Testkonti (navne med dummy, demo, prøve eller test) og den læse-konto, siden selv bruger, tælles ikke med i "
                       "nogen medlemstal."},
             {"term": "Medlemmer i alt",
              "tekst": "Alle i goMembers medlemsliste, også udmeldte (ikke aktive)."},

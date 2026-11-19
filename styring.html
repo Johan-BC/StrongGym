@@ -104,6 +104,12 @@ table.plain th{color:var(--muted);font-weight:400}
 .nuleg{display:flex;flex-wrap:wrap;gap:0.4rem 1rem;margin-top:0.5rem}
 .nuleg span{display:inline-flex;align-items:center;gap:0.35rem}
 .nuleg i{display:inline-block;width:12px;height:12px;border-radius:2px}
+.lnwrap{position:relative;height:130px;margin:0.4rem 0 0.6rem}
+.lnwrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.lnpts{position:absolute;inset:0;display:grid;gap:4px}
+.lnpt{position:relative}
+.lnpt i{position:absolute;left:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--primary);border:2px solid var(--card)}
+.lnpt span{position:absolute;left:0;right:0;margin-top:-1.45rem;text-align:center;font-size:0.74rem;font-variant-numeric:tabular-nums;color:var(--fg)}
 .dot{width:0.7rem;height:0.7rem;border-radius:50%;display:inline-block;flex:none}
 
 /* ---------- Holdtyper ---------- */
@@ -978,31 +984,6 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
         : emptyStat('Holdtal')) +
       '</div>';
 
-    // Aktive medlemmer over tid (beregnet ud fra betalende medlemskaber)
-    var BH = M && M.betalendeHistorik && Array.isArray(M.betalendeHistorik.maaneder) ? M.betalendeHistorik.maaneder : null;
-    if (BH && BH.length) {
-      var first = BH[0], last = BH[BH.length - 1], diff = last.antal - first.antal;
-      var maxB = Math.max.apply(null, BH.map(function (r) { return r.antal; }));
-      var colsB = 'grid-template-columns:repeat(' + BH.length + ',minmax(0,1fr))';
-      var curB = (M.hentet || '').slice(0, 7);
-      h += '<section class="st-sec" aria-labelledby="b-akt"><h3 id="b-akt">Aktive medlemmer</h3>' +
-        '<p class="st-note">' + num(last.antal) + ' nu mod ' + num(first.antal) + ' for 12 måneder siden (' + (diff >= 0 ? '+' : '') + num(diff) + ').</p>' +
-        '<figure class="chart"><figcaption class="small muted" style="margin-bottom:0.6rem">Antal ved udgangen af hver måned. ' +
-        esc(cap1(MONTHS_LONG[+curB.slice(5, 7) - 1] || '')) + ' er til og med i dag.</figcaption>' +
-        '<div class="vbars" style="' + colsB + ';height:170px" aria-hidden="true">' + BH.map(function (r) {
-          return '<div class="mcol"><span class="val">' + num(r.antal) + '</span><div class="b' + (r.maaned === curB ? ' cur' : '') + '" style="height:' + Math.round(r.antal / maxB * 140) + 'px"></div></div>';
-        }).join('') + '</div><div class="vlabs" style="' + colsB + '" aria-hidden="true">' + BH.map(function (r, i) {
-          var mi = +r.maaned.slice(5, 7) - 1;
-          return '<span>' + MONTHS[mi].replace('.', '') + ((i === 0 || mi === 0) ? '<b>' + r.maaned.slice(2, 4) + '</b>' : '<b>&nbsp;</b>') + '</span>';
-        }).join('') + '</div>' +
-        '<div class="sr-only"><table><caption>Aktive medlemmer pr. måned</caption><thead><tr><th>Måned</th><th>Antal</th></tr></thead><tbody>' +
-        BH.map(function (r) { return '<tr><td>' + MONTHS_LONG[+r.maaned.slice(5, 7) - 1] + ' ' + r.maaned.slice(0, 4) + '</td><td>' + r.antal + '</td></tr>'; }).join('') +
-        '</tbody></table></div></figure>' +
-        '<p class="chart-note"><strong>Beregnet ud fra betalende medlemskaber</strong> (' + esc(k.betalendeMedlemskaber.summeret.join(', ')) + '), ikke ud fra goMembers markering af aktive. ' +
-        'Månederne bagud er genskabt ud fra oprettelses- og udmeldingsdato med de medlemskaber, medlemmerne har i dag; skiftede nogen medlemskab undervejs, passer de ikke helt. ' +
-        'Fra 19. november 2026 gemmes det faktiske tal hver nat. Testkonti og læse-kontoen er ikke talt med.</p></section>';
-    }
-
     // Medlemmer pr. medlemskab
     h += '<section class="st-sec" aria-labelledby="b-ms"><h3 id="b-ms">Medlemmer pr. medlemskab</h3>';
     if (M) {
@@ -1020,23 +1001,36 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     } else h += missingData('styring-medlemmer.json');
     h += '</section>';
 
-    // Nye og udmeldte pr. måned
-    h += '<section class="st-sec" aria-labelledby="b-nu"><h3 id="b-nu">Nye medlemmer og udmeldinger</h3>';
-    if (M && M.nyePrMaaned) {
-      var udm = {};
+    // Medlemsudvikling: aktive (linje) + indmeldinger og udmeldinger (søjler) i én graf
+    h += '<section class="st-sec" aria-labelledby="b-nu"><h3 id="b-nu">Medlemsudvikling</h3>';
+    var BH = M && M.betalendeHistorik && Array.isArray(M.betalendeHistorik.maaneder) ? M.betalendeHistorik.maaneder : null;
+    if (M && M.nyePrMaaned && BH && BH.length) {
+      var udm = {}, akt = {};
       ((u && u.prMaaned) || []).forEach(function (r) { udm[r.maaned] = r; });
+      BH.forEach(function (r) { akt[r.maaned] = r.antal; });
       var mrows = M.nyePrMaaned.map(function (r) {
         var x = udm[r.maaned];
-        return { m: r.maaned, nye: r.antal, ud: x ? x.antal : (u ? 0 : null), kom: x ? x.kommende : 0 };
+        return { m: r.maaned, nye: r.antal, ud: x ? x.antal : (u ? 0 : null), akt: akt[r.maaned] };
       });
-      var cur = (M.hentet || '').slice(0, 7);
+      var n = mrows.length, cur = (M.hentet || '').slice(0, 7);
+      var cols = 'grid-template-columns:repeat(' + n + ',minmax(0,1fr))';
+      var av = mrows.map(function (r) { return r.akt; }).filter(function (v) { return typeof v === 'number'; });
+      var lo = Math.min.apply(null, av), hi = Math.max.apply(null, av), pad = Math.max(2, Math.round((hi - lo) * 0.2));
+      lo -= pad; hi += pad;
+      function yPct(v) { return (1 - (v - lo) / (hi - lo)) * 100; }
       var maxV = Math.max(1, Math.max.apply(null, mrows.map(function (r) { return Math.max(typeof r.nye === 'number' ? r.nye : 2, r.ud || 0); })));
-      var cols = 'grid-template-columns:repeat(' + mrows.length + ',minmax(0,1fr))';
       var sumNye = 0, smaa = 0, sumUd = 0;
       mrows.forEach(function (r) { if (typeof r.nye === 'number') sumNye += r.nye; else smaa++; sumUd += r.ud || 0; });
-      h += '<p class="st-note">Seneste 12 måneder: ' + (smaa ? 'mindst ' : '') + num(sumNye + smaa) + ' nye og ' + num(sumUd) + ' udmeldinger' + (u ? '' : ' (udmeldinger mangler)') + '.</p>';
-      h += '<figure class="chart"><figcaption class="small muted" style="margin-bottom:0.6rem">Grøn op = nye (oprettet i goMember). Rød ned = udmeldinger efter udmeldingsdato. ' +
-        esc(cap1(MONTHS_LONG[+cur.slice(5, 7) - 1] || '')) + ' er ikke slut endnu.</figcaption>' +
+      var a0 = mrows[0].akt, a1 = mrows[n - 1].akt, d = a1 - a0;
+      h += '<p class="st-note">' + num(a1) + ' aktive medlemmer nu mod ' + num(a0) + ' for 12 måneder siden (' + (d >= 0 ? '+' : '') + num(d) + '). ' +
+        'I samme periode ' + (smaa ? 'mindst ' : '') + num(sumNye + smaa) + ' indmeldinger og ' + num(sumUd) + ' udmeldinger.</p>';
+      var pts = mrows.map(function (r, i) { return ((i + 0.5) / n * 1000).toFixed(1) + ',' + yPct(r.akt).toFixed(2); }).join(' ');
+      h += '<figure class="chart"><figcaption class="small muted" style="margin-bottom:0.9rem">Linjen: aktive medlemmer ved udgangen af hver måned. Søjlerne: indmeldinger (grøn, op) og udmeldinger (rød, ned) i måneden. ' +
+        esc(cap1(MONTHS_LONG[+cur.slice(5, 7) - 1] || '')) + ' er til og med i dag.</figcaption>' +
+        '<div class="lnwrap" aria-hidden="true"><svg viewBox="0 0 1000 100" preserveAspectRatio="none"><polyline points="' + pts + '" fill="none" stroke="var(--primary)" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
+        '<div class="lnpts" style="' + cols + '">' + mrows.map(function (r) {
+          return '<div class="lnpt"><i style="top:' + yPct(r.akt).toFixed(2) + '%"></i><span style="top:' + yPct(r.akt).toFixed(2) + '%">' + num(r.akt) + '</span></div>';
+        }).join('') + '</div></div>' +
         '<div class="nubars" style="' + cols + '" aria-hidden="true">' + mrows.map(function (r) {
           var sup = typeof r.nye !== 'number';
           var hu = sup ? 12 : Math.round(r.nye / maxV * 70), hd = Math.round((r.ud || 0) / maxV * 50);
@@ -1046,13 +1040,14 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
           var mi = +r.m.slice(5, 7) - 1;
           return '<span>' + MONTHS[mi].replace('.', '') + ((i === 0 || mi === 0) ? '<b>' + r.m.slice(2, 4) + '</b>' : '<b>&nbsp;</b>') + '</span>';
         }).join('') + '</div>' +
-        '<div class="nuleg small muted" aria-hidden="true"><span><i style="background:var(--green)"></i>nye</span><span><i style="background:var(--danger)"></i>udmeldt</span>' +
+        '<div class="nuleg small muted" aria-hidden="true"><span><i style="background:var(--primary);height:3px;border-radius:0"></i>aktive medlemmer</span><span><i style="background:var(--green)"></i>indmeldinger</span><span><i style="background:var(--danger)"></i>udmeldinger</span>' +
         '<span><i style="background:repeating-linear-gradient(135deg,#555 0 3px,transparent 3px 6px);border:1px dashed #777"></i>1 eller 2 (vises som &lt;3)</span></div>' +
-        '<div class="sr-only"><table><caption>Nye og udmeldte pr. måned</caption><thead><tr><th>Måned</th><th>Nye</th><th>Udmeldt</th></tr></thead><tbody>' +
-        mrows.map(function (r) { return '<tr><td>' + MONTHS_LONG[+r.m.slice(5, 7) - 1] + ' ' + r.m.slice(0, 4) + '</td><td>' + (typeof r.nye === 'number' ? r.nye : 'færre end 3') + '</td><td>' + (r.ud == null ? 'ukendt' : r.ud) + '</td></tr>'; }).join('') +
+        '<div class="sr-only"><table><caption>Medlemsudvikling pr. måned</caption><thead><tr><th>Måned</th><th>Aktive medlemmer</th><th>Indmeldinger</th><th>Udmeldinger</th></tr></thead><tbody>' +
+        mrows.map(function (r) { return '<tr><td>' + MONTHS_LONG[+r.m.slice(5, 7) - 1] + ' ' + r.m.slice(0, 4) + '</td><td>' + r.akt + '</td><td>' + (typeof r.nye === 'number' ? r.nye : 'færre end 3') + '</td><td>' + (r.ud == null ? 'ukendt' : r.ud) + '</td></tr>'; }).join('') +
         '</tbody></table></div></figure>';
-      h += '<p class="chart-note">Udmeldinger tælles efter udmeldingsdatoen for alle udmeldte i goMember (de står der som ikke aktive) og for aktive med etiketten “Ønsker udmelding”. ' +
-        'Nye tælles efter oprettelsesdato i goMember, ikke efter hvornår medlemskabet startede – også dem, der er udmeldt siden.</p>' +
+      h += '<p class="chart-note"><strong>Aktive medlemmer er beregnet ud fra betalende medlemskaber</strong> (' + esc(k.betalendeMedlemskaber.summeret.join(', ')) + '), ikke ud fra goMembers markering af aktive. ' +
+        'Månederne bagud er genskabt ud fra oprettelses- og udmeldingsdato med de medlemskaber, medlemmerne har i dag; skiftede nogen medlemskab undervejs, passer de ikke helt. Fra 19. november 2026 gemmes det faktiske tal hver nat. ' +
+        'Indmeldinger tælles efter oprettelsesdato i goMember (også dem, der er udmeldt siden), udmeldinger efter udmeldingsdato for alle udmeldte. Testkonti og læse-kontoen er ikke talt med.</p>' +
         '<p class="noprint" style="margin-top:0.5rem"><button class="btn small" type="button" data-goto="medlemmer">Flere medlemstal</button></p>';
     } else h += missingData('styring-medlemmer.json');
     h += '</section>';
