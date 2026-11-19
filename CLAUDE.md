@@ -83,6 +83,17 @@ klubben (Johan) bevidst åbnet for mere læsning, altid via
   logges eller gemmes - kun antal pr. måned og grove grupper.
 - Bookinglister pr. hold læses for at tælle tilmeldte og fremmødte.
 
+- Testkonti og læse-kontoen tælles aldrig med i medlemstal. Læse-kontoen
+  kendes på sit id (`GET /api/members/me`). Testkonti kendes på ordet "test"
+  i navnet (klubbens valg, 19. november 2026). Det er den ENESTE undtagelse
+  fra reglen om aldrig at læse navne: navnet bruges kun inde i
+  `er_testkonto()` i `byg_medlemsstatistik.py` til et ja/nej og gemmes,
+  printes eller logges aldrig. Kun antallet af udelukkede gemmes.
+- "Aktive medlemmer" på Overblik er beregnet ud fra betalende medlemskaber
+  (summen af medlemskabs-etiketterne blandt aktive). Månederne bagud er
+  genskabt; fra 19. november 2026 gemmes det faktiske tal hver nat i
+  `styring-medlemmer.json` (`maalinger`).
+
 Regel: der må aldrig vises, gemmes eller printes oplysninger om enkelte
 medlemmer - heller ikke i fejlbeskeder eller under fejlsøgning. Grupper på
 1-2 personer vises som "<3", undtagen udmeldinger pr. måned, som klubben har

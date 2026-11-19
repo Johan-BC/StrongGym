@@ -1,10 +1,11 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-19T10:16",
+ "hentet": "2026-11-19T10:27",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
    "GET /api/members?filter.pageSize=1000&filter.currentPage=1",
+   "GET /api/members/me",
    "GET /api/members?filter.isActive=true&filter.pageSize=1000",
    "GET /api/members?filter.isActive=false&filter.pageSize=1000",
    "GET /api/tag",
@@ -12,13 +13,90 @@
   ],
   "etiketnavne": "live (GET /api/tag)"
  },
- "total": 197,
+ "total": 196,
  "totalFraGoMember": null,
- "aktive": 172,
+ "aktive": 171,
  "ikkeAktive": 25,
+ "udelukket": {
+  "testkonti": 0,
+  "laesekonto": 1
+ },
+ "betalendeHistorik": {
+  "metode": "genskabt",
+  "maaneder": [
+   {
+    "maaned": "2025-12",
+    "dato": "2025-12-31",
+    "antal": 94
+   },
+   {
+    "maaned": "2026-01",
+    "dato": "2026-01-31",
+    "antal": 95
+   },
+   {
+    "maaned": "2026-02",
+    "dato": "2026-02-28",
+    "antal": 94
+   },
+   {
+    "maaned": "2026-03",
+    "dato": "2026-03-31",
+    "antal": 97
+   },
+   {
+    "maaned": "2026-04",
+    "dato": "2026-04-30",
+    "antal": 96
+   },
+   {
+    "maaned": "2026-05",
+    "dato": "2026-05-31",
+    "antal": 99
+   },
+   {
+    "maaned": "2026-06",
+    "dato": "2026-06-30",
+    "antal": 103
+   },
+   {
+    "maaned": "2026-07",
+    "dato": "2026-07-31",
+    "antal": 103
+   },
+   {
+    "maaned": "2026-08",
+    "dato": "2026-08-31",
+    "antal": 107
+   },
+   {
+    "maaned": "2026-09",
+    "dato": "2026-09-30",
+    "antal": 110
+   },
+   {
+    "maaned": "2026-10",
+    "dato": "2026-10-31",
+    "antal": 113
+   },
+   {
+    "maaned": "2026-11",
+    "dato": "2026-11-19",
+    "antal": 116
+   }
+  ],
+  "udmeldteUdenDato": 0
+ },
+ "maalinger": [
+  {
+   "dato": "2026-11-19",
+   "betalende": 116,
+   "aktive": 171
+  }
+ ],
  "noegletal": {
-  "medlemmerIAlt": 197,
-  "aktiveMedlemmer": 172,
+  "medlemmerIAlt": 196,
+  "aktiveMedlemmer": 171,
   "ikkeAktive": 25,
   "betalendeMedlemskaber": {
    "antal": 116,
@@ -33,7 +111,7 @@
   },
   "oenskerUdmelding": 2,
   "pause": 2,
-  "nyeSeneste30Dage": 9
+  "nyeSeneste30Dage": 8
  },
  "medlemskaber": [
   {
@@ -149,7 +227,7 @@
   }
  ],
  "ukendteEtiketter": [],
- "udenEtiketter": 9,
+ "udenEtiketter": 8,
  "udenMedlemskabsEtiket": null,
  "udenBetalendeMedlemskab": null,
  "nyePrMaaned": [
@@ -191,7 +269,7 @@
   },
   {
    "maaned": "2026-09",
-   "antal": 4
+   "antal": 3
   },
   {
    "maaned": "2026-10",
@@ -469,6 +547,14 @@
   {
    "term": "Aktive medlemmer",
    "tekst": "Medlemmer, som goMember markerer som aktive. Udmeldte bliver stående i goMember som ikke aktive og tælles ikke med. Kan stadig indeholde trænere, bestyrelse, testkonti og den fiktive læse-konto, som denne side selv bruger. Det er ikke det samme som betalende medlemmer."
+  },
+  {
+   "term": "Aktive medlemmer (graf)",
+   "tekst": "Beregnet ud fra betalende medlemskaber: summen af etiketterne Premium medlemskab, Ung 15-24 år medlemskab, Klippekort (10 klip), Fordels medlemskab, 12 måneder pr. måned (sidste dag i måneden). Månederne bagud er genskabt: et medlem tælles fra oprettelsesdatoen i goMember til udmeldingsdatoen, med de medlemskabs-etiketter det har i dag. Skiftede et medlem medlemskab undervejs, eller fik et udmeldt medlem fjernet sin etiket, passer måneden ikke helt. Fra 19. nov. 2026 gemmes det faktiske tal hver nat."
+  },
+  {
+   "term": "Udelukkede konti",
+   "tekst": "Testkonti (ordet \"test\" i navnet) og den læse-konto, siden selv bruger, tælles ikke med i nogen medlemstal."
   },
   {
    "term": "Medlemmer i alt",

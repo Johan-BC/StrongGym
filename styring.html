@@ -968,8 +968,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     // Nøgletal
     var lav = S ? lavtFyldte() : [];
     h += '<div class="stats">' +
-      (M ? (k.aktiveMedlemmer != null ? mstat(k.aktiveMedlemmer, 'Aktive medlemmer', num(k.ikkeAktive) + ' udmeldte står stadig i goMember og er ikke talt med') : '') +
-        mstat(k.betalendeMedlemskaber.antal, 'Betalende medlemskaber', k.betalendeMedlemskaber.summeret.join(', ') + ' lagt sammen, kun aktive') +
+      (M ? mstat(k.betalendeMedlemskaber.antal, 'Aktive medlemmer', 'Beregnet ud fra betalende medlemskaber' +
+          (k.aktiveMedlemmer != null ? '. ' + num(k.aktiveMedlemmer) + ' er markeret aktive i goMember, også trænere og konti uden medlemskab' : '')) +
         mstat(k.nyeSeneste30Dage, 'Nye seneste 30 dage') +
         (u ? mstat(u.kommende, 'Kommende udmeldinger', 'Udmeldingsdato i dag eller senere', u.kommende ? 'warn' : '') : '')
         : emptyStat('Medlemstal')) +
@@ -977,6 +977,31 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
         stat(lav.length, 'faste hold under ' + LAV_FYLDNING + ' %', lav.length ? 'warn' : '', 'Se listen under Hold')
         : emptyStat('Holdtal')) +
       '</div>';
+
+    // Aktive medlemmer over tid (beregnet ud fra betalende medlemskaber)
+    var BH = M && M.betalendeHistorik && Array.isArray(M.betalendeHistorik.maaneder) ? M.betalendeHistorik.maaneder : null;
+    if (BH && BH.length) {
+      var first = BH[0], last = BH[BH.length - 1], diff = last.antal - first.antal;
+      var maxB = Math.max.apply(null, BH.map(function (r) { return r.antal; }));
+      var colsB = 'grid-template-columns:repeat(' + BH.length + ',minmax(0,1fr))';
+      var curB = (M.hentet || '').slice(0, 7);
+      h += '<section class="st-sec" aria-labelledby="b-akt"><h3 id="b-akt">Aktive medlemmer</h3>' +
+        '<p class="st-note">' + num(last.antal) + ' nu mod ' + num(first.antal) + ' for 12 måneder siden (' + (diff >= 0 ? '+' : '') + num(diff) + ').</p>' +
+        '<figure class="chart"><figcaption class="small muted" style="margin-bottom:0.6rem">Antal ved udgangen af hver måned. ' +
+        esc(cap1(MONTHS_LONG[+curB.slice(5, 7) - 1] || '')) + ' er til og med i dag.</figcaption>' +
+        '<div class="vbars" style="' + colsB + ';height:170px" aria-hidden="true">' + BH.map(function (r) {
+          return '<div class="mcol"><span class="val">' + num(r.antal) + '</span><div class="b' + (r.maaned === curB ? ' cur' : '') + '" style="height:' + Math.round(r.antal / maxB * 140) + 'px"></div></div>';
+        }).join('') + '</div><div class="vlabs" style="' + colsB + '" aria-hidden="true">' + BH.map(function (r, i) {
+          var mi = +r.maaned.slice(5, 7) - 1;
+          return '<span>' + MONTHS[mi].replace('.', '') + ((i === 0 || mi === 0) ? '<b>' + r.maaned.slice(2, 4) + '</b>' : '<b>&nbsp;</b>') + '</span>';
+        }).join('') + '</div>' +
+        '<div class="sr-only"><table><caption>Aktive medlemmer pr. måned</caption><thead><tr><th>Måned</th><th>Antal</th></tr></thead><tbody>' +
+        BH.map(function (r) { return '<tr><td>' + MONTHS_LONG[+r.maaned.slice(5, 7) - 1] + ' ' + r.maaned.slice(0, 4) + '</td><td>' + r.antal + '</td></tr>'; }).join('') +
+        '</tbody></table></div></figure>' +
+        '<p class="chart-note"><strong>Beregnet ud fra betalende medlemskaber</strong> (' + esc(k.betalendeMedlemskaber.summeret.join(', ')) + '), ikke ud fra goMembers markering af aktive. ' +
+        'Månederne bagud er genskabt ud fra oprettelses- og udmeldingsdato med de medlemskaber, medlemmerne har i dag; skiftede nogen medlemskab undervejs, passer de ikke helt. ' +
+        'Fra 19. november 2026 gemmes det faktiske tal hver nat. Testkonti og læse-kontoen er ikke talt med.</p></section>';
+    }
 
     // Medlemmer pr. medlemskab
     h += '<section class="st-sec" aria-labelledby="b-ms"><h3 id="b-ms">Medlemmer pr. medlemskab</h3>';
@@ -1293,7 +1318,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     h += '<div class="notice gold"><strong>Kun samlede tal.</strong> Tallene i <code>styring-medlemmer.json</code> er optællinger, og klubben har godkendt, at de må være offentlige. Siden må aldrig vise data om enkelte medlemmer (navne, numre eller hvem der har en etiket).</div>';
 
     h += '<h3>Nøgletal</h3><div class="stats">' +
-      (k.aktiveMedlemmer != null ? mstat(k.aktiveMedlemmer, 'Aktive medlemmer', 'Af ' + num(k.medlemmerIAlt) + ' i medlemslisten; ' + num(k.ikkeAktive) + ' er udmeldt. Også trænere, testkonti og læse-kontoen')
+      (k.aktiveMedlemmer != null ? mstat(k.aktiveMedlemmer, 'Aktive i goMember', 'Af ' + num(k.medlemmerIAlt) + ' i medlemslisten; ' + num(k.ikkeAktive) + ' er udmeldt. Også trænere og konti uden medlemskab – Overblik regner aktive ud fra betalende medlemskaber')
         : mstat(k.medlemmerIAlt, 'Medlemmer i alt', 'Alle rækker i medlemslisten – også trænere, testkonti og læse-kontoen')) +
       mstat(k.betalendeMedlemskaber.antal, 'Betalende medlemskaber', 'Sum af etiketterne ' + k.betalendeMedlemskaber.summeret.join(' + ')) +
       mstat(k.oenskerUdmelding, 'Ønsker udmelding', udmSub(m.udmeldinger), 'warn') +

@@ -16,6 +16,10 @@ Regler (se CLAUDE.md):
 - Fra medlemslisten bruges KUN createdTs og tagsAssigned (og entityId for de
   medlemmer, hvis udmeldingsdato skal slås op). Navne og numre læses aldrig ind
   i egne variabler, printes, logges eller gemmes. Rækkerne kasseres straks.
+- Testkonti og læse-kontoen tælles aldrig med. Læse-kontoen kendes på sit id
+  (GET /api/members/me). En testkonto kendes på ordet "test" i navnet (klubbens
+  valg, 19. nov. 2026): navnet læses KUN ind i er_testkonto(), som returnerer
+  ja/nej; navnet gemmes, printes og logges aldrig. Kun antallet udelukkede gemmes.
 - Udmeldte medlemmer bliver stående i goMember som "ikke aktive". Listen hentes
   derfor tre gange: alle (til nye pr. måned), aktive (filter.isActive=true, til
   etiketter og medlemstal) og ikke aktive (filter.isActive=false).
@@ -114,6 +118,21 @@ def rows_of(resp):
     raise NetFejl("Kunne ikke finde medlemslisten i svaret fra goMember (kør byg_medlemsstatistik.py --struktur).")
 
 
+# ---------------------------------------------------------------- udelukkede konti
+# "test" som selvstændigt ord, evt. med tal (Test, test2, Test-bruger), eller som
+# starten af testkonto/testbruger/testmedlem. Rammer ikke fx "Testrup".
+_TEST_RE = re.compile(r"(?<![a-zæøå])test(?:\d*|konto|bruger|medlem)(?![a-zæøå])", re.I)
+
+
+def er_testkonto(r):
+    """Ja/nej: ligner medlemmet en testkonto? Navnet forlader aldrig funktionen."""
+    try:
+        navn = " ".join(str(r.get(k) or "") for k in ("displayName", "firstName", "middleName", "surName"))
+        return bool(_TEST_RE.search(navn))
+    except Exception:  # noqa: BLE001 - aldrig indholdet i en fejlbesked
+        return False
+
+
 # ---------------------------------------------------------------- udmeldingsdato
 UDMELD_ETIKET = "Ønsker udmelding"
 MAKS_FEJL_ANDEL = 0.20        # flere mislykkede medlemskald end dette -> trinnet fejler
@@ -176,6 +195,7 @@ def hent_udmeldinger(hent, ids, n_inaktive, n_med_etiket, idag, kald):
         raise NetFejl("Ingen udmeldte eller udmeldende medlemmer fundet - det ligner en fejl; stopper.")
     n_ids = len(ids)
     datoer = []          # (leftdate, joineddate) - uden id, kun i hukommelsen
+    ud_af = {}           # id -> udmeldingsdato; kun i hukommelsen, til historikken, kasseres af kalderen
     fejl = 0
     har_felt = 0
     for mid in ids:
@@ -197,6 +217,7 @@ def hent_udmeldinger(hent, ids, n_inaktive, n_med_etiket, idag, kald):
         del data
         har_felt += felt
         datoer.append((ud, ind))
+        ud_af[mid] = ud
     ids = None
     kald.append(f"GET /api/memberdata/{{id}} x {len(datoer) + fejl}")
     if fejl > MAKS_FEJL_ANDEL * (len(datoer) + fejl):
@@ -233,7 +254,7 @@ def hent_udmeldinger(hent, ids, n_inaktive, n_med_etiket, idag, kald):
         if rest:
             min(rest, key=lambda x: x["antal"])["antal"] = None
     del datoer, med
-    return {
+    return ud_af, {
         "grundlag": "ikke aktive medlemmer + aktive med etiketten " + UDMELD_ETIKET,
         "etiket": UDMELD_ETIKET,
         "opslag": n_ids,
@@ -293,11 +314,24 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
         return None
 
     rows, total_felt = rows_of(resp)
+    n_raa = len(rows)
+    _, me = hent.get("/api/members/me", None, tilladt=())
+    kald.append("GET /api/members/me")
+    me_id = me.get("entityId") if isinstance(me, dict) else None
+    del me
+    if not me_id:
+        raise NetFejl("Læse-kontoens id kunne ikke findes (GET /api/members/me); stopper.")
+
+    def udeluk(r):
+        return not isinstance(r, dict) or r.get("entityId") == me_id or er_testkonto(r)
+
+    n_test = sum(1 for r in rows if isinstance(r, dict) and r.get("entityId") != me_id and er_testkonto(r))
+    rows = [r for r in rows if not udeluk(r)]
     # Fra den fulde liste beholdes KUN createdTs (nye pr. måned). Alt andet kasseres her.
     alle_c = [r.get("createdTs") for r in rows]
     n_rows = len(rows)
     del rows, resp
-    if n_rows >= SIDE or (isinstance(total_felt, int) and total_felt > n_rows):
+    if n_raa >= SIDE or (isinstance(total_felt, int) and total_felt > n_raa):
         raise NetFejl(f"Medlemslisten er afskåret ({n_rows} rækker, goMember siger {total_felt}); "
                       "tallene ville være forkerte.")
     if n_rows == 0:
@@ -308,6 +342,7 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
                        tilladt=(), vis="/api/members?filter.isActive=true")
     kald.append(f"GET /api/members?filter.isActive=true&filter.pageSize={SIDE}")
     rows_a, _ = rows_of(resp)
+    rows_a = [r for r in rows_a if not udeluk(r)]
     aktive_raa = [{"c": r.get("createdTs"), "t": [tag_ref(x) for x in (r.get("tagsAssigned") or [])],
                    "id": r.get("entityId")} for r in rows_a]
     del rows_a, resp
@@ -316,7 +351,11 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
                        tilladt=(), vis="/api/members?filter.isActive=false")
     kald.append(f"GET /api/members?filter.isActive=false&filter.pageSize={SIDE}")
     rows_i, _ = rows_of(resp)
-    ids_inaktive = [r.get("entityId") for r in rows_i if isinstance(r, dict) and r.get("entityId")]
+    rows_i = [r for r in rows_i if not udeluk(r)]
+    # Ikke aktive: entityId (opslag), createdTs og etiketter (historik). Kun i hukommelsen.
+    inaktive_raa = [{"c": r.get("createdTs"), "t": [tag_ref(x) for x in (r.get("tagsAssigned") or [])],
+                     "id": r.get("entityId")} for r in rows_i]
+    ids_inaktive = [r["id"] for r in inaktive_raa if r["id"]]
     n_inaktive = len(rows_i)
     del rows_i, resp
     n_aktive = len(aktive_raa)
@@ -367,7 +406,15 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
         raise NetFejl(f"Etiketten '{UDMELD_ETIKET}' findes ikke længere i goMember.")
     ids_udmelder = [r["id"] for r in aktive_raa if r["id"] and udm_tag in {to_id(x) for x in r["t"] if x}]
     slim = [{"t": r["t"]} for r in aktive_raa]   # etiketter blandt aktive - uden id
-    del aktive_raa
+    betalende_ids = {id_af_navn.get(n) for n in BETALENDE} - {None}
+
+    def n_betalende(tags):
+        return sum(1 for x in {to_id(t) for t in tags if t} if x in betalende_ids)
+
+    # Historik-grundlag: (oprettet, betalende etiketter) - uden id for aktive.
+    hist_aktive = [(parse_ts(r["c"]), n_betalende(r["t"])) for r in aktive_raa]
+    hist_inaktive = [(r["id"], parse_ts(r["c"]), n_betalende(r["t"])) for r in inaktive_raa]
+    del aktive_raa, inaktive_raa
 
     now = now or dt.datetime.now(TZ)
     pr_tag = collections.Counter()  # antal pr. etiket (ingen personer)
@@ -478,8 +525,33 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
     opslag = list(dict.fromkeys(ids_inaktive + ids_udmelder))   # uden dubletter
     n_med_etiket = len(ids_udmelder)
     ids_inaktive = ids_udmelder = None
-    udm = hent_udmeldinger(hent, opslag, n_inaktive, n_med_etiket, now.date(), kald)
+    ud_af, udm = hent_udmeldinger(hent, opslag, n_inaktive, n_med_etiket, now.date(), kald)
     opslag = None
+    # Betalende medlemskaber pr. måned, genskabt: oprettet senest på dagen og ikke udmeldt endnu.
+    hist = [(c, n, None) for c, n in hist_aktive if n]
+    uden_dato_hist = 0
+    for mid, c, n in hist_inaktive:
+        if not n:
+            continue
+        u = ud_af.get(mid)
+        if u is None:
+            uden_dato_hist += 1      # udmeldt, men ukendt hvornår - kan ikke placeres
+            continue
+        hist.append((c, n, u))
+    ud_af = hist_aktive = hist_inaktive = None
+    historik = []
+    for k in maaneder:
+        y, m = int(k[:4]), int(k[5:])
+        slut = (dt.date(y + (m == 12), m % 12 + 1, 1) - dt.timedelta(days=1))
+        dag = min(slut, now.date())
+        historik.append({"maaned": k, "dato": dag.isoformat(),
+                         "antal": sum(n for c, n, u in hist
+                                      if c is not None and c.date() <= dag and (u is None or u > dag))})
+    hist = None
+    # Faktiske målinger: én pr. dag, fra hver kørsel (bygges op over tid).
+    maalinger = [x for x in ((prev or {}).get("maalinger") or []) if x.get("dato") != now.date().isoformat()]
+    maalinger.append({"dato": now.date().isoformat(), "betalende": betalende_sum, "aktive": n_aktive})
+    maalinger = sorted(maalinger, key=lambda x: x["dato"])[-800:]
     bero = maaned_tags(BERO_RE)
 
     out = {
@@ -493,6 +565,13 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
         "totalFraGoMember": total_felt,
         "aktive": n_aktive,
         "ikkeAktive": n_inaktive,
+        "udelukket": {"testkonti": n_test, "laesekonto": 1},
+        "betalendeHistorik": {
+            "metode": "genskabt",
+            "maaneder": historik,
+            "udmeldteUdenDato": uden_dato_hist,
+        },
+        "maalinger": maalinger,
         "noegletal": {
             "medlemmerIAlt": n_rows,
             "aktiveMedlemmer": n_aktive,
@@ -549,6 +628,15 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
              "tekst": "Medlemmer, som goMember markerer som aktive. Udmeldte bliver stående i goMember som ikke "
                       "aktive og tælles ikke med. Kan stadig indeholde trænere, bestyrelse, testkonti og den fiktive "
                       "læse-konto, som denne side selv bruger. Det er ikke det samme som betalende medlemmer."},
+            {"term": "Aktive medlemmer (graf)",
+             "tekst": "Beregnet ud fra betalende medlemskaber: summen af etiketterne " + ", ".join(BETALENDE) + " "
+                      "pr. måned (sidste dag i måneden). Månederne bagud er genskabt: et medlem tælles fra "
+                      "oprettelsesdatoen i goMember til udmeldingsdatoen, med de medlemskabs-etiketter det har i dag. "
+                      "Skiftede et medlem medlemskab undervejs, eller fik et udmeldt medlem fjernet sin etiket, "
+                      "passer måneden ikke helt. Fra 19. nov. 2026 gemmes det faktiske tal hver nat."},
+            {"term": "Udelukkede konti",
+             "tekst": "Testkonti (ordet \"test\" i navnet) og den læse-konto, siden selv bruger, tælles ikke med i "
+                      "nogen medlemstal."},
             {"term": "Medlemmer i alt",
              "tekst": "Alle i goMembers medlemsliste, også udmeldte (ikke aktive)."},
             {"term": "Betalende medlemskaber",
@@ -583,7 +671,7 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
     with open(ud, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=1)
         f.write("\n")
-    return {"medlemmer": n_rows, "aktive": n_aktive, "ikkeAktive": n_inaktive, "kald": kald, "forrige": gl,
+    return {"medlemmer": n_rows, "testkonti": n_test, "aktive": n_aktive, "ikkeAktive": n_inaktive, "kald": kald, "forrige": gl,
             "udmeldinger": udm}
 
 
@@ -595,7 +683,8 @@ def main():
     except NetFejl as e:
         sys.exit(f"FEJL: {e} Ingen fil skrevet.")
     if res:
-        print(f"Skrev {OUT}: {res['aktive']} aktive af {res['medlemmer']} medlemmer, {len(res['kald'])} GET-kald ({', '.join(res['kald'])}).")
+        print(f"Skrev {OUT}: {res['aktive']} aktive af {res['medlemmer']} medlemmer "
+              f"(udelukket: {res['testkonti']} testkonti + læse-kontoen), {len(res['kald'])} GET-kald ({', '.join(res['kald'])}).")
 
 
 if __name__ == "__main__":
