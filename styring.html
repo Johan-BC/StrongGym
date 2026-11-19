@@ -655,8 +655,46 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
         ' hold. <button class="btn small" type="button" data-goto="rettelser">Se rettelser</button></p>';
     }
     h += '<h3>Kræver opmærksomhed</h3><ul class="attn">' + attentionItems().join('') + '</ul>';
+    h += datakvalitetBlock();
     $('#v-drift').innerHTML = h;
   }
+  /* ---------- Datakvalitet i goMember (kun antal) ---------- */
+  var DQ_CHECKS = [
+    { g: 'Udmeldte', k: 'udmeldteMedMedlemskab', t: 'Udmeldte med medlemskabs-etiket', fix: 'Fjern medlemskabs-etiketten (Premium, Klippekort osv.), når medlemmet sættes til ikke aktiv.' },
+    { g: 'Udmeldte', k: 'udmeldteMedOenskerUdmelding', t: 'Udmeldte, der stadig har “Ønsker udmelding”', fix: 'Fjern etiketten – den skal kun sidde, mens udmeldelsen er i gang.' },
+    { g: 'Udmeldte', k: 'udmeldteUdenDato', t: 'Udmeldte uden udmeldingsdato', fix: 'Udfyld feltet Udmeldingsdato, så udmeldelsen kommer med i statistikken.' },
+    { g: 'Udmeldte', k: 'udmeldteMedAndreStatusEtiketter', t: 'Udmeldte med “Udmeld slut / Bero slut <måned>”', fix: 'Fjern måneds-etiketten.' },
+    { g: 'Aktive', k: 'aktiveMedPasseretUdmeldingsdato', t: 'Aktive, hvis udmeldingsdato er passeret', fix: 'Sæt medlemmet til ikke aktiv og fjern medlemskabs-etiketten.' },
+    { g: 'Aktive', k: 'aktiveMedOenskerUdmeldingUdenDato', t: '“Ønsker udmelding” uden udmeldingsdato', fix: 'Udfyld Udmeldingsdato, når medlemmet melder sig ud.' },
+    { g: 'Aktive', k: 'aktiveMedFlereMedlemskaber', t: 'Aktive med mere end ét medlemskab', fix: 'Behold kun den etiket, medlemmet betaler for – ellers tælles de dobbelt.' },
+    { g: 'Aktive', k: 'aktiveMedMaanedsEtiket', t: 'Aktive med “Udmeld slut / Bero slut <måned>”', fix: 'Måneds-etiketterne har intet årstal. Brug Udmeldingsdato og etiketten Pause i stedet.' },
+    { g: 'Aktive', k: 'aktiveUdenMedlemskab', t: 'Aktive uden medlemskab', fix: 'Gennemgå: trænere og bestyrelse uden medlemskab kan være i orden; andre skal have deres medlemskab på eller sættes til ikke aktiv.', soft: true }
+  ];
+  function datakvalitetBlock() {
+    var h = '<h3>Datakvalitet i goMember</h3>';
+    if (!M || !M.datakvalitet) {
+      return h + '<div class="empty"><strong>Ingen data endnu</strong><p class="small muted" style="margin-top:0.3rem">Tjeklisten kommer med næste opdatering af medlemstallene.</p></div>';
+    }
+    var q = M.datakvalitet;
+    function n(v) { return typeof v === 'number' ? v : (v === '<3' ? 1 : 0); }
+    var issues = DQ_CHECKS.filter(function (c) { return n(q[c.k]) > 0 && !c.soft; }).length;
+    h += '<p class="lead" style="margin-bottom:0.75rem">Tjek af om medlemsstatus og etiketter følger reglerne (se forbedringsforslagene). Kun antal – find de konkrete medlemmer i goMember ved at filtrere medlemslisten på etiketten og aktiv/ikke aktiv. Opdateres hver nat; data fra ' +
+      esc(fDayY(M.hentet || '')) + '.</p>';
+    h += '<p style="margin-bottom:0.75rem">' + (issues ? '<span class="badge b-warn">' + issues + ' kontroller kræver oprydning</span>' : '<span class="badge b-ok">Alt følger reglerne</span>') + '</p>';
+    ['Udmeldte', 'Aktive'].forEach(function (g) {
+      h += '<div class="card tablewrap" style="margin-bottom:0.75rem"><table class="plain"><caption class="sr-only">Datakvalitet: ' + g + '</caption><thead><tr><th scope="col">' + g + '</th><th scope="col" class="num">Antal</th><th scope="col">Sådan rettes det</th></tr></thead><tbody>' +
+        DQ_CHECKS.filter(function (c) { return c.g === g && c.k in q; }).map(function (c) {
+          var v = q[c.k], bad = n(v) > 0;
+          var badge = !bad ? '<span class="badge b-ok">OK</span>' : (c.soft ? '<span class="badge b-wait">' + mval(v) + '</span>' : '<span class="badge b-warn">' + mval(v) + '</span>');
+          return '<tr><th scope="row" style="font-weight:400;color:var(--fg)">' + esc(c.t) + '</th><td class="num">' + badge + '</td><td class="small muted">' + (bad ? esc(c.fix) : '') + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    });
+    var ub = M.ubrugteEtiketter || [];
+    if (ub.length) h += '<p class="small muted">Etiketter uden aktive medlemmer: ' + esc(ub.join(', ')) + '. Slet dem, der ikke længere bruges, eller giv dem en klar regel.</p>';
+    if (M.udelukket) h += '<p class="small muted" style="margin-top:0.4rem">Ikke talt med: ' + num(M.udelukket.testkonti) + ' testkonti (dummy, demo, prøve eller test i navnet) og læse-kontoen.</p>';
+    return h;
+  }
+
   function stat(v, l, cls, sub) {
     return '<div class="stat ' + (cls || '') + '"><div class="v">' + v + '</div><div class="l">' + esc(l) + '</div>' +
       (sub ? '<div class="l small">' + esc(sub) + '</div>' : '') + '</div>';
@@ -1641,7 +1679,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (data) {
       init(data);
-      membersReq.then(function (m) { if (m) { M = m; renderMedlemmer(); renderBestyrelse(); } });
+      membersReq.then(function (m) { if (m) { M = m; renderMedlemmer(); renderBestyrelse(); renderOverblik(); } });
       statReq.then(function (s) {
         S = s; S_LOADED = true;
         try { renderStatistik(); }

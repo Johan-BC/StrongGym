@@ -415,6 +415,21 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
     # Historik-grundlag: (oprettet, betalende etiketter) - uden id for aktive.
     hist_aktive = [(parse_ts(r["c"]), n_betalende(r["t"])) for r in aktive_raa]
     hist_inaktive = [(r["id"], parse_ts(r["c"]), n_betalende(r["t"])) for r in inaktive_raa]
+    # Datakvalitet: kun antal. Bruges til tjeklisten på Drift-fanen.
+    medlemskab_ids = {t["tagId"] for t in ht["tags"] if t["gruppe"] == "medlemskab/produkt"}
+    maaned_ids = {t["tagId"] for t in ht["tags"] if UDMELD_RE.match(t["navn"]) or BERO_RE.match(t["navn"])}
+
+    def tagset(r):
+        return {to_id(x) for x in r["t"] if x}
+    dq_raa = {
+        "aktiveUdenMedlemskab": sum(1 for r in aktive_raa if not (tagset(r) & medlemskab_ids)),
+        "aktiveMedFlereMedlemskaber": sum(1 for r in aktive_raa if len(tagset(r) & medlemskab_ids) > 1),
+        "udmeldteMedMedlemskab": sum(1 for r in inaktive_raa if tagset(r) & medlemskab_ids),
+        "udmeldteMedOenskerUdmelding": sum(1 for r in inaktive_raa if udm_tag in tagset(r)),
+        "udmeldteMedAndreStatusEtiketter": sum(1 for r in inaktive_raa if tagset(r) & maaned_ids),
+        "aktiveMedMaanedsEtiket": sum(1 for r in aktive_raa if tagset(r) & maaned_ids),
+    }
+    _inaktive_set = {r["id"] for r in inaktive_raa if r["id"]}
     del aktive_raa, inaktive_raa
 
     now = now or dt.datetime.now(TZ)
@@ -526,7 +541,13 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
     opslag = list(dict.fromkeys(ids_inaktive + ids_udmelder))   # uden dubletter
     n_med_etiket = len(ids_udmelder)
     ids_inaktive = ids_udmelder = None
+    _udmelder_set = set(opslag) - _inaktive_set
     ud_af, udm = hent_udmeldinger(hent, opslag, n_inaktive, n_med_etiket, now.date(), kald)
+    dq_raa["udmeldteUdenDato"] = sum(1 for i in _inaktive_set if i in ud_af and ud_af[i] is None)
+    dq_raa["aktiveMedPasseretUdmeldingsdato"] = sum(1 for i in _udmelder_set
+                                                    if ud_af.get(i) is not None and ud_af[i] < now.date())
+    dq_raa["aktiveMedOenskerUdmeldingUdenDato"] = sum(1 for i in _udmelder_set if i in ud_af and ud_af[i] is None)
+    _inaktive_set = _udmelder_set = None
     opslag = None
     # Betalende medlemskaber pr. måned, genskabt: oprettet senest på dagen og ikke udmeldt endnu.
     hist = [(c, n, None) for c, n in hist_aktive if n]
@@ -567,6 +588,12 @@ def byg(hent, now=None, ud=OUT, force=False, only_struktur=False):
         "aktive": n_aktive,
         "ikkeAktive": n_inaktive,
         "udelukket": {"testkonti": n_test, "laesekonto": 1},
+        # Antal pr. kontrol; 1-2 vises som "<3" som alle andre små grupper.
+        "datakvalitet": {k: skjul(v) for k, v in dq_raa.items()},
+        "ubrugteEtiketter": sorted(t["navn"] for t in ht["tags"]
+                                   if t["gruppe"] in ("medlemskab/produkt", "intern status/administration", "andet")
+                                   and pr_tag.get(t["tagId"], 0) == 0
+                                   and not UDMELD_RE.match(t["navn"]) and not BERO_RE.match(t["navn"])),
         "betalendeHistorik": {
             "metode": "genskabt",
             "maaneder": historik,

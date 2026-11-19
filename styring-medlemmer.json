@@ -1,6 +1,6 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-19T10:32",
+ "hentet": "2026-11-19T10:48",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
@@ -21,6 +21,29 @@
   "testkonti": 6,
   "laesekonto": 1
  },
+ "datakvalitet": {
+  "aktiveUdenMedlemskab": 50,
+  "aktiveMedFlereMedlemskaber": "<3",
+  "udmeldteMedMedlemskab": 14,
+  "udmeldteMedOenskerUdmelding": 16,
+  "udmeldteMedAndreStatusEtiketter": 0,
+  "aktiveMedMaanedsEtiket": "<3",
+  "udmeldteUdenDato": 0,
+  "aktiveMedPasseretUdmeldingsdato": 0,
+  "aktiveMedOenskerUdmeldingUdenDato": "<3"
+ },
+ "ubrugteEtiketter": [
+  "6 måneder",
+  "Bero gebyr",
+  "Børnemedlemsskab 7-14",
+  "Manglende fremmøde",
+  "PT klippekort",
+  "Rykker",
+  "Sponsorat 10000 kr.",
+  "Sponsorat 15000 kr",
+  "Studerende",
+  "Ung 15-24 år medlemskab"
+ ],
  "betalendeHistorik": {
   "metode": "genskabt",
   "maaneder": [
