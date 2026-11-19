@@ -7,7 +7,7 @@
     "activityId": "Activity2516088149026514920",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 0,
+    "booked": 1,
     "color": "9ccc65",
     "description": "<p>Dagens WOD</p>",
     "isSuperEvent": false,
@@ -629,7 +629,7 @@
     "activityId": "Activity2517489994278558056",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
+    "booked": 3,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -685,7 +685,7 @@
     "activityId": "Activity2516421299835599010",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 5,
+    "booked": 8,
     "color": "ffd54f",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
@@ -714,7 +714,7 @@
     "signupOpen": false,
     "startTime": "2026-12-03T18:00:00",
     "formDefinition": [],
-    "status": "scheduled",
+    "status": "booked",
     "invitationMedia": "sms",
     "inviteMembers": {
      "_count": 0
@@ -2349,7 +2349,7 @@
     "activityId": "Activity2516421299835599010",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 4,
+    "booked": 6,
     "color": "ffd54f",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
@@ -4007,7 +4007,7 @@
     "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 4,
+    "booked": 6,
     "color": "#ffd54f",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
@@ -5290,16 +5290,20 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-12-23T07:15:00Z",
     "name": "WOD Onsdag 0815",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Thomas Ronne"
      }
     ],
+    "signUpDeadline": "2026-12-23T08:15:00Z",
     "signupOpen": false,
     "startTime": "2026-12-23T08:15:00",
     "formDefinition": [],
@@ -5313,6 +5317,8 @@
     "reservations": 0,
     "startTimeUtc": "2026-12-23T07:15:00Z",
     "endTimeUtc": "2026-12-23T08:15:00Z",
+    "meetTimeUtc": "2026-12-23T07:15:00Z",
+    "signUpDeadlineUtc": "2026-12-23T08:15:00Z",
     "registerAttendance": true,
     "allowPartner": false,
     "allowInvite": false,
@@ -5323,7 +5329,7 @@
     "isParent": false,
     "sequence": "Activity2517743114820337813",
     "createdTs": "2026-10-20T17:02:49.8672714Z",
-    "modifiedTs": "2026-10-20T17:02:49.8672714Z",
+    "modifiedTs": "2026-11-16T19:46:49.4872278Z",
     "tagsAssigned": [
      "Tag2",
      "Tag2517986617667087038"
@@ -5668,6 +5674,7 @@
     "attendancePrivacy": 1,
     "booked": 0,
     "color": "ffd54f",
+    "cancellationMessage": "jul",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
     "endTime": "2026-12-24T19:00:00",
@@ -5695,7 +5702,7 @@
     "signupOpen": false,
     "startTime": "2026-12-24T18:00:00",
     "formDefinition": [],
-    "status": "scheduled",
+    "status": "cancelled",
     "invitationMedia": "sms",
     "inviteMembers": {
      "_count": 0
@@ -7318,6 +7325,7 @@
     "attendancePrivacy": 1,
     "booked": 0,
     "color": "ffd54f",
+    "cancellationMessage": "nytår",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
     "endTime": "2026-12-31T19:00:00",
@@ -7341,7 +7349,7 @@
     "signupOpen": false,
     "startTime": "2026-12-31T18:00:00",
     "formDefinition": [],
-    "status": "scheduled",
+    "status": "cancelled",
     "invitationMedia": "sms",
     "inviteMembers": {
      "_count": 0

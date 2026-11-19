@@ -1,22 +1,22 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-14T23:34",
+ "hentet": "2026-11-19T09:45",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
    "GET /api/members?filter.pageSize=1000&filter.currentPage=1",
    "GET /api/tag",
    "GET /api/members?filter.tags=<Ønsker udmelding>&filter.pageSize=1000",
-   "GET /api/memberdata/{id} x 20"
+   "GET /api/memberdata/{id} x 18"
   ],
   "etiketnavne": "live (GET /api/tag)"
  },
- "total": 195,
+ "total": 197,
  "totalFraGoMember": null,
  "noegletal": {
-  "medlemmerIAlt": 195,
+  "medlemmerIAlt": 197,
   "betalendeMedlemskaber": {
-   "antal": 122,
+   "antal": 123,
    "summeret": [
     "Premium medlemskab",
     "Ung 15-24 år medlemskab",
@@ -25,20 +25,20 @@
    ],
    "personerMedMindstEn": null
   },
-  "oenskerUdmelding": 20,
+  "oenskerUdmelding": 18,
   "pause": 3,
-  "nyeSeneste30Dage": 7
+  "nyeSeneste30Dage": 9
  },
  "medlemskaber": [
   {
    "tagId": "Tag2517253147042177325",
    "navn": "Premium medlemskab",
-   "antal": 98
+   "antal": 97
   },
   {
    "tagId": "Tag2517869245434174618",
    "navn": "Klippekort (10 klip)",
-   "antal": 21
+   "antal": 23
   },
   {
    "tagId": "Tag2518007440748131293",
@@ -80,7 +80,7 @@
   {
    "tagId": "Tag2",
    "navn": "Alle medlemmer",
-   "antal": 179
+   "antal": 181
   },
   {
    "tagId": "Tag2518007428832244134",
@@ -102,7 +102,7 @@
   {
    "tagId": "Tag2518007450850497760",
    "navn": "Oprettelse",
-   "antal": 45
+   "antal": 44
   },
   {
    "tagId": "Tag2516128188990002511",
@@ -119,7 +119,7 @@
   {
    "tagId": "Tag2517016445257204779",
    "navn": "Ønsker udmelding",
-   "antal": 20
+   "antal": 18
   },
   {
    "tagId": "Tag2517016442477144395",
@@ -143,7 +143,7 @@
   }
  ],
  "ukendteEtiketter": [],
- "udenEtiketter": 13,
+ "udenEtiketter": 14,
  "udenMedlemskabsEtiket": null,
  "udenBetalendeMedlemskab": null,
  "nyePrMaaned": [
@@ -193,20 +193,20 @@
   },
   {
    "maaned": "2026-11",
-   "antal": 4
+   "antal": 6
   }
  ],
  "nyeFoerPerioden": null,
  "udenOprettelsesdato": 0,
  "udmeldinger": {
   "etiket": "Ønsker udmelding",
-  "medEtiket": 20,
-  "hentet": 20,
+  "medEtiket": 18,
+  "hentet": 18,
   "kunneIkkeHentes": 0,
-  "medDato": 18,
-  "udenDato": 2,
+  "medDato": 17,
+  "udenDato": 1,
   "passeret": 16,
-  "kommende": 2,
+  "kommende": 1,
   "denneMaaned": "2026-11",
   "prMaaned": [
    {
@@ -283,9 +283,9 @@
    },
    {
     "maaned": "2026-11",
-    "antal": 2,
+    "antal": 1,
     "passeret": 0,
-    "kommende": 2
+    "kommende": 1
    }
   ],
   "medlemstid": [
@@ -295,7 +295,7 @@
    },
    {
     "gruppe": "6-12 mdr",
-    "antal": 5
+    "antal": 4
    },
    {
     "gruppe": "1-2 år",
@@ -307,12 +307,12 @@
    },
    {
     "gruppe": "ukendt",
-    "antal": 5
+    "antal": 4
    }
   ]
  },
  "opfoelgning": {
-  "oenskerUdmelding": 20,
+  "oenskerUdmelding": 18,
   "pause": 3,
   "rykker": 0,
   "manglendeFremmoede": 0,
