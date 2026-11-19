@@ -69,10 +69,15 @@ klubben (Johan) bevidst åbnet for mere læsning, altid via
 
 - `gomember-mcp/kortlaegning/opdater.py` er den ene kommando, der opdaterer
   sidens data. Den kører hver nat som en planlagt opgave.
-- Medlemslisten (`/api/members`) læses for at tælle medlemmer pr. etiket og
-  pr. oprettelsesmåned. Kun `createdTs` og etiketter bruges.
-- `GET /api/memberdata/{id}` kaldes én gang pr. medlem med etiketten "Ønsker
-  udmelding" - kun for felterne `LeftDate` (udmeldingsdato) og `JoinedDate`
+- Udmeldte medlemmer slettes ikke i goMember; de står som "ikke aktive"
+  (bekræftet af klubben 19. november 2026: 25 udmeldte).
+- Medlemslisten (`/api/members`) læses tre gange: alle (kun `createdTs`, til
+  nye pr. måned), aktive (`filter.isActive=true`: etiketter, til medlemstal pr.
+  medlemskab) og ikke aktive (`filter.isActive=false`: kun `entityId`, til
+  opslag af udmeldingsdato). Aktive + ikke aktive skal give hele listen.
+- `GET /api/memberdata/{id}` kaldes én gang pr. ikke aktivt medlem og pr.
+  aktivt medlem med etiketten "Ønsker udmelding" - kun for felterne `LeftDate`
+  (udmeldingsdato) og `JoinedDate`
   (indmeldingsdato). Svaret er medlemmets fulde stamkort; alt andet kasseres
   straks. Intet id, ingen præcis dato og intet andet fra svaret må printes,
   logges eller gemmes - kun antal pr. måned og grove grupper.

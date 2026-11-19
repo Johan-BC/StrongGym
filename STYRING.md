@@ -107,20 +107,23 @@ Den indeholder ingen anden `fetch`, `XMLHttpRequest`, `sendBeacon` eller
 formular-afsendelse. Rettelser gemmes i `localStorage` (siden virker også
 uden). Eksport som JSON sker med en lokal download i browseren.
 
-**Udmeldinger efter udmeldingsdato** (Medlemmer → Opfølgning): for de
-medlemmer, der har etiketten "Ønsker udmelding", hentes feltet
-"Udmeldingsdato" (og indmeldingsdatoen) fra deres medlemskort i goMember,
-`GET /api/memberdata/{id}` – ét kald pr. medlem, ca. 20. Svaret er medlemmets
+**Aktive og udmeldte:** Udmeldte medlemmer slettes ikke i goMember. De står
+som "ikke aktive" (25 pr. 19. nov. 2026). Medlemstal og antal pr. medlemskab
+tæller derfor kun **aktive** medlemmer; nye pr. måned tæller alle, også dem
+der er udmeldt siden.
+
+**Udmeldinger efter udmeldingsdato** (Medlemmer → Opfølgning): for alle
+udmeldte (ikke aktive) og for aktive med etiketten "Ønsker udmelding" hentes
+feltet "Udmeldingsdato" (og indmeldingsdatoen) fra deres medlemskort i
+goMember, `GET /api/memberdata/{id}` – ét kald pr. medlem, ca. 27. Svaret er medlemmets
 fulde stamkort (navn, adresse, e-mail, telefon …). Scriptet læser **kun**
 felterne `LeftDate` og `JoinedDate` og smider resten væk med det samme. Intet
 id, ingen dato og intet andet fra svaret gemmes eller skrives ud – kun:
-antal med etiketten, med/uden dato, allerede passeret/kommende, antal pr.
+antal udmeldte og aktive med etiketten, med/uden dato, allerede passeret/kommende, antal pr.
 måned og medlemstid i grove grupper. Antal pr. måned vises præcist, også 1
 og 2 (klubben har godkendt samlede tal uden navne; ellers ville grafen være
 tom), men kun som måned, aldrig som dato. Medlemstid vises kun for hele
-gruppen, med "<3" for 1-2. Tallene viser, at de fleste med etiketten
-allerede er udmeldt, men stadig står i listen – det rigtige antal medlemmer
-er altså lavere end "Medlemmer i alt".
+gruppen, med "<3" for 1-2.
 
 **Statistik opdateres** i to trin i `gomember-mcp/kortlaegning`:
 
@@ -152,9 +155,9 @@ python3 gomember-mcp/kortlaegning/opdater.py --dato 2026-11-15   # kun til test
 1. Holdplanen 8 uger tilbage og 8 uger frem, aktivitetslisten, etiketterne og
    medlemskaberne (ca. 8 kald, `holdplan.py`). Den store kortlægning
    (`kortlaeg.py`, ca. 100 adresser i goMember) køres ikke om natten.
-2. Medlemslisten, talt op til antal med det samme (2 kald), og
-   udmeldingsdatoen for medlemmer med etiketten "Ønsker udmelding" (1 kald
-   til listen + ca. 20 kald til `/api/memberdata/{id}`, hvor kun
+2. Medlemslisten, talt op til antal med det samme (alle, aktive og ikke
+   aktive: 3 kald + etiketterne), og udmeldingsdatoen for udmeldte og aktive
+   med "Ønsker udmelding" (ca. 27 kald til `/api/memberdata/{id}`, hvor kun
    udmeldings- og indmeldingsdato læses; se "Udmeldinger" ovenfor).
 3. Deltagelsen de seneste 6 måneder. Gamle hold ligger gemt i en cache og
    hentes aldrig igen. Kun hold fra de seneste 14 dage, nye hold og hold der

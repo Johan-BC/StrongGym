@@ -968,7 +968,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     // Nøgletal
     var lav = S ? lavtFyldte() : [];
     h += '<div class="stats">' +
-      (M ? mstat(k.betalendeMedlemskaber.antal, 'Betalende medlemskaber', k.betalendeMedlemskaber.summeret.join(', ') + ' lagt sammen') +
+      (M ? (k.aktiveMedlemmer != null ? mstat(k.aktiveMedlemmer, 'Aktive medlemmer', num(k.ikkeAktive) + ' udmeldte står stadig i goMember og er ikke talt med') : '') +
+        mstat(k.betalendeMedlemskaber.antal, 'Betalende medlemskaber', k.betalendeMedlemskaber.summeret.join(', ') + ' lagt sammen, kun aktive') +
         mstat(k.nyeSeneste30Dage, 'Nye seneste 30 dage') +
         (u ? mstat(u.kommende, 'Kommende udmeldinger', 'Udmeldingsdato i dag eller senere', u.kommende ? 'warn' : '') : '')
         : emptyStat('Medlemstal')) +
@@ -989,7 +990,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
           return '<tr><th scope="row" style="font-weight:400;color:var(--fg)">' + esc(pr ? pr.name : r.navn) + (UNCLEAR_TAGS[r.navn] ? ' <span class="badge b-warn">betydning uklar</span>' : '') +
             '</th><td class="num">' + mval(r.antal) + '</td><td class="num nw">' + (pr ? num(pr.price) + ' kr. ' + esc(pr.priceUnit) : '<span class="muted">–</span>') + '</td></tr>';
         }).join('') + '</tbody></table></div>';
-      h += '<p class="chart-note">Antal med etiketten i goMember. Et medlem kan have flere etiketter, og en etiket kan stå tilbage efter udmelding.' +
+      h += '<p class="chart-note">Antal <strong>aktive</strong> medlemmer med etiketten i goMember. Udmeldte tælles ikke med. Et medlem kan have flere etiketter.' +
         (zero.length ? ' Uden medlemmer: ' + esc(zero.join(', ')) + '.' : '') + '</p>';
     } else h += missingData('styring-medlemmer.json');
     h += '</section>';
@@ -1025,8 +1026,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
         '<div class="sr-only"><table><caption>Nye og udmeldte pr. måned</caption><thead><tr><th>Måned</th><th>Nye</th><th>Udmeldt</th></tr></thead><tbody>' +
         mrows.map(function (r) { return '<tr><td>' + MONTHS_LONG[+r.m.slice(5, 7) - 1] + ' ' + r.m.slice(0, 4) + '</td><td>' + (typeof r.nye === 'number' ? r.nye : 'færre end 3') + '</td><td>' + (r.ud == null ? 'ukendt' : r.ud) + '</td></tr>'; }).join('') +
         '</tbody></table></div></figure>';
-      h += '<p class="chart-note"><strong>Udmeldinger er et minimum.</strong> De tæller kun medlemmer, der stadig står i goMember med etiketten “Ønsker udmelding” og en udmeldingsdato. ' +
-        'Er et medlem slettet fra listen, er det ikke med. Nye tælles efter oprettelsesdato i goMember, ikke efter hvornår medlemskabet startede.</p>' +
+      h += '<p class="chart-note">Udmeldinger tælles efter udmeldingsdatoen for alle udmeldte i goMember (de står der som ikke aktive) og for aktive med etiketten “Ønsker udmelding”. ' +
+        'Nye tælles efter oprettelsesdato i goMember, ikke efter hvornår medlemskabet startede – også dem, der er udmeldt siden.</p>' +
         '<p class="noprint" style="margin-top:0.5rem"><button class="btn small" type="button" data-goto="medlemmer">Flere medlemstal</button></p>';
     } else h += missingData('styring-medlemmer.json');
     h += '</section>';
@@ -1292,7 +1293,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     h += '<div class="notice gold"><strong>Kun samlede tal.</strong> Tallene i <code>styring-medlemmer.json</code> er optællinger, og klubben har godkendt, at de må være offentlige. Siden må aldrig vise data om enkelte medlemmer (navne, numre eller hvem der har en etiket).</div>';
 
     h += '<h3>Nøgletal</h3><div class="stats">' +
-      mstat(k.medlemmerIAlt, 'Medlemmer i alt', 'Alle rækker i medlemslisten – også trænere, testkonti og læse-kontoen') +
+      (k.aktiveMedlemmer != null ? mstat(k.aktiveMedlemmer, 'Aktive medlemmer', 'Af ' + num(k.medlemmerIAlt) + ' i medlemslisten; ' + num(k.ikkeAktive) + ' er udmeldt. Også trænere, testkonti og læse-kontoen')
+        : mstat(k.medlemmerIAlt, 'Medlemmer i alt', 'Alle rækker i medlemslisten – også trænere, testkonti og læse-kontoen')) +
       mstat(k.betalendeMedlemskaber.antal, 'Betalende medlemskaber', 'Sum af etiketterne ' + k.betalendeMedlemskaber.summeret.join(' + ')) +
       mstat(k.oenskerUdmelding, 'Ønsker udmelding', udmSub(m.udmeldinger), 'warn') +
       mstat(k.pause, 'Pause', 'Etiketten “Pause”') +
@@ -1368,26 +1370,25 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
 
   // "Ønsker udmelding"-feltets undertekst: etiketten betyder ikke, at de alle er på vej ud nu.
   function udmSub(u) {
+    if (u && typeof u.aktiveMedEtiket === 'number') return 'Aktive med etiketten. ' + u.kommende + ' har en kommende udmeldingsdato – se Udmeldinger nedenfor';
     if (u && typeof u.passeret === 'number') return 'Står med etiketten. ' + u.passeret + ' af dem har en udmeldingsdato, der allerede er passeret – se Udmeldinger nedenfor';
     return 'Etiketten “Ønsker udmelding” – siger ikke, hvornår de stopper';
   }
 
   // Udmeldinger efter udmeldingsdato (styring-medlemmer.json -> udmeldinger). Mangler sektionen, vises intet.
   function udmeldingerBlock(u) {
-    if (!u || typeof u.medEtiket !== 'number' || !Array.isArray(u.prMaaned)) return '';
+    if (!u || typeof u.opslag !== 'number' || !Array.isArray(u.prMaaned)) return '';
     var rows = u.prMaaned;
     var h = '<h3 id="h-udmeld">Udmeldinger efter udmeldingsdato</h3>';
-    h += '<p class="small muted" style="margin-bottom:0.6rem">Feltet “Udmeldingsdato” for medlemmer med etiketten “' + esc(u.etiket) + '”. Kun måned – aldrig den præcise dato og aldrig navne.</p>';
+    h += '<p class="small muted" style="margin-bottom:0.6rem">Feltet “Udmeldingsdato” for alle udmeldte (ikke aktive i goMember) og for aktive med etiketten “' + esc(u.etiket) + '”. Kun måned – aldrig den præcise dato og aldrig navne.</p>';
     h += '<div class="stats">' +
-      mstat(u.medEtiket, 'Med etiketten “' + u.etiket + '”') +
+      mstat(u.ikkeAktive, 'Udmeldte', 'Ikke aktive i goMember') +
+      mstat(u.aktiveMedEtiket, 'Aktive med “' + u.etiket + '”') +
       mstat(u.medDato, 'Har udmeldingsdato') +
       mstat(u.passeret, 'Dato allerede passeret', 'Udmeldingsdatoen ligger før ' + fDayY(M.hentet || ''), 'warn') +
       mstat(u.kommende, 'Kommende', 'Udmeldingsdato i dag eller senere') +
-      mstat(u.udenDato, 'Uden dato', 'Etiketten står på, men feltet er tomt') + '</div>';
+      mstat(u.udenDato, 'Uden dato', 'Feltet er tomt i goMember') + '</div>';
     if (u.kunneIkkeHentes) h += '<p class="small muted" style="margin-top:0.4rem">Udmeldingsdatoen kunne ikke hentes for ' + num(u.kunneIkkeHentes) + ' medlemmer.</p>';
-    h += '<div class="notice" style="margin-top:0.75rem"><strong>De fleste er allerede gået.</strong> ' + num(u.passeret) + ' af de ' + num(u.medEtiket) +
-      ' med etiketten har en udmeldingsdato, der allerede er passeret. Det er altså tidligere medlemmer, som stadig står i medlemslisten med etiketten. ' +
-      'Det rigtige antal medlemmer er derfor lavere end “Medlemmer i alt”.</div>';
     if (rows.length) {
       var maxN = Math.max(1, Math.max.apply(null, rows.map(function (r) { return r.antal; })));
       var cols = 'grid-template-columns:repeat(' + rows.length + ',minmax(0,1fr))';

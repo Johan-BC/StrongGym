@@ -1,22 +1,27 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-19T09:54",
+ "hentet": "2026-11-19T10:16",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
    "GET /api/members?filter.pageSize=1000&filter.currentPage=1",
+   "GET /api/members?filter.isActive=true&filter.pageSize=1000",
+   "GET /api/members?filter.isActive=false&filter.pageSize=1000",
    "GET /api/tag",
-   "GET /api/members?filter.tags=<Ønsker udmelding>&filter.pageSize=1000",
-   "GET /api/memberdata/{id} x 18"
+   "GET /api/memberdata/{id} x 27"
   ],
   "etiketnavne": "live (GET /api/tag)"
  },
  "total": 197,
  "totalFraGoMember": null,
+ "aktive": 172,
+ "ikkeAktive": 25,
  "noegletal": {
   "medlemmerIAlt": 197,
+  "aktiveMedlemmer": 172,
+  "ikkeAktive": 25,
   "betalendeMedlemskaber": {
-   "antal": 130,
+   "antal": 116,
    "summeret": [
     "Premium medlemskab",
     "Ung 15-24 år medlemskab",
@@ -26,15 +31,15 @@
    ],
    "personerMedMindstEn": null
   },
-  "oenskerUdmelding": 18,
-  "pause": 3,
+  "oenskerUdmelding": 2,
+  "pause": 2,
   "nyeSeneste30Dage": 9
  },
  "medlemskaber": [
   {
    "tagId": "Tag2517253147042177325",
    "navn": "Premium medlemskab",
-   "antal": 97
+   "antal": 85
   },
   {
    "tagId": "Tag2517869245434174618",
@@ -45,11 +50,6 @@
    "tagId": "Tag2518007440748131293",
    "navn": "12 måneder",
    "antal": 7
-  },
-  {
-   "tagId": "Tag2518007451728538626",
-   "navn": "Ung 15-24 år medlemskab",
-   "antal": 2
   },
   {
    "tagId": "Tag2518007439372993219",
@@ -75,13 +75,18 @@
    "tagId": "Tag2516138032599593326",
    "navn": "Studerende",
    "antal": 0
+  },
+  {
+   "tagId": "Tag2518007451728538626",
+   "navn": "Ung 15-24 år medlemskab",
+   "antal": 0
   }
  ],
  "roller": [
   {
    "tagId": "Tag2",
    "navn": "Alle medlemmer",
-   "antal": 181
+   "antal": 161
   },
   {
    "tagId": "Tag2518007428832244134",
@@ -103,7 +108,7 @@
   {
    "tagId": "Tag2518007450850497760",
    "navn": "Oprettelse",
-   "antal": 44
+   "antal": 37
   },
   {
    "tagId": "Tag2516128188990002511",
@@ -118,14 +123,14 @@
  ],
  "status": [
   {
-   "tagId": "Tag2517016445257204779",
-   "navn": "Ønsker udmelding",
-   "antal": 18
-  },
-  {
    "tagId": "Tag2517016442477144395",
    "navn": "Pause",
-   "antal": 3
+   "antal": 2
+  },
+  {
+   "tagId": "Tag2517016445257204779",
+   "navn": "Ønsker udmelding",
+   "antal": 2
   },
   {
    "tagId": "Tag2517928754246739310",
@@ -144,7 +149,7 @@
   }
  ],
  "ukendteEtiketter": [],
- "udenEtiketter": 14,
+ "udenEtiketter": 9,
  "udenMedlemskabsEtiket": null,
  "udenBetalendeMedlemskab": null,
  "nyePrMaaned": [
@@ -200,13 +205,16 @@
  "nyeFoerPerioden": null,
  "udenOprettelsesdato": 0,
  "udmeldinger": {
+  "grundlag": "ikke aktive medlemmer + aktive med etiketten Ønsker udmelding",
   "etiket": "Ønsker udmelding",
-  "medEtiket": 18,
-  "hentet": 18,
+  "opslag": 27,
+  "ikkeAktive": 25,
+  "aktiveMedEtiket": 2,
+  "hentet": 27,
   "kunneIkkeHentes": 0,
-  "medDato": 17,
+  "medDato": 26,
   "udenDato": 1,
-  "passeret": 16,
+  "passeret": 25,
   "kommende": 1,
   "denneMaaned": "2026-11",
   "prMaaned": [
@@ -230,8 +238,8 @@
    },
    {
     "maaned": "2026-02",
-    "antal": 1,
-    "passeret": 1,
+    "antal": 4,
+    "passeret": 4,
     "kommende": 0
    },
    {
@@ -260,8 +268,8 @@
    },
    {
     "maaned": "2026-07",
-    "antal": 3,
-    "passeret": 3,
+    "antal": 4,
+    "passeret": 4,
     "kommende": 0
    },
    {
@@ -272,14 +280,14 @@
    },
    {
     "maaned": "2026-09",
-    "antal": 0,
-    "passeret": 0,
+    "antal": 3,
+    "passeret": 3,
     "kommende": 0
    },
    {
     "maaned": "2026-10",
-    "antal": 1,
-    "passeret": 1,
+    "antal": 3,
+    "passeret": 3,
     "kommende": 0
    },
    {
@@ -292,29 +300,29 @@
   "medlemstid": [
    {
     "gruppe": "under 6 mdr",
-    "antal": 5
+    "antal": 7
    },
    {
     "gruppe": "6-12 mdr",
-    "antal": 4
+    "antal": 7
    },
    {
     "gruppe": "1-2 år",
-    "antal": null
+    "antal": 5
    },
    {
     "gruppe": "over 2 år",
-    "antal": "<3"
+    "antal": 3
    },
    {
     "gruppe": "ukendt",
-    "antal": 4
+    "antal": 5
    }
   ]
  },
  "opfoelgning": {
-  "oenskerUdmelding": 18,
-  "pause": 3,
+  "oenskerUdmelding": 2,
+  "pause": 2,
   "rykker": 0,
   "manglendeFremmoede": 0,
   "beroGebyr": 0,
@@ -448,7 +456,7 @@
  "definitioner": [
   {
    "term": "Udmeldingsdato",
-   "tekst": "Feltet \"Udmeldingsdato\" (LeftDate) på medlemmer med etiketten \"Ønsker udmelding\", hentet ét medlem ad gangen (GET /api/memberdata/{id}). Kun udmeldings- og indmeldingsdato læses; resten af svaret kasseres straks. Siden viser kun måned, aldrig den præcise dato. \"Allerede passeret\" = datoen ligger før hentedagen; \"kommende\" = hentedagen eller senere."
+   "tekst": "Feltet \"Udmeldingsdato\" (LeftDate) på alle ikke aktive (udmeldte) medlemmer og på aktive med etiketten \"Ønsker udmelding\", hentet ét medlem ad gangen (GET /api/memberdata/{id}). Kun udmeldings- og indmeldingsdato læses; resten af svaret kasseres straks. Siden viser kun måned, aldrig den præcise dato. \"Allerede passeret\" = datoen ligger før hentedagen; \"kommende\" = hentedagen eller senere."
   },
   {
    "term": "Udmeldinger pr. måned",
@@ -459,16 +467,20 @@
    "tekst": "Fra indmeldingsdato (JoinedDate) til udmeldingsdato, i grove grupper og kun for hele gruppen. Grupper med 1 eller 2 vises som \"<3\"; er kun én gruppe skjult, udelades også den mindste anden gruppe, så tallet ikke kan regnes ud. \"Ukendt\" = en af datoerne mangler."
   },
   {
+   "term": "Aktive medlemmer",
+   "tekst": "Medlemmer, som goMember markerer som aktive. Udmeldte bliver stående i goMember som ikke aktive og tælles ikke med. Kan stadig indeholde trænere, bestyrelse, testkonti og den fiktive læse-konto, som denne side selv bruger. Det er ikke det samme som betalende medlemmer."
+  },
+  {
    "term": "Medlemmer i alt",
-   "tekst": "Antal rækker i goMembers medlemsliste (GET /api/members) på hentetidspunktet. Kan indeholde trænere, bestyrelse, udmeldte der stadig står i listen, testkonti og den fiktive læse-konto, som denne side selv bruger. Det er ikke det samme som betalende medlemmer."
+   "tekst": "Alle i goMembers medlemsliste, også udmeldte (ikke aktive)."
   },
   {
    "term": "Betalende medlemskaber",
-   "tekst": "Summen af antal pr. etiket for Premium medlemskab, Ung 15-24 år medlemskab, Klippekort (10 klip), Fordels medlemskab, 12 måneder. Et medlem med to af etiketterne tælles to gange i summen; \"personer med mindst én\" tæller hvert medlem én gang. Om etiketten betyder, at medlemmet betaler lige nu, ved vi ikke – den kan stå tilbage efter udmelding eller under pause."
+   "tekst": "Summen af antal pr. etiket for Premium medlemskab, Ung 15-24 år medlemskab, Klippekort (10 klip), Fordels medlemskab, 12 måneder. Et medlem med to af etiketterne tælles to gange i summen; \"personer med mindst én\" tæller hvert medlem én gang. Kun aktive medlemmer tælles. Om etiketten betyder, at medlemmet betaler lige nu, ved vi ikke – den kan fx stå på under pause."
   },
   {
    "term": "Antal pr. etiket",
-   "tekst": "Hvor mange medlemmer der har etiketten i goMember. Etiketterne er klubbens egne og bruges til flere ting på én gang. Et medlem kan have flere etiketter."
+   "tekst": "Hvor mange aktive medlemmer der har etiketten i goMember. Udmeldte tælles ikke med, selv om etiketten stadig står på dem. Etiketterne er klubbens egne og bruges til flere ting på én gang. Et medlem kan have flere etiketter."
   },
   {
    "term": "Nye pr. måned / nye seneste 30 dage",

@@ -251,11 +251,13 @@ def main(argv=None):
           f"({hp['requests_made']} kald).")
     if "medlemmer" in res:
         m = res["medlemmer"]
-        print(f"- Medlemmer: {m['medlemmer']} i alt" + (f" (før: {m['forrige']})" if m.get("forrige") else "")
+        print(f"- Medlemmer: {m.get('aktive', '?')} aktive, {m.get('ikkeAktive', '?')} udmeldte, {m['medlemmer']} i alt"
+              + (f" (før: {m['forrige']})" if m.get("forrige") else "")
               + f" ({m['http']} kald).")
         u = m.get("udmeldinger") or {}
         if u:
-            print(f"- Udmeldingsdato ('{u['etiket']}'): {u['medEtiket']} med etiketten, {u['medDato']} med dato "
+            print(f"- Udmeldingsdato: slået op for {u['opslag']} ({u['ikkeAktive']} udmeldte + {u['aktiveMedEtiket']} aktive "
+                  f"med '{u['etiket']}'), {u['medDato']} med dato "
                   f"({u['passeret']} allerede passeret, {u['kommende']} kommende), {u['udenDato']} uden dato"
                   + (f", {u['kunneIkkeHentes']} kunne ikke hentes" if u['kunneIkkeHentes'] else "") + ".")
     if "deltagelse" in res:
