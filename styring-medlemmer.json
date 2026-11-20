@@ -1,6 +1,6 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-19T10:48",
+ "hentet": "2026-11-20T03:18",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
@@ -27,14 +27,12 @@
   "udmeldteMedMedlemskab": 14,
   "udmeldteMedOenskerUdmelding": 16,
   "udmeldteMedAndreStatusEtiketter": 0,
-  "aktiveMedMaanedsEtiket": "<3",
+  "aktiveMedMaanedsEtiket": 0,
   "udmeldteUdenDato": 0,
   "aktiveMedPasseretUdmeldingsdato": 0,
   "aktiveMedOenskerUdmeldingUdenDato": "<3"
  },
  "ubrugteEtiketter": [
-  "6 måneder",
-  "Bero gebyr",
   "Børnemedlemsskab 7-14",
   "Manglende fremmøde",
   "PT klippekort",
@@ -42,6 +40,7 @@
   "Sponsorat 10000 kr.",
   "Sponsorat 15000 kr",
   "Studerende",
+  "Udmeldt",
   "Ung 15-24 år medlemskab"
  ],
  "betalendeHistorik": {
@@ -104,7 +103,7 @@
    },
    {
     "maaned": "2026-11",
-    "dato": "2026-11-19",
+    "dato": "2026-11-20",
     "antal": 116
    }
   ],
@@ -113,6 +112,11 @@
  "maalinger": [
   {
    "dato": "2026-11-19",
+   "betalende": 116,
+   "aktive": 165
+  },
+  {
+   "dato": "2026-11-20",
    "betalende": 116,
    "aktive": 165
   }
@@ -156,11 +160,6 @@
    "tagId": "Tag2518007439372993219",
    "navn": "Fordels medlemskab",
    "antal": 1
-  },
-  {
-   "tagId": "Tag2518007440403499043",
-   "navn": "6 måneder",
-   "antal": 0
   },
   {
    "tagId": "Tag2518137174801674575",
@@ -220,6 +219,11 @@
    "tagId": "Tag2516128182985175263",
    "navn": "Sponsorat 15000 kr",
    "antal": 0
+  },
+  {
+   "tagId": "Tag2516072103932792802",
+   "navn": "Udmeldt",
+   "antal": 0
   }
  ],
  "status": [
@@ -234,11 +238,6 @@
    "antal": 2
   },
   {
-   "tagId": "Tag2517928754246739310",
-   "navn": "Bero gebyr",
-   "antal": 0
-  },
-  {
    "tagId": "Tag2517895173267893064",
    "navn": "Manglende fremmøde",
    "antal": 0
@@ -249,7 +248,13 @@
    "antal": 0
   }
  ],
- "ukendteEtiketter": [],
+ "ukendteEtiketter": [
+  {
+   "tagId": "Tag2517931451169896607",
+   "navn": "Tag2517931451169896607",
+   "antal": 1
+  }
+ ],
  "udenEtiketter": 8,
  "udenMedlemskabsEtiket": null,
  "udenBetalendeMedlemskab": null,
@@ -430,53 +435,53 @@
   "udmeldSlut": [
    {
     "maaned": "november",
-    "etiket": "Udmeld slut nov",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "december",
-    "etiket": "Udmeld slut dec",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "januar",
-    "etiket": "Udmeld slut jan",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "februar",
-    "etiket": "Udmeld slut feb",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "marts",
-    "etiket": "Udmeld slut marts",
-    "antal": 1
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "april",
-    "etiket": "Udmeld slut april",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "maj",
-    "etiket": "Udmeld slut maj",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "juni",
-    "etiket": "Udmeld slut juni",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "juli",
-    "etiket": "Udmeld slut juli",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "august",
-    "etiket": "Udmeld slut august",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "september",
@@ -485,71 +490,71 @@
    },
    {
     "maaned": "oktober",
-    "etiket": "Udmeld slut okt",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    }
   ],
-  "udmeldSlutIAlt": 1,
+  "udmeldSlutIAlt": 0,
   "beroSlut": [
    {
     "maaned": "november",
-    "etiket": "Bero slut nov",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "december",
-    "etiket": "Bero slut dec",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "januar",
-    "etiket": "Bero slut jan",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "februar",
-    "etiket": "Bero slut feb",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "marts",
-    "etiket": "Bero slut marts",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "april",
-    "etiket": "Bero slut april",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "maj",
-    "etiket": "Bero slut maj",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "juni",
-    "etiket": "Bero slut juni",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "juli",
-    "etiket": "Bero slut juli",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "august",
-    "etiket": "Bero slut august",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "september",
-    "etiket": "Bero slut sep",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    },
    {
     "maaned": "oktober",
-    "etiket": "Bero slut okt",
-    "antal": 0
+    "etiket": null,
+    "antal": null
    }
   ],
   "beroSlutIAlt": 0

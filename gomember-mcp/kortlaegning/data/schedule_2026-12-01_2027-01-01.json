@@ -291,7 +291,7 @@
     "activityId": "Activity2517743114820337813",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 0,
+    "booked": 1,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
