@@ -1,9 +1,9 @@
 {
- "cutDate": "2026-11-20T00:00:00",
+ "cutDate": "2026-11-21T00:00:00",
  "products": [
   {
    "id": "Tag2517253147042177325",
-   "price": 183.0,
+   "price": 166.0,
    "displayPrice": 499.0,
    "name": "Premium medlemskab",
    "description": "<p><strong>Pris: 499,- pr/md<br /></strong></p>\n<p><strong>Du har adgang til at melde dig på alle WOD i Strong Gym, du har adgang til at selvtræne alle ugens dage mellem kl 6.00 - 23.00 - mulighed for at deltage i Events der afholdes i Strong Gym. </strong></p>\n<p><strong>Du bliver en del af et støttende &amp; tæt fællesskab.</strong></p>",
@@ -22,7 +22,7 @@
   },
   {
    "id": "Tag2518007451728538626",
-   "price": 110.0,
+   "price": 100.0,
    "displayPrice": 299.0,
    "name": "Ung 15-24 år medlemskab",
    "description": "<p><strong>Pris: 299,- pr/md</strong></p>\n<p><strong>Gældende for alle unge mellem 15 og 24 år. Du bliver automatisk tildelt premium medlemsskab når du bliver 25 år.</strong></p>\n<p><strong>Du har adgang til at melde dig på alle WOD i Strong Gym, du har adgang til at selvtræne alle ugens dage mellem kl 6.00 - 23.00 - mulighed for at deltage i Events der afholdes i Strong Gym og du bliver en del af et støttende &amp; tæt fællesskab.</strong></p>\n<p>Er du mellem 15 og 17 skal du have en forældre samtykke til at må træne hos os. </p>\n<p>Vi skal nok passe på dig og vi anbefaler at man starter på basis holdet om torsdagen. Her lærer man basal teknik og viden om øvelserne. </p>",

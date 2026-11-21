@@ -1,12 +1,12 @@
 {
  "_meta": {
   "genereret_af": "analyse_holdtyper.py",
-  "kilde_snapshot": "2026-11-20T03:18:42",
+  "kilde_snapshot": "2026-11-21T03:17:45",
   "snapshot_kilde": "holdplan_meta.json",
   "ukendte_aktiviteter": [],
   "holdplan_vindue": [
-   "2026-09-25T08:15:00",
-   "2027-01-14T19:00:00"
+   "2026-09-26T08:00:00",
+   "2027-01-15T16:30:00"
   ],
   "grid_vindue": [
    "2026-11-02",
@@ -14,7 +14,7 @@
   ],
   "belastning_vindue": [
    "2026-11-01",
-   "2026-11-20T03:18:42"
+   "2026-11-21T03:17:45"
   ],
   "note": "Afledt af læsekald (kun GET). Trænernavne er offentlige. Ingen medlemsdata."
  },
@@ -25,20 +25,20 @@
    "beskrivelse": "Almindelig WOD med træner (60 min)",
    "farve": "9ccc65",
    "farver_set": {
-    "9ccc65": 177,
+    "9ccc65": 178,
     "81c784": 11
    },
    "standard_kapacitet": 12,
    "kapaciteter_set": {
+    "14": 6,
     "12": 181,
-    "14": 5,
     "15": 1,
     "20": 1
    },
    "tilmelding": true,
    "aktiviteter_i_alt": 19,
    "aktive_aktiviteter": 17,
-   "hold_i_vinduet": 188,
+   "hold_i_vinduet": 189,
    "slots_i_standarduge": [
     "Mandag 08:15",
     "Mandag 16:00",
@@ -162,16 +162,16 @@
    "beskrivelse": "Hold for øvede - lidt mere udfordrende end WOD",
    "farve": "cfd8dc",
    "farver_set": {
-    "cfd8dc": 9
+    "cfd8dc": 10
    },
    "standard_kapacitet": 12,
    "kapaciteter_set": {
-    "12": 9
+    "12": 10
    },
    "tilmelding": true,
    "aktiviteter_i_alt": 2,
    "aktive_aktiviteter": 1,
-   "hold_i_vinduet": 9,
+   "hold_i_vinduet": 10,
    "slots_i_standarduge": [
     "Fredag 16:30"
    ],
@@ -268,19 +268,18 @@
    "beskrivelse": "Aktivitet der kun findes i holdplanen, ikke i /api/activity",
    "farve": "8bc34a",
    "farver_set": {
-    "8bc34a": 5,
-    "b0bec5": 1,
+    "8bc34a": 4,
     "03a9f4": 1
    },
    "standard_kapacitet": 12,
    "kapaciteter_set": {
-    "12": 5,
+    "12": 3,
     "14": 2
    },
    "tilmelding": true,
    "aktiviteter_i_alt": 1,
    "aktive_aktiviteter": 0,
-   "hold_i_vinduet": 7,
+   "hold_i_vinduet": 5,
    "slots_i_standarduge": [],
    "usikker_mapping": [
     "Activity2516351285377140362"
@@ -866,8 +865,8 @@
    "aktivitetsnavne": [
     "WOD Fredag 0815"
    ],
-   "foerste_dato": "2026-09-25",
-   "sidste_dato": "2027-01-08"
+   "foerste_dato": "2026-10-02",
+   "sidste_dato": "2027-01-15"
   },
   {
    "ugedag": "Fredag",
@@ -885,7 +884,7 @@
     "WOD Fredag 1530"
    ],
    "foerste_dato": "2026-11-13",
-   "sidste_dato": "2027-01-08"
+   "sidste_dato": "2027-01-15"
   },
   {
    "ugedag": "Fredag",
@@ -903,7 +902,7 @@
     "MASH - lidt mere udfordrende end WOD"
    ],
    "foerste_dato": "2026-11-13",
-   "sidste_dato": "2027-01-08"
+   "sidste_dato": "2027-01-15"
   },
   {
    "ugedag": "Lørdag",
@@ -1438,7 +1437,7 @@
    "oprettet": "2020-10-25",
    "er_produkt": false,
    "brugt_paa_aktiviteter": 2,
-   "brugt_paa_hold": 25
+   "brugt_paa_hold": 26
   },
   {
    "tagId": "Tag2517986617553880483",
@@ -1570,7 +1569,7 @@
    "oprettet": "2014-05-10",
    "er_produkt": false,
    "brugt_paa_aktiviteter": 30,
-   "brugt_paa_hold": 230
+   "brugt_paa_hold": 232
   },
   {
    "tagId": "Tag1",
@@ -1594,22 +1593,11 @@
  "traenere": [
   {
    "navn": "Mick Nielsen",
-   "hold": 15,
+   "hold": 14,
    "pr_type": {
-    "Ukendt engangs-aktivitet": 1,
     "WOD": 4,
     "Lang WOD": 1,
     "WOD uden træner": 9
-   }
-  },
-  {
-   "navn": "Peter Alexander Schougaard",
-   "hold": 12,
-   "pr_type": {
-    "WOD": 7,
-    "Ukendt engangs-aktivitet": 2,
-    "Lang WOD": 2,
-    "HYROX": 1
    }
   },
   {
@@ -1619,6 +1607,26 @@
     "Ukendt engangs-aktivitet": 2,
     "WOD": 8,
     "TONS": 2
+   }
+  },
+  {
+   "navn": "Peter Alexander Schougaard",
+   "hold": 11,
+   "pr_type": {
+    "Ukendt engangs-aktivitet": 2,
+    "WOD": 6,
+    "Lang WOD": 2,
+    "HYROX": 1
+   }
+  },
+  {
+   "navn": "Thomas Ronne",
+   "hold": 10,
+   "pr_type": {
+    "Ukendt engangs-aktivitet": 1,
+    "WOD": 6,
+    "MASH": 2,
+    "HYROX": 1
    }
   },
   {
@@ -1634,15 +1642,6 @@
    "hold": 10,
    "pr_type": {
     "WOD": 10
-   }
-  },
-  {
-   "navn": "Thomas Ronne",
-   "hold": 9,
-   "pr_type": {
-    "Ukendt engangs-aktivitet": 2,
-    "WOD": 5,
-    "MASH": 2
    }
   },
   {
@@ -1664,6 +1663,13 @@
    "hold": 5,
    "pr_type": {
     "WOD": 5
+   }
+  },
+  {
+   "navn": "Christoffer Hviid",
+   "hold": 4,
+   "pr_type": {
+    "HYROX": 4
    }
   },
   {
@@ -1689,13 +1695,6 @@
    }
   },
   {
-   "navn": "Christoffer Hviid",
-   "hold": 3,
-   "pr_type": {
-    "HYROX": 3
-   }
-  },
-  {
    "navn": "Sussi Larsen",
    "hold": 2,
    "pr_type": {
@@ -1704,23 +1703,23 @@
   },
   {
    "navn": "Maj Jeppesen",
-   "hold": 1,
+   "hold": 2,
    "pr_type": {
-    "Børnehold 5-12 år": 1
+    "Børnehold 5-12 år": 2
    }
   },
   {
    "navn": "Mia Bertram",
-   "hold": 1,
+   "hold": 2,
    "pr_type": {
-    "Børnehold 5-12 år": 1
+    "Børnehold 5-12 år": 2
    }
   }
  ],
  "traener_daekning_pr_type": {
   "WOD": {
    "med_navn": 58,
-   "uden_navn": 130
+   "uden_navn": 131
   },
   "WOD uden træner": {
    "med_navn": 17,
@@ -1731,8 +1730,8 @@
    "uden_navn": 7
   },
   "HYROX": {
-   "med_navn": 4,
-   "uden_navn": 17
+   "med_navn": 5,
+   "uden_navn": 16
   },
   "TONS": {
    "med_navn": 2,
@@ -1740,15 +1739,15 @@
   },
   "MASH": {
    "med_navn": 2,
-   "uden_navn": 7
+   "uden_navn": 8
   },
   "Basis/teknik": {
    "med_navn": 8,
    "uden_navn": 3
   },
   "Børnehold 5-12 år": {
-   "med_navn": 1,
-   "uden_navn": 10
+   "med_navn": 2,
+   "uden_navn": 9
   },
   "Rengøring": {
    "med_navn": 0,
@@ -1759,21 +1758,21 @@
    "uden_navn": 13
   },
   "Ukendt engangs-aktivitet": {
-   "med_navn": 7,
+   "med_navn": 5,
    "uden_navn": 0
   }
  },
  "belastning": {
   "pr_type": {
    "WOD": {
-    "hold": 44,
-    "kapacitet": 541,
-    "tilmeldt": 365,
-    "fyldning_pct": 67.5,
+    "hold": 46,
+    "kapacitet": 569,
+    "tilmeldt": 385,
+    "fyldning_pct": 67.7,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
-    "fuldt_booket": 6,
-    "snit_tilmeldt": 8.3
+    "fuldt_booket": 7,
+    "snit_tilmeldt": 8.4
    },
    "WOD uden træner": {
     "hold": 6,
@@ -1816,14 +1815,14 @@
     "snit_tilmeldt": 5.7
    },
    "MASH": {
-    "hold": 1,
-    "kapacitet": 12,
-    "tilmeldt": 7,
-    "fyldning_pct": 58.3,
+    "hold": 2,
+    "kapacitet": 24,
+    "tilmeldt": 16,
+    "fyldning_pct": 66.7,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
     "fuldt_booket": 0,
-    "snit_tilmeldt": 7.0
+    "snit_tilmeldt": 8.0
    },
    "Basis/teknik": {
     "hold": 3,
@@ -1847,13 +1846,13 @@
    }
   },
   "i_alt": {
-   "hold": 65,
-   "kapacitet": 793,
-   "tilmeldt": 511,
-   "fyldning_pct": 64.4,
+   "hold": 68,
+   "kapacitet": 833,
+   "tilmeldt": 540,
+   "fyldning_pct": 64.8,
    "venteliste_i_alt": 0,
    "hold_med_venteliste": 0,
-   "fuldt_booket": 8,
+   "fuldt_booket": 9,
    "snit_tilmeldt": 7.9
   },
   "pr_slot": [
@@ -2162,52 +2161,55 @@
     ]
    },
    {
-    "hold": 2,
-    "kapacitet": 24,
-    "tilmeldt": 18,
-    "fyldning_pct": 75.0,
+    "hold": 3,
+    "kapacitet": 38,
+    "tilmeldt": 24,
+    "fyldning_pct": 63.2,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
     "fuldt_booket": 0,
-    "snit_tilmeldt": 9.0,
+    "snit_tilmeldt": 8.0,
     "ugedag": "Fredag",
     "start": "08:15",
     "type": "WOD",
     "detaljer": [
      "2026-11-06: 7/12",
-     "2026-11-13: 11/12"
+     "2026-11-13: 11/12",
+     "2026-11-20: 6/14"
     ]
    },
    {
-    "hold": 1,
-    "kapacitet": 12,
-    "tilmeldt": 11,
-    "fyldning_pct": 91.7,
+    "hold": 2,
+    "kapacitet": 26,
+    "tilmeldt": 25,
+    "fyldning_pct": 96.2,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
-    "fuldt_booket": 0,
-    "snit_tilmeldt": 11.0,
+    "fuldt_booket": 1,
+    "snit_tilmeldt": 12.5,
     "ugedag": "Fredag",
     "start": "15:30",
     "type": "WOD",
     "detaljer": [
-     "2026-11-13: 11/12"
+     "2026-11-13: 11/12",
+     "2026-11-20: 14/14"
     ]
    },
    {
-    "hold": 1,
-    "kapacitet": 12,
-    "tilmeldt": 7,
-    "fyldning_pct": 58.3,
+    "hold": 2,
+    "kapacitet": 24,
+    "tilmeldt": 16,
+    "fyldning_pct": 66.7,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
     "fuldt_booket": 0,
-    "snit_tilmeldt": 7.0,
+    "snit_tilmeldt": 8.0,
     "ugedag": "Fredag",
     "start": "16:30",
     "type": "MASH",
     "detaljer": [
-     "2026-11-13: 7/12"
+     "2026-11-13: 7/12",
+     "2026-11-20: 9/12"
     ]
    },
    {
@@ -2355,14 +2357,14 @@
     "snit_tilmeldt": 7.4
    },
    "Fredag": {
-    "hold": 4,
-    "kapacitet": 48,
-    "tilmeldt": 36,
-    "fyldning_pct": 75.0,
+    "hold": 7,
+    "kapacitet": 88,
+    "tilmeldt": 65,
+    "fyldning_pct": 73.9,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
-    "fuldt_booket": 0,
-    "snit_tilmeldt": 9.0
+    "fuldt_booket": 1,
+    "snit_tilmeldt": 9.3
    },
    "Lørdag": {
     "hold": 5,
@@ -2387,24 +2389,24 @@
   },
   "pr_tid_paa_dagen": {
    "morgen (<10)": {
-    "hold": 30,
-    "kapacitet": 375,
-    "tilmeldt": 237,
-    "fyldning_pct": 63.2,
+    "hold": 31,
+    "kapacitet": 389,
+    "tilmeldt": 243,
+    "fyldning_pct": 62.5,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
     "fuldt_booket": 2,
-    "snit_tilmeldt": 7.9
+    "snit_tilmeldt": 7.8
    },
    "eftermiddag/aften (≥15)": {
-    "hold": 33,
-    "kapacitet": 394,
-    "tilmeldt": 267,
-    "fyldning_pct": 67.8,
+    "hold": 35,
+    "kapacitet": 420,
+    "tilmeldt": 290,
+    "fyldning_pct": 69.0,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
-    "fuldt_booket": 6,
-    "snit_tilmeldt": 8.1
+    "fuldt_booket": 7,
+    "snit_tilmeldt": 8.3
    },
    "formiddag (10-15)": {
     "hold": 2,
@@ -2419,20 +2421,20 @@
   },
   "fyldning_efter_afstand": {
    "afholdt": {
-    "hold": 65,
-    "snit_fyldning_pct": 64.3
+    "hold": 68,
+    "snit_fyldning_pct": 64.7
    },
    "0-7 dage frem": {
     "hold": 26,
-    "snit_fyldning_pct": 44.0
+    "snit_fyldning_pct": 44.2
    },
    "8-14": {
     "hold": 26,
-    "snit_fyldning_pct": 12.5
+    "snit_fyldning_pct": 9.3
    },
    "15-28": {
     "hold": 52,
-    "snit_fyldning_pct": 2.9
+    "snit_fyldning_pct": 3.1
    },
    "29+": {
     "hold": 102,
@@ -2463,12 +2465,12 @@
    "HYROX": {
     "hold": 2,
     "kapacitet": 24,
-    "tilmeldt": 11,
-    "fyldning_pct": 45.8,
+    "tilmeldt": 10,
+    "fyldning_pct": 41.7,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
     "fuldt_booket": 0,
-    "snit_tilmeldt": 5.5
+    "snit_tilmeldt": 5.0
    },
    "Lang WOD": {
     "hold": 1,
@@ -2483,16 +2485,6 @@
    "MASH": {
     "hold": 1,
     "kapacitet": 12,
-    "tilmeldt": 7,
-    "fyldning_pct": 58.3,
-    "venteliste_i_alt": 0,
-    "hold_med_venteliste": 0,
-    "fuldt_booket": 0,
-    "snit_tilmeldt": 7.0
-   },
-   "TONS": {
-    "hold": 1,
-    "kapacitet": 12,
     "tilmeldt": 2,
     "fyldning_pct": 16.7,
     "venteliste_i_alt": 0,
@@ -2500,29 +2492,39 @@
     "fuldt_booket": 0,
     "snit_tilmeldt": 2.0
    },
+   "TONS": {
+    "hold": 1,
+    "kapacitet": 12,
+    "tilmeldt": 3,
+    "fyldning_pct": 25.0,
+    "venteliste_i_alt": 0,
+    "hold_med_venteliste": 0,
+    "fuldt_booket": 0,
+    "snit_tilmeldt": 3.0
+   },
    "WOD": {
     "hold": 17,
-    "kapacitet": 208,
-    "tilmeldt": 95,
-    "fyldning_pct": 45.7,
-    "venteliste_i_alt": 1,
-    "hold_med_venteliste": 1,
-    "fuldt_booket": 2,
-    "snit_tilmeldt": 5.6
+    "kapacitet": 206,
+    "tilmeldt": 98,
+    "fyldning_pct": 47.6,
+    "venteliste_i_alt": 0,
+    "hold_med_venteliste": 0,
+    "fuldt_booket": 1,
+    "snit_tilmeldt": 5.8
    },
    "WOD uden træner": {
     "hold": 2,
     "kapacitet": 24,
-    "tilmeldt": 5,
-    "fyldning_pct": 20.8,
+    "tilmeldt": 7,
+    "fyldning_pct": 29.2,
     "venteliste_i_alt": 0,
     "hold_med_venteliste": 0,
     "fuldt_booket": 0,
-    "snit_tilmeldt": 2.5
+    "snit_tilmeldt": 3.5
    }
   },
   "udeladt": {
-   "før 1/11 (ufuldstændig holdplan)": 18,
+   "før 1/11 (ufuldstændig holdplan)": 15,
    "aflyst": 5,
    "intet pladsloft (rengøring/ungeenhed)": 9,
    "fremtidige (tilmelding ikke afsluttet)": 232
@@ -2601,16 +2603,16 @@
    "waitingList"
   ],
   "felter_der_varierer_pr_hold": {
-   "maxAttendees": 7,
-   "responsible": 27,
-   "registerAttendance": 23,
-   "attendanceMessage": 26,
-   "rules": 27,
-   "locationName": 26,
-   "hasWaitingList": 18,
-   "name": 4,
+   "maxAttendees": 8,
    "onlyLoggedIn": 1,
+   "responsible": 27,
+   "rules": 27,
    "color": 8,
+   "name": 4,
+   "attendanceMessage": 26,
+   "registerAttendance": 23,
+   "hasWaitingList": 18,
+   "locationName": 26,
    "description": 2
   },
   "felter_der_aldrig_varierer": [
@@ -2646,91 +2648,91 @@
     "genereret_afviger": 17,
     "genereret_i_alt": 226,
     "egen_record_afviger": 23,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "color": {
     "genereret_afviger": 9,
     "genereret_i_alt": 226,
     "egen_record_afviger": 2,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "maxAttendees": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
-    "egen_record_afviger": 10,
-    "egen_record_i_alt": 96
+    "egen_record_afviger": 11,
+    "egen_record_i_alt": 98
    },
    "hasWaitingList": {
-    "genereret_afviger": 130,
+    "genereret_afviger": 128,
     "genereret_i_alt": 226,
-    "egen_record_afviger": 19,
-    "egen_record_i_alt": 96
+    "egen_record_afviger": 22,
+    "egen_record_i_alt": 98
    },
    "registerAttendance": {
-    "genereret_afviger": 118,
+    "genereret_afviger": 116,
     "genereret_i_alt": 226,
-    "egen_record_afviger": 38,
-    "egen_record_i_alt": 96
+    "egen_record_afviger": 34,
+    "egen_record_i_alt": 98
    },
    "onlineSignup": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "description": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 4,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "tagsAssigned": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "onlyLoggedIn": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "allowNonMember": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "attendancePrivacy": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "maxGuestsPerMember": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "hideFromOverview": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "allowPartner": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    },
    "allowInvite": {
     "genereret_afviger": 0,
     "genereret_i_alt": 226,
     "egen_record_afviger": 0,
-    "egen_record_i_alt": 96
+    "egen_record_i_alt": 98
    }
   },
   "hold_med_egen_record": 103,
@@ -2982,7 +2984,7 @@
     "booked": 1
    },
    "oprettet": "2026-09-01",
-   "sidst_aendret": "2026-11-17",
+   "sidst_aendret": "2026-11-20",
    "pris_klip": null,
    "udeblivelsesgebyr": null,
    "tilmeldingsfrist": {
@@ -3027,19 +3029,22 @@
     "Lørdag 10:00-11:00 (10)"
    ],
    "traenere_navngivne": {
-    "Peter Alexander Schougaard": 1
+    "Peter Alexander Schougaard": 1,
+    "Thomas Ronne": 1,
+    "Christoffer Hviid": 1
    },
-   "hold_uden_navngiven_traener": 9,
+   "hold_uden_navngiven_traener": 8,
    "statusser": {
     "cancelled": 1,
     "scheduled": 9
    },
    "oprettet": "2026-08-24",
-   "sidst_aendret": "2026-11-13",
+   "sidst_aendret": "2026-11-20",
    "pris_klip": "ingen prisregler (tomt svar)",
    "udeblivelsesgebyr": null,
    "tilmeldingsfrist": {
-    "ved holdets start": 1
+    "ved holdets start": 1,
+    "ved holdets slut": 1
    }
   },
   {
@@ -3151,18 +3156,18 @@
    "navn": "MASH - lidt mere udfordrende end WOD",
    "i_activity_listen": true,
    "holdnavne_i_planen": {
-    "MASH - lidt mere udfordrende end WOD": 9
+    "MASH - lidt mere udfordrende end WOD": 10
    },
    "type": "mash",
    "type_sikkerhed": "sikker",
    "note": "",
    "farve": "cfd8dc",
    "farver_i_planen": {
-    "cfd8dc": 9
+    "cfd8dc": 10
    },
    "kapacitet": 12,
    "kapaciteter_i_planen": {
-    "12": 9
+    "12": 10
    },
    "venteliste": true,
    "onlineSignup": true,
@@ -3174,22 +3179,22 @@
     "Alle medlemmer"
    ],
    "tags_i_planen": {
-    "Alle medlemmer": 9
+    "Alle medlemmer": 10
    },
    "antal_standard_ansvarlige": 1,
    "status": "aktiv",
-   "antal_hold": 9,
+   "antal_hold": 10,
    "foerste_hold": "2026-11-13T16:30:00",
-   "sidste_hold": "2027-01-08T16:30:00",
+   "sidste_hold": "2027-01-15T16:30:00",
    "ugedag_tid": [
-    "Fredag 16:30-18:00 (9)"
+    "Fredag 16:30-18:00 (10)"
    ],
    "traenere_navngivne": {
     "Thomas Ronne": 2
    },
-   "hold_uden_navngiven_traener": 7,
+   "hold_uden_navngiven_traener": 8,
    "statusser": {
-    "scheduled": 9
+    "scheduled": 10
    },
    "oprettet": "2026-05-04",
    "sidst_aendret": "2026-11-19",
@@ -3237,20 +3242,20 @@
     "Søndag 10:45-11:45 (11)"
    ],
    "traenere_navngivne": {
-    "Maj Jeppesen": 1,
-    "Mia Bertram": 1
+    "Maj Jeppesen": 2,
+    "Mia Bertram": 2
    },
-   "hold_uden_navngiven_traener": 10,
+   "hold_uden_navngiven_traener": 9,
    "statusser": {
     "cancelled": 2,
     "scheduled": 9
    },
    "oprettet": "2026-04-03",
-   "sidst_aendret": "2026-11-06",
+   "sidst_aendret": "2026-11-20",
    "pris_klip": null,
    "udeblivelsesgebyr": null,
    "tilmeldingsfrist": {
-    "ved holdets slut": 1
+    "ved holdets slut": 2
    }
   },
   {
@@ -4154,18 +4159,19 @@
    ],
    "traenere_navngivne": {
     "Peter Alexander Schougaard": 2,
-    "Mick Nielsen": 1
+    "Mick Nielsen": 1,
+    "Thomas Ronne": 1
    },
-   "hold_uden_navngiven_traener": 8,
+   "hold_uden_navngiven_traener": 7,
    "statusser": {
     "scheduled": 11
    },
    "oprettet": "2021-08-03",
-   "sidst_aendret": "2026-11-14",
+   "sidst_aendret": "2026-11-20",
    "pris_klip": null,
    "udeblivelsesgebyr": null,
    "tilmeldingsfrist": {
-    "ved holdets slut": 2,
+    "ved holdets slut": 3,
     "ved holdets start": 1
    }
   },
@@ -4218,7 +4224,7 @@
     "scheduled": 10
    },
    "oprettet": "2021-08-03",
-   "sidst_aendret": "2026-11-12",
+   "sidst_aendret": "2026-11-20",
    "pris_klip": "1 point pr. online-tilmelding (tag: Klippekort (10 klip))",
    "udeblivelsesgebyr": 25.0,
    "tilmeldingsfrist": {
@@ -4241,7 +4247,8 @@
    },
    "kapacitet": 12,
    "kapaciteter_i_planen": {
-    "12": 10
+    "12": 9,
+    "14": 1
    },
    "venteliste": true,
    "onlineSignup": true,
@@ -4275,7 +4282,7 @@
     "booked": 1
    },
    "oprettet": "2021-08-03",
-   "sidst_aendret": "2026-11-14",
+   "sidst_aendret": "2026-11-21",
    "pris_klip": "1 point pr. online-tilmelding (tag: Klippekort (10 klip))",
    "udeblivelsesgebyr": 25.0,
    "tilmeldingsfrist": {
@@ -4287,18 +4294,18 @@
    "navn": "WOD Fredag 1530",
    "i_activity_listen": true,
    "holdnavne_i_planen": {
-    "WOD Fredag 1530": 9
+    "WOD Fredag 1530": 10
    },
    "type": "wod",
    "type_sikkerhed": "sikker",
    "note": "",
    "farve": "9ccc65",
    "farver_i_planen": {
-    "9ccc65": 9
+    "9ccc65": 10
    },
    "kapacitet": 12,
    "kapaciteter_i_planen": {
-    "12": 8,
+    "12": 9,
     "14": 1
    },
    "venteliste": true,
@@ -4312,23 +4319,23 @@
     "fredag"
    ],
    "tags_i_planen": {
-    "Alle medlemmer, fredag": 9
+    "Alle medlemmer, fredag": 10
    },
    "antal_standard_ansvarlige": 1,
    "status": "aktiv",
-   "antal_hold": 9,
+   "antal_hold": 10,
    "foerste_hold": "2026-11-13T15:30:00",
-   "sidste_hold": "2027-01-08T15:30:00",
+   "sidste_hold": "2027-01-15T15:30:00",
    "ugedag_tid": [
-    "Fredag 15:30-16:30 (9)"
+    "Fredag 15:30-16:30 (10)"
    ],
    "traenere_navngivne": {
     "Jeppe Rasmussen": 1,
     "Peter Alexander Schougaard": 1
    },
-   "hold_uden_navngiven_traener": 7,
+   "hold_uden_navngiven_traener": 8,
    "statusser": {
-    "scheduled": 8,
+    "scheduled": 9,
     "booked": 1
    },
    "oprettet": "2021-08-03",
@@ -4355,8 +4362,8 @@
    },
    "kapacitet": 12,
    "kapaciteter_i_planen": {
-    "12": 13,
-    "14": 3
+    "14": 3,
+    "12": 13
    },
    "venteliste": true,
    "onlineSignup": true,
@@ -4374,20 +4381,20 @@
    "antal_standard_ansvarlige": 1,
    "status": "aktiv",
    "antal_hold": 16,
-   "foerste_hold": "2026-09-25T08:15:00",
-   "sidste_hold": "2027-01-08T08:15:00",
+   "foerste_hold": "2026-10-02T08:15:00",
+   "sidste_hold": "2027-01-15T08:15:00",
    "ugedag_tid": [
     "Fredag 08:15-09:15 (16)"
    ],
    "traenere_navngivne": {
-    "Peter Alexander Schougaard": 3,
+    "Peter Alexander Schougaard": 2,
     "Mia Foldager": 2,
     "Thomas Ronne": 1,
     "Sussi Larsen": 1,
     "Christian Gøtzsche": 1,
     "Mick Nielsen": 1
    },
-   "hold_uden_navngiven_traener": 7,
+   "hold_uden_navngiven_traener": 8,
    "statusser": {
     "scheduled": 16
    },
@@ -4396,8 +4403,8 @@
    "pris_klip": null,
    "udeblivelsesgebyr": null,
    "tilmeldingsfrist": {
-    "ved holdets slut": 7,
-    "ved holdets start": 2
+    "ved holdets start": 2,
+    "ved holdets slut": 6
    }
   },
   {
@@ -4705,8 +4712,7 @@
    "navn": null,
    "i_activity_listen": false,
    "holdnavne_i_planen": {
-    "WOD": 4,
-    "MASH": 1,
+    "WOD": 3,
     "HYROX": 1,
     "LANG WOD": 1
    },
@@ -4715,13 +4721,12 @@
    "note": "Findes ikke i /api/activity; 6 hold 25.-27/9 med navnene WOD/MASH/LANG WOD - ligner en opstarts-/eventweekend",
    "farve": null,
    "farver_i_planen": {
-    "8bc34a": 5,
-    "b0bec5": 1,
+    "8bc34a": 4,
     "03a9f4": 1
    },
    "kapacitet": null,
    "kapaciteter_i_planen": {
-    "12": 5,
+    "12": 3,
     "14": 2
    },
    "venteliste": null,
@@ -4732,16 +4737,14 @@
    "activityMode": null,
    "tags": [],
    "tags_i_planen": {
-    "(ingen)": 7
+    "(ingen)": 5
    },
    "antal_standard_ansvarlige": null,
    "status": "kun fortid",
-   "antal_hold": 7,
-   "foerste_hold": "2026-09-25T15:30:00",
+   "antal_hold": 5,
+   "foerste_hold": "2026-09-26T08:00:00",
    "sidste_hold": "2026-09-27T09:00:00",
    "ugedag_tid": [
-    "Fredag 15:30-16:30 (1)",
-    "Fredag 16:30-17:30 (1)",
     "Lørdag 08:00-09:00 (1)",
     "Lørdag 09:00-10:00 (1)",
     "Lørdag 10:00-11:00 (1)",
@@ -4749,14 +4752,13 @@
     "Søndag 09:00-10:30 (1)"
    ],
    "traenere_navngivne": {
-    "Thomas Ronne": 2,
     "Jeppe Rasmussen": 2,
     "Peter Alexander Schougaard": 2,
-    "Mick Nielsen": 1
+    "Thomas Ronne": 1
    },
    "hold_uden_navngiven_traener": 0,
    "statusser": {
-    "scheduled": 5,
+    "scheduled": 3,
     "booked": 1,
     "cancelled": 1
    },
@@ -4765,7 +4767,7 @@
    "pris_klip": null,
    "udeblivelsesgebyr": null,
    "tilmeldingsfrist": {
-    "ved holdets slut": 7
+    "ved holdets slut": 5
    }
   }
  ],
@@ -4801,8 +4803,7 @@
    "kategori": "farve",
    "tekst": "Farvekoder i blandet format (med '#', store bogstaver)",
    "eksempler": {
-    "#8bc34a": 14,
-    "#b0bec5": 1,
+    "#8bc34a": 13,
     "#03a9f4": 1,
     "#aed581": 8,
     "#9ccc65": 10,
@@ -4940,6 +4941,12 @@
      "WOD Fredag 1530",
      14,
      12
+    ],
+    [
+     "2026-11-21T08:00",
+     "WOD Lørdag 0800",
+     14,
+     12
     ]
    ]
   },
@@ -4997,7 +5004,6 @@
     "HYROX",
     "Hyrox",
     "LANG WOD",
-    "MASH",
     "TONS",
     "WOD",
     "WOD hold"
@@ -5007,8 +5013,8 @@
    "kategori": "tags",
    "tekst": "Ugedags-tags bruges ikke konsekvent",
    "eksempler": {
-    "passer": 166,
-    "ingen ugedags-tag": 163
+    "ingen ugedags-tag": 162,
+    "passer": 167
    }
   },
   {
@@ -5078,8 +5084,6 @@
    "kategori": "id",
    "tekst": "eventId svarer ikke altid til holdets lokale starttid (TONS: +60 min = UTC-tid; flyttet eller oprettet anderledes - uafklaret)",
    "eksempler": {
-    "(ukendt aktivitet): eventId med bogstav-suffiks, fx 202609251330PB": 1,
-    "(ukendt aktivitet): eventId med bogstav-suffiks, fx 202609241430YG": 1,
     "(ukendt aktivitet): eventId med bogstav-suffiks, fx 202609260600QL": 1,
     "(ukendt aktivitet): eventId med bogstav-suffiks, fx 202609260700PK": 1,
     "(ukendt aktivitet): eventId med bogstav-suffiks, fx 202609260800CI": 1,

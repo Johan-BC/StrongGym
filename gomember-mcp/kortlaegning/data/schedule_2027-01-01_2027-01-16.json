@@ -3266,5 +3266,177 @@
     "tagsAssigned": []
    }
   ]
+ },
+ {
+  "date": "2027-01-15T00:00:00Z",
+  "slots": [
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743106713615054",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-15T09:15:00",
+    "entityId": "Activity2517743106713615054-202701150815",
+    "eventId": "202701150815",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Fredag 0815",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-15T08:15:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-15T07:15:00Z",
+    "endTimeUtc": "2027-01-15T08:15:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743106713615054",
+    "createdTs": "2026-11-03T11:48:39.5982754Z",
+    "modifiedTs": "2026-11-03T11:48:39.5982754Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986616979897335"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743105546903012",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-15T16:30:00",
+    "entityId": "Activity2517743105546903012-202701151530",
+    "eventId": "202701151530",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Fredag 1530",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-15T15:30:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-15T14:30:00Z",
+    "endTimeUtc": "2027-01-15T15:30:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743105546903012",
+    "createdTs": "2026-11-03T11:48:46.8258392Z",
+    "modifiedTs": "2026-11-03T11:48:46.8258392Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986616979897335"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516244060202738431",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "cfd8dc",
+    "description": "<p><span>Holdet er for folk som ser crossfit som en sport og ikke som en motionsform. Deltagelse kræver at du har et tilpas højt niveau, da der forekommer skills og træningsvolumen er høj. Skaleringer vil kun være muligt i meget begrænset omfang. Det forventes at du kan tage 100% ansvar for egen træning da der ikke er en træner tilrådighed.</span><br /><br /><span>Ved holdstart har man varmet op, så kun træningsspecifikt opvarmningen foregår i den angivne træningstid.</span></p>\n<p> </p>\n<p><span>MASH-workouten udgives af programmet \"The Progrm\" og slås op på deres profil på Instagram. Man kan også få gratis adgang til workouten, hvis man er tilmeldt programmet. </span></p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-15T18:00:00",
+    "entityId": "Activity2516244060202738431-202701151630",
+    "eventId": "202701151630",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "MASH - lidt mere udfordrende end WOD",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-15T16:30:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-15T15:30:00Z",
+    "endTimeUtc": "2027-01-15T17:00:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516244060202738431",
+    "createdTs": "2026-05-04T11:39:40.1609705Z",
+    "modifiedTs": "2026-05-07T17:06:40.3152218Z",
+    "tagsAssigned": [
+     "Tag2"
+    ]
+   }
+  ]
  }
 ]
