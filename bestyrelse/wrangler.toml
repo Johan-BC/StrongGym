@@ -19,7 +19,7 @@ database_id = "31f23580-5d1a-472f-a211-19d7ad9e3ae0"
 [vars]
 # Fra Cloudflare Zero Trust > Settings > Custom Pages (team-domæne) og
 # Access > Applications > (appen) > Overview > Application Audience (AUD) Tag.
-ACCESS_TEAM_DOMAIN = "https://broken-heart-84b3.cloudflareaccess.com"
+ACCESS_TEAM_DOMAIN = "https://stronggym.cloudflareaccess.com"
 ACCESS_AUD = "dc4e992ad0f2440b3b4e044e8b0d7c804f4ffbf3a0feb36ee6fe6f96f42b1f37"
 # BOARD_EMAILS (kan registrere) og VIEW_EMAILS (kan kun se) sættes som secrets,
 # så bestyrelsens e-mails ikke ligger i det offentlige repo:
