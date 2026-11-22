@@ -27,6 +27,14 @@ glemme noget.
   pladserne bliver brugt. Fyldning er tilmeldte i forhold til pladser, ikke
   fremmøde. Økonomien har en tom plads, indtil den kobles på fra
   bestyrelsens egen side (`/bestyrelse/` på branchen `bestyrelse-okonomi`).
+- **Bestyrelse**: næste bestyrelsesmøde, møder pr. dato med dagsorden og
+  referat, og en opgaveliste hvor bestyrelsen krydser af. Opgaver fra
+  tidligere møder vises automatisk som opfølgning (punkt 3) på næste møde.
+  Data ligger i sidens database (`bestyrelse_moeder/<dato>`,
+  `bestyrelse_opgaver/<opgave-id>`), ikke i repoet: referater kan rumme
+  personsager. Kun bidragydere kan læse dem; kun redaktører kan ændre møder.
+  Nye dagsordener og referater laves med bestyrelses-skabelonen og lægges ind
+  af Claude; opgaverne fra referatets handlingsliste oprettes med samme ID.
 - **Drift**: ugens nøgletal (antal hold, tilmeldte i forhold til pladser,
   fuldt bookede, hold uden synlig træner, aflyste) og en liste over det,
   der kræver opmærksomhed. Det kan være juleaften og nytårsdag, hvor alle hold

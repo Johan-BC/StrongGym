@@ -260,6 +260,38 @@ details.how > summary{cursor:pointer;font-family:'Bebas Neue',sans-serif;font-si
 details.how ul{margin:0.4rem 0 0.4rem 1.1rem;font-size:0.86rem;display:grid;gap:0.3rem}
 details.how h4{font-weight:500;font-size:0.92rem;margin:1rem 0 0.3rem}
 
+/* ---------- Bestyrelse ---------- */
+.nm{display:flex;flex-wrap:wrap;gap:0.5rem 1.5rem;align-items:center;justify-content:space-between;border-left:4px solid var(--primary)}
+.nm .when{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,5vw,2.2rem);line-height:1.05;letter-spacing:0.03em}
+.subnav{display:flex;gap:0.35rem;margin:1rem 0 0.9rem;flex-wrap:wrap}
+.subnav button[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#111;font-weight:500}
+.mlist{display:grid;gap:0.5rem}
+.mrow{display:flex;flex-wrap:wrap;gap:0.4rem 1rem;align-items:center;justify-content:space-between;text-align:left;width:100%;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0.75rem 1rem;color:var(--fg)}
+.mrow:hover{border-color:var(--primary)}
+.mrow .d{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:0.04em}
+.md{font-size:0.92rem;line-height:1.55;overflow-wrap:anywhere}
+.md h1{font-size:1.7rem;margin:0 0 0.6rem}
+.md h2{font-size:1.35rem;margin:1.2rem 0 0.4rem;color:var(--primary2)}
+.md h3{font-size:1.1rem;margin:0.9rem 0 0.3rem}
+.md p{margin:0.35rem 0}
+.md ul,.md ol{margin:0.3rem 0 0.5rem 1.2rem}
+.md li{margin:0.15rem 0}
+.md strong{font-weight:500;color:var(--fg)}
+.md table{width:100%;border-collapse:collapse;font-size:0.82rem;margin:0.4rem 0 0.8rem}
+.md th,.md td{text-align:left;padding:0.3rem 0.45rem;border-bottom:1px solid var(--border);vertical-align:top}
+.md th{color:var(--muted);font-weight:400}
+.tk{display:grid;grid-template-columns:1.6rem minmax(0,1fr);gap:0.5rem;padding:0.6rem 0;border-top:1px solid var(--border)}
+.tk:first-child{border-top:none}
+.tk input[type=checkbox]{width:1.15rem;height:1.15rem;margin-top:0.15rem;accent-color:var(--green)}
+.tk .tt{font-size:0.92rem}
+.tk.done .tt{text-decoration:line-through;color:var(--muted)}
+.tk .meta{display:flex;flex-wrap:wrap;gap:0.3rem 0.6rem;align-items:center;font-size:0.78rem;color:var(--muted);margin-top:0.25rem}
+.tk select{min-height:1.9rem;padding:0.1rem 0.4rem;font-size:0.78rem}
+.late{color:var(--red2)!important;font-weight:500}
+.b-solved{background:rgba(74,222,128,0.12);color:#86efac}
+.b-prog{background:rgba(96,165,250,0.15);color:#93c5fd}
+.b-gone{background:#2a2a2a;color:#bdb7ad}
+
 /* ---------- Rettelser ---------- */
 .groups{list-style:none;display:grid;grid-template-columns:minmax(0,1fr);gap:0.75rem}
 .group{background:var(--card);border:1px dashed var(--primary);border-radius:var(--radius);padding:0.85rem 1rem}
@@ -338,6 +370,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   <button type="button" data-view="holdtyper">Holdtyper</button>
   <button type="button" data-view="statistik">Statistik</button>
   <button type="button" data-view="medlemmer">Medlemmer</button>
+  <button type="button" data-view="bestyrelse">Bestyrelse</button>
   <button type="button" data-view="rettelser">Rettelser<span class="count-pill" id="draftCount">0</span></button>
 </nav>
 
@@ -348,11 +381,13 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   <section class="view" id="v-holdtyper" hidden aria-labelledby="h-holdtyper"></section>
   <section class="view" id="v-statistik" hidden aria-labelledby="h-statistik"></section>
   <section class="view" id="v-medlemmer" hidden aria-labelledby="h-medlemmer"></section>
+  <section class="view" id="v-bestyrelse" hidden aria-labelledby="h-bestyrelse"></section>
   <section class="view" id="v-rettelser" hidden aria-labelledby="h-rettelser"></section>
 </main>
 
 <footer>
   <p><strong>Adgang:</strong> Holdplan og trænernavne er offentlige (de står også på hjemmesiden). Medlemstallene i <code>styring-medlemmer.json</code> er samlede optællinger uden navne, og klubben har godkendt, at de må være offentlige. Siden må aldrig vise data om enkelte medlemmer; skal den det, kræver det først rigtig adgangskontrol (login).</p>
+  <p><strong>Bestyrelse:</strong> Møder, referater og opgaver ligger i sidens database og kan kun læses af dem, siden er delt med som bidragydere. Del aldrig siden med et offentligt link.</p>
   <p>Rettelser gemmes kun lokalt i din browser. Siden sender intet til goMember eller andre steder.</p>
 </footer>
 
@@ -1008,6 +1043,9 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     if (S) src.push('holdtal for ' + fLong(S.periode.fra) + ' – ' + fLong(S.periode.til));
     h += '<p class="lead">' + esc(src.join(', ')) + (src.length ? '. ' : '') + 'Kun samlede tal – ingen navne. ' +
       '<button class="btn small noprint" type="button" id="printBtn">Udskriv</button></p>';
+    var nm = (typeof naesteMoede === 'function') ? naesteMoede() : null;
+    if (nm) h += '<p class="notice gold" style="margin-bottom:1rem"><strong>Næste bestyrelsesmøde:</strong> ' + esc(bLong(nm.dato)) + (nm.tid ? ' kl. ' + esc(nm.tid.replace(':', '.')) : '') + (nm.sted ? ', ' + esc(nm.sted) : '') +
+      '. <button class="btn small noprint" type="button" data-goto="bestyrelse">Dagsorden og opgaver</button></p>';
 
     // Nøgletal
     var lav = S ? lavtFyldte() : [];
@@ -1663,7 +1701,200 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     setView(location.hash.slice(1) || 'overblik', false);
   }
 
+
+  /* ================================================================ BESTYRELSE (møder, dagsordener, referater, opgaver) */
+  // Data: claude.use('db') -> bestyrelse_moeder/<dato> og bestyrelse_opgaver/<id>. Kun læsbart for inviterede (interact).
+  var B = { db: null, user: null, canWrite: true, me: '', loaded: false, note: 'Henter bestyrelsens møder …', moeder: {}, opgaver: {},
+    view: 'moeder', cur: null, keep: {}, part: 'referat', filter: 'aabne', ans: '', names: {} };
+  var STATUSER = ['Åben', 'I gang', 'Løst', 'Bortfaldet'];
+  function bToday() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function bLong(iso) { var d = toDate(iso); return cap1(['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'][d.getDay()]) + ' ' + d.getDate() + '. ' + MONTHS_LONG[d.getMonth()] + ' ' + d.getFullYear(); }
+  function bShort(iso) { return iso ? fDateShort(iso) + ' ' + iso.slice(0, 4) : ''; }
+  function moederSorted() { return Object.keys(B.moeder).sort().map(function (k) { return B.moeder[k]; }); }
+  function naesteMoede() { var t = bToday(); return moederSorted().filter(function (m) { return m.dato >= t && m.status !== 'aflyst'; })[0] || null; }
+  function opgListe() { return Object.keys(B.opgaver).map(function (k) { return B.opgaver[k]; }); }
+  function erAaben(t) { return t.status !== 'Løst' && t.status !== 'Bortfaldet'; }
+  function erSen(t) { return erAaben(t) && t.deadline && t.deadline < bToday(); }
+  function statusBadge(st) { var c = st === 'Løst' ? 'b-solved' : st === 'I gang' ? 'b-prog' : st === 'Bortfaldet' ? 'b-gone' : 'b-warn'; return '<span class="badge ' + c + '">' + esc(st) + '</span>'; }
+
+  // Lille markdown-visning: overskrifter, lister, tabeller, fed, <br>.
+  function mdInline(t) { return esc(t).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/&lt;br&gt;/g, '<br>'); }
+  function mdRender(src) {
+    var L = String(src || '').split('\n'), h = '', i = 0;
+    while (i < L.length) {
+      var l = L[i];
+      if (!l.trim()) { i++; continue; }
+      var m = /^(#{1,3}) (.*)$/.exec(l);
+      if (m) { h += '<h' + m[1].length + '>' + mdInline(m[2]) + '</h' + m[1].length + '>'; i++; continue; }
+      if (/^\|/.test(l)) {
+        var rows = []; while (i < L.length && /^\|/.test(L[i])) { rows.push(L[i]); i++; }
+        var cells = function (r) { return r.replace(/^\||\|$/g, '').split('|').map(function (c) { return c.trim(); }); };
+        h += '<div class="tablewrap"><table><thead><tr>' + cells(rows[0]).map(function (c) { return '<th>' + mdInline(c) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+          rows.slice(2).map(function (r) { return '<tr>' + cells(r).map(function (c) { return '<td>' + mdInline(c) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+        continue;
+      }
+      if (/^\s*(- |\d+\. )/.test(l)) {
+        var ord = /^\s*\d+\. /.test(l), items = [];
+        while (i < L.length && /^\s*(- |\d+\. )/.test(L[i])) { items.push(L[i].replace(/^\s*(- \[ \] |- |\d+\. )/, '')); i++; }
+        h += '<' + (ord ? 'ol' : 'ul') + '>' + items.map(function (x) { return '<li>' + mdInline(x) + '</li>'; }).join('') + '</' + (ord ? 'ol' : 'ul') + '>';
+        continue;
+      }
+      h += '<p>' + mdInline(l) + '</p>'; i++;
+    }
+    return h;
+  }
+
+  function opgRaekke(t, visMoede) {
+    var done = t.status === 'Løst', late = erSen(t);
+    var dl = t.deadline ? '<span class="' + (late ? 'late' : '') + '">Frist ' + esc(bShort(t.deadline)) + (late ? ' – overskredet' : '') + '</span>' : '<span>' + esc(t.deadlineTekst || 'Deadline ikke fastlagt') + '</span>';
+    var who = t.opdateretAf && B.names[t.opdateretAf] ? ' af ' + esc(B.names[t.opdateretAf]) : '';
+    var upd = t.opdateret ? '<span>Ændret ' + esc(bShort(t.opdateret.slice(0, 10))) + who + '</span>' : '';
+    var sel = B.canWrite ? '<select data-bst="' + esc(t.id) + '" aria-label="Status for ' + esc(t.id) + '">' + STATUSER.map(function (s) { return '<option' + (s === t.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select>' : statusBadge(t.status);
+    return '<div class="tk' + (done || t.status === 'Bortfaldet' ? ' done' : '') + '"><input type="checkbox" data-bck="' + esc(t.id) + '"' + (done ? ' checked' : '') + (B.canWrite ? '' : ' disabled') + ' aria-label="Udført: ' + esc(t.tekst) + '">' +
+      '<div><div class="tt">' + esc(t.tekst) + '</div><div class="meta"><span class="chip">' + esc(t.ansvarlig || 'Ansvarlig ikke fastlagt') + '</span>' + dl + sel +
+      '<span>' + esc(t.id) + (t.punkt ? ' · punkt ' + esc(t.punkt) : '') + '</span>' +
+      (visMoede ? '<button class="btn small" type="button" data-bact="open" data-bm="' + esc(t.moede) + '">Møde ' + esc(bShort(t.moede)) + '</button>' : '') + upd + '</div></div></div>';
+  }
+
+  function naesteKort() {
+    var n = naesteMoede(), all = opgListe(), aab = all.filter(erAaben), sen = all.filter(erSen);
+    if (!n) return '<div class="card nm"><div><div class="muted small">Næste bestyrelsesmøde</div><div class="when">Ikke fastlagt</div></div></div>';
+    var dage = Math.round((toDate(n.dato) - toDate(bToday())) / 864e5);
+    return '<div class="card nm"><div><div class="muted small">Næste bestyrelsesmøde' + (dage === 0 ? ' – i dag' : dage === 1 ? ' – i morgen' : ' – om ' + dage + ' dage') + '</div>' +
+      '<div class="when">' + esc(bLong(n.dato)) + (n.tid ? ' kl. ' + esc(n.tid.replace(':', '.')) : '') + '</div>' +
+      '<div class="small muted">' + esc(n.sted || 'Sted ikke fastlagt') + '</div></div>' +
+      '<div class="row"><span class="badge b-warn">' + aab.length + ' åbne opgaver</span>' + (sen.length ? '<span class="badge b-cancel">' + sen.length + ' over frist</span>' : '') +
+      '<button class="btn small" type="button" data-bact="open" data-bm="' + esc(n.dato) + '">Se mødet</button></div></div>';
+  }
+
+  function renderBoard() {
+    var el = $('#v-bestyrelse'); if (!el) return;
+    var h = '<h2 id="h-bestyrelse" tabindex="-1">Bestyrelse</h2>';
+    if (!B.loaded) { el.innerHTML = h + '<p class="lead">' + esc(B.note) + '</p>'; return; }
+    if (B.note) h += '<p class="notice">' + esc(B.note) + '</p>';
+    h += naesteKort();
+    h += '<div class="subnav" role="group" aria-label="Visning"><button class="btn small" type="button" data-bact="v-moeder" aria-pressed="' + (B.view === 'moeder') + '">Møder</button>' +
+      '<button class="btn small" type="button" data-bact="v-opgaver" aria-pressed="' + (B.view === 'opgaver') + '">Opgaver</button></div>';
+    h += B.view === 'opgaver' ? boardOpgaver() : (B.cur && B.moeder[B.cur] ? boardMoede(B.moeder[B.cur]) : boardMoeder());
+    el.innerHTML = h;
+    var f = $('#b-filter'); if (f) f.value = B.filter; var a = $('#b-ans'); if (a) a.value = B.ans;
+  }
+
+  function boardMoeder() {
+    var t = bToday(), ms = moederSorted();
+    var kom = ms.filter(function (m) { return m.dato >= t; }), afh = ms.filter(function (m) { return m.dato < t; }).reverse();
+    function row(m) {
+      var n = opgListe().filter(function (x) { return x.moede === m.dato; }).length;
+      var tags = (m.dagsorden ? '<span class="badge b-ok">Dagsorden</span>' : '<span class="badge b-past">Dagsorden mangler</span>') +
+        (m.dato < t ? (m.referat ? '<span class="badge ' + (m.referatStatus === 'godkendt' ? 'b-ok' : 'b-draft') + '">Referat' + (m.referatStatus === 'godkendt' ? '' : ' – kladde') + '</span>' : '<span class="badge b-warn">Referat mangler</span>') : '') +
+        (n ? '<span class="badge b-wait">' + n + ' opgaver</span>' : '');
+      return '<button type="button" class="mrow" data-bact="open" data-bm="' + esc(m.dato) + '"><span class="d">' + esc(bLong(m.dato)) + '</span><span class="row">' + tags + '</span></button>';
+    }
+    var h = '<h3>Kommende møder</h3><div class="mlist">' + (kom.length ? kom.map(row).join('') : '<p class="muted">Ingen planlagte møder.</p>') + '</div>';
+    h += '<h3>Afholdte møder</h3><div class="mlist">' + (afh.length ? afh.map(row).join('') : '<p class="muted">Ingen afholdte møder endnu.</p>') + '</div>';
+    h += '<p class="small muted" style="margin-top:1rem">Dagsordener og referater gemmes pr. mødedato. Nye dagsordener og referater laves med bestyrelses-skabelonen og lægges ind af Claude; opgaverne fra referatets handlingsliste kommer med automatisk.</p>';
+    return h;
+  }
+
+  function boardMoede(m) {
+    var t = bToday(), planlagt = m.dato >= t;
+    var h = '<div class="row" style="margin-bottom:0.6rem"><button class="btn small" type="button" data-bact="back">‹ Alle møder</button></div>';
+    h += '<h3 style="margin-top:0">' + esc(bLong(m.dato)) + (m.tid ? ' kl. ' + esc(m.tid.replace(':', '.')) : '') + '</h3><p class="small muted" style="margin-bottom:0.6rem">' + esc(m.sted || 'Sted ikke fastlagt') + '</p>';
+    // Opfølgning: opgaver fra tidligere møder - grundlaget for dagsordenens punkt 3.
+    var tidl = opgListe().filter(function (x) { return x.moede < m.dato; }).sort(function (a, b) { return (a.deadline || '9999') < (b.deadline || '9999') ? -1 : 1; });
+    if (planlagt) {
+      var aab = tidl.filter(erAaben), lost = tidl.filter(function (x) { return !erAaben(x); });
+      h += '<section class="card" style="margin-bottom:0.75rem"><h3 style="margin-top:0">Til punkt 3: opfølgning på tidligere opgaver</h3>' +
+        '<p class="small muted">Opdateres, når opgaverne krydses af. ' + aab.length + ' åbne, ' + lost.length + ' løst eller bortfaldet.</p>' +
+        (aab.length ? aab.map(function (x) { return opgRaekke(x, true); }).join('') : '<p class="muted">Ingen åbne opgaver fra tidligere møder.</p>') +
+        (lost.length ? '<details style="margin-top:0.5rem"><summary class="small" style="cursor:pointer;color:var(--primary2)">Løst eller bortfaldet (' + lost.length + ')</summary>' + lost.map(function (x) { return opgRaekke(x, true); }).join('') + '</details>' : '') + '</section>';
+    }
+    var parts = [['dagsorden', 'Dagsorden'], ['referat', 'Referat']];
+    var part = m.dato >= t ? 'dagsorden' : B.part;
+    h += '<div class="subnav" role="group" aria-label="Dokument">' + parts.map(function (p) { return '<button class="btn small" type="button" data-bact="part-' + p[0] + '" aria-pressed="' + (part === p[0]) + '"' + (p[0] === 'referat' && planlagt ? ' disabled' : '') + '>' + p[1] + '</button>'; }).join('') + '</div>';
+    var txt = m[part];
+    h += '<section class="card md">' + (txt ? mdRender(txt) : '<p class="muted">' + (part === 'dagsorden' ? 'Dagsordenen er ikke lavet endnu.' : 'Referatet er ikke lavet endnu.') + '</p>') +
+      (part === 'referat' && txt && m.referatStatus !== 'godkendt' ? '<p class="notice" style="margin-top:0.8rem">Referatet er en kladde, indtil bestyrelsen har godkendt det på næste møde.</p>' : '') + '</section>';
+    if (m.kilder && m.kilder[part]) h += '<p class="small muted" style="margin-top:0.4rem">Redigerbar udgave: <a href="' + esc(m.kilder[part]) + '" target="_blank" rel="noopener">åbn dokumentet</a></p>';
+    var egne = opgListe().filter(function (x) { return x.moede === m.dato; }).sort(function (a, b) { return a.id < b.id ? -1 : 1; });
+    if (egne.length) h += '<section class="card" style="margin-top:0.75rem"><h3 style="margin-top:0">Opgaver aftalt på mødet (' + egne.length + ')</h3>' + egne.map(function (x) { return opgRaekke(x, false); }).join('') + '</section>';
+    return h;
+  }
+
+  function boardOpgaver() {
+    var all = opgListe(), owners = {};
+    all.forEach(function (x) { if (x.ansvarlig) owners[x.ansvarlig.replace(/\s*\(.*$/, '')] = 1; });
+    var list = all.filter(function (x) { return (B.filter === 'alle' || B.keep[x.id] || (B.filter === 'aabne' ? erAaben(x) : B.filter === 'sene' ? erSen(x) : !erAaben(x))) && (!B.ans || (x.ansvarlig || '').indexOf(B.ans) === 0); })
+      .sort(function (a, b) { return (a.deadline || '9999') + a.id < (b.deadline || '9999') + b.id ? -1 : 1; });
+    var aab = all.filter(erAaben).length, sen = all.filter(erSen).length;
+    var h = '<div class="row" style="margin-bottom:0.6rem"><label class="f">Vis<select id="b-filter" data-bflt="filter"><option value="aabne">Åbne</option><option value="sene">Over frist</option><option value="lukkede">Løst / bortfaldet</option><option value="alle">Alle</option></select></label>' +
+      '<label class="f">Ansvarlig<select id="b-ans" data-bflt="ans"><option value="">Alle</option>' + Object.keys(owners).sort().map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('') + '</select></label></div>';
+    h += '<p class="small muted" style="margin-bottom:0.5rem">' + aab + ' åbne, heraf ' + sen + ' over frist · ' + (all.length - aab) + ' løst eller bortfaldet. ' + (B.canWrite ? 'Sæt kryds, når en opgave er løst – den står så som løst under opfølgningen til næste møde.' : 'Du kan se opgaverne, men ikke ændre dem.') + '</p>';
+    h += '<section class="card">' + (list.length ? list.map(function (x) { return opgRaekke(x, true); }).join('') : '<p class="muted">Ingen opgaver her.</p>') + '</section>';
+    return h;
+  }
+
+  function saetStatus(id, st) {
+    var t = B.opgaver[id]; if (!t || !B.db || t.status === st) return;
+    var prev = t.status; t.status = st; B.keep[id] = 1; t.opdateret = new Date().toISOString(); t.opdateretAf = B.me || '';
+    renderBoard(); renderBestyrelse();
+    B.db.doc('bestyrelse_opgaver/' + id).update({ status: st, opdateret: t.opdateret, opdateretAf: t.opdateretAf })
+      .then(function () { toast(st === 'Løst' ? 'Markeret som løst' : 'Status: ' + st); })
+      .catch(function () { t.status = prev; renderBoard(); toast('Kunne ikke gemme – har du adgang til at ændre?'); });
+  }
+
+  function bindBoard() {
+    var el = $('#v-bestyrelse');
+    el.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-bact]'); if (!b || b.disabled) return;
+      var a = b.getAttribute('data-bact');
+      if (a === 'open') { B.cur = b.getAttribute('data-bm'); B.view = 'moeder'; B.part = 'referat'; setView('bestyrelse'); window.scrollTo(0, 0); }
+      else if (a === 'back') B.cur = null;
+      else if (a === 'v-moeder') { B.view = 'moeder'; B.cur = null; }
+      else if (a === 'v-opgaver') { B.view = 'opgaver'; B.keep = {}; }
+      else if (a.indexOf('part-') === 0) B.part = a.slice(5);
+      renderBoard();
+    });
+    el.addEventListener('change', function (ev) {
+      var t = ev.target;
+      if (t.hasAttribute('data-bck')) saetStatus(t.getAttribute('data-bck'), t.checked ? 'Løst' : 'Åben');
+      else if (t.hasAttribute('data-bst')) saetStatus(t.getAttribute('data-bst'), t.value);
+      else if (t.hasAttribute('data-bflt')) { B[t.getAttribute('data-bflt')] = t.value; B.keep = {}; renderBoard(); }
+    });
+  }
+
+  function navne() {
+    if (!B.user || !B.user.profiles) return;
+    var ids = {}; opgListe().forEach(function (t) { if (t.opdateretAf) ids[t.opdateretAf] = 1; });
+    var l = Object.keys(ids); if (!l.length) return;
+    B.user.profiles(l).then(function (ps) { l.forEach(function (id) { B.names[id] = (ps && ps[id] && ps[id].name) || 'en fra bestyrelsen'; }); renderBoard(); }).catch(function () { });
+  }
+
+  function startBoard() {
+    bindBoard(); renderBoard();
+    if (!window.claude || !window.claude.use) { B.loaded = true; B.note = 'Bestyrelsens møder kan kun ses, når siden er åbnet i Claude.'; renderBoard(); return; }
+    var timer = setTimeout(function () { if (!B.loaded) { B.loaded = true; B.note = 'Bestyrelsens møder kan ikke hentes lige nu. Har du fået adgang til siden?'; renderBoard(); } }, 10000);
+    window.claude.use('user').then(function (u) {
+      B.user = u; if (!u) return;
+      if (u.id) u.id().then(function (id) { B.me = id || ''; }).catch(function () { });
+      if (u.can) u.can('data.write').then(function (c) { B.canWrite = c !== false; renderBoard(); }).catch(function () { });
+    });
+    window.claude.use('db').then(function (db) {
+      if (!db) { clearTimeout(timer); B.loaded = true; B.note = 'Bestyrelsens møder kan ikke hentes i denne visning. Log ind i Claude og åbn siden igen.'; renderBoard(); return; }
+      B.db = db;
+      var got = { m: false, o: false };
+      function done(k) { got[k] = true; if (got.m && got.o) { clearTimeout(timer); B.loaded = true; B.note = ''; } renderBoard(); renderBestyrelse(); }
+      db.collection('bestyrelse_moeder').onSnapshot(function (snap) {
+        var n = {}; snap.docs.forEach(function (d) { var v = Object.assign({}, d.data()); v.dato = v.dato || d.id; n[d.id] = v; }); B.moeder = n; done('m');
+      }, function () { clearTimeout(timer); B.loaded = true; B.note = 'Du har ikke adgang til bestyrelsens møder, eller forbindelsen blev afbrudt.'; renderBoard(); });
+      db.collection('bestyrelse_opgaver').onSnapshot(function (snap) {
+        var n = {}; snap.docs.forEach(function (d) { var v = Object.assign({}, d.data()); v.id = v.id || d.id; n[d.id] = v; }); B.opgaver = n; done('o'); navne();
+      }, function () { });
+    });
+  }
+
   bind();
+  startBoard();
   // Sidens eneste tre netværkskald, alle GET af lokale filer:
   // 1) holdplanen, 2) anonyme, samlede medlemstal (godkendt til offentliggørelse - mangler filen, vises "afventer login"),
   // 3) samlet deltagelsesstatistik (kun antal - mangler filen, viser Statistik "ikke bygget endnu").
