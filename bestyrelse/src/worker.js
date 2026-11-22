@@ -14,7 +14,19 @@
  * medmindre DEV_MODE="1" (kun i .dev.vars til lokal udvikling).
  */
 
+import TAL_HTML from "../public/bestyrelse/index.html";
+import OKONOMI_HTML from "../public/bestyrelse/okonomi/index.html";
+import FAVICON from "../public/bestyrelse/favicon.png";
+
 const BASE = "/bestyrelse";
+const PAGES = {
+  [BASE + "/"]: [TAL_HTML, "text/html; charset=utf-8"],
+  [BASE + "/index.html"]: [TAL_HTML, "text/html; charset=utf-8"],
+  [BASE + "/okonomi/"]: [OKONOMI_HTML, "text/html; charset=utf-8"],
+  [BASE + "/okonomi/index.html"]: [OKONOMI_HTML, "text/html; charset=utf-8"],
+  [BASE + "/favicon.png"]: [FAVICON, "image/png"],
+  [BASE + "/okonomi/favicon.png"]: [FAVICON, "image/png"],
+};
 const API = BASE + "/api";
 const MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
 const ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
@@ -54,8 +66,15 @@ export default {
       }
     }
 
-    // Statiske filer (siden selv). Kun under /bestyrelse/.
-    if (url.pathname.startsWith(BASE + "/")) return env.ASSETS.fetch(request);
+    if (url.pathname === BASE + "/okonomi") return Response.redirect(url.origin + BASE + "/okonomi/", 301);
+    // Siderne selv (bygget ind i worker'en). Kun under /bestyrelse/.
+    const page = PAGES[url.pathname];
+    if (page) {
+      return new Response(page[0], {
+        headers: { "Content-Type": page[1], "Cache-Control": "no-store", "X-Frame-Options": "DENY",
+          "Referrer-Policy": "same-origin", "X-Content-Type-Options": "nosniff" },
+      });
+    }
     return new Response("Ikke fundet", { status: 404 });
   },
 };
