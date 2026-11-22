@@ -1,6 +1,6 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-21T03:17",
+ "hentet": "2026-11-22T03:17",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
@@ -13,9 +13,9 @@
   ],
   "etiketnavne": "live (GET /api/tag)"
  },
- "total": 190,
+ "total": 191,
  "totalFraGoMember": null,
- "aktive": 165,
+ "aktive": 166,
  "ikkeAktive": 25,
  "udelukket": {
   "testkonti": 6,
@@ -103,8 +103,8 @@
    },
    {
     "maaned": "2026-11",
-    "dato": "2026-11-21",
-    "antal": 116
+    "dato": "2026-11-22",
+    "antal": 117
    }
   ],
   "udmeldteUdenDato": 0
@@ -124,14 +124,19 @@
    "dato": "2026-11-21",
    "betalende": 116,
    "aktive": 165
+  },
+  {
+   "dato": "2026-11-22",
+   "betalende": 117,
+   "aktive": 166
   }
  ],
  "noegletal": {
-  "medlemmerIAlt": 190,
-  "aktiveMedlemmer": 165,
+  "medlemmerIAlt": 191,
+  "aktiveMedlemmer": 166,
   "ikkeAktive": 25,
   "betalendeMedlemskaber": {
-   "antal": 116,
+   "antal": 117,
    "summeret": [
     "Premium medlemskab",
     "Ung 15-24 år medlemskab",
@@ -143,13 +148,13 @@
   },
   "oenskerUdmelding": 2,
   "pause": 2,
-  "nyeSeneste30Dage": 8
+  "nyeSeneste30Dage": 9
  },
  "medlemskaber": [
   {
    "tagId": "Tag2517253147042177325",
    "navn": "Premium medlemskab",
-   "antal": 85
+   "antal": 86
   },
   {
    "tagId": "Tag2517869245434174618",
@@ -213,7 +218,7 @@
   {
    "tagId": "Tag2518007450850497760",
    "navn": "Oprettelse",
-   "antal": 37
+   "antal": 38
   },
   {
    "tagId": "Tag2516128188990002511",
@@ -310,7 +315,7 @@
   },
   {
    "maaned": "2026-11",
-   "antal": 6
+   "antal": 7
   }
  ],
  "nyeFoerPerioden": null,

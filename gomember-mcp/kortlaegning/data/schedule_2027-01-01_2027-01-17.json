@@ -3438,5 +3438,178 @@
     ]
    }
   ]
+ },
+ {
+  "date": "2027-01-16T00:00:00Z",
+  "slots": [
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743105127783782",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-16T09:00:00",
+    "entityId": "Activity2517743105127783782-202701160800",
+    "eventId": "202701160800",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Lørdag 0800",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-16T08:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-16T07:00:00Z",
+    "endTimeUtc": "2027-01-16T08:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743105127783782",
+    "createdTs": "2026-11-03T11:48:57.074122Z",
+    "modifiedTs": "2026-11-03T11:48:57.074122Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986616820290849"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743104814044562",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-16T10:00:00",
+    "entityId": "Activity2517743104814044562-202701160900",
+    "eventId": "202701160900",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Lørdag 0900",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-16T09:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-16T08:00:00Z",
+    "endTimeUtc": "2027-01-16T09:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743104814044562",
+    "createdTs": "2026-11-03T11:49:14.3724804Z",
+    "modifiedTs": "2026-11-03T11:49:14.3724804Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986616820290849"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516147394819805210",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "039be5",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-16T11:00:00",
+    "entityId": "Activity2516147394819805210-202701161000",
+    "eventId": "202701161000",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "Hyrox",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     },
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-16T10:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-16T09:00:00Z",
+    "endTimeUtc": "2027-01-16T10:00:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516147394819805210",
+    "createdTs": "2026-08-24T08:48:38.0507387Z",
+    "modifiedTs": "2026-08-24T08:48:38.0507387Z",
+    "tagsAssigned": []
+   }
+  ]
  }
 ]
