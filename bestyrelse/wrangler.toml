@@ -10,7 +10,7 @@ binding = "ASSETS"
 [[d1_databases]]
 binding = "DB"
 database_name = "stronggym-bestyrelse"
-database_id = "UDFYLD-EFTER-wrangler-d1-create"
+database_id = "31f23580-5d1a-472f-a211-19d7ad9e3ae0"
 
 [vars]
 # Fra Cloudflare Zero Trust > Settings > Custom Pages (team-domæne) og
