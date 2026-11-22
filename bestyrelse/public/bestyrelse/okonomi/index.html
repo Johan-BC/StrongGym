@@ -118,16 +118,19 @@ legend { font-size: .8rem; font-weight: 600; padding: 0 6px; }
 .fixed-list { display: flex; flex-direction: column; gap: 8px; }
 .fixed-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 8px; align-items: center; }
 @media (max-width: 520px) { .fixed-row { grid-template-columns: 1fr 1fr; } h1 { font-size: 2.3rem; } .topbar .who #who-email, .wordmark span, .topbar .who a.home { display: none; } }
+.back { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin-top: 16px; padding: 9px 14px; border: 1px solid var(--line); border-radius: var(--r); color: var(--fg); text-decoration: none; font-size: .9rem; }
+.back:hover { border-color: currentColor; }
 .notice { padding: 16px; border-radius: var(--r); border: 1px solid var(--line); background: var(--panel); }
 </style>
 
 </head>
 <body>
 <div class="topbar"><div class="topbar-inner">
-  <a class="wordmark" href="/">STRONG GYM <span>· BESTYRELSE</span></a>
-  <div class="who"><span id="who-email"></span><a class="home" href="../">‹ Strong Gym i tal</a><a href="/cdn-cgi/access/logout">Log ud</a></div>
+  <a class="wordmark" href="../">STRONG GYM <span>· BESTYRELSE</span></a>
+  <div class="who"><span id="who-email"></span><a href="/cdn-cgi/access/logout">Log ud</a></div>
 </div></div>
 <div class="wrap">
+  <a class="back" href="../">‹ Tilbage til Strong Gym i tal</a>
   <header class="top">
     <div class="ttl">
       <span class="eyebrow">Kun for bestyrelsen</span>

@@ -1047,9 +1047,6 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     if (S) src.push('holdtal for ' + fLong(S.periode.fra) + ' – ' + fLong(S.periode.til));
     h += '<p class="lead">' + esc(src.join(', ')) + (src.length ? '. ' : '') + 'Kun samlede tal – ingen navne. ' +
       '<button class="btn small noprint" type="button" id="printBtn">Udskriv</button></p>';
-    var nm = (typeof naesteMoede === 'function') ? naesteMoede() : null;
-    if (nm) h += '<p class="notice gold" style="margin-bottom:1rem"><strong>Næste bestyrelsesmøde:</strong> ' + esc(bLong(nm.dato)) + (nm.tid ? ' kl. ' + esc(nm.tid.replace(':', '.')) : '') + (nm.sted ? ', ' + esc(nm.sted) : '') +
-      '. <button class="btn small noprint" type="button" data-goto="bestyrelse">Dagsorden og opgaver</button></p>';
 
     // Nøgletal
     var lav = S ? lavtFyldte() : [];
