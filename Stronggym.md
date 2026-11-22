@@ -167,7 +167,7 @@ er forholdsmæssig for resten af indmeldelsesmåneden og må ikke vises som pris
 - Holdplanen viser nu live-data (inkl. engangsbegivenheder og aflysninger) direkte fra API'et — den gamle begrænsning til det faste ugentlige mønster er løst. Det hardcodede array bruges kun som fallback.
 - Galleri-sektionen på forsiden er stadig placeholder-ikoner (🏋️), ikke rigtige billeder.
 - Login, tilmelding til hold og indmeldelse linker til goMembers portal (løst 10. november 2026, se **Opgave: Login og tilmelding** nedenfor). Sitet skriver aldrig til goMember.
-- Bestyrelsens dashboard i `index.html` er skjult, men kan stadig nås med `navigate('dashboard')`. Det viser mock-tal og har ingen adgangskontrol. Afløseren er `styring.html` (se [`STYRING.md`](STYRING.md)).
+- Bestyrelsens gamle mock-dashboard i `index.html` er fjernet (23. november 2026). Bestyrelsens side - Strong Gym i tal, møder, opgaver og økonomi - ligger bag login på Cloudflare (se [`bestyrelse/README.md`](bestyrelse/README.md)).
 - `styring.html`s data (`styring-*.json`) opdateres kun, når `opdater.py` køres manuelt og resultatet committes. Der er endnu ingen natlig kørsel.
 - Tre trænere (Mika Zillo, Sebastian Meier, Katja Kliem) har stadig generisk tekst, markeret `// TODO` i `index.html`.
 - Hosting af det nye site og 301-redirects ved domæneskiftet er uafklaret (se nedenfor).
@@ -395,9 +395,8 @@ nogen login-tilstand på sitet overhovedet — og så skal Dashboard-linket
 enten fjernes eller have en rigtig adgangsmekanisme. Afklar det sammen med
 denne opgave, ikke bagefter.
 
-**Udfald:** Dashboard-linket er skjult i menuen. Siden findes stadig i koden
-uden adgangskontrol og med mock-tal; den skal fjernes eller have en rigtig
-gate, før den må være synlig.
+**Udfald:** Dashboard-siden er fjernet helt fra `index.html` (23. november
+2026). Bestyrelsens side ligger i stedet bag login på Cloudflare.
 
 ---
 

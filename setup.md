@@ -282,10 +282,9 @@ request-body'en til `/auth/token` er gættet ud fra swagger-filen.
 ### Noter
 - `PORTAL` i [`index.html`](index.html) skal rettes ved domæneskiftet —
   se trinlisten i [`Stronggym.md`](Stronggym.md).
-- **Bestyrelsens dashboard er skjult.** Det var gated på den attrap-login,
-  der nu er væk. Siden findes stadig og kan nås med `navigate('dashboard')`,
-  men den har ingen adgangskontrol og viser mock-tal. Den skal have en
-  rigtig gate, før den må være synlig.
+- **Bestyrelsens gamle dashboard er fjernet** (23. november 2026). Det viste
+  mock-tal uden adgangskontrol. Bestyrelsens side ligger nu bag login på
+  Cloudflare (se `bestyrelse/README.md`).
 - **"Bliv medlem" sender til goMembers indmeldelse** på
   `PORTAL_SIGNUP` (`/Account/Signup/Tag2517869245434174618`). Den gamle
   formular samlede navn, email og telefon, sendte dem ingen steder hen og
