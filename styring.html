@@ -40,6 +40,8 @@ nav.tabs{max-width:1280px;margin:0.75rem auto 0;padding:0 1rem;display:flex;gap:
 nav.tabs button{background:none;border:none;border-bottom:3px solid transparent;padding:0.55rem 0.8rem;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.08em;color:var(--muted);white-space:nowrap}
 nav.tabs button[aria-current="page"]{color:var(--primary2);border-bottom-color:var(--primary)}
 nav.tabs button:hover{color:var(--fg)}
+nav.tabs a.navlink{padding:0.55rem 0.8rem;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.08em;color:var(--muted);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent}
+nav.tabs a.navlink:hover{color:var(--fg)}
 .count-pill{display:inline-block;min-width:1.4rem;padding:0 0.35rem;margin-left:0.3rem;border-radius:1rem;background:var(--primary);color:#111;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:500;line-height:1.4rem;text-align:center;letter-spacing:0}
 
 main{max-width:1280px;margin:0 auto;padding:1.25rem 1rem 3rem}
@@ -361,6 +363,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
 <header class="top">
   <div>
     <h1>Strong Gym <span>i tal</span></h1>
+    <p class="small" id="cfWho" hidden></p>
   </div>
 </header>
 
@@ -371,6 +374,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   <button type="button" data-view="statistik">Statistik</button>
   <button type="button" data-view="medlemmer">Medlemmer</button>
   <button type="button" data-view="bestyrelse">Bestyrelse</button>
+  <a class="navlink" id="okoLink" href="okonomi/" hidden>Økonomi</a>
   <button type="button" data-view="rettelser">Rettelser<span class="count-pill" id="draftCount">0</span></button>
 </nav>
 
@@ -1162,7 +1166,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     // Økonomi
     h += '<section class="st-sec" aria-labelledby="b-oko"><h3 id="b-oko">Økonomi</h3>' +
       '<div class="empty"><div class="row" style="justify-content:space-between;flex-wrap:wrap"><strong>Kobles på senere</strong><span class="await">ikke koblet på</span></div>' +
-      '<p class="small muted" style="margin-top:0.35rem">Økonomien (løn, udgifter og prognose for fri kasse) ligger på bestyrelsens egen side bag login. Her kommer den med, når de to sider bliver koblet sammen.</p></div></section>';
+      '<p class="small muted" style="margin-top:0.35rem">Økonomien (løn, udgifter og prognose for fri kasse) ligger på bestyrelsens egen side bag login. Her kommer den med, når de to sider bliver koblet sammen.</p>' +
+      (CF ? '<p style="margin-top:0.5rem"><a class="btn small" href="okonomi/">Åbn økonomisiden</a></p>' : '') + '</div></section>';
 
     el.innerHTML = h;
   }
@@ -1835,10 +1840,11 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   }
 
   function saetStatus(id, st) {
-    var t = B.opgaver[id]; if (!t || !B.db || t.status === st) return;
+    var t = B.opgaver[id]; if (!t || (!B.db && !B.store) || t.status === st) return;
     var prev = t.status; t.status = st; B.keep[id] = 1; t.opdateret = new Date().toISOString(); t.opdateretAf = B.me || '';
     renderBoard(); renderBestyrelse();
-    B.db.doc('bestyrelse_opgaver/' + id).update({ status: st, opdateret: t.opdateret, opdateretAf: t.opdateretAf })
+    if (B.store && B.me) B.names[B.me] = B.names[B.me] || navnAfEmail(B.me);
+    (B.store ? B.store.update(id, st) : B.db.doc('bestyrelse_opgaver/' + id).update({ status: st, opdateret: t.opdateret, opdateretAf: t.opdateretAf }))
       .then(function () { toast(st === 'Løst' ? 'Markeret som løst' : 'Status: ' + st); })
       .catch(function () { t.status = prev; renderBoard(); toast('Kunne ikke gemme – har du adgang til at ændre?'); });
   }
@@ -1870,8 +1876,40 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     B.user.profiles(l).then(function (ps) { l.forEach(function (id) { B.names[id] = (ps && ps[id] && ps[id].name) || 'en fra bestyrelsen'; }); renderBoard(); }).catch(function () { });
   }
 
+  // På Cloudflare (bag login) ligger siden under /bestyrelse/ og taler med worker'ens API.
+  var CF = /^\/bestyrelse\//.test(location.pathname);
+  var CF_API = '/bestyrelse/api';
+  function cfFetch(path, opt) {
+    opt = opt || {};
+    return fetch(CF_API + path, { method: opt.method || 'GET', credentials: 'same-origin', redirect: 'manual',
+      headers: opt.body ? { 'Content-Type': 'application/json' } : {}, body: opt.body ? JSON.stringify(opt.body) : undefined })
+      .then(function (r) {
+        if (r.type === 'opaqueredirect' || r.status === 401) throw new Error('Du er logget ud. Genindlæs siden for at logge ind igen.');
+        return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || ('Fejl ' + r.status)); return j; });
+      });
+  }
+  function cfLoad() {
+    return cfFetch('/board').then(function (st) {
+      var m = {}, o = {};
+      (st.moeder || []).forEach(function (x) { m[x.dato] = x; });
+      (st.opgaver || []).forEach(function (x) { o[x.id] = x; if (x.opdateretAf) B.names[x.opdateretAf] = navnAfEmail(x.opdateretAf); });
+      B.moeder = m; B.opgaver = o; B.canWrite = !!(st.me && st.me.canWrite); B.me = (st.me && st.me.email) || '';
+      B.loaded = true; B.note = ''; renderBoard(); renderBestyrelse();
+    }).catch(function (e) { B.loaded = true; B.note = e.message || 'Bestyrelsens møder kan ikke hentes lige nu.'; renderBoard(); });
+  }
+  function navnAfEmail(e) { var n = String(e).split('@')[0].split(/[._-]/)[0]; return n ? n.charAt(0).toUpperCase() + n.slice(1) : e; }
+
   function startBoard() {
     bindBoard(); renderBoard();
+    if (CF) {
+      var ol = $('#okoLink'); if (ol) ol.hidden = false;
+      var cw = $('#cfWho'); if (cw) { cw.hidden = false; cw.innerHTML = '<a href="/cdn-cgi/access/logout">Log ud</a>'; }
+      B.store = { update: function (id, st) { return cfFetch('/board/opgaver/' + encodeURIComponent(id), { method: 'PATCH', body: { status: st } }).then(cfLoad); } };
+      cfLoad();
+      setInterval(function () { if (!document.hidden) cfLoad(); }, 60000);
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) cfLoad(); });
+      return;
+    }
     if (!window.claude || !window.claude.use) { B.loaded = true; B.note = 'Bestyrelsens møder kan kun ses, når siden er åbnet i Claude.'; renderBoard(); return; }
     var timer = setTimeout(function () { if (!B.loaded) { B.loaded = true; B.note = 'Bestyrelsens møder kan ikke hentes lige nu. Har du fået adgang til siden?'; renderBoard(); } }, 10000);
     window.claude.use('user').then(function (u) {

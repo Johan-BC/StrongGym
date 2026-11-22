@@ -1,0 +1,15 @@
+{
+  "name": "bestyrelse",
+  "version": "1.0.0",
+  "description": "Lukket side for Strong Gyms bestyrelse på `/bestyrelse/`. Her registreres hver måned aktive medlemmer, lønudgift fra Danløn og variable udgifter, og siden viser historik, prognose for den fri kasse og ønskelisten til udstyr.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "wrangler": "^4.166.0"
+  }
+}
