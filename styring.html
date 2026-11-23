@@ -1709,6 +1709,9 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   var B = { db: null, user: null, canWrite: true, me: '', loaded: false, note: 'Henter bestyrelsens møder …', moeder: {}, opgaver: {},
     view: 'moeder', cur: null, keep: {}, part: 'referat', filter: 'aabne', ans: '', names: {} };
   var STATUSER = ['Åben', 'I gang', 'Løst', 'Bortfaldet'];
+  // Opgavelisten er skjult indtil videre (bestyrelsens ønske 23. nov. 2026). Data ligger
+  // stadig i databasen; sæt til true for at vise Opgaver, tællere og henvisninger igen.
+  var VIS_OPGAVER = false;
   function bToday() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function bLong(iso) { var d = toDate(iso); return cap1(['søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'][d.getDay()]) + ' ' + d.getDate() + '. ' + MONTHS_LONG[d.getMonth()] + ' ' + d.getFullYear(); }
   function bShort(iso) { return iso ? fDateShort(iso) + ' ' + iso.slice(0, 4) : ''; }
@@ -1765,7 +1768,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     return '<div class="card nm"><div><div class="muted small">Næste bestyrelsesmøde' + (dage === 0 ? ' – i dag' : dage === 1 ? ' – i morgen' : ' – om ' + dage + ' dage') + '</div>' +
       '<div class="when">' + esc(bLong(n.dato)) + (n.tid ? ' kl. ' + esc(n.tid.replace(':', '.')) : '') + '</div>' +
       '<div class="small muted">' + esc(n.sted || 'Sted ikke fastlagt') + '</div></div>' +
-      '<div class="row"><span class="badge b-warn">' + aab.length + ' åbne opgaver</span>' + (sen.length ? '<span class="badge b-cancel">' + sen.length + ' over frist</span>' : '') +
+      '<div class="row">' + (VIS_OPGAVER ? '<span class="badge b-warn">' + aab.length + ' åbne opgaver</span>' + (sen.length ? '<span class="badge b-cancel">' + sen.length + ' over frist</span>' : '') : '') +
       '<button class="btn small" type="button" data-bact="open" data-bm="' + esc(n.dato) + '">Se mødet</button></div></div>';
   }
 
@@ -1775,8 +1778,10 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     if (!B.loaded) { el.innerHTML = h + '<p class="lead">' + esc(B.note) + '</p>'; return; }
     if (B.note) h += '<p class="notice">' + esc(B.note) + '</p>';
     h += naesteKort();
-    h += '<div class="subnav" role="group" aria-label="Visning"><button class="btn small" type="button" data-bact="v-moeder" aria-pressed="' + (B.view === 'moeder') + '">Møder</button>' +
+    if (!VIS_OPGAVER) B.view = 'moeder';
+    if (VIS_OPGAVER) h += '<div class="subnav" role="group" aria-label="Visning"><button class="btn small" type="button" data-bact="v-moeder" aria-pressed="' + (B.view === 'moeder') + '">Møder</button>' +
       '<button class="btn small" type="button" data-bact="v-opgaver" aria-pressed="' + (B.view === 'opgaver') + '">Opgaver</button></div>';
+    else h += '<div style="height:1rem"></div>';
     h += B.view === 'opgaver' ? boardOpgaver() : (B.cur && B.moeder[B.cur] ? boardMoede(B.moeder[B.cur]) : boardMoeder());
     el.innerHTML = h;
     var f = $('#b-filter'); if (f) f.value = B.filter; var a = $('#b-ans'); if (a) a.value = B.ans;
@@ -1789,12 +1794,12 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
       var n = opgListe().filter(function (x) { return x.moede === m.dato; }).length;
       var tags = (m.dagsorden ? '<span class="badge b-ok">Dagsorden</span>' : '<span class="badge b-past">Dagsorden mangler</span>') +
         (m.dato < t ? (m.referat ? '<span class="badge ' + (m.referatStatus === 'godkendt' ? 'b-ok' : 'b-draft') + '">Referat' + (m.referatStatus === 'godkendt' ? '' : ' – kladde') + '</span>' : '<span class="badge b-warn">Referat mangler</span>') : '') +
-        (n ? '<span class="badge b-wait">' + n + ' opgaver</span>' : '');
+        (n && VIS_OPGAVER ? '<span class="badge b-wait">' + n + ' opgaver</span>' : '');
       return '<button type="button" class="mrow" data-bact="open" data-bm="' + esc(m.dato) + '"><span class="d">' + esc(bLong(m.dato)) + '</span><span class="row">' + tags + '</span></button>';
     }
     var h = '<h3>Kommende møder</h3><div class="mlist">' + (kom.length ? kom.map(row).join('') : '<p class="muted">Ingen planlagte møder.</p>') + '</div>';
     h += '<h3>Afholdte møder</h3><div class="mlist">' + (afh.length ? afh.map(row).join('') : '<p class="muted">Ingen afholdte møder endnu.</p>') + '</div>';
-    h += '<p class="small muted" style="margin-top:1rem">Dagsordener og referater gemmes pr. mødedato. Nye dagsordener og referater laves med bestyrelses-skabelonen og lægges ind af Claude; opgaverne fra referatets handlingsliste kommer med automatisk.</p>';
+    h += '<p class="small muted" style="margin-top:1rem">Dagsordener og referater gemmes pr. mødedato og kan hentes som Word eller PDF.</p>';
     return h;
   }
 
@@ -1806,7 +1811,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     var aabneFoer = opgListe().filter(function (x) { return x.moede < m.dato && erAaben(x); }).length;
     var egneN = opgListe().filter(function (x) { return x.moede === m.dato; }).length;
     var henv = planlagt ? (aabneFoer ? aabneFoer + ' åbne opgaver fra tidligere møder til opfølgning (punkt 3).' : '') : (egneN ? egneN + ' opgaver blev aftalt på mødet.' : '');
-    if (henv) h += '<p class="small muted" style="margin-bottom:0.4rem">' + henv + ' <button class="btn small" type="button" data-bact="v-opgaver">Se opgaver</button></p>';
+    if (henv && VIS_OPGAVER) h += '<p class="small muted" style="margin-bottom:0.4rem">' + henv + ' <button class="btn small" type="button" data-bact="v-opgaver">Se opgaver</button></p>';
     var parts = [['dagsorden', 'Dagsorden'], ['referat', 'Referat']];
     var part = m.dato >= t ? 'dagsorden' : B.part;
     h += '<div class="subnav" role="group" aria-label="Dokument">' + parts.map(function (p) { return '<button class="btn small" type="button" data-bact="part-' + p[0] + '" aria-pressed="' + (part === p[0]) + '"' + (p[0] === 'referat' && planlagt ? ' disabled' : '') + '>' + p[1] + '</button>'; }).join('') + '</div>';
