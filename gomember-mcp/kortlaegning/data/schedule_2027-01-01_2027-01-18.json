@@ -3611,5 +3611,229 @@
     "tagsAssigned": []
    }
   ]
+ },
+ {
+  "date": "2027-01-17T00:00:00Z",
+  "slots": [
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743103297333604",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-17T09:00:00",
+    "entityId": "Activity2517743103297333604-202701170800",
+    "eventId": "202701170800",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Søndag 0800",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-17T08:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-17T07:00:00Z",
+    "endTimeUtc": "2027-01-17T08:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743103297333604",
+    "createdTs": "2026-11-03T11:50:22.9998317Z",
+    "modifiedTs": "2026-11-03T11:50:22.9998317Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986616748194159"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516140240740267054",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "66bb6a",
+    "description": "<p>Den lange søndags WOD </p>\n<p>selve workout er 60 min. </p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-17T10:30:00",
+    "entityId": "Activity2516140240740267054-202701170900",
+    "eventId": "202701170900",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "Lang WOD",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-17T09:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-17T08:00:00Z",
+    "endTimeUtc": "2027-01-17T09:30:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516140240740267054",
+    "createdTs": "2026-09-01T15:32:06.4420422Z",
+    "modifiedTs": "2026-09-01T15:32:06.4420422Z",
+    "tagsAssigned": [
+     "Tag2"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516270957033362421",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "fce4ec",
+    "description": "<p>Så starter vi Strong Gym's nye børnehold. </p>\n<p>Alle børn mellem 5 og 12 år er velkommen. Både med og uden forældre. </p>\n<p>Tilmelding sker ved at forældre tilmelder sig som alm wod. Hvis man har to børn med så kom bare, selv om man kun kan tilmelde 1.</p>\n<p>Kom og støt op om det! </p>\n<p>Coaches: Maj og Mia B. </p>\n<p> </p>\n<p> </p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-17T11:45:00",
+    "entityId": "Activity2516270957033362421-202701171045",
+    "eventId": "202701171045",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "Børne hold 5-12 år",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     },
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-17T10:45:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-17T09:45:00Z",
+    "endTimeUtc": "2027-01-17T10:45:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516270957033362421",
+    "createdTs": "2026-04-03T08:31:37.0926983Z",
+    "modifiedTs": "2026-04-03T08:31:37.0926983Z",
+    "tagsAssigned": []
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516098606059431091",
+    "paymentRules": 0,
+    "attendancePrivacy": 0,
+    "booked": 0,
+    "color": "f8bbd0",
+    "description": "<p>Husk at der skal være plads til rengøring. Man kan godt selvtræne </p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-17T15:30:00",
+    "entityId": "Activity2516098606059431091-202701171300",
+    "eventId": "202701171300",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxGuestsPerMember": 0,
+    "name": "Rengøring",
+    "onlineSignup": false,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-17T13:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-17T12:00:00Z",
+    "endTimeUtc": "2027-01-17T14:30:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516098606059431091",
+    "createdTs": "2026-10-19T20:03:14.6037648Z",
+    "modifiedTs": "2026-10-19T20:03:14.6037648Z",
+    "tagsAssigned": []
+   }
+  ]
  }
 ]
