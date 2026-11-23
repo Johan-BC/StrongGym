@@ -1802,15 +1802,11 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     var t = bToday(), planlagt = m.dato >= t;
     var h = '<div class="row" style="margin-bottom:0.6rem"><button class="btn small" type="button" data-bact="back">‹ Alle møder</button></div>';
     h += '<h3 style="margin-top:0">' + esc(bLong(m.dato)) + (m.tid ? ' kl. ' + esc(m.tid.replace(':', '.')) : '') + '</h3><p class="small muted" style="margin-bottom:0.6rem">' + esc(m.sted || 'Sted ikke fastlagt') + '</p>';
-    // Opfølgning: opgaver fra tidligere møder - grundlaget for dagsordenens punkt 3.
-    var tidl = opgListe().filter(function (x) { return x.moede < m.dato; }).sort(function (a, b) { return (a.deadline || '9999') < (b.deadline || '9999') ? -1 : 1; });
-    if (planlagt) {
-      var aab = tidl.filter(erAaben), lost = tidl.filter(function (x) { return !erAaben(x); });
-      h += '<section class="card" style="margin-bottom:0.75rem"><h3 style="margin-top:0">Til punkt 3: opfølgning på tidligere opgaver</h3>' +
-        '<p class="small muted">Opdateres, når opgaverne krydses af. ' + aab.length + ' åbne, ' + lost.length + ' løst eller bortfaldet.</p>' +
-        (aab.length ? aab.map(function (x) { return opgRaekke(x, true); }).join('') : '<p class="muted">Ingen åbne opgaver fra tidligere møder.</p>') +
-        (lost.length ? '<details style="margin-top:0.5rem"><summary class="small" style="cursor:pointer;color:var(--primary2)">Løst eller bortfaldet (' + lost.length + ')</summary>' + lost.map(function (x) { return opgRaekke(x, true); }).join('') + '</details>' : '') + '</section>';
-    }
+    // Opgaverne krydses af under "Opgaver" - mødesiden viser kun en henvisning.
+    var aabneFoer = opgListe().filter(function (x) { return x.moede < m.dato && erAaben(x); }).length;
+    var egneN = opgListe().filter(function (x) { return x.moede === m.dato; }).length;
+    var henv = planlagt ? (aabneFoer ? aabneFoer + ' åbne opgaver fra tidligere møder til opfølgning (punkt 3).' : '') : (egneN ? egneN + ' opgaver blev aftalt på mødet.' : '');
+    if (henv) h += '<p class="small muted" style="margin-bottom:0.4rem">' + henv + ' <button class="btn small" type="button" data-bact="v-opgaver">Se opgaver</button></p>';
     var parts = [['dagsorden', 'Dagsorden'], ['referat', 'Referat']];
     var part = m.dato >= t ? 'dagsorden' : B.part;
     h += '<div class="subnav" role="group" aria-label="Dokument">' + parts.map(function (p) { return '<button class="btn small" type="button" data-bact="part-' + p[0] + '" aria-pressed="' + (part === p[0]) + '"' + (p[0] === 'referat' && planlagt ? ' disabled' : '') + '>' + p[1] + '</button>'; }).join('') + '</div>';
@@ -1820,8 +1816,6 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     if (txt && CF) h += '<div class="row noprint" style="margin-top:0.6rem"><button class="btn small" type="button" data-bact="dl-docx" data-bm="' + esc(m.dato) + '" data-bp="' + part + '">Download Word</button>' +
       '<button class="btn small" type="button" data-bact="dl-pdf" data-bm="' + esc(m.dato) + '" data-bp="' + part + '">Download PDF</button></div>';
     if (m.kilder && m.kilder[part] && !CF) h += '<p class="small muted" style="margin-top:0.4rem">Redigerbar udgave: <a href="' + esc(m.kilder[part]) + '" target="_blank" rel="noopener">åbn dokumentet</a></p>';
-    var egne = opgListe().filter(function (x) { return x.moede === m.dato; }).sort(function (a, b) { return a.id < b.id ? -1 : 1; });
-    if (egne.length) h += '<section class="card" style="margin-top:0.75rem"><h3 style="margin-top:0">Opgaver aftalt på mødet (' + egne.length + ')</h3>' + egne.map(function (x) { return opgRaekke(x, false); }).join('') + '</section>';
     return h;
   }
 
