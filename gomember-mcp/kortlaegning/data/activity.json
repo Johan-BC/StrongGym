@@ -61,7 +61,7 @@
   "resourceTypes": [],
   "createdTs": "2026-10-31T23:31:37.3485079",
   "entityId": "Activity2516088149026514920",
-  "modifiedTs": "2026-11-16T20:50:24.0329612Z",
+  "modifiedTs": "2026-11-23T20:55:38.495221Z",
   "tagsAssigned": []
  },
  {
@@ -426,10 +426,10 @@
   "assignedTags": [],
   "attendanceMessage": "",
   "attendancePrivacy": 1,
-  "color": "4caf50",
+  "color": "a1887f",
   "commentsAll": false,
   "commentsNoSend": false,
-  "description": "",
+  "description": "<p>Nyt hold. </p>\n<p>Fokus på klassiske vægtløftnings discipliner, herunder Clean &amp; Jerk.</p>",
   "showDescription": false,
   "eventsCount": 0,
   "formDefinition": [],
@@ -437,7 +437,7 @@
   "isSuperEvent": false,
   "isGroup": false,
   "isDayBooking": false,
-  "name": "WOD",
+  "name": "Vægtløftning",
   "onlineSignup": true,
   "autoPromote": false,
   "responsibleUsersIds": {
@@ -463,7 +463,7 @@
   "resourceTypes": [],
   "createdTs": "2026-08-24T10:46:41.7825544",
   "entityId": "Activity2516147395982174455",
-  "modifiedTs": "2026-11-22T20:36:31.5159649Z",
+  "modifiedTs": "2026-11-23T07:50:03.1949197Z",
   "tagsAssigned": []
  },
  {
@@ -528,7 +528,7 @@
   "resourceTypes": [],
   "createdTs": "2026-05-16T13:07:49.8319049",
   "entityId": "Activity2516233711301680950",
-  "modifiedTs": "2026-11-16T20:51:03.288957Z",
+  "modifiedTs": "2026-11-23T14:18:49.156273Z",
   "tagsAssigned": []
  },
  {
@@ -960,7 +960,7 @@
     "tagType": 0,
     "createdTs": "2023-02-21T13:28:15.8135237Z",
     "entityId": "Tag2517253147042177325",
-    "modifiedTs": "2026-09-04T04:53:22.1065761Z",
+    "modifiedTs": "2026-11-23T21:31:07.5624881Z",
     "tagsAssigned": []
    },
    {
@@ -972,7 +972,7 @@
     "tagType": 0,
     "createdTs": "2021-03-10T11:37:36.613839Z",
     "entityId": "Tag2517869245434174618",
-    "modifiedTs": "2025-09-19T10:55:42.0637667Z",
+    "modifiedTs": "2026-11-23T21:33:01.5621176Z",
     "tagsAssigned": []
    }
   ],
@@ -1529,7 +1529,7 @@
     "tagType": 0,
     "createdTs": "2021-03-10T11:37:36.613839Z",
     "entityId": "Tag2517869245434174618",
-    "modifiedTs": "2025-09-19T10:55:42.0637667Z",
+    "modifiedTs": "2026-11-23T21:33:01.5621176Z",
     "tagsAssigned": []
    },
    {
@@ -1678,7 +1678,7 @@
   "resourceTypes": [],
   "createdTs": "2024-01-17T12:41:45.1823842",
   "entityId": "Activity2516968090948176157",
-  "modifiedTs": "2026-11-15T21:40:14.7125297Z",
+  "modifiedTs": "2026-11-23T14:18:06.2778886Z",
   "tagsAssigned": [
    "Tag2",
    "Tag2517986617920749834"
@@ -2980,7 +2980,7 @@
   "resourceTypes": [],
   "createdTs": "2021-08-03T13:13:43.0130754",
   "entityId": "Activity2517743115769869245",
-  "modifiedTs": "2026-11-16T20:51:15.1562036Z",
+  "modifiedTs": "2026-11-23T17:06:37.5043071Z",
   "tagsAssigned": [
    "Tag2",
    "Tag2517986617775210869"
@@ -3073,7 +3073,7 @@
   "resourceTypes": [],
   "createdTs": "2021-08-03T13:12:50.6048903",
   "entityId": "Activity2517743116293951096",
-  "modifiedTs": "2026-11-16T20:50:34.614127Z",
+  "modifiedTs": "2026-11-23T14:18:39.3961541Z",
   "tagsAssigned": [
    "Tag2",
    "Tag2517986617775210869"
@@ -3135,7 +3135,7 @@
     "tagType": 0,
     "createdTs": "2021-03-10T11:37:36.613839Z",
     "entityId": "Tag2517869245434174618",
-    "modifiedTs": "2025-09-19T10:55:42.0637667Z",
+    "modifiedTs": "2026-11-23T21:33:01.5621176Z",
     "tagsAssigned": []
    }
   ],

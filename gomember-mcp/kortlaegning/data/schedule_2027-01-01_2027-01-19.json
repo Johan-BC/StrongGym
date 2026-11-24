@@ -1628,7 +1628,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -3262,7 +3262,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -3833,6 +3833,289 @@
     "createdTs": "2026-10-19T20:03:14.6037648Z",
     "modifiedTs": "2026-10-19T20:03:14.6037648Z",
     "tagsAssigned": []
+   }
+  ]
+ },
+ {
+  "date": "2027-01-18T00:00:00Z",
+  "slots": [
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516524686452660410",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "aed581",
+    "description": "<p>For de morgenfriske - god start på ugen // Mandag</p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-18T07:00:00",
+    "entityId": "Activity2516524686452660410-202701180600",
+    "eventId": "202701180600",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Mandag 0600",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-18T06:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-18T05:00:00Z",
+    "endTimeUtc": "2027-01-18T06:00:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": false,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516524686452660410",
+    "createdTs": "2026-08-18T01:53:48.4545079Z",
+    "modifiedTs": "2026-08-18T01:53:48.4701297Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617920749834"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743126576154536",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-18T09:15:00",
+    "entityId": "Activity2517743126576154536-202701180815",
+    "eventId": "202701180815",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Mandag 0815",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-18T08:15:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-18T07:15:00Z",
+    "endTimeUtc": "2027-01-18T08:15:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743126576154536",
+    "createdTs": "2026-11-03T11:49:35.3141851Z",
+    "modifiedTs": "2026-11-03T11:49:35.3141851Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617920749834"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516363572535700946",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-18T17:00:00",
+    "entityId": "Activity2516363572535700946-202701181600",
+    "eventId": "202701181600",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Mandag 1600",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-18T16:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-18T15:00:00Z",
+    "endTimeUtc": "2027-01-18T16:00:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": false,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516363572535700946",
+    "createdTs": "2025-12-17T03:52:26.4611356Z",
+    "modifiedTs": "2026-11-06T19:59:47.9291998Z",
+    "tagsAssigned": [
+     "Tag2"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516363571799491831",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-18T18:00:00",
+    "entityId": "Activity2516363571799491831-202701181700",
+    "eventId": "202701181700",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Mandag 1700",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-18T17:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-18T16:00:00Z",
+    "endTimeUtc": "2027-01-18T17:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": false,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516363571799491831",
+    "createdTs": "2025-12-17T03:53:40.4570595Z",
+    "modifiedTs": "2026-11-06T19:59:22.1716155Z",
+    "tagsAssigned": [
+     "Tag2"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516968090948176157",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-18T20:45:00",
+    "entityId": "Activity2516968090948176157-202701181945",
+    "eventId": "202701181945",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Mandag 1945",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-18T19:45:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-18T18:45:00Z",
+    "endTimeUtc": "2027-01-18T19:45:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516968090948176157",
+    "createdTs": "2026-04-13T04:54:03.5817715Z",
+    "modifiedTs": "2026-05-04T11:47:58.7690263Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617920749834"
+    ]
    }
   ]
  }

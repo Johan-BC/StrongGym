@@ -353,7 +353,7 @@
     "activityId": "Activity2517682293521157937",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 3,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -720,7 +720,7 @@
      "_count": 0
     },
     "inviteTags": [],
-    "waitingList": 0,
+    "waitingList": 1,
     "reservations": 0,
     "startTimeUtc": "2026-12-03T17:00:00Z",
     "endTimeUtc": "2026-12-03T18:00:00Z",
@@ -793,7 +793,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -862,7 +862,7 @@
     "activityId": "Activity2517743105546903012",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
+    "booked": 2,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -2349,7 +2349,7 @@
     "activityId": "Activity2516421299835599010",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 7,
+    "booked": 8,
     "color": "ffd54f",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
@@ -2378,7 +2378,7 @@
     "signupOpen": false,
     "startTime": "2026-12-10T18:00:00",
     "formDefinition": [],
-    "status": "scheduled",
+    "status": "booked",
     "invitationMedia": "sms",
     "inviteMembers": {
      "_count": 0
@@ -2457,7 +2457,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -4007,7 +4007,7 @@
     "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 6,
+    "booked": 7,
     "color": "#ffd54f",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
@@ -4115,7 +4115,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -5717,7 +5717,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -7362,7 +7362,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]

@@ -1,14 +1,14 @@
 {
- "generated": "2026-11-23T03:18:09",
+ "generated": "2026-11-24T03:18:46",
  "genereret_af": "holdplan.py",
  "mode": "login",
  "requests_made": 8,
  "schedule_window": {
-  "from": "2026-09-28T00:00:00",
-  "to": "2027-01-18T00:00:00",
+  "from": "2026-09-29T00:00:00",
+  "to": "2027-01-19T00:00:00",
   "chunks": [
    {
-    "from": "2026-09-28T00:00:00",
+    "from": "2026-09-29T00:00:00",
     "to": "2026-10-01T00:00:00",
     "days": 0,
     "events": 0
@@ -33,14 +33,14 @@
    },
    {
     "from": "2027-01-01T00:00:00",
-    "to": "2027-01-18T00:00:00",
-    "days": 17,
-    "events": 68
+    "to": "2027-01-19T00:00:00",
+    "days": 18,
+    "events": 73
    }
   ],
-  "events_total": 330
+  "events_total": 335
  },
- "events_with_named_trainer": 102,
+ "events_with_named_trainer": 108,
  "activities": 39,
  "tags": 27,
  "products": 4

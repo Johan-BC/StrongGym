@@ -4,7 +4,7 @@
 "activityMode": "event",
 "createdTs": "2026-10-31T23:31:37.3485079",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-16T20:50:24.0329612Z",
+"modifiedTs": "2026-11-23T20:55:38.495221Z",
 "name": "WOD",
 "registerAttendance": false,
 "weekdayTags": []
@@ -58,8 +58,8 @@
 "activityMode": "event",
 "createdTs": "2026-08-24T10:46:41.7825544",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-22T20:36:31.5159649Z",
-"name": "WOD",
+"modifiedTs": "2026-11-23T07:50:03.1949197Z",
+"name": "Vægtløftning",
 "registerAttendance": false,
 "weekdayTags": []
 },
@@ -67,7 +67,7 @@
 "activityMode": "event",
 "createdTs": "2026-05-16T13:07:49.8319049",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-16T20:51:03.288957Z",
+"modifiedTs": "2026-11-23T14:18:49.156273Z",
 "name": "TONS",
 "registerAttendance": false,
 "weekdayTags": []
@@ -196,7 +196,7 @@
 "activityMode": "event",
 "createdTs": "2024-01-17T12:41:45.1823842",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-15T21:40:14.7125297Z",
+"modifiedTs": "2026-11-23T14:18:06.2778886Z",
 "name": "WOD Mandag 1945",
 "registerAttendance": false,
 "weekdayTags": [
@@ -350,7 +350,7 @@
 "activityMode": "event",
 "createdTs": "2021-08-03T13:13:43.0130754",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-16T20:51:15.1562036Z",
+"modifiedTs": "2026-11-23T17:06:37.5043071Z",
 "name": "WOD Tirsdag 1900",
 "registerAttendance": false,
 "weekdayTags": [
@@ -361,7 +361,7 @@
 "activityMode": "event",
 "createdTs": "2021-08-03T13:12:50.6048903",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-16T20:50:34.614127Z",
+"modifiedTs": "2026-11-23T14:18:39.3961541Z",
 "name": "WOD Tirsdag 1630",
 "registerAttendance": false,
 "weekdayTags": [
@@ -414,7 +414,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -424,7 +424,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -498,7 +498,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -508,7 +508,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -590,7 +590,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 6,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 6,
 "rows": 6,
 "truncated": false,
@@ -600,7 +600,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -683,7 +683,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 2,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 2,
 "rows": 2,
 "truncated": false,
@@ -909,7 +909,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -919,7 +919,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -1082,7 +1082,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -1092,7 +1092,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -1400,7 +1400,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 15,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 15,
 "rows": 15,
 "truncated": false,
@@ -1410,7 +1410,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 12,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 12,
 "rows": 12,
 "truncated": false,
@@ -1736,9 +1736,19 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 4,
 "rows": 4,
+"truncated": false,
+"waiting": 0
+},
+"Activity2516363571799491831|202611231700": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 3,
+"h": "2026-11-24T03:18:46",
+"participants": 3,
+"rows": 3,
 "truncated": false,
 "waiting": 0
 },
@@ -1972,9 +1982,19 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 12,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 12,
 "rows": 12,
+"truncated": false,
+"waiting": 0
+},
+"Activity2516363572535700946|202611231600": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 10,
+"h": "2026-11-24T03:18:46",
+"participants": 10,
+"rows": 10,
 "truncated": false,
 "waiting": 0
 },
@@ -2172,7 +2192,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 6,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 6,
 "rows": 6,
 "truncated": false,
@@ -2182,7 +2202,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -2454,9 +2474,19 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 7,
 "rows": 7,
+"truncated": false,
+"waiting": 0
+},
+"Activity2516524686452660410|202611230600": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 3,
+"h": "2026-11-24T03:18:46",
+"participants": 3,
+"rows": 3,
 "truncated": false,
 "waiting": 0
 },
@@ -2636,7 +2666,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 3,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 3,
 "rows": 3,
 "truncated": false,
@@ -2646,7 +2676,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 8,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 8,
 "rows": 8,
 "truncated": false,
@@ -2828,9 +2858,19 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 9,
 "rows": 9,
+"truncated": false,
+"waiting": 0
+},
+"Activity2516968090948176157|202611231945": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 4,
+"h": "2026-11-24T03:18:46",
+"participants": 4,
+"rows": 4,
 "truncated": false,
 "waiting": 0
 },
@@ -3045,7 +3085,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -3055,7 +3095,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -3300,7 +3340,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 12,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 12,
 "rows": 12,
 "truncated": false,
@@ -3310,7 +3350,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 13,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 13,
 "rows": 13,
 "truncated": false,
@@ -3536,7 +3576,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 15,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 15,
 "rows": 15,
 "truncated": false,
@@ -3546,7 +3586,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -3917,7 +3957,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -3927,7 +3967,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -4136,7 +4176,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -4146,7 +4186,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -4364,7 +4404,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 8,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 8,
 "rows": 8,
 "truncated": false,
@@ -4374,7 +4414,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 14,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 14,
 "rows": 14,
 "truncated": false,
@@ -4582,7 +4622,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 11,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 11,
 "rows": 11,
 "truncated": false,
@@ -4592,7 +4632,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 14,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 14,
 "rows": 14,
 "truncated": false,
@@ -4837,7 +4877,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 11,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 11,
 "rows": 11,
 "truncated": false,
@@ -4847,7 +4887,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 6,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 6,
 "rows": 6,
 "truncated": false,
@@ -5073,7 +5113,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 8,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 8,
 "rows": 8,
 "truncated": false,
@@ -5083,7 +5123,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -5282,7 +5322,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -5292,7 +5332,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -5509,7 +5549,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -5519,7 +5559,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -5746,9 +5786,19 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 11,
-"h": "2026-11-23T03:18:09",
+"h": "2026-11-24T03:18:46",
 "participants": 11,
 "rows": 11,
+"truncated": false,
+"waiting": 0
+},
+"Activity2517743126576154536|202611230815": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 4,
+"h": "2026-11-24T03:18:46",
+"participants": 4,
+"rows": 4,
 "truncated": false,
 "waiting": 0
 }
@@ -10473,16 +10523,16 @@
 },
 {
 "activityId": "Activity2516363572535700946",
-"booked": 11,
+"booked": 10,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:52:26.4611356Z",
 "endTime": "2026-11-23T17:00:00",
 "eventId": "202611231600",
 "hasWaitingList": false,
 "maxAttendees": 12,
-"modifiedTs": "2026-11-06T19:59:47.9291998Z",
+"modifiedTs": "2026-11-23T14:17:38.6130633Z",
 "name": "WOD Mandag 1600",
-"registerAttendance": true,
+"registerAttendance": false,
 "reservations": 0,
 "sequence": "Activity2516363572535700946",
 "startTime": "2026-11-23T16:00:00",
@@ -10491,7 +10541,7 @@
 },
 {
 "activityId": "Activity2516363571799491831",
-"booked": 5,
+"booked": 3,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:53:40.4570595Z",
 "endTime": "2026-11-23T18:00:00",
@@ -10509,16 +10559,16 @@
 },
 {
 "activityId": "Activity2516968090948176157",
-"booked": 3,
+"booked": 4,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:49:13.3551919Z",
 "endTime": "2026-11-23T20:45:00",
 "eventId": "202611231945",
 "hasWaitingList": false,
 "maxAttendees": 12,
-"modifiedTs": "2026-05-04T11:47:58.7690263Z",
+"modifiedTs": "2026-11-23T14:18:06.2935167Z",
 "name": "WOD Mandag 1945",
-"registerAttendance": true,
+"registerAttendance": false,
 "reservations": 0,
 "sequence": "Activity2516968090948176157",
 "startTime": "2026-11-23T19:45:00",
@@ -10527,34 +10577,34 @@
 },
 {
 "activityId": "Activity2516088149026514920",
-"booked": 7,
+"booked": 14,
 "cancelReason": null,
 "createdTs": "2026-10-31T22:31:37.3797352Z",
 "endTime": "2026-11-24T09:15:00",
 "eventId": "202611240815",
 "hasWaitingList": true,
-"maxAttendees": 12,
-"modifiedTs": "2026-10-31T22:31:37.3797352Z",
+"maxAttendees": 14,
+"modifiedTs": "2026-11-23T20:55:38.5108453Z",
 "name": "WOD",
-"registerAttendance": true,
+"registerAttendance": false,
 "reservations": 0,
 "sequence": "Activity2516088149026514920",
 "startTime": "2026-11-24T08:15:00",
-"status": "scheduled",
+"status": "booked",
 "waitingList": 0
 },
 {
 "activityId": "Activity2517743116293951096",
-"booked": 6,
+"booked": 7,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:46:23.317116Z",
 "endTime": "2026-11-24T17:30:00",
 "eventId": "202611241630",
 "hasWaitingList": false,
 "maxAttendees": 12,
-"modifiedTs": "2026-05-04T11:48:03.7687029Z",
+"modifiedTs": "2026-11-23T14:18:39.4117877Z",
 "name": "WOD Tirsdag 1630",
-"registerAttendance": true,
+"registerAttendance": false,
 "reservations": 0,
 "sequence": "Activity2517743116293951096",
 "startTime": "2026-11-24T16:30:00",
@@ -10570,9 +10620,9 @@
 "eventId": "202611241645",
 "hasWaitingList": false,
 "maxAttendees": 12,
-"modifiedTs": "2026-05-16T11:08:29.5658847Z",
+"modifiedTs": "2026-11-23T14:18:49.156273Z",
 "name": "TONS",
-"registerAttendance": true,
+"registerAttendance": false,
 "reservations": 0,
 "sequence": "Activity2516233711301680950",
 "startTime": "2026-11-24T17:45:00",
@@ -10581,16 +10631,16 @@
 },
 {
 "activityId": "Activity2517743115769869245",
-"booked": 1,
+"booked": 4,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:46:47.6949263Z",
 "endTime": "2026-11-24T20:00:00",
 "eventId": "202611241900",
 "hasWaitingList": false,
 "maxAttendees": 12,
-"modifiedTs": "2026-05-04T11:48:03.0811731Z",
+"modifiedTs": "2026-11-23T17:06:37.5355559Z",
 "name": "WOD Tirsdag 1900",
-"registerAttendance": true,
+"registerAttendance": false,
 "reservations": 0,
 "sequence": "Activity2517743115769869245",
 "startTime": "2026-11-24T19:00:00",
@@ -10617,7 +10667,7 @@
 },
 {
 "activityId": "Activity2517743114820337813",
-"booked": 5,
+"booked": 7,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:47:14.725538Z",
 "endTime": "2026-11-25T09:15:00",
@@ -10635,7 +10685,7 @@
 },
 {
 "activityId": "Activity2517682293521157937",
-"booked": 10,
+"booked": 9,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:48:33.3574787Z",
 "endTime": "2026-11-25T17:00:00",
@@ -10653,7 +10703,7 @@
 },
 {
 "activityId": "Activity2516277445812201999",
-"booked": 6,
+"booked": 9,
 "cancelReason": null,
 "createdTs": "2026-03-26T20:16:59.3892108Z",
 "endTime": "2026-11-25T18:00:00",
@@ -10689,7 +10739,7 @@
 },
 {
 "activityId": "Activity2516659546312284291",
-"booked": 2,
+"booked": 4,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:49:25.5757226Z",
 "endTime": "2026-11-26T09:15:00",
@@ -10739,7 +10789,7 @@
 "sequence": "Activity2517489994278558056",
 "startTime": "2026-11-26T16:30:00",
 "status": "booked",
-"waitingList": 4
+"waitingList": 6
 },
 {
 "activityId": "Activity2516421299835599010",
@@ -10768,7 +10818,7 @@
 "eventId": "202611261900",
 "hasWaitingList": false,
 "maxAttendees": 12,
-"modifiedTs": "2026-11-22T20:36:31.5159649Z",
+"modifiedTs": "2026-11-23T07:50:03.1167958Z",
 "name": "Vægtløftning ",
 "registerAttendance": false,
 "reservations": 0,
@@ -10833,7 +10883,7 @@
 },
 {
 "activityId": "Activity2517743105127783782",
-"booked": 5,
+"booked": 7,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:47:54.2971022Z",
 "endTime": "2026-11-28T09:00:00",
@@ -10851,7 +10901,7 @@
 },
 {
 "activityId": "Activity2517743104814044562",
-"booked": 6,
+"booked": 9,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:48:06.0875533Z",
 "endTime": "2026-11-28T10:00:00",
@@ -10869,7 +10919,7 @@
 },
 {
 "activityId": "Activity2516147394819805210",
-"booked": 1,
+"booked": 2,
 "cancelReason": null,
 "createdTs": "2026-08-24T08:48:38.0507387Z",
 "endTime": "2026-11-28T11:00:00",
@@ -10905,7 +10955,7 @@
 },
 {
 "activityId": "Activity2516140240740267054",
-"booked": 4,
+"booked": 5,
 "cancelReason": null,
 "createdTs": "2026-09-01T15:32:06.4420422Z",
 "endTime": "2026-11-29T10:30:00",
@@ -10959,7 +11009,7 @@
 },
 {
 "activityId": "Activity2516524686452660410",
-"booked": 0,
+"booked": 1,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:49:37.2559997Z",
 "endTime": "2026-11-30T07:00:00",
@@ -10995,7 +11045,7 @@
 },
 {
 "activityId": "Activity2516363572535700946",
-"booked": 5,
+"booked": 6,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:52:26.4611356Z",
 "endTime": "2026-11-30T17:00:00",
@@ -11048,7 +11098,7 @@
 "waitingList": 0
 }
 ],
-"h": "2026-11-23T03:18:09"
+"h": "2026-11-24T03:18:46"
 }
 },
 "events": {
@@ -16178,6 +16228,9 @@
 "Activity2516450767014171449|202611221300": {
 "nf": 1
 },
+"Activity2516450767014171449|202611231300": {
+"nf": 1
+},
 "Activity2516464197876025217|202605190815": {
 "booked": 0,
 "cancelReason": null,
@@ -18822,6 +18875,42 @@
 "Activity2517147997087724635|202611101900": {
 "nf": 1
 },
+"Activity2517147997087724635|202611170615": {
+"nf": 1
+},
+"Activity2517147997087724635|202611170715": {
+"nf": 1
+},
+"Activity2517147997087724635|202611170815": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171430": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171530": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171545": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171630": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171645": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171700": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171745": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171800": {
+"nf": 1
+},
+"Activity2517147997087724635|202611171900": {
+"nf": 1
+},
 "Activity2517489994278558056|202605141630": {
 "booked": 10,
 "cancelReason": null,
@@ -20040,6 +20129,42 @@
 "nf": 1
 },
 "Activity2517743036997736134|202611101900": {
+"nf": 1
+},
+"Activity2517743036997736134|202611170615": {
+"nf": 1
+},
+"Activity2517743036997736134|202611170715": {
+"nf": 1
+},
+"Activity2517743036997736134|202611170815": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171430": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171530": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171545": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171630": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171645": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171700": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171745": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171800": {
+"nf": 1
+},
+"Activity2517743036997736134|202611171900": {
 "nf": 1
 },
 "Activity2517743102480462084|202605170900": {
@@ -24603,6 +24728,14 @@
 "status": {
 "200": 51,
 "404": 34
+}
+},
+{
+"kald": 76,
+"run": "2026-11-24T03:18:46",
+"status": {
+"200": 51,
+"404": 25
 }
 }
 ]
