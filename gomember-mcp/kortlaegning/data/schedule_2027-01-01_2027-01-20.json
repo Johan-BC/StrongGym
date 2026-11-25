@@ -4118,5 +4118,228 @@
     ]
    }
   ]
+ },
+ {
+  "date": "2027-01-19T00:00:00Z",
+  "slots": [
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516088149026514920",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "<p>Dagens WOD</p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-19T09:15:00",
+    "entityId": "Activity2516088149026514920-202701190815",
+    "eventId": "202701190815",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-19T08:15:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-19T07:15:00Z",
+    "endTimeUtc": "2027-01-19T08:15:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516088149026514920",
+    "createdTs": "2026-10-31T22:31:37.3797352Z",
+    "modifiedTs": "2026-10-31T22:31:37.3797352Z",
+    "tagsAssigned": []
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743116293951096",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-19T17:30:00",
+    "entityId": "Activity2517743116293951096-202701191630",
+    "eventId": "202701191630",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Tirsdag 1630",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-19T16:30:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-19T15:30:00Z",
+    "endTimeUtc": "2027-01-19T16:30:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743116293951096",
+    "createdTs": "2026-11-03T11:50:36.382899Z",
+    "modifiedTs": "2026-11-03T11:50:36.382899Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617775210869"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516233711301680950",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "bdbdbd",
+    "description": "<p>Holdet er for folk som ser crossfit som en sport og ikke som en motionsform. Deltagelse kræver at du har et tilpas højt niveau, da der forekommer skills og træningsvolumen er høj. Skaleringer vil kun være muligt i meget begrænset omfang. Det forventes at du kan tage 100% ansvar for egen træning da der ikke er en træner tilrådighed.<br /><br />Ved holdstart har man varmet op, så kun træningsspecifikt opvarmningen foregår i den angivne træningstid.</p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-19T19:00:00",
+    "entityId": "Activity2516233711301680950-202701191645",
+    "eventId": "202701191645",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "TONS",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-19T17:45:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-19T16:45:00Z",
+    "endTimeUtc": "2027-01-19T18:00:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516233711301680950",
+    "createdTs": "2026-05-16T11:07:50.3006569Z",
+    "modifiedTs": "2026-05-16T11:08:29.5658847Z",
+    "tagsAssigned": []
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743115769869245",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-19T20:00:00",
+    "entityId": "Activity2517743115769869245-202701191900",
+    "eventId": "202701191900",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Tirsdag 1900",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-19T19:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-19T18:00:00Z",
+    "endTimeUtc": "2027-01-19T19:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743115769869245",
+    "createdTs": "2026-11-03T11:50:48.4696153Z",
+    "modifiedTs": "2026-11-03T11:50:48.4696153Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617775210869"
+    ]
+   }
+  ]
  }
 ]

@@ -1,6 +1,6 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-24T03:18",
+ "hentet": "2026-11-25T03:17",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
@@ -22,7 +22,7 @@
   "laesekonto": 1
  },
  "datakvalitet": {
-  "aktiveUdenMedlemskab": 50,
+  "aktiveUdenMedlemskab": 51,
   "aktiveMedFlereMedlemskaber": "<3",
   "udmeldteMedMedlemskab": 14,
   "udmeldteMedOenskerUdmelding": 16,
@@ -49,62 +49,62 @@
    {
     "maaned": "2025-12",
     "dato": "2025-12-31",
-    "antal": 94
+    "antal": 93
    },
    {
     "maaned": "2026-01",
     "dato": "2026-01-31",
-    "antal": 95
+    "antal": 94
    },
    {
     "maaned": "2026-02",
     "dato": "2026-02-28",
-    "antal": 94
+    "antal": 93
    },
    {
     "maaned": "2026-03",
     "dato": "2026-03-31",
-    "antal": 97
+    "antal": 96
    },
    {
     "maaned": "2026-04",
     "dato": "2026-04-30",
-    "antal": 96
+    "antal": 95
    },
    {
     "maaned": "2026-05",
     "dato": "2026-05-31",
-    "antal": 99
+    "antal": 98
    },
    {
     "maaned": "2026-06",
     "dato": "2026-06-30",
-    "antal": 103
+    "antal": 102
    },
    {
     "maaned": "2026-07",
     "dato": "2026-07-31",
-    "antal": 103
+    "antal": 102
    },
    {
     "maaned": "2026-08",
     "dato": "2026-08-31",
-    "antal": 107
+    "antal": 106
    },
    {
     "maaned": "2026-09",
     "dato": "2026-09-30",
-    "antal": 110
+    "antal": 109
    },
    {
     "maaned": "2026-10",
     "dato": "2026-10-31",
-    "antal": 113
+    "antal": 112
    },
    {
     "maaned": "2026-11",
-    "dato": "2026-11-24",
-    "antal": 119
+    "dato": "2026-11-25",
+    "antal": 118
    }
   ],
   "udmeldteUdenDato": 0
@@ -139,6 +139,11 @@
    "dato": "2026-11-24",
    "betalende": 119,
    "aktive": 168
+  },
+  {
+   "dato": "2026-11-25",
+   "betalende": 118,
+   "aktive": 168
   }
  ],
  "noegletal": {
@@ -146,7 +151,7 @@
   "aktiveMedlemmer": 168,
   "ikkeAktive": 25,
   "betalendeMedlemskaber": {
-   "antal": 119,
+   "antal": 118,
    "summeret": [
     "Premium medlemskab",
     "Ung 15-24 år medlemskab",
@@ -158,13 +163,13 @@
   },
   "oenskerUdmelding": 2,
   "pause": 2,
-  "nyeSeneste30Dage": 11
+  "nyeSeneste30Dage": 10
  },
  "medlemskaber": [
   {
    "tagId": "Tag2517253147042177325",
    "navn": "Premium medlemskab",
-   "antal": 88
+   "antal": 87
   },
   {
    "tagId": "Tag2517869245434174618",
@@ -206,7 +211,7 @@
   {
    "tagId": "Tag2",
    "navn": "Alle medlemmer",
-   "antal": 155
+   "antal": 154
   },
   {
    "tagId": "Tag2518007428832244134",
@@ -228,7 +233,7 @@
   {
    "tagId": "Tag2518007450850497760",
    "navn": "Oprettelse",
-   "antal": 40
+   "antal": 39
   },
   {
    "tagId": "Tag2516128188990002511",
@@ -275,7 +280,7 @@
    "antal": 1
   }
  ],
- "udenEtiketter": 8,
+ "udenEtiketter": 9,
  "udenMedlemskabsEtiket": null,
  "udenBetalendeMedlemskab": null,
  "nyePrMaaned": [
