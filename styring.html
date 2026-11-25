@@ -654,12 +654,15 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   // Rettelser (kladder) er kun for udvalgte. På claude.ai er det kun ejeren, der har siden;
   // på Cloudflare afgør worker'en det (me.rettelser). Indtil svaret er kommet: skjult.
   var DRAFTS_OK = !/^\/bestyrelse\//.test(location.pathname);
+  // Fanen Bestyrelse findes kun på Cloudflare (bag login). På claude.ai er den væk.
+  var BOARD_OK = /^\/bestyrelse\//.test(location.pathname);
   function applyDraftAccess() {
     var nb = document.querySelector('nav.tabs button[data-view="rettelser"]'); if (nb) nb.hidden = !DRAFTS_OK;
+    var bb = document.querySelector('nav.tabs button[data-view="bestyrelse"]'); if (bb) bb.hidden = !BOARD_OK;
     if (!DRAFTS_OK && state.view === 'rettelser') setView('overblik');
   }
   function setView(v, focus) {
-    if (!document.getElementById('v-' + v) || (v === 'rettelser' && !DRAFTS_OK)) v = 'overblik';
+    if (!document.getElementById('v-' + v) || (v === 'rettelser' && !DRAFTS_OK) || (v === 'bestyrelse' && !BOARD_OK)) v = 'overblik';
     state.view = v;
     $all('nav.tabs button').forEach(function (b) {
       if (b.dataset.view === v) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
@@ -1714,7 +1717,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
 
 
   /* ================================================================ BESTYRELSE (møder, dagsordener, referater, opgaver) */
-  // Data: claude.use('db') -> bestyrelse_moeder/<dato> og bestyrelse_opgaver/<id>. Kun læsbart for inviterede (interact).
+  // Data: kun på Cloudflare, via worker'ens API (/bestyrelse/api/board). Ingen data på claude.ai.
   var B = { db: null, user: null, canWrite: true, me: '', loaded: false, note: 'Henter bestyrelsens møder …', moeder: {}, opgaver: {},
     view: 'moeder', cur: null, keep: {}, part: 'referat', filter: 'aabne', ans: '', names: {} };
   var STATUSER = ['Åben', 'I gang', 'Løst', 'Bortfaldet'];
@@ -1938,11 +1941,11 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   }
 
   function saetStatus(id, st) {
-    var t = B.opgaver[id]; if (!t || (!B.db && !B.store) || t.status === st) return;
+    var t = B.opgaver[id]; if (!t || !B.store || t.status === st) return;
     var prev = t.status; t.status = st; B.keep[id] = 1; t.opdateret = new Date().toISOString(); t.opdateretAf = B.me || '';
     renderBoard(); renderBestyrelse();
     if (B.store && B.me) B.names[B.me] = B.names[B.me] || navnAfEmail(B.me);
-    (B.store ? B.store.update(id, st) : B.db.doc('bestyrelse_opgaver/' + id).update({ status: st, opdateret: t.opdateret, opdateretAf: t.opdateretAf }))
+    B.store.update(id, st)
       .then(function () { toast(st === 'Løst' ? 'Markeret som løst' : 'Status: ' + st); })
       .catch(function () { t.status = prev; renderBoard(); toast('Kunne ikke gemme – har du adgang til at ændre?'); });
   }
@@ -2015,25 +2018,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
       document.addEventListener('visibilitychange', function () { if (!document.hidden) cfLoad(); });
       return;
     }
-    if (!window.claude || !window.claude.use) { B.loaded = true; B.note = 'Bestyrelsens møder kan kun ses, når siden er åbnet i Claude.'; renderBoard(); return; }
-    var timer = setTimeout(function () { if (!B.loaded) { B.loaded = true; B.note = 'Bestyrelsens møder kan ikke hentes lige nu. Har du fået adgang til siden?'; renderBoard(); } }, 10000);
-    window.claude.use('user').then(function (u) {
-      B.user = u; if (!u) return;
-      if (u.id) u.id().then(function (id) { B.me = id || ''; }).catch(function () { });
-      if (u.can) u.can('data.write').then(function (c) { B.canWrite = c !== false; renderBoard(); }).catch(function () { });
-    });
-    window.claude.use('db').then(function (db) {
-      if (!db) { clearTimeout(timer); B.loaded = true; B.note = 'Bestyrelsens møder kan ikke hentes i denne visning. Log ind i Claude og åbn siden igen.'; renderBoard(); return; }
-      B.db = db;
-      var got = { m: false, o: false };
-      function done(k) { got[k] = true; if (got.m && got.o) { clearTimeout(timer); B.loaded = true; B.note = ''; } renderBoard(); renderBestyrelse(); }
-      db.collection('bestyrelse_moeder').onSnapshot(function (snap) {
-        var n = {}; snap.docs.forEach(function (d) { var v = Object.assign({}, d.data()); v.dato = v.dato || d.id; n[d.id] = v; }); B.moeder = n; done('m');
-      }, function () { clearTimeout(timer); B.loaded = true; B.note = 'Du har ikke adgang til bestyrelsens møder, eller forbindelsen blev afbrudt.'; renderBoard(); });
-      db.collection('bestyrelse_opgaver').onSnapshot(function (snap) {
-        var n = {}; snap.docs.forEach(function (d) { var v = Object.assign({}, d.data()); v.id = v.id || d.id; n[d.id] = v; }); B.opgaver = n; done('o'); navne();
-      }, function () { });
-    });
+    // Uden for Cloudflare: ingen bestyrelsesdata (møder og referater ligger kun bag login).
+    B.loaded = true; B.note = 'Bestyrelsens møder ligger på bestyrelsessiden bag login.'; renderBoard();
   }
 
   bind();

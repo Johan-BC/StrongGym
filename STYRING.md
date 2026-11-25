@@ -32,9 +32,10 @@ glemme noget.
   bygget, men skjult indtil videre: `VIS_OPGAVER = false` i `styring.html`.
   Opgaverne ligger stadig i databasen og bruges til opfølgningen (punkt 3)
   på næste dagsorden.
-  Data ligger i sidens database (`bestyrelse_moeder/<dato>`,
-  `bestyrelse_opgaver/<opgave-id>`), ikke i repoet: referater kan rumme
-  personsager. Kun bidragydere kan læse dem; kun redaktører kan ændre møder.
+  Fanen findes KUN på bestyrelsessiden på Cloudflare (bag login); på
+  claude.ai-udgaven er den skjult, og dens database er slået fra. Data ligger
+  i Cloudflare D1 (tabellerne `meetings` og `tasks`), aldrig i repoet:
+  referater kan rumme personsager.
   Nye dagsordener og referater laves med bestyrelses-skabelonen og lægges ind
   af Claude; opgaverne fra referatets handlingsliste oprettes med samme ID.
 - **Drift**: ugens nøgletal (antal hold, tilmeldte i forhold til pladser,
