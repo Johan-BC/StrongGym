@@ -99,6 +99,16 @@ medlemmer - heller ikke i fejlbeskeder eller under fejlsøgning. Grupper på
 1-2 personer vises som "<3", undtagen udmeldinger pr. måned, som klubben har
 godkendt med præcise antal.
 
+## Bestyrelsens side og e-mails
+
+Bestyrelsens side (Strong Gym i tal, møder, referater, økonomi) ligger på Cloudflare bag
+login med e-mail-kode - se `bestyrelse/README.md`. Bestyrelsens navne og e-mails ligger i
+D1-tabellen `board_members` (slå op med
+`npx wrangler d1 execute stronggym-bestyrelse --remote --command "select * from board_members"`
+i `bestyrelse/`). Læg dem ALDRIG i repoet - det er offentligt. Adgang kræver, at e-mailen
+står tre steder: `board_members`, secret'en `BOARD_EMAILS` og Access-politikken
+"Bestyrelsen" (den sidste kan kun rettes i Cloudflare-dashboardet).
+
 ## Status
 
 **Login virker (bekræftet 14. november 2026).** `/auth/token` kræver, ud

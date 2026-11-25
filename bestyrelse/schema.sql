@@ -48,3 +48,12 @@ CREATE TABLE IF NOT EXISTS tasks (
   updated_by TEXT,
   updated_at TEXT
 );
+
+-- Bestyrelsens medlemmer (navn, e-mail, rolle). Fyldes direkte i databasen,
+-- aldrig fra repoet. Samme e-mails skal stå i BOARD_EMAILS og i Access-politikken.
+CREATE TABLE IF NOT EXISTS board_members (
+  email      TEXT PRIMARY KEY,
+  navn       TEXT NOT NULL,
+  rolle      TEXT,
+  updated_at TEXT
+);

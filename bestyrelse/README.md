@@ -66,7 +66,8 @@ wrangler secret put VIEW_EMAILS      # kan være tom
 3. Kopiér **Application Audience (AUD) Tag** fra appens oversigt.
 4. Sæt `ACCESS_TEAM_DOMAIN` og `ACCESS_AUD` i `wrangler.toml` og kør `wrangler deploy` igen.
 
-Ændres bestyrelsen, opdateres både Access-policyen og `BOARD_EMAILS`.
+Ændres bestyrelsen, opdateres tre steder: Access-policyen "Bestyrelsen" (dashboardet), secret'en
+`BOARD_EMAILS` og tabellen `board_members` (navn, e-mail, rolle - kun i D1, aldrig i repoet).
 
 ### Hvor siden ligger
 
