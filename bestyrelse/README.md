@@ -69,6 +69,9 @@ wrangler secret put VIEW_EMAILS      # kan være tom
 Ændres bestyrelsen, opdateres tre steder: Access-policyen "Bestyrelsen" (dashboardet), secret'en
 `BOARD_EMAILS` og tabellen `board_members` (navn, e-mail, rolle - kun i D1, aldrig i repoet).
 
+Roller sættes som secrets: `ECONOMY_EMAILS` (må ændre økonomien; alle i bestyrelsen kan se
+den) og `RETTELSER_EMAILS` (ser fanen Rettelser). Mangler en liste, har ingen rollen.
+
 ### Hvor siden ligger
 
 - **På stronggym.dk/bestyrelse** (anbefalet): kræver at domænet bruger Cloudflare DNS.

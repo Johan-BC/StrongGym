@@ -109,6 +109,11 @@ i `bestyrelse/`). Læg dem ALDRIG i repoet - det er offentligt. Adgang kræver, 
 står tre steder: `board_members`, secret'en `BOARD_EMAILS` og Access-politikken
 "Bestyrelsen" (den sidste kan kun rettes i Cloudflare-dashboardet).
 
+Roller (secrets i worker'en, besluttet af Johan 25. november 2026): `ECONOMY_EMAILS` må
+ændre økonomien (Johan og Trine) - alle andre ser den kun. `RETTELSER_EMAILS` ser fanen
+Rettelser og knapperne, der laver rettelser (kun Johan). Worker'en håndhæver
+økonomireglen; Rettelser er kun kladder i browseren og skjules for andre.
+
 ## Status
 
 **Login virker (bekræftet 14. november 2026).** `/auth/token` kræver, ud

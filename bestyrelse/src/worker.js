@@ -110,8 +110,13 @@ async function identify(request, env) {
   }
   const writers = emailList(env.BOARD_EMAILS);
   const viewers = emailList(env.VIEW_EMAILS);
-  if (writers.includes(email)) return { email, canWrite: true };
-  if (viewers.includes(email)) return { email, canWrite: false };
+  // Ekstra roller (secrets, så e-mails ikke ligger i repoet). Mangler en liste, har ingen rollen.
+  const roles = {
+    economy: emailList(env.ECONOMY_EMAILS).includes(email),     // må rette i økonomi
+    rettelser: emailList(env.RETTELSER_EMAILS).includes(email), // ser fanen Rettelser
+  };
+  if (writers.includes(email)) return { email, canWrite: true, ...roles };
+  if (viewers.includes(email)) return { email, canWrite: false, ...roles, economy: false };
   throw new HttpError(403, "Din e-mail har ikke adgang til bestyrelsessiden");
 }
 
@@ -174,6 +179,10 @@ async function handleApi(request, env, url) {
   }
 
   if (path === "/state" && method === "GET") return json(await loadState(env, who));
+
+  // Økonomien må kun ændres af dem i ECONOMY_EMAILS; alle i bestyrelsen kan se den.
+  const economyWrite = method !== "GET" && (path === "/settings" || path === "/sample" || /^\/(months|wishlist)(\/|$)/.test(path));
+  if (economyWrite && !who.economy) throw new HttpError(403, "Kun økonomiansvarlige kan ændre økonomien");
 
   // Bestyrelsens møder og opgaver
   if (path === "/board" && method === "GET") return json(await loadBoard(env, who));
@@ -261,7 +270,7 @@ async function loadState(env, who) {
     env.DB.prepare("SELECT data FROM settings WHERE id = 1").first(),
   ]);
   return {
-    me: { email: who.email, canWrite: who.canWrite },
+    me: { email: who.email, canWrite: who.canWrite && who.economy },
     settings: settings ? JSON.parse(settings.data) : null,
     months: months.results.map((r) => ({ ...JSON.parse(r.data), updatedBy: r.updated_by, updatedAt: r.updated_at })),
     wishlist: wish.results.map((r) => ({ ...JSON.parse(r.data), id: r.id })),
@@ -274,7 +283,7 @@ async function loadBoard(env, who) {
     env.DB.prepare("SELECT id, data, updated_by, updated_at FROM tasks ORDER BY id").all(),
   ]);
   return {
-    me: { email: who.email, canWrite: who.canWrite },
+    me: { email: who.email, canWrite: who.canWrite, rettelser: !!who.rettelser },
     moeder: m.results.map((r) => ({ ...JSON.parse(r.data), dato: r.dato })),
     opgaver: t.results.map((r) => ({ ...JSON.parse(r.data), id: r.id, opdateretAf: r.updated_by || "", opdateret: r.updated_at || "" })),
   };

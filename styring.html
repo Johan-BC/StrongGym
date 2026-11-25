@@ -651,8 +651,15 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
     var el = $('#toast'); el.textContent = t; el.classList.add('show');
     clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3200);
   }
+  // Rettelser (kladder) er kun for udvalgte. På claude.ai er det kun ejeren, der har siden;
+  // på Cloudflare afgør worker'en det (me.rettelser). Indtil svaret er kommet: skjult.
+  var DRAFTS_OK = !/^\/bestyrelse\//.test(location.pathname);
+  function applyDraftAccess() {
+    var nb = document.querySelector('nav.tabs button[data-view="rettelser"]'); if (nb) nb.hidden = !DRAFTS_OK;
+    if (!DRAFTS_OK && state.view === 'rettelser') setView('overblik');
+  }
   function setView(v, focus) {
-    if (!document.getElementById('v-' + v)) v = 'overblik';
+    if (!document.getElementById('v-' + v) || (v === 'rettelser' && !DRAFTS_OK)) v = 'overblik';
     state.view = v;
     $all('nav.tabs button').forEach(function (b) {
       if (b.dataset.view === v) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
@@ -749,7 +756,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
       var pending = evs.filter(function (e) { return effective(e).status === 'cancelled'; }).length;
       items.push('<li class="sev-high"><div class="t">' + esc(hd.name) + ' ' + fDayY(hd.date) + ': ' + evs.length + ' hold står som normalt</div>' +
         '<div class="d">' + esc(evs.map(function (e) { return hm(e.start) + ' ' + typeName(e.typeId); }).join(' · ')) + '</div>' +
-        '<div class="row">' + (pending === evs.length ? '<span class="badge b-draft">kladde: alle aflyst</span>' :
+        '<div class="row">' + (pending === evs.length ? '<span class="badge b-draft">kladde: alle aflyst</span>' : !DRAFTS_OK ? '' :
           '<button class="btn small primary" type="button" data-cancelday="' + hd.date + '">Lav aflysningskladde for dagen (' + (evs.length - pending) + ')</button>') +
         '</div></li>');
     });
@@ -855,7 +862,9 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
             '<button class="btn small danger" type="button" data-rm="' + d.id + '">Fortryd</button></li>';
         }).join('') + '</ul></div>';
     }
-    if (past) {
+    if (!DRAFTS_OK) {
+      // ingen rettelser for andre end dem med rollen
+    } else if (past) {
       h += '<p class="notice">Holdet er afholdt (før ' + fDayY(SNAP) + ' kl. ' + hm(SNAP) + '), så der kan ikke laves rettelser til det.</p>';
     } else {
       h += '<div><p class="muted small" style="margin-bottom:0.35rem">Lav en rettelse (lægges i kladden – sendes ikke):</p><div class="actions" role="group" aria-label="Rettelser">' +
@@ -977,7 +986,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
             '</td><td>' + (a.capacity == null ? '–' : a.capacity || 'intet') + '</td><td>' + (a.hasWaitingList == null ? '–' : yesNo(a.hasWaitingList)) + '</td><td>' + (a.registerAttendance == null ? '–' : yesNo(a.registerAttendance)) +
             '</td><td>' + (a.colour ? '<span class="swatch" style="background:#' + esc(a.colour) + '"></span>' + esc(a.colour) : '–') + '</td></tr>';
         }).join('') + '</tbody></table></div><p class="small muted">Venteliste/fremmøde i tabellen er aktivitetens standard – de enkelte hold kan afvige.</p></details>';
-      if (sd.futureEvents) h += fixAllForm(t);
+      if (sd.futureEvents && DRAFTS_OK) h += fixAllForm(t);
       h += '</article>';
     });
     h += '</div>';
@@ -1988,6 +1997,8 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
       (st.moeder || []).forEach(function (x) { m[x.dato] = x; });
       (st.opgaver || []).forEach(function (x) { o[x.id] = x; if (x.opdateretAf) B.names[x.opdateretAf] = navnAfEmail(x.opdateretAf); });
       B.moeder = m; B.opgaver = o; B.canWrite = !!(st.me && st.me.canWrite); B.me = (st.me && st.me.email) || '';
+      var dOk = !!(st.me && st.me.rettelser);
+      if (dOk !== DRAFTS_OK) { DRAFTS_OK = dOk; applyDraftAccess(); if (D) renderAll(); }
       B.loaded = true; B.note = ''; renderBoard(); renderBestyrelse();
     }).catch(function (e) { B.loaded = true; B.note = e.message || 'Bestyrelsens møder kan ikke hentes lige nu.'; renderBoard(); });
   }
@@ -2026,6 +2037,7 @@ footer{max-width:1280px;margin:0 auto;padding:1rem 1rem 2.5rem;color:var(--muted
   }
 
   bind();
+  applyDraftAccess();
   startBoard();
   // Sidens eneste tre netværkskald, alle GET af lokale filer:
   // 1) holdplanen, 2) anonyme, samlede medlemstal (godkendt til offentliggørelse - mangler filen, vises "afventer login"),
