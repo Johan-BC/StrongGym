@@ -32,8 +32,9 @@ glemme noget.
   bygget, men skjult indtil videre: `VIS_OPGAVER = false` i `styring.html`.
   Opgaverne ligger stadig i databasen og bruges til opfølgningen (punkt 3)
   på næste dagsorden.
-  Fanen findes KUN på bestyrelsessiden på Cloudflare (bag login); på
-  claude.ai-udgaven er den skjult, og dens database er slået fra. Data ligger
+  Siden findes kun på Cloudflare bag login (claude.ai-udgaven er slettet
+  25. november 2026; den natlige opdatering gemmer blot tallene i repoet,
+  som bestyrelsessiden henter dem fra). Data ligger
   i Cloudflare D1 (tabellerne `meetings` og `tasks`), aldrig i repoet:
   referater kan rumme personsager.
   Nye dagsordener og referater laves med bestyrelses-skabelonen og lægges ind
