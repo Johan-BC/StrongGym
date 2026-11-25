@@ -5,9 +5,10 @@
    {
     "activityHasPrice": false,
     "activityId": "Activity2516088149026514920",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 3,
+    "booked": 4,
     "color": "9ccc65",
     "description": "<p>Dagens WOD</p>",
     "isSuperEvent": false,
@@ -19,16 +20,20 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-12-01T07:15:00Z",
     "name": "WOD",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Sussi Larsen"
      }
     ],
+    "signUpDeadline": "2026-12-01T08:15:00Z",
     "signupOpen": false,
     "startTime": "2026-12-01T08:15:00",
     "formDefinition": [],
@@ -42,7 +47,9 @@
     "reservations": 0,
     "startTimeUtc": "2026-12-01T07:15:00Z",
     "endTimeUtc": "2026-12-01T08:15:00Z",
-    "registerAttendance": true,
+    "meetTimeUtc": "2026-12-01T07:15:00Z",
+    "signUpDeadlineUtc": "2026-12-01T08:15:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -52,7 +59,7 @@
     "isParent": false,
     "sequence": "Activity2516088149026514920",
     "createdTs": "2026-10-31T22:31:37.3797352Z",
-    "modifiedTs": "2026-10-31T22:31:37.3797352Z",
+    "modifiedTs": "2026-11-24T06:23:14.0326454Z",
     "tagsAssigned": []
    },
    {
@@ -60,7 +67,7 @@
     "activityId": "Activity2517743116293951096",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 0,
+    "booked": 1,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -353,7 +360,7 @@
     "activityId": "Activity2517682293521157937",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 3,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -409,7 +416,7 @@
     "activityId": "Activity2516277445812201999",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
+    "booked": 2,
     "color": "039be5",
     "description": "<p>HYROX inspireret træning med krævende og udfordrende øvelser som ikke er teknisk svære eller tunge. </p>\n<p>Træningen er 40 min. </p>",
     "isSuperEvent": false,
@@ -521,7 +528,7 @@
     "activityId": "Activity2516659546312284291",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
+    "booked": 2,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -720,7 +727,7 @@
      "_count": 0
     },
     "inviteTags": [],
-    "waitingList": 0,
+    "waitingList": 1,
     "reservations": 0,
     "startTimeUtc": "2026-12-03T17:00:00Z",
     "endTimeUtc": "2026-12-03T18:00:00Z",
@@ -793,7 +800,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -806,7 +813,7 @@
     "activityId": "Activity2517743106713615054",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
+    "booked": 2,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -862,7 +869,7 @@
     "activityId": "Activity2517743105546903012",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
+    "booked": 3,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -979,7 +986,7 @@
     "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 3,
     "color": "#9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -1675,6 +1682,7 @@
    {
     "activityHasPrice": false,
     "activityId": "Activity2516088149026514920",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
     "booked": 0,
@@ -1689,16 +1697,20 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-12-08T07:15:00Z",
     "name": "WOD",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Sussi Larsen"
      }
     ],
+    "signUpDeadline": "2026-12-08T08:15:00Z",
     "signupOpen": false,
     "startTime": "2026-12-08T08:15:00",
     "formDefinition": [],
@@ -1712,7 +1724,9 @@
     "reservations": 0,
     "startTimeUtc": "2026-12-08T07:15:00Z",
     "endTimeUtc": "2026-12-08T08:15:00Z",
-    "registerAttendance": true,
+    "meetTimeUtc": "2026-12-08T07:15:00Z",
+    "signUpDeadlineUtc": "2026-12-08T08:15:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -1722,7 +1736,7 @@
     "isParent": false,
     "sequence": "Activity2516088149026514920",
     "createdTs": "2026-10-31T22:31:37.3797352Z",
-    "modifiedTs": "2026-10-31T22:31:37.3797352Z",
+    "modifiedTs": "2026-11-24T06:23:40.233282Z",
     "tagsAssigned": []
    },
    {
@@ -2349,7 +2363,7 @@
     "activityId": "Activity2516421299835599010",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 7,
+    "booked": 8,
     "color": "ffd54f",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
@@ -2378,7 +2392,7 @@
     "signupOpen": false,
     "startTime": "2026-12-10T18:00:00",
     "formDefinition": [],
-    "status": "scheduled",
+    "status": "booked",
     "invitationMedia": "sms",
     "inviteMembers": {
      "_count": 0
@@ -2457,7 +2471,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -4007,7 +4021,7 @@
     "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 6,
+    "booked": 7,
     "color": "#ffd54f",
     "description": "<p><strong>Formålet med Basic/teknik holdet er:</strong><br />- Fokus på teknik frem for præstation.<br />- Give en god introduktion til basale løft og teknikker i funktionel fitness<br />- Mulighed for at forfine teknikker og gå mere i dybden med bevægelserne</p>",
     "isSuperEvent": false,
@@ -4115,7 +4129,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -5717,7 +5731,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -7362,7 +7376,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-08-24T08:46:42.2059794Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]

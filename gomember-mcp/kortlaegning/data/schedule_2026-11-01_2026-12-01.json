@@ -5582,9 +5582,10 @@
    {
     "activityHasPrice": false,
     "activityId": "Activity2516363572535700946",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 11,
+    "booked": 10,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -5596,16 +5597,20 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-11-23T15:00:00Z",
     "name": "WOD Mandag 1600",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Ivan Munch Petersen"
      }
     ],
+    "signUpDeadline": "2026-11-23T16:00:00Z",
     "signupOpen": false,
     "startTime": "2026-11-23T16:00:00",
     "formDefinition": [],
@@ -5619,7 +5624,9 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-23T15:00:00Z",
     "endTimeUtc": "2026-11-23T16:00:00Z",
-    "registerAttendance": true,
+    "meetTimeUtc": "2026-11-23T15:00:00Z",
+    "signUpDeadlineUtc": "2026-11-23T16:00:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": false,
@@ -5629,7 +5636,7 @@
     "isParent": false,
     "sequence": "Activity2516363572535700946",
     "createdTs": "2025-12-17T03:52:26.4611356Z",
-    "modifiedTs": "2026-11-06T19:59:47.9291998Z",
+    "modifiedTs": "2026-11-23T14:17:38.6130633Z",
     "tagsAssigned": [
      "Tag2"
     ]
@@ -5639,7 +5646,7 @@
     "activityId": "Activity2516363571799491831",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 5,
+    "booked": 3,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -5692,9 +5699,10 @@
    {
     "activityHasPrice": false,
     "activityId": "Activity2516968090948176157",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 3,
+    "booked": 4,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -5706,16 +5714,19 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
     "name": "WOD Mandag 1945",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Christian Gøtzsche"
      }
     ],
+    "signUpDeadline": "2026-11-23T18:45:00Z",
     "signupOpen": false,
     "startTime": "2026-11-23T19:45:00",
     "formDefinition": [],
@@ -5729,7 +5740,8 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-23T18:45:00Z",
     "endTimeUtc": "2026-11-23T19:45:00Z",
-    "registerAttendance": true,
+    "signUpDeadlineUtc": "2026-11-23T18:45:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -5739,7 +5751,7 @@
     "isParent": false,
     "sequence": "Activity2516968090948176157",
     "createdTs": "2025-12-17T03:49:13.3551919Z",
-    "modifiedTs": "2026-05-04T11:47:58.7690263Z",
+    "modifiedTs": "2026-11-23T14:18:06.2935167Z",
     "tagsAssigned": [
      "Tag2",
      "Tag2517986617920749834"
@@ -5753,9 +5765,10 @@
    {
     "activityHasPrice": false,
     "activityId": "Activity2516088149026514920",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 7,
+    "booked": 14,
     "color": "9ccc65",
     "description": "<p>Dagens WOD</p>",
     "isSuperEvent": false,
@@ -5767,20 +5780,24 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
-    "maxAttendees": 12,
+    "locationName": "",
+    "maxAttendees": 14,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-11-24T07:15:00Z",
     "name": "WOD",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Thomas Ronne"
      }
     ],
+    "signUpDeadline": "2026-11-24T08:15:00Z",
     "signupOpen": false,
     "startTime": "2026-11-24T08:15:00",
     "formDefinition": [],
-    "status": "scheduled",
+    "status": "booked",
     "invitationMedia": "sms",
     "inviteMembers": {
      "_count": 0
@@ -5790,7 +5807,9 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-24T07:15:00Z",
     "endTimeUtc": "2026-11-24T08:15:00Z",
-    "registerAttendance": true,
+    "meetTimeUtc": "2026-11-24T07:15:00Z",
+    "signUpDeadlineUtc": "2026-11-24T08:15:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -5800,12 +5819,13 @@
     "isParent": false,
     "sequence": "Activity2516088149026514920",
     "createdTs": "2026-10-31T22:31:37.3797352Z",
-    "modifiedTs": "2026-10-31T22:31:37.3797352Z",
+    "modifiedTs": "2026-11-23T20:55:38.5108453Z",
     "tagsAssigned": []
    },
    {
     "activityHasPrice": false,
     "activityId": "Activity2517743116293951096",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
     "booked": 6,
@@ -5820,16 +5840,19 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
     "name": "WOD Tirsdag 1630",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Jeppe Rasmussen"
      }
     ],
+    "signUpDeadline": "2026-11-24T15:30:00Z",
     "signupOpen": false,
     "startTime": "2026-11-24T16:30:00",
     "formDefinition": [],
@@ -5843,7 +5866,8 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-24T15:30:00Z",
     "endTimeUtc": "2026-11-24T16:30:00Z",
-    "registerAttendance": true,
+    "signUpDeadlineUtc": "2026-11-24T15:30:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -5853,7 +5877,7 @@
     "isParent": false,
     "sequence": "Activity2517743116293951096",
     "createdTs": "2025-12-17T03:46:23.317116Z",
-    "modifiedTs": "2026-05-04T11:48:03.7687029Z",
+    "modifiedTs": "2026-11-23T14:18:39.4117877Z",
     "tagsAssigned": [
      "Tag2",
      "Tag2517986617775210869"
@@ -5862,6 +5886,7 @@
    {
     "activityHasPrice": false,
     "activityId": "Activity2516233711301680950",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
     "booked": 5,
@@ -5876,16 +5901,20 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-11-24T16:45:00Z",
     "name": "TONS",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Jeppe Rasmussen"
      }
     ],
+    "signUpDeadline": "2026-11-24T18:00:00Z",
     "signupOpen": false,
     "startTime": "2026-11-24T17:45:00",
     "formDefinition": [],
@@ -5899,7 +5928,9 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-24T16:45:00Z",
     "endTimeUtc": "2026-11-24T18:00:00Z",
-    "registerAttendance": true,
+    "meetTimeUtc": "2026-11-24T16:45:00Z",
+    "signUpDeadlineUtc": "2026-11-24T18:00:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -5909,16 +5940,17 @@
     "isParent": false,
     "sequence": "Activity2516233711301680950",
     "createdTs": "2026-05-16T11:07:50.3006569Z",
-    "modifiedTs": "2026-05-16T11:08:29.5658847Z",
+    "modifiedTs": "2026-11-23T14:18:49.156273Z",
     "tagsAssigned": []
    },
    {
     "activityHasPrice": false,
     "activityId": "Activity2517743115769869245",
+    "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
-    "color": "9ccc65",
+    "booked": 4,
+    "color": "#9ccc65",
     "description": "",
     "isSuperEvent": false,
     "endTime": "2026-11-24T20:00:00",
@@ -5929,16 +5961,20 @@
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-11-24T18:00:00Z",
     "name": "WOD Tirsdag 1900",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Ulrikke Wøhler"
      }
     ],
+    "signUpDeadline": "2026-11-24T19:00:00Z",
     "signupOpen": false,
     "startTime": "2026-11-24T19:00:00",
     "formDefinition": [],
@@ -5952,7 +5988,9 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-24T18:00:00Z",
     "endTimeUtc": "2026-11-24T19:00:00Z",
-    "registerAttendance": true,
+    "meetTimeUtc": "2026-11-24T18:00:00Z",
+    "signUpDeadlineUtc": "2026-11-24T19:00:00Z",
+    "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
     "disableComments": true,
@@ -5962,7 +6000,7 @@
     "isParent": false,
     "sequence": "Activity2517743115769869245",
     "createdTs": "2025-12-17T03:46:47.6949263Z",
-    "modifiedTs": "2026-05-04T11:48:03.0811731Z",
+    "modifiedTs": "2026-11-23T17:06:37.5355559Z",
     "tagsAssigned": [
      "Tag2",
      "Tag2517986617775210869"
@@ -6047,7 +6085,7 @@
     "entityId": "Activity2517743114820337813-202611250815",
     "eventId": "202611250815",
     "hasPrice": false,
-    "hasWaitingList": false,
+    "hasWaitingList": true,
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
@@ -6061,7 +6099,7 @@
     "rules": "",
     "responsible": [
      {
-      "displayName": "Thomas Ronne"
+      "displayName": "Peter Alexander Schougaard"
      }
     ],
     "signUpDeadline": "2026-11-25T08:15:00Z",
@@ -6090,7 +6128,7 @@
     "isParent": false,
     "sequence": "Activity2517743114820337813",
     "createdTs": "2025-12-17T03:47:14.725538Z",
-    "modifiedTs": "2026-11-22T07:28:58.1742483Z",
+    "modifiedTs": "2026-11-24T20:12:21.2628961Z",
     "tagsAssigned": [
      "Tag2",
      "Tag2517986617667087038"
@@ -6101,7 +6139,7 @@
     "activityId": "Activity2517682293521157937",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 10,
+    "booked": 8,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -6109,20 +6147,24 @@
     "entityId": "Activity2517682293521157937-202611251600",
     "eventId": "202611251600",
     "hasPrice": false,
-    "hasWaitingList": false,
+    "hasWaitingList": true,
     "hasSeating": false,
     "hideFromOverview": false,
     "onlyLoggedIn": false,
+    "locationName": "",
     "maxAttendees": 12,
     "maxGuestsPerMember": 0,
+    "meetTime": "2026-11-25T15:00:00Z",
     "name": "WOD Onsdag 1600",
     "onlineSignup": true,
     "price": 0.0,
+    "rules": "",
     "responsible": [
      {
-      "displayName": null
+      "displayName": "Christian Gøtzsche"
      }
     ],
+    "signUpDeadline": "2026-11-25T16:00:00Z",
     "signupOpen": false,
     "startTime": "2026-11-25T16:00:00",
     "formDefinition": [],
@@ -6136,6 +6178,8 @@
     "reservations": 0,
     "startTimeUtc": "2026-11-25T15:00:00Z",
     "endTimeUtc": "2026-11-25T16:00:00Z",
+    "meetTimeUtc": "2026-11-25T15:00:00Z",
+    "signUpDeadlineUtc": "2026-11-25T16:00:00Z",
     "registerAttendance": true,
     "allowPartner": false,
     "allowInvite": false,
@@ -6146,7 +6190,7 @@
     "isParent": false,
     "sequence": "Activity2517682293521157937",
     "createdTs": "2025-12-17T03:48:33.3574787Z",
-    "modifiedTs": "2026-05-04T11:48:04.9562662Z",
+    "modifiedTs": "2026-11-24T11:24:52.6990787Z",
     "tagsAssigned": [
      "Tag2",
      "Tag2517986617667087038"
@@ -6157,7 +6201,7 @@
     "activityId": "Activity2516277445812201999",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 6,
+    "booked": 10,
     "color": "039be5",
     "description": "<p>HYROX inspireret træning med krævende og udfordrende øvelser som ikke er teknisk svære eller tunge. </p>\n<p>Træningen er 40 min. </p>",
     "isSuperEvent": false,
@@ -6269,7 +6313,7 @@
     "activityId": "Activity2516659546312284291",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 5,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -6413,7 +6457,7 @@
      "_count": 0
     },
     "inviteTags": [],
-    "waitingList": 4,
+    "waitingList": 8,
     "reservations": 0,
     "startTimeUtc": "2026-11-26T15:30:00Z",
     "endTimeUtc": "2026-11-26T16:30:00Z",
@@ -6475,7 +6519,7 @@
      "_count": 0
     },
     "inviteTags": [],
-    "waitingList": 2,
+    "waitingList": 1,
     "reservations": 0,
     "startTimeUtc": "2026-11-26T17:00:00Z",
     "endTimeUtc": "2026-11-26T18:00:00Z",
@@ -6504,7 +6548,7 @@
     "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 3,
     "color": "81c784",
     "description": "",
     "isSuperEvent": false,
@@ -6529,7 +6573,6 @@
       "displayName": "Christian Gøtzsche"
      }
     ],
-    "signUpDeadline": "2026-11-26T19:00:00Z",
     "signupOpen": false,
     "startTime": "2026-11-26T19:00:00",
     "formDefinition": [],
@@ -6544,7 +6587,6 @@
     "startTimeUtc": "2026-11-26T18:00:00Z",
     "endTimeUtc": "2026-11-26T19:00:00Z",
     "meetTimeUtc": "2026-11-26T18:00:00Z",
-    "signUpDeadlineUtc": "2026-11-26T19:00:00Z",
     "registerAttendance": false,
     "allowPartner": false,
     "allowInvite": false,
@@ -6555,7 +6597,7 @@
     "isParent": false,
     "sequence": "Activity2516147395982174455",
     "createdTs": "2026-08-24T08:46:42.2059794Z",
-    "modifiedTs": "2026-11-22T20:36:31.5159649Z",
+    "modifiedTs": "2026-11-23T07:50:03.1167958Z",
     "tagsAssigned": []
    }
   ]
@@ -6686,7 +6728,7 @@
     "activityId": "Activity2516244060202738431",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 2,
+    "booked": 3,
     "color": "cfd8dc",
     "description": "<p><span>Holdet er for folk som ser crossfit som en sport og ikke som en motionsform. Deltagelse kræver at du har et tilpas højt niveau, da der forekommer skills og træningsvolumen er høj. Skaleringer vil kun være muligt i meget begrænset omfang. Det forventes at du kan tage 100% ansvar for egen træning da der ikke er en træner tilrådighed.</span><br /><br /><span>Ved holdstart har man varmet op, så kun træningsspecifikt opvarmningen foregår i den angivne træningstid.</span></p>\n<p> </p>\n<p><span>MASH-workouten udgives af programmet \"The Progrm\" og slås op på deres profil på Instagram. Man kan også få gratis adgang til workouten, hvis man er tilmeldt programmet. </span></p>",
     "isSuperEvent": false,
@@ -6746,7 +6788,7 @@
     "activityId": "Activity2517743105127783782",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 5,
+    "booked": 7,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -6808,7 +6850,7 @@
     "activityId": "Activity2517743104814044562",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 6,
+    "booked": 10,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -6870,7 +6912,7 @@
     "activityId": "Activity2516147394819805210",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 1,
+    "booked": 3,
     "color": "039be5",
     "description": "",
     "isSuperEvent": false,
@@ -6931,7 +6973,7 @@
     "activityId": "Activity2517743103297333604",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 9,
+    "booked": 11,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -6987,7 +7029,7 @@
     "activityId": "Activity2516140240740267054",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 4,
+    "booked": 5,
     "color": "66bb6a",
     "description": "<p>Den lange søndags WOD </p>\n<p>selve workout er 60 min. </p>",
     "isSuperEvent": false,
@@ -7156,7 +7198,7 @@
     "attendanceMessage": "",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 0,
+    "booked": 1,
     "color": "#aed581",
     "description": "<p>For de morgenfriske - god start på ugen // Mandag</p>",
     "isSuperEvent": false,
@@ -7216,7 +7258,7 @@
     "activityId": "Activity2517743126576154536",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 3,
+    "booked": 4,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
@@ -7278,7 +7320,7 @@
     "activityId": "Activity2516363572535700946",
     "paymentRules": 0,
     "attendancePrivacy": 1,
-    "booked": 5,
+    "booked": 6,
     "color": "9ccc65",
     "description": "",
     "isSuperEvent": false,
