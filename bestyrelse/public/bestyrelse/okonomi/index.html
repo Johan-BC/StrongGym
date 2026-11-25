@@ -159,7 +159,7 @@ legend { font-size: .8rem; font-weight: 600; padding: 0 6px; }
       </div>
       <div class="fields">
         <div class="field"><label for="f-month">Måned</label><input type="month" id="f-month" required></div>
-        <div class="field"><label for="f-members">Aktive medlemmer</label><input type="number" id="f-members" min="0" step="1" inputmode="numeric" required><span class="hint">Fra goMember ved månedens udgang</span></div>
+        <div class="field"><label for="f-members">Aktive medlemmer</label><input type="number" id="f-members" min="0" step="1" inputmode="numeric" required><span class="hint" id="f-members-hint">Fra goMember ved månedens udgang</span></div>
         <div class="field"><label for="f-cash">Kassebeholdning ultimo</label><input type="number" id="f-cash" step="1" inputmode="numeric"><span class="hint">Fra banken. Tom = beregnes</span></div>
       </div>
 
@@ -329,6 +329,28 @@ async function load() {
   S.wish = d.wishlist || []; S.db = true;
   $('#who-email').textContent = d.me.email;
   render();
+  loadGoMember();
+}
+// Forslag til "Aktive medlemmer": samme tal som grafen på Overblik - beregnet ud fra
+// betalende medlemskaber i goMember ved månedens udgang. Faktiske natlige målinger går forud.
+async function loadGoMember() {
+  try {
+    const r = await fetch('../styring-medlemmer.json', { credentials: 'same-origin', cache: 'no-store' });
+    if (!r.ok) return;
+    const m = await r.json(), out = {};
+    ((m.betalendeHistorik && m.betalendeHistorik.maaneder) || []).forEach((x) => { if (Number.isFinite(x.antal)) out[x.maaned] = x.antal; });
+    (m.maalinger || []).slice().sort((a, b) => (a.dato < b.dato ? -1 : 1)).forEach((x) => { if (Number.isFinite(x.betalende)) out[x.dato.slice(0, 7)] = x.betalende; });
+    S.goMember = out;
+  } catch (e) { /* uden forslag virker formularen som før */ }
+}
+const forslag = (month) => (S.goMember && Number.isFinite(S.goMember[month]) ? S.goMember[month] : null);
+function setMembersSuggestion(month, ex) {
+  const inp = $('#f-members'), hint = $('#f-members-hint'), fs = forslag(month);
+  if (ex) { inp.value = ex.members; inp.dataset.auto = '';
+    hint.textContent = fs != null && fs !== ex.members ? 'goMember siger ' + nf.format(fs) + ' (beregnet). Ret, hvis det er forkert.' : 'Fra goMember ved månedens udgang';
+    return; }
+  if (fs != null) { inp.value = fs; inp.dataset.auto = '1'; hint.textContent = 'Forslag fra goMember: beregnet ud fra betalende medlemskaber. Ret, hvis det er forkert.'; }
+  else { inp.value = S.months.length ? S.months[S.months.length - 1].members : ''; inp.dataset.auto = ''; hint.textContent = 'Fra goMember ved månedens udgang (intet forslag for denne måned)'; }
 }
 const st = () => Object.assign({}, DEFAULTS, S.settings || {});
 const sumFixed = (s, type) => (s.fixed || []).filter((f) => f.type === type).reduce((a, f) => a + (Number(f.amount) || 0), 0);
@@ -670,7 +692,7 @@ function openEntry(month) {
   $('#entry-title').textContent = ex ? 'Ret ' + monLong(ex.month) : 'Registrér måned';
   $('#f-month').value = def;
   const set = (id, v) => { $(id).value = v == null ? '' : v; };
-  set('#f-members', ex ? ex.members : (S.months.length ? S.months[S.months.length - 1].members : ''));
+  setMembersSuggestion(def, ex);
   set('#f-cash', ex && ex.cash); set('#f-payroll', ex && ex.payroll); set('#f-hours', ex && ex.hours);
   set('#f-other', ex && ex.other_income); set('#f-contingent', ex && ex.contingent); set('#f-equip', ex && ex.equipment); set('#f-note', ex && ex.note);
   $('#f-file').value = ''; $('#import').hidden = true;
@@ -682,10 +704,17 @@ function openEntry(month) {
   $('#f-month').focus({ preventScroll: true });
 }
 $('#btn-new').addEventListener('click', () => openEntry(null));
+$('#f-members').addEventListener('input', () => {
+  $('#f-members').dataset.auto = '';
+  const fs = forslag($('#f-month').value);
+  $('#f-members-hint').textContent = fs != null ? 'Rettet af dig. goMember foreslår ' + nf.format(fs) + ' for denne måned.' : 'Fra goMember ved månedens udgang';
+});
 $('#entry-cancel').addEventListener('click', () => { $('#entry').hidden = true; });
 $('#f-month').addEventListener('change', () => {
   const m = $('#f-month').value; const ex = S.months.find((x) => x.month === m);
   $('#entry-delete').hidden = !ex;
+  if (ex || $('#f-members').dataset.auto === '1' || $('#f-members').value === '') setMembersSuggestion(m, ex);
+  else { const fs = forslag(m); $('#f-members-hint').textContent = fs != null ? 'Rettet af dig. goMember foreslår ' + nf.format(fs) + ' for denne måned.' : 'Fra goMember ved månedens udgang'; }
   if (ex) $('#entry-title').textContent = 'Ret ' + monLong(m) + ' (findes allerede)'; else $('#entry-title').textContent = 'Registrér måned';
 });
 $('#entry-delete').addEventListener('click', (ev) => confirmBtn(ev.currentTarget, async () => {
