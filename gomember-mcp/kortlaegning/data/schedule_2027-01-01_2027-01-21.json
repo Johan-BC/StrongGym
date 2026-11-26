@@ -4341,5 +4341,285 @@
     ]
    }
   ]
+ },
+ {
+  "date": "2027-01-20T00:00:00Z",
+  "slots": [
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517091423358347887",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "8bc34a",
+    "description": "<p>Træning for de morgen friske</p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-20T07:00:00",
+    "entityId": "Activity2517091423358347887-202701200600",
+    "eventId": "202701200600",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Onsdag 0600",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-20T06:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-20T05:00:00Z",
+    "endTimeUtc": "2027-01-20T06:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517091423358347887",
+    "createdTs": "2026-11-03T11:49:59.562693Z",
+    "modifiedTs": "2026-11-03T11:49:59.562693Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617667087038"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517743114820337813",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-20T09:15:00",
+    "entityId": "Activity2517743114820337813-202701200815",
+    "eventId": "202701200815",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Onsdag 0815",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-20T08:15:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-20T07:15:00Z",
+    "endTimeUtc": "2027-01-20T08:15:00Z",
+    "registerAttendance": true,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517743114820337813",
+    "createdTs": "2026-10-20T17:02:49.8672714Z",
+    "modifiedTs": "2026-10-20T17:02:49.8672714Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617667087038"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2517682293521157937",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "9ccc65",
+    "description": "",
+    "isSuperEvent": false,
+    "endTime": "2027-01-20T17:00:00",
+    "entityId": "Activity2517682293521157937-202701201600",
+    "eventId": "202701201600",
+    "hasPrice": false,
+    "hasWaitingList": true,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "WOD Onsdag 1600",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-20T16:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-20T15:00:00Z",
+    "endTimeUtc": "2027-01-20T16:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2517682293521157937",
+    "createdTs": "2026-11-06T20:04:41.3945353Z",
+    "modifiedTs": "2026-11-06T20:04:41.3945353Z",
+    "tagsAssigned": [
+     "Tag2",
+     "Tag2517986617667087038"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516277445812201999",
+    "paymentRules": 0,
+    "attendancePrivacy": 1,
+    "booked": 0,
+    "color": "039be5",
+    "description": "<p>HYROX inspireret træning med krævende og udfordrende øvelser som ikke er teknisk svære eller tunge. </p>\n<p>Træningen er 40 min. </p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-20T18:00:00",
+    "entityId": "Activity2516277445812201999-202701201700",
+    "eventId": "202701201700",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxAttendees": 12,
+    "maxGuestsPerMember": 0,
+    "name": "HYROX",
+    "onlineSignup": true,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-20T17:00:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-20T16:00:00Z",
+    "endTimeUtc": "2027-01-20T17:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516277445812201999",
+    "createdTs": "2026-03-26T20:16:59.3892108Z",
+    "modifiedTs": "2026-03-26T20:16:59.3892108Z",
+    "tagsAssigned": [
+     "Tag2"
+    ]
+   },
+   {
+    "activityHasPrice": false,
+    "activityId": "Activity2516098608171825494",
+    "paymentRules": 0,
+    "attendancePrivacy": 0,
+    "booked": 0,
+    "color": "f8bbd0",
+    "description": "<p>Husk: der skal være plads til rengøringen. Man kan godt selvtræne imens💪</p>",
+    "isSuperEvent": false,
+    "endTime": "2027-01-20T21:00:00",
+    "entityId": "Activity2516098608171825494-202701201830",
+    "eventId": "202701201830",
+    "hasPrice": false,
+    "hasWaitingList": false,
+    "hasSeating": false,
+    "hideFromOverview": false,
+    "onlyLoggedIn": false,
+    "maxGuestsPerMember": 0,
+    "name": "Rengøring",
+    "onlineSignup": false,
+    "price": 0.0,
+    "responsible": [
+     {
+      "displayName": null
+     }
+    ],
+    "signupOpen": false,
+    "startTime": "2027-01-20T18:30:00",
+    "formDefinition": [],
+    "status": "scheduled",
+    "invitationMedia": "sms",
+    "inviteMembers": {
+     "_count": 0
+    },
+    "inviteTags": [],
+    "waitingList": 0,
+    "reservations": 0,
+    "startTimeUtc": "2027-01-20T17:30:00Z",
+    "endTimeUtc": "2027-01-20T20:00:00Z",
+    "registerAttendance": false,
+    "allowPartner": false,
+    "allowInvite": false,
+    "disableComments": true,
+    "commentsAll": false,
+    "commentsNoSend": false,
+    "allowNonMember": false,
+    "isParent": false,
+    "sequence": "Activity2516098608171825494",
+    "createdTs": "2026-10-19T19:59:43.3955697Z",
+    "modifiedTs": "2026-10-19T19:59:43.3955697Z",
+    "tagsAssigned": []
+   }
+  ]
  }
 ]
