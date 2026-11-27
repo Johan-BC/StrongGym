@@ -1,6 +1,6 @@
 {
  "_om": "Anonyme optællinger fra goMember (kun GET via GoMemberClient). Ingen navne, numre eller id'er på medlemmer. Tal for kombinationer vises som \"<3\", når de er 1 eller 2. Samlede tal er godkendt til offentliggørelse; filen må aldrig indeholde data om enkeltpersoner.",
- "hentet": "2026-11-25T03:17",
+ "hentet": "2026-11-27T03:18",
  "tidszone": "Europe/Copenhagen",
  "kilde": {
   "kald": [
@@ -103,7 +103,7 @@
    },
    {
     "maaned": "2026-11",
-    "dato": "2026-11-25",
+    "dato": "2026-11-27",
     "antal": 118
    }
   ],
@@ -142,6 +142,16 @@
   },
   {
    "dato": "2026-11-25",
+   "betalende": 118,
+   "aktive": 168
+  },
+  {
+   "dato": "2026-11-26",
+   "betalende": 118,
+   "aktive": 168
+  },
+  {
+   "dato": "2026-11-27",
    "betalende": 118,
    "aktive": 168
   }
@@ -211,7 +221,7 @@
   {
    "tagId": "Tag2",
    "navn": "Alle medlemmer",
-   "antal": 154
+   "antal": 156
   },
   {
    "tagId": "Tag2518007428832244134",
