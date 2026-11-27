@@ -308,7 +308,7 @@ const addMonths = (k, n) => { const [y, m] = k.split('-').map(Number); return ne
 const val = (id) => { const v = $(id).value.trim(); if (v === '') return null; const n = Number(v); return Number.isFinite(n) ? n : NaN; };
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
-const DEFAULTS = { avg_fee: 350, buffer_months: 1, growth: 1, opening_cash: 0, categories: ['El', 'Vand', 'Varme', 'Andet'], fixed: [] };
+const DEFAULTS = { avg_fee: 350, buffer_months: 1, growth: 1, opening_cash: 0, categories: ['El', 'Vand', 'Andet'], fixed: [] };
 const S = { settings: null, months: [], wish: [], db: false, me: null, canWrite: null, range: 12, editWish: null };
 const API = '/bestyrelse/api';
 async function api(method, path, body) {
