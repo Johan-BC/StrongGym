@@ -275,7 +275,7 @@ legend { font-size: .8rem; font-weight: 600; padding: 0 6px; }
     <form class="panel" id="set-form" novalidate>
       <div class="card-head"><div><h2>Indstillinger</h2><p class="muted small">Ændringer i faste poster gælder fra nu. Allerede registrerede måneder beholder de faste poster, de blev gemt med.</p></div></div>
       <div class="fields">
-        <div class="field"><label for="s-fee">Gns. kontingent pr. medlem pr. måned</label><input type="number" id="s-fee" min="0" step="1"></div>
+        <div class="field"><label for="s-fee">Gns. kontingent pr. medlem pr. måned</label><input type="number" id="s-fee" min="0" step="1"><span class="hint" id="s-fee-hint"></span></div>
         <div class="field"><label for="s-buffer">Buffer, antal måneders udgifter</label><input type="number" id="s-buffer" min="0" step="0.5"></div>
         <div class="field"><label for="s-growth">Forventet netto-tilgang pr. måned</label><input type="number" id="s-growth" step="0.5"><span class="hint">Medlemmer. Bruges i prognosen</span></div>
         <div class="field"><label for="s-opening">Kasse før første måned</label><input type="number" id="s-opening" step="1"><span class="hint">Bruges kun hvis kassen ikke er indtastet</span></div>
@@ -341,6 +341,21 @@ async function loadGoMember() {
     ((m.betalendeHistorik && m.betalendeHistorik.maaneder) || []).forEach((x) => { if (Number.isFinite(x.antal)) out[x.maaned] = x.antal; });
     (m.maalinger || []).slice().sort((a, b) => (a.dato < b.dato ? -1 : 1)).forEach((x) => { if (Number.isFinite(x.betalende)) out[x.dato.slice(0, 7)] = x.betalende; });
     S.goMember = out;
+    // Gns. kontingent beregnes af medlemskaberne og priserne fra Overblik - ikke tastet ind.
+    const r2 = await fetch('../styring-data.json', { credentials: 'same-origin', cache: 'no-store' });
+    if (r2.ok) {
+      const d = await r2.json(), pris = {};
+      (d.memberships || []).forEach((x) => { pris[x.id] = x; });
+      let sum = 0, n = 0; const dele = [];
+      (m.medlemskaber || []).forEach((x) => {
+        const p = pris[x.tagId], antal = Number(x.antal);
+        if (!p || !Number.isFinite(antal) || antal <= 0 || !(p.price > 0)) return;
+        // Månedspris: pr. md. som den er, pr. år / 12, klippekort / 6 (gyldigt i 6 måneder).
+        const md = /år/.test(p.priceUnit) ? p.price / 12 : /kort/.test(p.priceUnit) ? p.price / 6 : p.price;
+        sum += antal * md; n += antal; dele.push({ navn: p.name, antal, md });
+      });
+      if (n > 0) { S.fee = { value: Math.round(sum / n), total: Math.round(sum), n, dele }; render(); }
+    }
   } catch (e) { /* uden forslag virker formularen som før */ }
 }
 const forslag = (month) => (S.goMember && Number.isFinite(S.goMember[month]) ? S.goMember[month] : null);
@@ -352,7 +367,7 @@ function setMembersSuggestion(month, ex) {
   if (fs != null) { inp.value = fs; inp.dataset.auto = '1'; hint.textContent = 'Forslag fra goMember: beregnet ud fra betalende medlemskaber. Ret, hvis det er forkert.'; }
   else { inp.value = S.months.length ? S.months[S.months.length - 1].members : ''; inp.dataset.auto = ''; hint.textContent = 'Fra goMember ved månedens udgang (intet forslag for denne måned)'; }
 }
-const st = () => Object.assign({}, DEFAULTS, S.settings || {});
+const st = () => Object.assign({}, DEFAULTS, S.settings || {}, S.fee ? { avg_fee: S.fee.value } : {});
 const sumFixed = (s, type) => (s.fixed || []).filter((f) => f.type === type).reduce((a, f) => a + (Number(f.amount) || 0), 0);
 
 /* ---------- beregninger ---------- */
@@ -873,7 +888,9 @@ function fixedRow(f) {
 }
 function openSettings() {
   const s = st();
-  $('#s-fee').value = s.avg_fee; $('#s-buffer').value = s.buffer_months; $('#s-growth').value = s.growth; $('#s-opening').value = s.opening_cash; $('#s-cats').value = s.categories.join(', ');
+  $('#s-fee').value = s.avg_fee; $('#s-fee').readOnly = !!S.fee;
+  $('#s-fee-hint').textContent = S.fee ? 'Beregnet hver nat fra medlemskaber og priser (Overblik): ' + S.fee.dele.map((x) => x.antal + ' × ' + nf.format(Math.round(x.md)) + ' kr (' + x.navn + ')').join(', ') + '. Klippekort regnes som 850 kr fordelt på 6 måneder. Kan ikke tastes.' : 'Kunne ikke beregnes fra Overblik - indtast et skøn.';
+  $('#s-buffer').value = s.buffer_months; $('#s-growth').value = s.growth; $('#s-opening').value = s.opening_cash; $('#s-cats').value = s.categories.join(', ');
   $('#s-fixed').replaceChildren(...(s.fixed || []).map(fixedRow));
   showErr('#set-err'); $('#card-settings').hidden = false; $('#entry').hidden = true;
   $('#card-settings').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -896,7 +913,7 @@ $('#set-form').addEventListener('submit', async (ev) => {
   if (bad) return showErr('#set-err', 'Hver fast post skal have et navn og et beløb.');
   const sampleFlag = !!(S.settings && S.settings.sample) && JSON.stringify(fixed) === JSON.stringify(st().fixed);
   try {
-    await api('PUT', '/settings', { avg_fee: nums[0], buffer_months: nums[1], growth: nums[2], opening_cash: nums[3], categories: cats, fixed, sample: sampleFlag });
+    await api('PUT', '/settings', { avg_fee: S.fee ? S.fee.value : nums[0], buffer_months: nums[1], growth: nums[2], opening_cash: nums[3], categories: cats, fixed, sample: sampleFlag });
     $('#card-settings').hidden = true; await load();
   } catch (e) { showErr('#set-err', onWriteErr(e)); }
 });
