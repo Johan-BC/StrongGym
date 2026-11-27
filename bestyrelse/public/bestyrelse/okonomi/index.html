@@ -189,7 +189,7 @@ legend { font-size: .8rem; font-weight: 600; padding: 0 6px; }
         <legend>Øvrigt</legend>
         <div class="fields">
           <div class="field"><label for="f-other">Øvrige indtægter</label><input type="number" id="f-other" min="0" step="1" inputmode="numeric"><span class="hint">Drop-in, events, salg</span></div>
-          <div class="field"><label for="f-contingent">Kontingentindtægt</label><input type="number" id="f-contingent" min="0" step="1" inputmode="numeric"><span class="hint" id="f-contingent-hint">Månedlige abonnementer. Årsabonnementer og klippekort er ikke med</span></div>
+          <div class="field"><label for="f-contingent">Kontingentindtægt</label><input type="number" id="f-contingent" min="0" step="1" inputmode="numeric"><span class="hint" id="f-contingent-hint">Månedens Nets-udbetalinger fra kontoudtoget</span></div>
           <div class="field"><label for="f-equip">Udstyrskøb</label><input type="number" id="f-equip" min="0" step="1" inputmode="numeric"><span class="hint">Tæller i kassen, ikke i driften</span></div>
           <div class="field"><label for="f-note">Note</label><input type="text" id="f-note" maxlength="200"></div>
         </div>
@@ -368,6 +368,15 @@ function setMembersSuggestion(month, ex) {
 const st = () => Object.assign({}, DEFAULTS, S.settings || {});
 // Kontingent, når måneden ikke har et tal: abonnementerne fra Overblik (ellers 0).
 const kontForslag = () => (S.kont ? S.kont.total : 0);
+// Sidste registrerede måned før `month` med et faktisk kontingent (Nets-udbetalingerne).
+const forrigeKont = (month) => S.months.filter((x) => x.month < month && x.contingent != null).sort((a, b) => (a.month < b.month ? 1 : -1))[0] || null;
+// Forslag til en måned: sidste måneds faktiske beløb; findes ingen, beregnes det af abonnementerne.
+function kontForslagFor(month) {
+  const f = forrigeKont(month);
+  if (f) return { v: f.contingent, tekst: 'Forslag: sidste måneds faktiske kontingent (' + monLong(f.month) + '). Ret til månedens Nets-udbetalinger.' };
+  if (S.kont) return { v: S.kont.total, tekst: 'Ingen tidligere måned endnu - beregnet af abonnementerne: ' + kontTekst() + '. Ret til månedens Nets-udbetalinger.' };
+  return null;
+}
 const kontTekst = () => (S.kont ? S.kont.dele.map((x) => x.antal + ' × ' + nf.format(x.pris) + ' kr (' + x.navn + ')').join(' + ') : '');
 const sumFixed = (s, type) => (s.fixed || []).filter((f) => f.type === type).reduce((a, f) => a + (Number(f.amount) || 0), 0);
 
@@ -375,7 +384,8 @@ const sumFixed = (s, type) => (s.fixed || []).filter((f) => f.type === type).red
 function calcMonth(m, s) {
   const variable = m.variable || {};
   const varTotal = Object.values(variable).reduce((a, v) => a + (Number(v) || 0), 0);
-  const contingent = m.contingent != null ? m.contingent : kontForslag();
+  const fk = m.contingent != null ? null : forrigeKont(m.month);
+  const contingent = m.contingent != null ? m.contingent : (fk ? fk.contingent : kontForslag());
   const fixedInc = m.fixed_income != null ? m.fixed_income : sumFixed(s, 'Indtægt');
   const fixedExp = m.fixed_expenses != null ? m.fixed_expenses : sumFixed(s, 'Udgift');
   const other = m.other_income || 0;
@@ -712,9 +722,7 @@ function openEntry(month) {
   set('#f-cash', ex && ex.cash); set('#f-payroll', ex && ex.payroll); set('#f-hours', ex && ex.hours);
   set('#f-other', ex && ex.other_income); set('#f-equip', ex && ex.equipment); set('#f-note', ex && ex.note);
   const kh = $('#f-contingent-hint');
-  if (ex && ex.contingent != null) { set('#f-contingent', ex.contingent); kh.textContent = S.kont ? 'Abonnementerne giver nu ' + nf.format(S.kont.total) + ' kr. Ret, hvis det er forkert.' : 'Månedlige abonnementer'; }
-  else if (S.kont) { set('#f-contingent', S.kont.total); kh.textContent = 'Forslag: ' + kontTekst() + '. Årsabonnementer og klippekort er ikke med. Ret, hvis det er forkert.'; }
-  else { set('#f-contingent', ''); kh.textContent = 'Månedlige abonnementer. Årsabonnementer og klippekort er ikke med'; }
+  setKontSuggestion(def, ex);
   $('#f-file').value = ''; $('#import').hidden = true;
   buildVarFields(ex && ex.variable);
   $('#entry-delete').hidden = !ex; $('#entry-delete').textContent = 'Slet måned'; delete $('#entry-delete').dataset.armed;
@@ -724,8 +732,16 @@ function openEntry(month) {
   $('#f-month').focus({ preventScroll: true });
 }
 $('#btn-new').addEventListener('click', () => openEntry(null));
+function setKontSuggestion(month, ex) {
+  const inp = $('#f-contingent'), kh = $('#f-contingent-hint');
+  if (ex && ex.contingent != null) { inp.value = ex.contingent; inp.dataset.auto = ''; kh.textContent = 'Månedens Nets-udbetalinger fra kontoudtoget'; return; }
+  const f = kontForslagFor(month);
+  if (f) { inp.value = f.v; inp.dataset.auto = '1'; kh.textContent = f.tekst; }
+  else { inp.value = ''; inp.dataset.auto = ''; kh.textContent = 'Månedens Nets-udbetalinger fra kontoudtoget'; }
+}
 $('#f-contingent').addEventListener('input', () => {
-  if (S.kont) $('#f-contingent-hint').textContent = 'Rettet af dig. Abonnementerne giver ' + nf.format(S.kont.total) + ' kr.';
+  $('#f-contingent').dataset.auto = '';
+  $('#f-contingent-hint').textContent = 'Rettet af dig.';
 });
 $('#f-members').addEventListener('input', () => {
   $('#f-members').dataset.auto = '';
@@ -738,6 +754,7 @@ $('#f-month').addEventListener('change', () => {
   $('#entry-delete').hidden = !ex;
   if (ex || $('#f-members').dataset.auto === '1' || $('#f-members').value === '') setMembersSuggestion(m, ex);
   else { const fs = forslag(m); $('#f-members-hint').textContent = fs != null ? 'Rettet af dig. goMember foreslår ' + nf.format(fs) + ' for denne måned.' : 'Fra goMember ved månedens udgang'; }
+  if (ex || $('#f-contingent').dataset.auto === '1' || $('#f-contingent').value === '') setKontSuggestion(m, ex);
   if (ex) $('#entry-title').textContent = 'Ret ' + monLong(m) + ' (findes allerede)'; else $('#entry-title').textContent = 'Registrér måned';
 });
 $('#entry-delete').addEventListener('click', (ev) => confirmBtn(ev.currentTarget, async () => {
