@@ -58,7 +58,7 @@
 "activityMode": "event",
 "createdTs": "2026-08-24T10:48:38.0194789",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-20T22:47:22.1120791Z",
+"modifiedTs": "2026-11-27T17:23:02.1466217Z",
 "name": "Hyrox",
 "registerAttendance": false,
 "weekdayTags": []
@@ -85,7 +85,7 @@
 "activityMode": "event",
 "createdTs": "2026-05-04T13:39:39.7261568",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-26T15:58:35.6754165Z",
+"modifiedTs": "2026-11-27T08:06:53.2561524Z",
 "name": "MASH - lidt mere udfordrende end WOD",
 "registerAttendance": false,
 "weekdayTags": []
@@ -183,7 +183,7 @@
 "activityMode": "event",
 "createdTs": "2025-01-08T15:22:48.7715708",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-06T20:06:43.4660197Z",
+"modifiedTs": "2026-11-27T08:03:40.8803727Z",
 "name": "WOD Torsdag 0815",
 "registerAttendance": false,
 "weekdayTags": [
@@ -238,7 +238,7 @@
 "activityMode": "event",
 "createdTs": "2022-05-23T12:22:52.1441943",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-26T19:32:22.0463899Z",
+"modifiedTs": "2026-11-27T11:34:36.4687596Z",
 "name": "WOD Torsdag 1630",
 "registerAttendance": false,
 "weekdayTags": [
@@ -326,7 +326,7 @@
 "activityMode": "event",
 "createdTs": "2021-08-03T13:30:45.3096987",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-26T15:58:21.8175135Z",
+"modifiedTs": "2026-11-27T08:06:27.3552674Z",
 "name": "WOD Fredag 1530",
 "registerAttendance": false,
 "weekdayTags": [
@@ -337,7 +337,7 @@
 "activityMode": "event",
 "createdTs": "2021-08-03T13:28:48.6384945",
 "maxAttendees": 12,
-"modifiedTs": "2026-11-26T22:35:49.7232623Z",
+"modifiedTs": "2026-11-27T08:05:18.1907809Z",
 "name": "WOD Fredag 0815",
 "registerAttendance": false,
 "weekdayTags": [
@@ -433,7 +433,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -443,7 +443,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 14,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 14,
 "rows": 14,
 "truncated": false,
@@ -517,7 +517,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -527,7 +527,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -609,7 +609,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 6,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 6,
 "rows": 6,
 "truncated": false,
@@ -619,7 +619,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -938,7 +938,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -948,7 +948,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -1121,9 +1121,19 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 9,
 "rows": 9,
+"truncated": false,
+"waiting": 0
+},
+"Activity2516244060202738431|202611271630": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 3,
+"h": "2026-11-28T03:18:11",
+"participants": 3,
+"rows": 3,
 "truncated": false,
 "waiting": 0
 },
@@ -1439,7 +1449,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 12,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 12,
 "rows": 12,
 "truncated": false,
@@ -1449,7 +1459,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -1775,7 +1785,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -1785,7 +1795,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 3,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 3,
 "rows": 3,
 "truncated": false,
@@ -2021,7 +2031,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 12,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 12,
 "rows": 12,
 "truncated": false,
@@ -2031,7 +2041,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -2241,7 +2251,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -2251,7 +2261,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 8,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 8,
 "rows": 8,
 "truncated": false,
@@ -2523,7 +2533,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -2533,7 +2543,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 3,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 3,
 "rows": 3,
 "truncated": false,
@@ -2725,7 +2735,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 8,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 8,
 "rows": 8,
 "truncated": false,
@@ -2735,7 +2745,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -2917,7 +2927,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -2927,7 +2937,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -3154,7 +3164,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -3164,7 +3174,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -3419,7 +3429,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 13,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 13,
 "rows": 13,
 "truncated": false,
@@ -3429,7 +3439,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 18,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 18,
 "rows": 19,
 "truncated": false,
@@ -3665,7 +3675,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -3675,7 +3685,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -4046,7 +4056,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -4056,7 +4066,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 10,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 10,
 "rows": 10,
 "truncated": false,
@@ -4265,7 +4275,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -4275,7 +4285,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 9,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 9,
 "rows": 9,
 "truncated": false,
@@ -4493,7 +4503,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 8,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 8,
 "rows": 8,
 "truncated": false,
@@ -4503,7 +4513,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 14,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 14,
 "rows": 14,
 "truncated": false,
@@ -4721,9 +4731,19 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 14,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 14,
 "rows": 14,
+"truncated": false,
+"waiting": 0
+},
+"Activity2517743105546903012|202611271530": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 5,
+"h": "2026-11-28T03:18:11",
+"participants": 5,
+"rows": 5,
 "truncated": false,
 "waiting": 0
 },
@@ -4976,7 +4996,17 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 6,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
+"participants": 6,
+"rows": 6,
+"truncated": false,
+"waiting": 0
+},
+"Activity2517743106713615054|202611270815": {
+"attended": 0,
+"attended_participants": 0,
+"confirmed": 6,
+"h": "2026-11-28T03:18:11",
 "participants": 6,
 "rows": 6,
 "truncated": false,
@@ -5212,7 +5242,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 7,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 7,
 "rows": 7,
 "truncated": false,
@@ -5222,7 +5252,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -5431,7 +5461,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -5441,7 +5471,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -5668,7 +5698,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 5,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 5,
 "rows": 5,
 "truncated": false,
@@ -5678,7 +5708,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 6,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 6,
 "rows": 6,
 "truncated": false,
@@ -5905,7 +5935,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 11,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 11,
 "rows": 11,
 "truncated": false,
@@ -5915,7 +5945,7 @@
 "attended": 0,
 "attended_participants": 0,
 "confirmed": 4,
-"h": "2026-11-27T03:18:23",
+"h": "2026-11-28T03:18:11",
 "participants": 4,
 "rows": 4,
 "truncated": false,
@@ -10876,7 +10906,7 @@
 },
 {
 "activityId": "Activity2517743106713615054",
-"booked": 7,
+"booked": 6,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:47:28.138261Z",
 "endTime": "2026-11-27T09:15:00",
@@ -10894,7 +10924,7 @@
 },
 {
 "activityId": "Activity2517743105546903012",
-"booked": 7,
+"booked": 5,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:47:41.4491042Z",
 "endTime": "2026-11-27T16:30:00",
@@ -10962,20 +10992,20 @@
 "sequence": "Activity2517743104814044562",
 "startTime": "2026-11-28T09:00:00",
 "status": "booked",
-"waitingList": 2
+"waitingList": 1
 },
 {
 "activityId": "Activity2516147394819805210",
-"booked": 4,
+"booked": 3,
 "cancelReason": null,
 "createdTs": "2026-08-24T08:48:38.0507387Z",
 "endTime": "2026-11-28T11:00:00",
 "eventId": "202611281000",
 "hasWaitingList": false,
 "maxAttendees": 12,
-"modifiedTs": "2026-08-24T08:48:38.0507387Z",
+"modifiedTs": "2026-11-27T17:23:02.1466217Z",
 "name": "Hyrox",
-"registerAttendance": true,
+"registerAttendance": false,
 "reservations": 0,
 "sequence": "Activity2516147394819805210",
 "startTime": "2026-11-28T10:00:00",
@@ -10998,11 +11028,11 @@
 "sequence": "Activity2517743103297333604",
 "startTime": "2026-11-29T08:00:00",
 "status": "booked",
-"waitingList": 0
+"waitingList": 2
 },
 {
 "activityId": "Activity2516140240740267054",
-"booked": 5,
+"booked": 7,
 "cancelReason": null,
 "createdTs": "2026-09-01T15:32:06.4420422Z",
 "endTime": "2026-11-29T10:30:00",
@@ -11020,7 +11050,7 @@
 },
 {
 "activityId": "Activity2516270957033362421",
-"booked": 0,
+"booked": 1,
 "cancelReason": null,
 "createdTs": "2026-04-03T08:31:37.0926983Z",
 "endTime": "2026-11-29T11:45:00",
@@ -11056,7 +11086,7 @@
 },
 {
 "activityId": "Activity2516524686452660410",
-"booked": 1,
+"booked": 2,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:49:37.2559997Z",
 "endTime": "2026-11-30T07:00:00",
@@ -11092,7 +11122,7 @@
 },
 {
 "activityId": "Activity2516363572535700946",
-"booked": 9,
+"booked": 8,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:52:26.4611356Z",
 "endTime": "2026-11-30T17:00:00",
@@ -11110,7 +11140,7 @@
 },
 {
 "activityId": "Activity2516363571799491831",
-"booked": 5,
+"booked": 7,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:53:40.4570595Z",
 "endTime": "2026-11-30T18:00:00",
@@ -11128,7 +11158,7 @@
 },
 {
 "activityId": "Activity2516968090948176157",
-"booked": 3,
+"booked": 4,
 "cancelReason": null,
 "createdTs": "2025-12-17T03:49:13.3551919Z",
 "endTime": "2026-11-30T20:45:00",
@@ -11145,11 +11175,14 @@
 "waitingList": 0
 }
 ],
-"h": "2026-11-27T03:18:23"
+"h": "2026-11-28T03:18:11"
 }
 },
 "events": {
 "Activity2516066068117787031|202611260615": {
+"nf": 1
+},
+"Activity2516066068117787031|202611260700": {
 "nf": 1
 },
 "Activity2516066068117787031|202611260715": {
@@ -11158,10 +11191,16 @@
 "Activity2516066068117787031|202611260730": {
 "nf": 1
 },
+"Activity2516066068117787031|202611260800": {
+"nf": 1
+},
 "Activity2516066068117787031|202611260815": {
 "nf": 1
 },
 "Activity2516066068117787031|202611260830": {
+"nf": 1
+},
+"Activity2516066068117787031|202611260900": {
 "nf": 1
 },
 "Activity2516066068117787031|202611260930": {
@@ -12469,6 +12508,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202605291600": {
+"nf": 1
+},
 "Activity2516244060202738431|202605291630": {
 "booked": 7,
 "cancelReason": null,
@@ -12484,6 +12526,9 @@
 "startTime": "2026-05-29T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202606051600": {
+"nf": 1
 },
 "Activity2516244060202738431|202606051630": {
 "booked": 0,
@@ -12501,6 +12546,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202606121600": {
+"nf": 1
+},
 "Activity2516244060202738431|202606121630": {
 "booked": 3,
 "cancelReason": null,
@@ -12516,6 +12564,9 @@
 "startTime": "2026-06-12T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202606191600": {
+"nf": 1
 },
 "Activity2516244060202738431|202606191630": {
 "booked": 2,
@@ -12533,6 +12584,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202606261600": {
+"nf": 1
+},
 "Activity2516244060202738431|202606261630": {
 "booked": 3,
 "cancelReason": null,
@@ -12548,6 +12602,9 @@
 "startTime": "2026-06-26T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202607031600": {
+"nf": 1
 },
 "Activity2516244060202738431|202607031630": {
 "booked": 4,
@@ -12565,6 +12622,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202607101600": {
+"nf": 1
+},
 "Activity2516244060202738431|202607101630": {
 "booked": 2,
 "cancelReason": null,
@@ -12580,6 +12640,9 @@
 "startTime": "2026-07-10T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202607171600": {
+"nf": 1
 },
 "Activity2516244060202738431|202607171630": {
 "booked": 0,
@@ -12597,6 +12660,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202607241600": {
+"nf": 1
+},
 "Activity2516244060202738431|202607241630": {
 "booked": 4,
 "cancelReason": null,
@@ -12612,6 +12678,9 @@
 "startTime": "2026-07-24T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202607311600": {
+"nf": 1
 },
 "Activity2516244060202738431|202607311630": {
 "booked": 3,
@@ -12629,6 +12698,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202608071600": {
+"nf": 1
+},
 "Activity2516244060202738431|202608071630": {
 "booked": 0,
 "cancelReason": null,
@@ -12644,6 +12716,9 @@
 "startTime": "2026-08-07T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202608141600": {
+"nf": 1
 },
 "Activity2516244060202738431|202608141630": {
 "booked": 0,
@@ -12661,6 +12736,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202608211600": {
+"nf": 1
+},
 "Activity2516244060202738431|202608211630": {
 "booked": 5,
 "cancelReason": null,
@@ -12676,6 +12754,9 @@
 "startTime": "2026-08-21T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202608281600": {
+"nf": 1
 },
 "Activity2516244060202738431|202608281630": {
 "booked": 2,
@@ -12693,6 +12774,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202609041600": {
+"nf": 1
+},
 "Activity2516244060202738431|202609041630": {
 "booked": 1,
 "cancelReason": null,
@@ -12708,6 +12792,9 @@
 "startTime": "2026-09-04T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202609111600": {
+"nf": 1
 },
 "Activity2516244060202738431|202609111630": {
 "booked": 7,
@@ -12725,6 +12812,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202609181600": {
+"nf": 1
+},
 "Activity2516244060202738431|202609181630": {
 "booked": 4,
 "cancelReason": null,
@@ -12740,6 +12830,9 @@
 "startTime": "2026-09-18T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202609251600": {
+"nf": 1
 },
 "Activity2516244060202738431|202609251630": {
 "booked": 0,
@@ -12757,6 +12850,9 @@
 "status": "excluded",
 "waitingList": 0
 },
+"Activity2516244060202738431|202610021600": {
+"nf": 1
+},
 "Activity2516244060202738431|202610021630": {
 "booked": 0,
 "cancelReason": null,
@@ -12772,6 +12868,9 @@
 "startTime": "2026-10-02T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202610091600": {
+"nf": 1
 },
 "Activity2516244060202738431|202610091630": {
 "booked": 0,
@@ -12789,6 +12888,9 @@
 "status": "cancelled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202610161600": {
+"nf": 1
+},
 "Activity2516244060202738431|202610161630": {
 "booked": 2,
 "cancelReason": null,
@@ -12804,6 +12906,9 @@
 "startTime": "2026-10-16T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202610231600": {
+"nf": 1
 },
 "Activity2516244060202738431|202610231630": {
 "booked": 4,
@@ -12821,6 +12926,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202610301600": {
+"nf": 1
+},
 "Activity2516244060202738431|202610301630": {
 "booked": 5,
 "cancelReason": null,
@@ -12837,7 +12945,13 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516244060202738431|202611061600": {
+"nf": 1
+},
 "Activity2516244060202738431|202611061630": {
+"nf": 1
+},
+"Activity2516244060202738431|202611131600": {
 "nf": 1
 },
 "Activity2516244060202738431|202611131630": {
@@ -12855,6 +12969,12 @@
 "startTime": "2026-11-13T16:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516244060202738431|202611201600": {
+"nf": 1
+},
+"Activity2516244060202738431|202611271600": {
+"nf": 1
 },
 "Activity2516270957033362421|202605171045": {
 "booked": 11,
@@ -17118,6 +17238,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202605280900": {
+"nf": 1
+},
 "Activity2516659546312284291|202606040815": {
 "booked": 7,
 "cancelReason": null,
@@ -17133,6 +17256,9 @@
 "startTime": "2026-06-04T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202606040900": {
+"nf": 1
 },
 "Activity2516659546312284291|202606110815": {
 "booked": 2,
@@ -17150,6 +17276,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202606110900": {
+"nf": 1
+},
 "Activity2516659546312284291|202606180815": {
 "booked": 0,
 "cancelReason": null,
@@ -17165,6 +17294,9 @@
 "startTime": "2026-06-18T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202606180900": {
+"nf": 1
 },
 "Activity2516659546312284291|202606250815": {
 "booked": 0,
@@ -17182,6 +17314,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202606250900": {
+"nf": 1
+},
 "Activity2516659546312284291|202607020815": {
 "booked": 1,
 "cancelReason": null,
@@ -17197,6 +17332,9 @@
 "startTime": "2026-07-02T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202607020900": {
+"nf": 1
 },
 "Activity2516659546312284291|202607090815": {
 "booked": 0,
@@ -17214,6 +17352,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202607090900": {
+"nf": 1
+},
 "Activity2516659546312284291|202607160815": {
 "booked": 0,
 "cancelReason": null,
@@ -17229,6 +17370,9 @@
 "startTime": "2026-07-16T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202607160900": {
+"nf": 1
 },
 "Activity2516659546312284291|202607230815": {
 "booked": 7,
@@ -17246,6 +17390,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202607230900": {
+"nf": 1
+},
 "Activity2516659546312284291|202607300815": {
 "booked": 0,
 "cancelReason": null,
@@ -17261,6 +17408,9 @@
 "startTime": "2026-07-30T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202607300900": {
+"nf": 1
 },
 "Activity2516659546312284291|202608060815": {
 "booked": 5,
@@ -17278,6 +17428,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202608060900": {
+"nf": 1
+},
 "Activity2516659546312284291|202608130815": {
 "booked": 1,
 "cancelReason": null,
@@ -17293,6 +17446,9 @@
 "startTime": "2026-08-13T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202608130900": {
+"nf": 1
 },
 "Activity2516659546312284291|202608200815": {
 "booked": 5,
@@ -17310,6 +17466,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202608200900": {
+"nf": 1
+},
 "Activity2516659546312284291|202608270815": {
 "booked": 3,
 "cancelReason": null,
@@ -17325,6 +17484,9 @@
 "startTime": "2026-08-27T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202608270900": {
+"nf": 1
 },
 "Activity2516659546312284291|202609030815": {
 "booked": 0,
@@ -17342,6 +17504,9 @@
 "status": "cancelled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202609030900": {
+"nf": 1
+},
 "Activity2516659546312284291|202609100815": {
 "booked": 6,
 "cancelReason": null,
@@ -17357,6 +17522,9 @@
 "startTime": "2026-09-10T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202609100900": {
+"nf": 1
 },
 "Activity2516659546312284291|202609170815": {
 "booked": 4,
@@ -17374,6 +17542,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202609170900": {
+"nf": 1
+},
 "Activity2516659546312284291|202609240815": {
 "booked": 3,
 "cancelReason": null,
@@ -17389,6 +17560,9 @@
 "startTime": "2026-09-24T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202609240900": {
+"nf": 1
 },
 "Activity2516659546312284291|202610010815": {
 "booked": 5,
@@ -17406,6 +17580,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202610010900": {
+"nf": 1
+},
 "Activity2516659546312284291|202610080815": {
 "booked": 4,
 "cancelReason": null,
@@ -17421,6 +17598,9 @@
 "startTime": "2026-10-08T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202610080900": {
+"nf": 1
 },
 "Activity2516659546312284291|202610150815": {
 "booked": 5,
@@ -17438,6 +17618,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202610150900": {
+"nf": 1
+},
 "Activity2516659546312284291|202610220815": {
 "booked": 9,
 "cancelReason": null,
@@ -17453,6 +17636,9 @@
 "startTime": "2026-10-22T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202610220900": {
+"nf": 1
 },
 "Activity2516659546312284291|202610290815": {
 "booked": 8,
@@ -17470,6 +17656,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202610290900": {
+"nf": 1
+},
 "Activity2516659546312284291|202611050815": {
 "booked": 9,
 "cancelReason": null,
@@ -17486,6 +17675,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2516659546312284291|202611050900": {
+"nf": 1
+},
 "Activity2516659546312284291|202611120815": {
 "booked": 3,
 "cancelReason": null,
@@ -17501,6 +17693,15 @@
 "startTime": "2026-11-12T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2516659546312284291|202611120900": {
+"nf": 1
+},
+"Activity2516659546312284291|202611190900": {
+"nf": 1
+},
+"Activity2516659546312284291|202611260900": {
+"nf": 1
 },
 "Activity2516936776804134130|202605250400": {
 "nf": 1
@@ -19974,6 +20175,21 @@
 "Activity2517743036073189885|202611141000": {
 "nf": 1
 },
+"Activity2517743036073189885|202611210600": {
+"nf": 1
+},
+"Activity2517743036073189885|202611210700": {
+"nf": 1
+},
+"Activity2517743036073189885|202611210800": {
+"nf": 1
+},
+"Activity2517743036073189885|202611210900": {
+"nf": 1
+},
+"Activity2517743036073189885|202611211000": {
+"nf": 1
+},
 "Activity2517743036997736134|202605260615": {
 "nf": 1
 },
@@ -21866,6 +22082,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202605291500": {
+"nf": 1
+},
 "Activity2517743105546903012|202605291530": {
 "booked": 10,
 "cancelReason": null,
@@ -21881,6 +22100,9 @@
 "startTime": "2026-05-29T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202606051500": {
+"nf": 1
 },
 "Activity2517743105546903012|202606051530": {
 "booked": 0,
@@ -21898,6 +22120,9 @@
 "status": "cancelled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202606121500": {
+"nf": 1
+},
 "Activity2517743105546903012|202606121530": {
 "booked": 9,
 "cancelReason": null,
@@ -21913,6 +22138,9 @@
 "startTime": "2026-06-12T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202606191500": {
+"nf": 1
 },
 "Activity2517743105546903012|202606191530": {
 "booked": 6,
@@ -21930,6 +22158,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202606261500": {
+"nf": 1
+},
 "Activity2517743105546903012|202606261530": {
 "booked": 8,
 "cancelReason": null,
@@ -21945,6 +22176,9 @@
 "startTime": "2026-06-26T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202607031500": {
+"nf": 1
 },
 "Activity2517743105546903012|202607031530": {
 "booked": 11,
@@ -21962,6 +22196,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202607101500": {
+"nf": 1
+},
 "Activity2517743105546903012|202607101530": {
 "booked": 6,
 "cancelReason": null,
@@ -21977,6 +22214,9 @@
 "startTime": "2026-07-10T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202607171500": {
+"nf": 1
 },
 "Activity2517743105546903012|202607171530": {
 "booked": 8,
@@ -21994,6 +22234,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202607241500": {
+"nf": 1
+},
 "Activity2517743105546903012|202607241530": {
 "booked": 4,
 "cancelReason": null,
@@ -22009,6 +22252,9 @@
 "startTime": "2026-07-24T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202607311500": {
+"nf": 1
 },
 "Activity2517743105546903012|202607311530": {
 "booked": 8,
@@ -22026,6 +22272,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202608071500": {
+"nf": 1
+},
 "Activity2517743105546903012|202608071530": {
 "booked": 12,
 "cancelReason": null,
@@ -22041,6 +22290,9 @@
 "startTime": "2026-08-07T15:30:00",
 "status": "booked",
 "waitingList": 0
+},
+"Activity2517743105546903012|202608141500": {
+"nf": 1
 },
 "Activity2517743105546903012|202608141530": {
 "booked": 14,
@@ -22058,6 +22310,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202608211500": {
+"nf": 1
+},
 "Activity2517743105546903012|202608211530": {
 "booked": 2,
 "cancelReason": null,
@@ -22073,6 +22328,9 @@
 "startTime": "2026-08-21T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202608281500": {
+"nf": 1
 },
 "Activity2517743105546903012|202608281530": {
 "booked": 6,
@@ -22090,6 +22348,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202609041500": {
+"nf": 1
+},
 "Activity2517743105546903012|202609041530": {
 "booked": 8,
 "cancelReason": null,
@@ -22105,6 +22366,9 @@
 "startTime": "2026-09-04T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202609111500": {
+"nf": 1
 },
 "Activity2517743105546903012|202609111530": {
 "booked": 7,
@@ -22122,6 +22386,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202609181500": {
+"nf": 1
+},
 "Activity2517743105546903012|202609181530": {
 "booked": 8,
 "cancelReason": null,
@@ -22137,6 +22404,9 @@
 "startTime": "2026-09-18T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202609251500": {
+"nf": 1
 },
 "Activity2517743105546903012|202609251530": {
 "booked": 0,
@@ -22154,6 +22424,9 @@
 "status": "excluded",
 "waitingList": 0
 },
+"Activity2517743105546903012|202610021500": {
+"nf": 1
+},
 "Activity2517743105546903012|202610021530": {
 "booked": 6,
 "cancelReason": null,
@@ -22169,6 +22442,9 @@
 "startTime": "2026-10-02T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202610091500": {
+"nf": 1
 },
 "Activity2517743105546903012|202610091530": {
 "booked": 0,
@@ -22186,6 +22462,9 @@
 "status": "cancelled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202610161500": {
+"nf": 1
+},
 "Activity2517743105546903012|202610161530": {
 "booked": 12,
 "cancelReason": null,
@@ -22201,6 +22480,9 @@
 "startTime": "2026-10-16T15:30:00",
 "status": "booked",
 "waitingList": 2
+},
+"Activity2517743105546903012|202610231500": {
+"nf": 1
 },
 "Activity2517743105546903012|202610231530": {
 "booked": 5,
@@ -22218,6 +22500,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202610301500": {
+"nf": 1
+},
 "Activity2517743105546903012|202610301530": {
 "booked": 8,
 "cancelReason": null,
@@ -22234,7 +22519,13 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743105546903012|202611061500": {
+"nf": 1
+},
 "Activity2517743105546903012|202611061530": {
+"nf": 1
+},
+"Activity2517743105546903012|202611131500": {
 "nf": 1
 },
 "Activity2517743105546903012|202611131530": {
@@ -22252,6 +22543,12 @@
 "startTime": "2026-11-13T15:30:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743105546903012|202611201500": {
+"nf": 1
+},
+"Activity2517743105546903012|202611271500": {
+"nf": 1
 },
 "Activity2517743106713615054|202605150815": {
 "booked": 10,
@@ -22301,6 +22598,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202605290900": {
+"nf": 1
+},
 "Activity2517743106713615054|202606050815": {
 "booked": 16,
 "cancelReason": null,
@@ -22316,6 +22616,9 @@
 "startTime": "2026-06-05T08:15:00",
 "status": "booked",
 "waitingList": 0
+},
+"Activity2517743106713615054|202606050900": {
+"nf": 1
 },
 "Activity2517743106713615054|202606120815": {
 "booked": 10,
@@ -22333,6 +22636,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202606120900": {
+"nf": 1
+},
 "Activity2517743106713615054|202606190815": {
 "booked": 16,
 "cancelReason": null,
@@ -22348,6 +22654,9 @@
 "startTime": "2026-06-19T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202606190900": {
+"nf": 1
 },
 "Activity2517743106713615054|202606260815": {
 "booked": 11,
@@ -22365,6 +22674,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202606260900": {
+"nf": 1
+},
 "Activity2517743106713615054|202607030815": {
 "booked": 13,
 "cancelReason": null,
@@ -22380,6 +22692,9 @@
 "startTime": "2026-07-03T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202607030900": {
+"nf": 1
 },
 "Activity2517743106713615054|202607100815": {
 "booked": 13,
@@ -22397,6 +22712,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202607100900": {
+"nf": 1
+},
 "Activity2517743106713615054|202607170815": {
 "booked": 7,
 "cancelReason": null,
@@ -22412,6 +22730,9 @@
 "startTime": "2026-07-17T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202607170900": {
+"nf": 1
 },
 "Activity2517743106713615054|202607240815": {
 "booked": 12,
@@ -22429,6 +22750,9 @@
 "status": "booked",
 "waitingList": 3
 },
+"Activity2517743106713615054|202607240900": {
+"nf": 1
+},
 "Activity2517743106713615054|202607310815": {
 "booked": 12,
 "cancelReason": null,
@@ -22444,6 +22768,9 @@
 "startTime": "2026-07-31T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202607310900": {
+"nf": 1
 },
 "Activity2517743106713615054|202608070815": {
 "booked": 10,
@@ -22461,6 +22788,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202608070900": {
+"nf": 1
+},
 "Activity2517743106713615054|202608140815": {
 "booked": 17,
 "cancelReason": null,
@@ -22476,6 +22806,9 @@
 "startTime": "2026-08-14T08:15:00",
 "status": "booked",
 "waitingList": 1
+},
+"Activity2517743106713615054|202608140900": {
+"nf": 1
 },
 "Activity2517743106713615054|202608210815": {
 "booked": 16,
@@ -22493,6 +22826,9 @@
 "status": "booked",
 "waitingList": 0
 },
+"Activity2517743106713615054|202608210900": {
+"nf": 1
+},
 "Activity2517743106713615054|202608280815": {
 "booked": 14,
 "cancelReason": null,
@@ -22508,6 +22844,9 @@
 "startTime": "2026-08-28T08:15:00",
 "status": "booked",
 "waitingList": 1
+},
+"Activity2517743106713615054|202608280900": {
+"nf": 1
 },
 "Activity2517743106713615054|202609040815": {
 "booked": 14,
@@ -22525,6 +22864,9 @@
 "status": "booked",
 "waitingList": 0
 },
+"Activity2517743106713615054|202609040900": {
+"nf": 1
+},
 "Activity2517743106713615054|202609110815": {
 "booked": 13,
 "cancelReason": null,
@@ -22540,6 +22882,9 @@
 "startTime": "2026-09-11T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202609110900": {
+"nf": 1
 },
 "Activity2517743106713615054|202609180815": {
 "booked": 12,
@@ -22557,6 +22902,9 @@
 "status": "booked",
 "waitingList": 0
 },
+"Activity2517743106713615054|202609180900": {
+"nf": 1
+},
 "Activity2517743106713615054|202609250815": {
 "booked": 9,
 "cancelReason": null,
@@ -22572,6 +22920,9 @@
 "startTime": "2026-09-25T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202609250900": {
+"nf": 1
 },
 "Activity2517743106713615054|202610020815": {
 "booked": 6,
@@ -22589,6 +22940,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202610020900": {
+"nf": 1
+},
 "Activity2517743106713615054|202610090815": {
 "booked": 9,
 "cancelReason": null,
@@ -22604,6 +22958,9 @@
 "startTime": "2026-10-09T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202610090900": {
+"nf": 1
 },
 "Activity2517743106713615054|202610160815": {
 "booked": 10,
@@ -22621,6 +22978,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202610160900": {
+"nf": 1
+},
 "Activity2517743106713615054|202610230815": {
 "booked": 10,
 "cancelReason": null,
@@ -22636,6 +22996,9 @@
 "startTime": "2026-10-23T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202610230900": {
+"nf": 1
 },
 "Activity2517743106713615054|202610300815": {
 "booked": 4,
@@ -22653,6 +23016,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202610300900": {
+"nf": 1
+},
 "Activity2517743106713615054|202611060815": {
 "booked": 7,
 "cancelReason": null,
@@ -22669,6 +23035,9 @@
 "status": "scheduled",
 "waitingList": 0
 },
+"Activity2517743106713615054|202611060900": {
+"nf": 1
+},
 "Activity2517743106713615054|202611130815": {
 "booked": 11,
 "cancelReason": null,
@@ -22684,6 +23053,15 @@
 "startTime": "2026-11-13T08:15:00",
 "status": "scheduled",
 "waitingList": 0
+},
+"Activity2517743106713615054|202611130900": {
+"nf": 1
+},
+"Activity2517743106713615054|202611200900": {
+"nf": 1
+},
+"Activity2517743106713615054|202611270900": {
+"nf": 1
 },
 "Activity2517743114820337813|202605200815": {
 "booked": 6,
@@ -24855,6 +25233,14 @@
 "status": {
 "200": 50,
 "404": 14
+}
+},
+{
+"kald": 166,
+"run": "2026-11-28T03:18:11",
+"status": {
+"200": 50,
+"404": 116
 }
 }
 ]
